@@ -3,108 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CreatorBridge - Founding Creator Bewerbung</title>
-    <meta name="description" content="Bewirb dich als einer der ersten 100 Founding Creator bei CreatorBridge. Strukturierte Brand Deals, von Creator für Creator.">
+    <title>CreatorBridge — Founding Creator Bewerbung</title>
+    <meta name="description" content="Bewirb dich als einer der ersten Founding Creator bei CreatorBridge. Strukturierte Brand Deals, von Creator für Creator. Die ersten 100 erhalten exklusive Vorteile.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ============ RESET & VARIABLES ============ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --bg: #FDFAF9;
+            --bg-warm: #F5EAEA;
+            --bg-ivory: #FCF7F4;
+            --text: #3A2520;
+            --text-secondary: #6B5650;
+            --text-muted: #9A8480;
+            --accent: #C98C83;
+            --accent-hover: #B87A71;
+            --accent-light: #DCA39B;
+            --gold: #E6C9A8;
+            --gold-dark: #C5A47F;
+            --cocoa: #4B322D;
+            --cocoa-deep: #2E1D19;
+            --border: rgba(75, 50, 45, 0.08);
+            --border-strong: rgba(75, 50, 45, 0.14);
+            --glass: rgba(255, 255, 255, 0.88);
+            --glass-border: rgba(255, 255, 255, 0.35);
+            --white: #FFFFFF;
+            --shadow-sm: 0 2px 8px rgba(75, 50, 45, 0.06);
+            --shadow-md: 0 8px 32px rgba(75, 50, 45, 0.08);
+            --shadow-lg: 0 20px 60px rgba(75, 50, 45, 0.12);
+            --shadow-glow: 0 0 40px rgba(201, 140, 131, 0.15);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --radius-xl: 40px;
+            --radius-pill: 100px;
+            --font-heading: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background-color: #FDFAF9;
-            color: #3A2520;
-            line-height: 1.6;
+            font-family: var(--font-body);
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        body::before {
-            content: "";
+        /* Noise overlay */
+        body::after {
+            content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 9999;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
         }
 
-        nav {
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ============ TYPOGRAPHY ============ */
+        h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; line-height: 1.15; }
+        h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); letter-spacing: -0.02em; color: var(--text); }
+        h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); letter-spacing: -0.015em; color: var(--text); }
+        h1 em, h2 em { font-style: italic; font-weight: 500; color: var(--accent); }
+
+        /* ============ FLOATING PILL NAVBAR ============ */
+        .navbar {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(92%, 1100px);
+            border-radius: var(--radius-pill);
+            padding: 10px 24px;
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 2rem;
-            backdrop-filter: blur(10px);
-            background-color: rgba(253, 250, 249, 0.7);
-            border-bottom: 1px solid rgba(201, 140, 131, 0.1);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 30px rgba(75, 50, 45, 0.06);
+            transition: all 0.3s var(--ease-out);
         }
 
-        .nav-container {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 40px rgba(75, 50, 45, 0.1);
         }
 
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
+        .navbar-logo {
+            font-family: var(--font-heading);
             font-weight: 700;
-            color: #3A2520;
+            font-size: 1.25rem;
+            color: var(--cocoa);
             text-decoration: none;
         }
+        .navbar-logo em { font-style: italic; font-weight: 500; color: var(--accent); }
 
         .nav-links {
             display: flex;
             gap: 2rem;
             list-style: none;
-            flex: 1;
         }
 
         .nav-links a {
-            color: #6B5650;
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: color 0.3s ease;
         }
-
-        .nav-links a:hover {
-            color: #C98C83;
-        }
+        .nav-links a:hover { color: var(--accent); }
 
         .nav-cta {
-            background: linear-gradient(135deg, #C98C83 0%, #B87A71 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 100px;
+            padding: 0.6rem 1.4rem;
+            border-radius: var(--radius-pill);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 0.85rem;
             border: none;
             cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .nav-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(201, 140, 131, 0.3);
@@ -113,100 +149,99 @@
         .hamburger {
             display: none;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.3rem;
             cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
         }
-
         .hamburger span {
-            width: 25px;
+            width: 22px;
             height: 2px;
-            background: #3A2520;
+            background: var(--text);
             transition: all 0.3s ease;
+            border-radius: 2px;
         }
 
+        /* ============ HERO ============ */
         .hero {
-            padding: 120px 2rem 80px;
-            background: linear-gradient(135deg, #FDFAF9 0%, #F5EAEA 50%, #FCF7F4 100%);
+            padding: 140px 0 100px;
+            background: radial-gradient(ellipse at 30% 20%, rgba(230, 201, 168, 0.12) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(201, 140, 131, 0.08) 0%, transparent 50%),
+                        linear-gradient(180deg, var(--bg-ivory) 0%, var(--bg) 100%);
             position: relative;
             overflow: hidden;
-            margin-top: 60px;
         }
 
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .hero-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
         }
 
-        .hero-content {
-            z-index: 10;
-        }
+        .hero-content { z-index: 10; }
 
         .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #DCA39B 0%, #C98C83 100%);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 100px;
-            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
         }
-
-        h1, h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            color: #3A2520;
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
         }
-
-        h1 {
-            font-size: 3.5rem;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-        }
-
-        .italic-accent {
-            font-style: italic;
-            color: #C98C83;
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .hero-subtitle {
             font-size: 1.1rem;
-            color: #6B5650;
-            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            margin: 1.5rem 0 2rem;
             line-height: 1.8;
+            max-width: 520px;
         }
 
         .hero-buttons {
             display: flex;
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
         .btn {
             padding: 1rem 2rem;
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             font-weight: 600;
             text-decoration: none;
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            font-family: var(--font-body);
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #C98C83 0%, #B87A71 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
             color: white;
+            box-shadow: 0 4px 16px rgba(201, 140, 131, 0.25);
         }
-
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(201, 140, 131, 0.4);
@@ -214,51 +249,47 @@
 
         .btn-secondary {
             background: transparent;
-            color: #C98C83;
-            border: 2px solid #C98C83;
+            color: var(--accent);
+            border: 2px solid var(--accent);
         }
-
         .btn-secondary:hover {
-            background: rgba(201, 140, 131, 0.1);
+            background: rgba(201, 140, 131, 0.08);
             transform: translateY(-3px);
         }
 
         .micro-text {
             font-size: 0.85rem;
-            color: #9A8480;
-            margin-top: 0.5rem;
+            color: var(--text-muted);
         }
 
         .stats-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
             padding-top: 2rem;
-            border-top: 1px solid rgba(201, 140, 131, 0.2);
+            border-top: 1px solid var(--border);
         }
 
-        .stat-item {
-            text-align: center;
-        }
+        .stat-item { text-align: center; }
 
         .stat-value {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-heading);
             font-size: 1.5rem;
             font-weight: 700;
-            color: #3A2520;
+            color: var(--text);
         }
 
         .stat-label {
-            font-size: 0.9rem;
-            color: #6B5650;
-            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
         }
 
+        /* ============ HERO MOCKUP (3D Dashboard) ============ */
         .hero-mockup {
             perspective: 1200px;
             position: relative;
-            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -266,19 +297,18 @@
 
         .dashboard-card {
             width: 100%;
-            max-width: 400px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 440px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
             overflow: hidden;
-            position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+            transition: transform 0.15s ease-out;
         }
 
         .dashboard-header {
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #3A2520 0%, #4B322D 100%);
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--cocoa) 0%, var(--cocoa-deep) 100%);
             color: white;
             display: flex;
             justify-content: space-between;
@@ -287,40 +317,77 @@
 
         .window-dots {
             display: flex;
-            gap: 0.5rem;
+            gap: 6px;
         }
-
         .dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
         }
+        .dot:nth-child(1) { background: #FF5F57; }
+        .dot:nth-child(2) { background: #FEBC2E; }
+        .dot:nth-child(3) { background: #28C840; }
 
         .dashboard-title {
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
 
-        .badge-new {
-            background: #C98C83;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 100px;
-            font-size: 0.75rem;
+        .dashboard-nav {
+            display: flex;
+            gap: 0;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-ivory);
+        }
+        .dashboard-nav-item {
+            padding: 10px 16px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-bottom: 2px solid transparent;
+            cursor: default;
+        }
+        .dashboard-nav-item.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
             font-weight: 600;
         }
 
-        .dashboard-content {
-            padding: 1.5rem;
+        .dashboard-content { padding: 20px; }
+
+        .dashboard-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .dashboard-stat-card {
+            background: var(--bg-ivory);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+        }
+        .dashboard-stat-value {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .dashboard-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            font-weight: 500;
         }
 
         .dashboard-label {
-            font-size: 0.85rem;
-            color: #9A8480;
+            font-size: 0.75rem;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
@@ -328,200 +395,230 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid #F5EAEA;
+            padding: 10px 12px;
             border-radius: 8px;
-            margin-bottom: 0.5rem;
-            transition: background 0.3s ease;
+            margin-bottom: 4px;
+            transition: background 0.2s ease;
         }
+        .deal-row:hover { background: var(--bg-ivory); }
 
-        .deal-row:hover {
-            background: #FCF7F4;
+        .deal-info { display: flex; align-items: center; gap: 10px; flex: 1; }
+
+        .deal-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
         }
 
         .deal-name {
-            flex: 1;
             font-weight: 600;
-            font-size: 0.95rem;
-            color: #3A2520;
+            font-size: 0.85rem;
+            color: var(--text);
         }
+        .deal-meta {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .deal-status {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+        }
+        .deal-status.matched { background: rgba(40, 200, 64, 0.1); color: #1A9B38; }
+        .deal-status.pending { background: rgba(254, 188, 46, 0.15); color: #B8860B; }
+        .deal-status.new { background: rgba(201, 140, 131, 0.12); color: var(--accent); }
 
         .deal-amount {
             font-weight: 700;
-            color: #C98C83;
-            font-size: 1rem;
+            color: var(--accent);
+            font-size: 0.9rem;
+            min-width: 60px;
+            text-align: right;
         }
 
         .dashboard-footer {
-            padding: 1rem 1.5rem;
-            background: #FCF7F4;
+            padding: 12px 20px;
+            background: var(--bg-ivory);
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
-            color: #6B5650;
-            border-top: 1px solid #F5EAEA;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
         }
 
         .floating-card {
             position: absolute;
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            font-size: 0.9rem;
+            background: var(--white);
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+            font-size: 0.85rem;
             font-weight: 600;
-            color: #3A2520;
+            color: var(--text);
             z-index: 5;
+            border: 1px solid var(--border);
         }
 
         .floating-card.top-left {
-            top: -20px;
-            left: -40px;
-            opacity: 0;
-            animation: floatIn 0.8s ease-out 0.3s forwards;
-        }
-
-        .floating-card.bottom-right {
-            bottom: -20px;
-            right: -40px;
+            top: 20px;
+            left: -30px;
             opacity: 0;
             animation: floatIn 0.8s ease-out 0.5s forwards;
         }
+        .floating-card.bottom-right {
+            bottom: 20px;
+            right: -30px;
+            opacity: 0;
+            animation: floatIn 0.8s ease-out 0.7s forwards;
+        }
 
         @keyframes floatIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ SECTIONS ============ */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
         }
 
         .section-label {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #9A8480;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 16px;
         }
-
-        .section {
-            padding: 100px 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            margin-bottom: 1rem;
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
         }
 
         .section-subtitle {
             font-size: 1.1rem;
-            color: #6B5650;
-            margin-bottom: 3rem;
-            max-width: 600px;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            line-height: 1.8;
         }
 
-        .cards-grid {
+        /* ============ PROBLEM SECTION ============ */
+        .problem-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin-bottom: 3rem;
         }
 
-        .card {
-            background: white;
+        .problem-card {
+            background: var(--white);
             padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
             transition: all 0.3s ease;
-            transform-style: preserve-3d;
             position: relative;
             overflow: hidden;
         }
-
-        .card::before {
-            content: "";
+        .problem-card::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 0px;
-            background: linear-gradient(90deg, #C98C83 0%, #DCA39B 100%);
-            transition: height 0.3s ease;
-            z-index: -1;
-        }
-
-        .card:hover::before {
+            top: 0; left: 0; right: 0;
             height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .problem-card:hover::before { opacity: 1; }
+        .problem-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
         }
 
-        .card:hover {
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
-            transform: translateY(-8px);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+        .problem-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #DCA39B 0%, #C98C83 100%);
-            color: white;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, rgba(201, 140, 131, 0.1), rgba(220, 163, 155, 0.15));
         }
 
-        .card-title {
+        .problem-title {
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            color: var(--text);
             margin-bottom: 0.5rem;
-            color: #3A2520;
         }
-
-        .card-text {
-            color: #6B5650;
-            font-size: 0.95rem;
-            line-height: 1.6;
+        .problem-text {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
         }
 
         .stat-callout {
-            background: linear-gradient(135deg, #FCF7F4 0%, #F5EAEA 100%);
-            padding: 2rem;
-            border-radius: 20px;
-            border-left: 4px solid #C98C83;
-            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--bg-ivory) 0%, var(--bg-warm) 100%);
+            padding: 2rem 2.5rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
-
         .stat-callout-number {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-heading);
             font-size: 2.5rem;
             font-weight: 700;
-            color: #C98C83;
+            color: var(--accent);
+            white-space: nowrap;
         }
-
         .stat-callout-text {
-            color: #6B5650;
-            font-size: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .stat-callout-source {
+            color: var(--text-muted);
+            font-size: 0.8rem;
             margin-top: 0.5rem;
         }
 
-        .stat-callout-source {
-            color: #9A8480;
-            font-size: 0.85rem;
-            margin-top: 1rem;
+        /* ============ SOLUTION / FEATURES (SaaS-Style) ============ */
+        .solution-section {
+            padding: 100px 0;
+            background: var(--bg-ivory);
         }
 
         .solution-intro {
-            background: linear-gradient(135deg, #FCF7F4 0%, #F5EAEA 100%);
-            padding: 3rem;
-            border-radius: 20px;
-            margin-bottom: 3rem;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 4rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
         }
 
         .solution-stat {
@@ -530,377 +627,400 @@
             gap: 2rem;
             align-items: center;
         }
-
         .solution-stat-number {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-heading);
             font-size: 3.5rem;
             font-weight: 700;
-            color: #C98C83;
+            color: var(--accent);
         }
-
         .solution-stat-text {
-            color: #6B5650;
-            font-size: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
             line-height: 1.8;
         }
-
         .solution-stat-source {
-            color: #9A8480;
-            font-size: 0.85rem;
-            margin-top: 1rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
         }
 
-        .features-grid {
+        /* Bento Grid for features */
+        .bento-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
         }
 
-        .feature-card {
-            background: white;
+        .bento-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
             padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
+        }
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(201, 140, 131, 0.2);
         }
 
-        .feature-card::before {
-            content: "";
+        .bento-card.wide {
+            grid-column: span 2;
+        }
+
+        .bento-number {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            opacity: 0.6;
+        }
+        .bento-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* Inline dashboard mockup for bento card */
+        .bento-mockup {
+            margin-top: 1.5rem;
+            background: var(--bg-ivory);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .mockup-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.8rem;
+        }
+        .mockup-row:last-child { border-bottom: none; }
+        .mockup-row .label { color: var(--text-secondary); font-weight: 500; }
+        .mockup-row .value { color: var(--text); font-weight: 600; }
+        .mockup-row .tag {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+        }
+        .mockup-row .tag.green { background: rgba(40, 200, 64, 0.1); color: #1A9B38; }
+        .mockup-row .tag.orange { background: rgba(254, 188, 46, 0.15); color: #B8860B; }
+
+        .cta-center {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* ============ PERKS / TIERS ============ */
+        .perks-section {
+            padding: 100px 0;
+        }
+
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .tier-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .tier-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tier-card.featured {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-glow);
+        }
+        .tier-card.featured::before {
+            content: 'Beliebteste Wahl';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 0px;
-            background: linear-gradient(90deg, #C98C83 0%, #DCA39B 100%);
-            transition: height 0.3s ease;
-        }
-
-        .feature-card:hover::before {
-            height: 3px;
-        }
-
-        .feature-card:hover {
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
-            transform: translateY(-8px);
-        }
-
-        .feature-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #C98C83;
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #3A2520;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-text {
-            color: #6B5650;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .perks-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .perk-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            position: relative;
-        }
-
-        .perk-card.featured {
-            grid-column: 1 / -1;
-            max-width: 100%;
-        }
-
-        .perk-header {
-            padding: 2rem;
-            background: linear-gradient(135deg, #F5EAEA 0%, #FCF7F4 100%);
-            position: relative;
-        }
-
-        .perk-card.featured .perk-header {
-            background: linear-gradient(135deg, #3A2520 0%, #4B322D 100%);
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: white;
+            text-align: center;
+            padding: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
-        .perk-badge {
+        .tier-header {
+            padding: 2rem 2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .tier-card.featured .tier-header {
+            padding-top: 2.5rem;
+        }
+
+        .tier-badge {
             display: inline-block;
-            background: #C98C83;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 100px;
+            background: rgba(201, 140, 131, 0.1);
+            color: var(--accent);
+            padding: 0.35rem 1rem;
+            border-radius: var(--radius-pill);
             font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .tier-card.featured .tier-badge {
+            background: rgba(201, 140, 131, 0.15);
         }
 
-        .perk-card.featured .perk-badge {
-            background: #DCA39B;
-        }
-
-        .perk-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #3A2520;
-            margin-bottom: 0.5rem;
-        }
-
-        .perk-card.featured .perk-title {
-            color: white;
-        }
-
-        .perk-subtitle {
-            font-size: 0.95rem;
-            color: #6B5650;
-        }
-
-        .perk-card.featured .perk-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .perk-content {
-            padding: 2rem;
-        }
-
-        .perk-list {
-            list-style: none;
-        }
-
-        .perk-list li {
-            padding: 0.75rem 0;
-            color: #6B5650;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .perk-card.featured .perk-list li {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .perk-list li::before {
-            content: "✓";
-            color: #C98C83;
-            font-weight: 700;
-            flex-shrink: 0;
-            font-size: 1.1rem;
-        }
-
-        .perk-card.featured .perk-list li::before {
-            color: #DCA39B;
-        }
-
-        .perk-card:hover {
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
-            transform: translateY(-8px);
-        }
-
-        .for-whom-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-
-        .for-whom-column {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-        }
-
-        .for-whom-column h3 {
-            font-family: 'Cormorant Garamond', serif;
+        .tier-name {
+            font-family: var(--font-heading);
             font-size: 1.5rem;
             font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        .tier-spots {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .tier-content {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .tier-list {
+            list-style: none;
+        }
+        .tier-list li {
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .tier-list li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .tier-cta {
+            padding: 0 2rem 2rem;
+        }
+        .tier-cta .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .perks-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ============ FOR WHOM ============ */
+        .for-whom-section {
+            padding: 100px 0;
+            background: var(--bg-ivory);
+        }
+
+        .for-whom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .for-whom-col {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        .for-whom-col h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
-            color: #3A2520;
+            color: var(--text);
         }
 
         .for-whom-list {
             list-style: none;
         }
-
         .for-whom-list li {
-            padding: 1rem 0;
-            color: #6B5650;
-            font-size: 0.95rem;
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            border-bottom: 1px solid #FCF7F4;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
         }
-
-        .for-whom-list li:last-child {
-            border-bottom: none;
-        }
-
+        .for-whom-list li:last-child { border-bottom: none; }
         .for-whom-list li::before {
             content: "✓";
-            color: #4CAF50;
+            color: #28C840;
             font-weight: 700;
             flex-shrink: 0;
-            font-size: 1.2rem;
-            margin-top: -2px;
+            font-size: 1.1rem;
         }
-
-        .for-whom-column.not li::before {
+        .for-whom-col.not .for-whom-list li::before {
             content: "✕";
-            color: #F44336;
+            color: #FF5F57;
         }
 
-        .for-whom-cta {
-            background: linear-gradient(135deg, #FCF7F4 0%, #F5EAEA 100%);
-            padding: 2rem;
-            border-radius: 20px;
-            margin-top: 3rem;
-        }
-
-        .for-whom-cta p {
-            color: #6B5650;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .scarcity {
-            background: linear-gradient(135deg, #2E1D19 0%, #4B322D 100%);
-            color: white;
-            padding: 100px 2rem;
-        }
-
-        .scarcity-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .scarcity h2 {
-            color: white;
-        }
-
-        .scarcity .section-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .tier-bars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        .for-whom-cta-box {
+            background: var(--white);
+            padding: 2rem 2.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             gap: 2rem;
-            margin: 3rem 0;
+        }
+        .for-whom-cta-box p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        /* ============ SCARCITY (DARK) ============ */
+        .scarcity {
+            background: linear-gradient(135deg, var(--cocoa-deep) 0%, var(--cocoa) 100%);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .scarcity .section-header { margin-bottom: 3rem; }
+        .scarcity .section-label { color: var(--accent-light); }
+        .scarcity .section-label::before { background: var(--accent-light); }
+        .scarcity h2 { color: white; }
+        .scarcity .section-subtitle { color: rgba(255, 255, 255, 0.75); }
+
+        .tier-bars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         .tier-bar {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.06);
             padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .tier-name {
+        .tier-bar-name {
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: #DCA39B;
+            margin-bottom: 0.75rem;
+            color: var(--accent-light);
+            font-size: 0.95rem;
         }
 
         .progress-bar {
-            background: rgba(255, 255, 255, 0.1);
-            height: 8px;
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            height: 6px;
+            border-radius: 3px;
             overflow: hidden;
-            margin: 1rem 0;
+            margin: 0.75rem 0;
         }
-
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #C98C83 0%, #DCA39B 100%);
-            border-radius: 4px;
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: 3px;
+            transition: width 1s ease;
         }
 
-        .tier-count {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 0.5rem;
+        .tier-bar-count {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .scarcity-counter {
-            background: rgba(201, 140, 131, 0.2);
-            border: 2px solid #C98C83;
+            background: rgba(201, 140, 131, 0.15);
+            border: 1px solid rgba(201, 140, 131, 0.3);
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: var(--radius-md);
             text-align: center;
-            margin: 3rem 0;
+            margin-bottom: 2rem;
         }
-
         .counter-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.5rem;
+            font-family: var(--font-heading);
+            font-size: 3rem;
             font-weight: 700;
-            color: #DCA39B;
-            margin-bottom: 0.5rem;
+            color: var(--accent-light);
         }
-
         .counter-label {
-            font-size: 1.1rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 0.25rem;
         }
 
         .scarcity-stat {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #C98C83;
-            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--accent);
+        }
+        .scarcity-stat p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            font-size: 0.95rem;
         }
 
-        .scarcity-stat p {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.8;
+        /* ============ APPLICATION FORM ============ */
+        .form-section {
+            padding: 100px 0;
         }
 
         .form-container {
-            background: white;
+            background: var(--white);
             padding: 3rem;
-            border-radius: 20px;
-            max-width: 600px;
+            border-radius: var(--radius-md);
+            max-width: 640px;
             margin: 0 auto;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+        .form-group { margin-bottom: 1.5rem; }
 
         label {
             display: block;
             font-weight: 600;
-            color: #3A2520;
+            color: var(--text);
             margin-bottom: 0.5rem;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
         }
-
-        label .required {
-            color: #C98C83;
-        }
+        label .required { color: var(--accent); }
 
         input[type="text"],
         input[type="email"],
@@ -908,23 +1028,19 @@
         textarea {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 1px solid #DCA39B;
-            border-radius: 12px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.95rem;
-            color: #3A2520;
-            background: #FDFAF9;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            color: var(--text);
+            background: var(--bg);
             transition: all 0.3s ease;
         }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        select:focus,
-        textarea:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #C98C83;
+            border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(201, 140, 131, 0.1);
-            background: white;
+            background: var(--white);
         }
 
         textarea {
@@ -932,45 +1048,44 @@
             min-height: 100px;
         }
 
-        .form-group.two-col {
+        .form-two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
-
-        .form-group.two-col .form-group {
-            margin-bottom: 0;
-        }
+        .form-two-col .form-group { margin-bottom: 0; }
 
         .form-submit {
             width: 100%;
-            background: linear-gradient(135deg, #C98C83 0%, #B87A71 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
             color: white;
             padding: 1rem;
             border: none;
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             font-weight: 600;
             font-size: 1rem;
+            font-family: var(--font-body);
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
-
         .form-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(201, 140, 131, 0.3);
         }
 
-        .form-submit:active {
-            transform: translateY(0);
-        }
-
         .form-micro {
-            color: #9A8480;
-            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-size: 0.82rem;
             margin-top: 1rem;
             text-align: center;
+        }
+
+        /* ============ FAQ ============ */
+        .faq-section {
+            padding: 100px 0;
+            background: var(--bg-ivory);
         }
 
         .faq-container {
@@ -979,31 +1094,30 @@
         }
 
         .faq-item {
-            background: white;
-            margin-bottom: 1rem;
-            border-radius: 12px;
+            background: var(--white);
+            margin-bottom: 0.75rem;
+            border-radius: var(--radius-sm);
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            transition: border-color 0.3s ease;
         }
+        .faq-item.active { border-color: rgba(201, 140, 131, 0.3); }
 
         .faq-question {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            background: #FDFAF9;
             transition: all 0.3s ease;
             user-select: none;
         }
-
-        .faq-question:hover {
-            background: #FCF7F4;
-        }
+        .faq-question:hover { background: var(--bg-ivory); }
 
         .faq-question h3 {
-            font-size: 1rem;
-            color: #3A2520;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--text);
             font-weight: 600;
             margin: 0;
             flex: 1;
@@ -1011,680 +1125,794 @@
         }
 
         .faq-toggle {
-            font-size: 1.5rem;
-            color: #C98C83;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(201, 140, 131, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.1rem;
             margin-left: 1rem;
-            transition: transform 0.3s ease;
             flex-shrink: 0;
+            transition: all 0.3s ease;
         }
-
         .faq-item.active .faq-toggle {
-            transform: rotate(180deg);
+            transform: rotate(45deg);
+            background: var(--accent);
+            color: white;
         }
 
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease;
             padding: 0 1.5rem;
         }
-
         .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 0 1.5rem 1.5rem 1.5rem;
+            max-height: 400px;
+            padding: 0 1.5rem 1.5rem;
         }
-
         .faq-answer p {
-            color: #6B5650;
-            line-height: 1.6;
-            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.92rem;
         }
 
+        /* ============ FINAL CTA ============ */
         .final-cta {
-            background: linear-gradient(135deg, #C98C83 0%, #B87A71 100%);
+            background: linear-gradient(135deg, var(--cocoa) 0%, var(--cocoa-deep) 100%);
             color: white;
-            padding: 100px 2rem;
+            padding: 100px 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(ellipse at center, rgba(201, 140, 131, 0.08) 0%, transparent 60%);
+            pointer-events: none;
         }
 
-        .final-cta h2 {
-            color: white;
-        }
-
-        .final-cta .section-subtitle {
-            color: rgba(255, 255, 255, 0.9);
+        .final-cta-inner {
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .final-cta h2 { color: white; margin-bottom: 1rem; }
+        .final-cta .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
         }
 
         .final-cta .btn-primary {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
-            margin-top: 2rem;
+            background: var(--accent);
+            box-shadow: 0 4px 20px rgba(201, 140, 131, 0.3);
         }
-
         .final-cta .btn-primary:hover {
-            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(201, 140, 131, 0.5);
         }
 
+        .final-cta .micro-text {
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 1rem;
+        }
+
+        /* ============ FOOTER ============ */
         footer {
-            background: #3A2520;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            font-size: 0.85rem;
+            background: var(--cocoa-deep);
+            color: rgba(245, 234, 234, 0.5);
+            padding: 24px 0;
         }
-
-        footer a {
-            color: #DCA39B;
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-copy { font-size: 0.78rem; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a {
+            font-size: 0.78rem;
+            color: rgba(245, 234, 234, 0.5);
             text-decoration: none;
-            margin: 0 1rem;
+            transition: color 0.25s ease;
+        }
+        .footer-links a:hover { color: rgba(245, 234, 234, 0.9); }
+
+        /* ============ ANIMATIONS ============ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
         }
 
-        footer a:hover {
-            text-decoration: underline;
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .bento-card.wide { grid-column: span 2; }
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 1rem;
-            }
-
-            .nav-container {
-                gap: 1rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
 
             .nav-links.active {
                 display: flex;
                 flex-direction: column;
                 position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #FDFAF9;
+                top: calc(100% + 8px);
+                left: 0; right: 0;
+                background: var(--white);
                 padding: 1rem;
                 gap: 0.5rem;
-                border-bottom: 1px solid rgba(201, 140, 131, 0.1);
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-md);
+                border: 1px solid var(--border);
             }
 
-            h1 {
-                font-size: 2rem;
-            }
+            .hero { padding: 120px 0 60px; }
+            .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-mockup { display: none; }
 
-            h2 {
-                font-size: 1.8rem;
-            }
+            .stats-row { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
-            .hero {
-                padding: 100px 1rem 60px;
-                margin-top: 60px;
-            }
+            .problem-grid { grid-template-columns: 1fr; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card.wide { grid-column: span 1; }
+            .tiers-grid { grid-template-columns: 1fr; }
+            .for-whom-grid { grid-template-columns: 1fr; }
+            .tier-bars-grid { grid-template-columns: 1fr; }
 
-            .hero-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+            .for-whom-cta-box { flex-direction: column; text-align: center; }
 
-            .stats-row {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+            .section { padding: 60px 0; }
+            .solution-section, .perks-section, .for-whom-section,
+            .form-section, .faq-section { padding: 60px 0; }
+            .scarcity, .final-cta { padding: 60px 0; }
 
-            .for-whom-container {
-                grid-template-columns: 1fr;
-            }
+            .form-two-col { grid-template-columns: 1fr; }
 
-            .section {
-                padding: 60px 1rem;
-            }
-
-            .form-group.two-col {
-                grid-template-columns: 1fr;
-            }
-
-            .perk-card.featured {
-                grid-column: 1 / -1;
-            }
-
-            .solution-stat {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+            .solution-stat { grid-template-columns: 1fr; gap: 1rem; }
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            h2 {
-                font-size: 1.3rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .cards-grid, .features-grid, .perks-container {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-value {
-                font-size: 1.2rem;
-            }
+            .hero-buttons { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .stats-row { grid-template-columns: 1fr; }
+            .stat-callout { flex-direction: column; gap: 1rem; text-align: center; }
+            .footer-inner { justify-content: center; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">CreatorBridge</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#problem">Problem</a></li>
-                <li><a href="#loesung">Lösung</a></li>
-                <li><a href="#vorteile">Vorteile</a></li>
-                <li><a href="#bewerbung">Bewerbung</a></li>
-                <li><a href="#fragen">Fragen</a></li>
-            </ul>
-            <button class="nav-cta" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+
+    <!-- ============ NAVBAR (Floating Pill) ============ -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="navbar-logo">Creator<em>Bridge</em></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#problem">Problem</a></li>
+            <li><a href="#loesung">Lösung</a></li>
+            <li><a href="#vorteile">Vorteile</a></li>
+            <li><a href="#bewerbung">Bewerbung</a></li>
+            <li><a href="#fragen">FAQ</a></li>
+        </ul>
+        <button class="nav-cta" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
+        <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
 
+    <!-- ============ HERO ============ -->
     <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="badge">Founding Creator Bewerbungen offen</div>
-                <h1>Brand Deals sollten nicht vom <span class="italic-accent">Zufall</span> abhängen</h1>
-                <p class="hero-subtitle">CreatorBridge verbindet Creator mit passenden Marken. Strukturiert, transparent und ohne endlose DMs. Bewirb dich jetzt als einer der ersten 100 Founding Creator.</p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Als Founding Creator bewerben</button>
-                </div>
-                <p class="micro-text">Limitiert auf 100 Plätze</p>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value">$252 Mrd.</div>
-                        <div class="stat-label">Creator Economy 2025</div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge fade-up">Founding Creator Bewerbungen offen</div>
+                    <h1 class="fade-up">Brand Deals sollten nicht vom <em>Zufall</em> abhängen</h1>
+                    <p class="hero-subtitle fade-up">CreatorBridge verbindet Creator mit passenden Marken. Strukturiert, transparent und ohne endlose DMs. Bewirb dich jetzt und sichere dir exklusive Founding-Creator-Vorteile.</p>
+                    <div class="hero-buttons fade-up">
+                        <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Als Founding Creator bewerben</button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">92%</div>
-                        <div class="stat-label">der Brands investieren mehr</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">100</div>
-                        <div class="stat-label">Founding Creator Plätze</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero-mockup">
-                <div class="dashboard-card">
-                    <div class="dashboard-header">
-                        <span class="dashboard-title">CreatorBridge</span>
-                        <div class="window-dots">
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
+                    <p class="micro-text fade-up">Nur die ersten 100 Creator erhalten exklusive Boni</p>
+                    <div class="stats-row fade-up">
+                        <div class="stat-item">
+                            <div class="stat-value">$252 Mrd.</div>
+                            <div class="stat-label">Creator Economy 2025</div>
                         </div>
-                    </div>
-                    <div class="dashboard-content">
-                        <div class="dashboard-label">Deine Kooperationen</div>
-                        <div style="margin-bottom: 1rem;">
-                            <span style="color: #C98C83; font-weight: 700; font-size: 0.9rem;">3 neue Deals</span>
+                        <div class="stat-item">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">der Brands investieren mehr</div>
                         </div>
-                        <div class="deal-row">
-                            <div class="deal-name">Hautpflege-Kampagne</div>
-                            <div class="deal-amount">€850</div>
+                        <div class="stat-item">
+                            <div class="stat-value">100</div>
+                            <div class="stat-label">Founding-Bonus-Plätze</div>
                         </div>
-                        <div class="deal-row">
-                            <div class="deal-name">Sommer-Kollektion Launch</div>
-                            <div class="deal-amount">€1.200</div>
-                        </div>
-                        <div class="deal-row">
-                            <div class="deal-name">Fitness-Supplement Review</div>
-                            <div class="deal-amount">€600</div>
-                        </div>
-                    </div>
-                    <div class="dashboard-footer">
-                        <span>2 Bewerbungen offen</span>
-                        <span>1 Match</span>
                     </div>
                 </div>
 
-                <div class="floating-card top-left">
-                    <span style="color: #C98C83; font-weight: 700;">+3</span> Neue Deals
-                </div>
-                <div class="floating-card bottom-right">
-                    <span style="color: #C98C83; font-weight: 700;">€2.650</span> Umsatz
+                <div class="hero-mockup">
+                    <div class="dashboard-card">
+                        <div class="dashboard-header">
+                            <div class="window-dots">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                            <span class="dashboard-title">CreatorBridge Dashboard</span>
+                            <span style="font-size: 0.7rem; opacity: 0.6;">v1.0</span>
+                        </div>
+                        <div class="dashboard-nav">
+                            <div class="dashboard-nav-item active">Übersicht</div>
+                            <div class="dashboard-nav-item">Deals</div>
+                            <div class="dashboard-nav-item">Nachrichten</div>
+                            <div class="dashboard-nav-item">Profil</div>
+                        </div>
+                        <div class="dashboard-content">
+                            <div class="dashboard-stats-row">
+                                <div class="dashboard-stat-card">
+                                    <div class="dashboard-stat-value" style="color: var(--accent);">€2.650</div>
+                                    <div class="dashboard-stat-label">Umsatz</div>
+                                </div>
+                                <div class="dashboard-stat-card">
+                                    <div class="dashboard-stat-value">5</div>
+                                    <div class="dashboard-stat-label">Aktive Deals</div>
+                                </div>
+                                <div class="dashboard-stat-card">
+                                    <div class="dashboard-stat-value">3</div>
+                                    <div class="dashboard-stat-label">Neue Matches</div>
+                                </div>
+                            </div>
+                            <div class="dashboard-label">Aktuelle Kooperationen</div>
+                            <div class="deal-row">
+                                <div class="deal-info">
+                                    <div class="deal-avatar" style="background: linear-gradient(135deg, #E8B4B8, #D4918A);">HP</div>
+                                    <div>
+                                        <div class="deal-name">Hautpflege-Kampagne</div>
+                                        <div class="deal-meta">Beauty Brand Co.</div>
+                                    </div>
+                                </div>
+                                <div class="deal-status matched">Matched</div>
+                                <div class="deal-amount">€850</div>
+                            </div>
+                            <div class="deal-row">
+                                <div class="deal-info">
+                                    <div class="deal-avatar" style="background: linear-gradient(135deg, #A8C9E6, #7AB0D4);">SK</div>
+                                    <div>
+                                        <div class="deal-name">Sommer-Kollektion</div>
+                                        <div class="deal-meta">Fashion Label X</div>
+                                    </div>
+                                </div>
+                                <div class="deal-status pending">In Prüfung</div>
+                                <div class="deal-amount">€1.200</div>
+                            </div>
+                            <div class="deal-row">
+                                <div class="deal-info">
+                                    <div class="deal-avatar" style="background: linear-gradient(135deg, #B8E6C9, #8AD4A4);">FS</div>
+                                    <div>
+                                        <div class="deal-name">Fitness-Supplement</div>
+                                        <div class="deal-meta">SupFit GmbH</div>
+                                    </div>
+                                </div>
+                                <div class="deal-status new">Neu</div>
+                                <div class="deal-amount">€600</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-footer">
+                            <span>2 Bewerbungen offen</span>
+                            <span>Nächste Deadline: 15. Apr</span>
+                        </div>
+                    </div>
+
+                    <div class="floating-card top-left">
+                        <span style="color: var(--accent); font-weight: 700;">+3</span> Neue Matches
+                    </div>
+                    <div class="floating-card bottom-right">
+                        <span style="color: #28C840; font-weight: 700;">↑ 24%</span> diesen Monat
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ============ PROBLEM ============ -->
     <section class="section" id="problem">
-        <div class="section-label">Das Problem</div>
-        <h2>Creator-Brand-Kooperationen sind heute <span class="italic-accent">Glückssache</span></h2>
-        <p class="section-subtitle">Du erstellst großartigen Content, aber passende Brand Deals? Die kommen eher zufällig. Oder gar nicht. Das liegt nicht an dir, sondern am System.</p>
-
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-icon">🎲</div>
-                <h3 class="card-title">Deals kommen zufällig</h3>
-                <p class="card-text">Du wartest auf DMs, hoffst auf Empfehlungen und schreibst Marken an, die nie antworten. Ob ein Deal zustande kommt, hängt vom Zufall ab.</p>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Das Problem</div>
+                <h2>Creator-Brand-Kooperationen sind heute <em>Glückssache</em></h2>
+                <p class="section-subtitle">Du erstellst großartigen Content, aber passende Brand Deals? Die kommen eher zufällig. Oder gar nicht. Das liegt nicht an dir, sondern am System.</p>
             </div>
-            <div class="card">
-                <div class="card-icon">⏰</div>
-                <h3 class="card-title">Akquise kostet Zeit</h3>
-                <p class="card-text">Statt Content zu erstellen, verbringst du Stunden damit, Marken zu recherchieren, Pitches zu schreiben und Follow-ups zu schicken.</p>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">🎲</div>
+                    <h3 class="problem-title">Deals kommen zufällig</h3>
+                    <p class="problem-text">Du wartest auf DMs, hoffst auf Empfehlungen und schreibst Marken an, die nie antworten. Ob ein Deal zustande kommt, hängt vom Zufall ab.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">⏰</div>
+                    <h3 class="problem-title">Akquise kostet Zeit</h3>
+                    <p class="problem-text">Statt Content zu erstellen, verbringst du Stunden damit, Marken zu recherchieren, Pitches zu schreiben und Follow-ups zu schicken.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💬</div>
+                    <h3 class="problem-title">Kommunikation ist Chaos</h3>
+                    <p class="problem-text">DMs auf Instagram, E-Mails, WhatsApp-Gruppen. Briefings gehen verloren, Deadlines werden verpasst, und niemand hat den Überblick.</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-icon">💬</div>
-                <h3 class="card-title">Kommunikation ist Chaos</h3>
-                <p class="card-text">DMs auf Instagram, E-Mails, WhatsApp-Gruppen. Briefings gehen verloren, Deadlines werden verpasst, und niemand hat den Überblick.</p>
-            </div>
-        </div>
 
-        <div class="stat-callout">
-            <div class="stat-callout-number">1 von 4</div>
-            <div class="stat-callout-text">Creatorn hat Schwierigkeiten, passende Brand-Partnerschaften zu finden</div>
-            <div class="stat-callout-source">Quelle: Creator Economy Report 2025</div>
-        </div>
-    </section>
-
-    <section class="section" id="loesung">
-        <div class="section-label">Die Lösung</div>
-        <h2>Eine Plattform, die vom <span class="italic-accent">Creator</span> aus denkt</h2>
-        <p class="section-subtitle">Statt darauf zu warten, dass Marken dich finden, wirst du aktiv sichtbar. Bewerbe dich auf Deals, die zu dir passen, und manage alles an einem Ort.</p>
-
-        <div class="solution-intro">
-            <div class="solution-stat">
-                <div class="solution-stat-number">92%</div>
+            <div class="stat-callout">
                 <div>
-                    <div class="solution-stat-text">der Brands wollen mehr in Influencer-Marketing investieren. Die Nachfrage wächst, aber Creator brauchen einen strukturierten Zugang.</div>
-                    <div class="solution-stat-source">Quelle: Influencer Marketing Hub 2025</div>
+                    <div class="stat-callout-number">1 von 4</div>
+                </div>
+                <div>
+                    <div class="stat-callout-text">Creatorn hat Schwierigkeiten, passende Brand-Partnerschaften zu finden.</div>
+                    <div class="stat-callout-source">Quelle: Creator Economy Report 2025</div>
                 </div>
             </div>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-number">01</div>
-                <h3 class="feature-title">Deals entdecken</h3>
-                <p class="feature-text">Marken stellen Kooperationen ein. Du siehst, was verfügbar ist, welche Anforderungen es gibt und was das Budget ist.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-number">02</div>
-                <h3 class="feature-title">Gezielt bewerben</h3>
-                <p class="feature-text">Bewirb dich auf die Deals, die wirklich zu dir und deiner Nische passen. Kein Streuen, kein Hoffen.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-number">03</div>
-                <h3 class="feature-title">Gematcht werden</h3>
-                <p class="feature-text">Die Plattform verbindet dich mit Marken, die zu deinem Profil passen. Relevante Matches statt Massenanfragen.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-number">04</div>
-                <h3 class="feature-title">Alles an einem Ort</h3>
-                <p class="feature-text">Kommunikation, Briefings, Deadlines, Deliverables. Kein Wechsel mehr zwischen fünf verschiedenen Tools.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-number">05</div>
-                <h3 class="feature-title">Überblick behalten</h3>
-                <p class="feature-text">Sieh auf einen Blick, welche Deals offen sind, wo du stehst und was als Nächstes ansteht.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-number">06</div>
-                <h3 class="feature-title">Neue Chancen finden</h3>
-                <p class="feature-text">Die Plattform zeigt dir laufend neue Kooperationsmöglichkeiten, die zu deiner Nische und Reichweite passen.</p>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 3rem;">
-            <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Als Founding Creator bewerben</button>
         </div>
     </section>
 
-    <section class="section" id="vorteile">
-        <div class="section-label">Founding Creator Vorteile</div>
-        <h2>Warum es sich lohnt, <span class="italic-accent">früh</span> dabei zu sein</h2>
-        <p class="section-subtitle">Die ersten Creator formen die Plattform mit. Je früher du beitrittst, desto stärker profitierst du.</p>
+    <!-- ============ SOLUTION (Bento Grid + Dashboard Mockups) ============ -->
+    <section class="solution-section" id="loesung">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Die Lösung</div>
+                <h2>Eine Plattform, die vom <em>Creator</em> aus denkt</h2>
+                <p class="section-subtitle">Statt darauf zu warten, dass Marken dich finden, wirst du aktiv sichtbar. Bewerbe dich auf Deals, die zu dir passen, und manage alles an einem Ort.</p>
+            </div>
 
-        <div class="perks-container">
-            <div class="perk-card featured">
-                <div class="perk-header">
-                    <div class="perk-badge">Exklusiv</div>
-                    <div class="perk-title">Die ersten 10 Plätze</div>
-                    <div class="perk-subtitle">Founding 10</div>
+            <div class="solution-intro">
+                <div class="solution-stat">
+                    <div class="solution-stat-number">92%</div>
+                    <div>
+                        <div class="solution-stat-text">der Brands wollen mehr in Influencer-Marketing investieren. Die Nachfrage wächst, aber Creator brauchen einen strukturierten Zugang.</div>
+                        <div class="solution-stat-source">Quelle: Influencer Marketing Hub 2025</div>
+                    </div>
                 </div>
-                <div class="perk-content">
-                    <ul class="perk-list">
-                        <li>Persönliches 1:1 Onboarding</li>
-                        <li>Direkter Einfluss auf die Produktentwicklung</li>
-                        <li>Höchste Matching-Priorität bei Brand Deals</li>
-                        <li>Priorisierte Profilprüfung</li>
-                        <li>Frühester Zugang zu neuen Features</li>
-                        <li>Exklusiver Founding 10 Badge</li>
+            </div>
+
+            <div class="bento-grid">
+                <div class="bento-card wide">
+                    <div class="bento-number">01</div>
+                    <h3 class="bento-title">Deals entdecken und bewerben</h3>
+                    <p class="bento-text">Marken stellen Kooperationen ein. Du siehst sofort, was verfügbar ist, welche Anforderungen gelten und wie hoch das Budget ist. Bewirb dich gezielt auf die Deals, die zu deiner Nische passen.</p>
+                    <div class="bento-mockup">
+                        <div class="mockup-row">
+                            <span class="label">Hautpflege-Kampagne</span>
+                            <span class="tag green">Offen</span>
+                            <span class="value">€850</span>
+                        </div>
+                        <div class="mockup-row">
+                            <span class="label">Sommer-Kollektion Launch</span>
+                            <span class="tag green">Offen</span>
+                            <span class="value">€1.200</span>
+                        </div>
+                        <div class="mockup-row">
+                            <span class="label">Fitness-Supplement Review</span>
+                            <span class="tag orange">Bald</span>
+                            <span class="value">€600</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bento-card">
+                    <div class="bento-number">02</div>
+                    <h3 class="bento-title">Gematcht werden</h3>
+                    <p class="bento-text">Die Plattform verbindet dich mit Marken, die zu deinem Profil passen. Relevante Matches statt Massenanfragen.</p>
+                </div>
+                <div class="bento-card">
+                    <div class="bento-number">03</div>
+                    <h3 class="bento-title">Alles an einem Ort</h3>
+                    <p class="bento-text">Kommunikation, Briefings, Deadlines, Deliverables. Kein Wechsel mehr zwischen fünf verschiedenen Tools.</p>
+                </div>
+                <div class="bento-card">
+                    <div class="bento-number">04</div>
+                    <h3 class="bento-title">Überblick behalten</h3>
+                    <p class="bento-text">Sieh auf einen Blick, welche Deals offen sind, wo du stehst und was als Nächstes ansteht.</p>
+                </div>
+                <div class="bento-card wide">
+                    <div class="bento-number">05</div>
+                    <h3 class="bento-title">Neue Chancen finden, automatisch</h3>
+                    <p class="bento-text">Die Plattform zeigt dir laufend neue Kooperationsmöglichkeiten, die zu deiner Nische und Reichweite passen. Du verpasst keinen Deal mehr.</p>
+                    <div class="bento-mockup">
+                        <div class="mockup-row">
+                            <span class="label">3 neue Matches</span>
+                            <span class="value" style="color: var(--accent);">Heute</span>
+                        </div>
+                        <div class="mockup-row">
+                            <span class="label">Nächste Deadline</span>
+                            <span class="value">15. April</span>
+                        </div>
+                        <div class="mockup-row">
+                            <span class="label">Antwortrate</span>
+                            <span class="value" style="color: #28C840;">94%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-center">
+                <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Als Founding Creator bewerben</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PERKS / TIERS ============ -->
+    <section class="perks-section" id="vorteile">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Founding Creator Vorteile</div>
+                <h2>Warum es sich lohnt, <em>früh</em> dabei zu sein</h2>
+                <p class="section-subtitle">Die ersten Creator formen die Plattform mit. Mehr als 100 Creator können beitreten, aber nur die ersten 100 erhalten exklusive Vorteile. Je früher du dabei bist, desto stärker profitierst du.</p>
+            </div>
+
+            <div class="tiers-grid">
+                <div class="tier-card featured">
+                    <div class="tier-header">
+                        <div class="tier-badge">Founding 10</div>
+                        <div class="tier-name">Die ersten 10</div>
+                        <div class="tier-spots">Exklusivste Vorteile</div>
+                    </div>
+                    <div class="tier-content">
+                        <ul class="tier-list">
+                            <li>Persönliches 1:1 Onboarding mit dem Gründerteam</li>
+                            <li>Direkter Einfluss auf die Produktentwicklung</li>
+                            <li>Höchste Matching-Priorität bei Brand Deals</li>
+                            <li>Priorisierte Profilprüfung</li>
+                            <li>Frühester Zugang zu neuen Features</li>
+                            <li>Exklusiver Founding 10 Badge</li>
+                            <li>Lebenslanger kostenloser Zugang</li>
+                            <li>Zugang zur privaten Founding-10-Community</li>
+                        </ul>
+                    </div>
+                    <div class="tier-cta">
+                        <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
+                    </div>
+                </div>
+
+                <div class="tier-card">
+                    <div class="tier-header">
+                        <div class="tier-badge">Founding 50</div>
+                        <div class="tier-name">Plätze 11 bis 50</div>
+                        <div class="tier-spots">Starke Vorteile</div>
+                    </div>
+                    <div class="tier-content">
+                        <ul class="tier-list">
+                            <li>Priorisiertes Gruppen-Onboarding</li>
+                            <li>Early Access zu allen Features</li>
+                            <li>Priorisierter Support</li>
+                            <li>Regelmäßige Founder-Updates</li>
+                            <li>Frühe Berücksichtigung bei neuen Deals</li>
+                            <li>Founding 50 Badge</li>
+                            <li>Kostenloser Zugang während der Beta</li>
+                        </ul>
+                    </div>
+                    <div class="tier-cta">
+                        <button class="btn btn-secondary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
+                    </div>
+                </div>
+
+                <div class="tier-card">
+                    <div class="tier-header">
+                        <div class="tier-badge">Founding 100</div>
+                        <div class="tier-name">Plätze 51 bis 100</div>
+                        <div class="tier-spots">Basis-Vorteile</div>
+                    </div>
+                    <div class="tier-content">
+                        <ul class="tier-list">
+                            <li>Onboarding-Support</li>
+                            <li>Early Access</li>
+                            <li>Regelmäßige Updates</li>
+                            <li>Feedback-Möglichkeit</li>
+                            <li>Zukünftige exklusive Perks</li>
+                            <li>Founding 100 Badge</li>
+                        </ul>
+                    </div>
+                    <div class="tier-cta">
+                        <button class="btn btn-secondary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
+                    </div>
+                </div>
+            </div>
+
+            <p class="perks-note">Je früher du beitrittst, desto stärker sind die Vorteile. Sobald ein Tier voll ist, rücken neue Bewerbungen in die nächste Stufe. Nach Platz 100 gibt es keine Founding-Vorteile mehr.</p>
+        </div>
+    </section>
+
+    <!-- ============ FOR WHOM ============ -->
+    <section class="for-whom-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Ist das für dich?</div>
+                <h2>Für wen das <em>gedacht</em> ist</h2>
+            </div>
+
+            <div class="for-whom-grid">
+                <div class="for-whom-col">
+                    <h3>Passt zu dir wenn...</h3>
+                    <ul class="for-whom-list">
+                        <li>Regelmäßig Content auf Instagram, TikTok oder YouTube erstellst</li>
+                        <li>Interesse an Brand Deals hast oder bereits welche umsetzt</li>
+                        <li>Mehr Kooperationen willst ohne ständig selbst akquirieren zu müssen</li>
+                        <li>Wert auf Struktur und Transparenz bei Kooperationen legst</li>
+                        <li>Bereit bist, eine neue Plattform aktiv mitzugestalten</li>
+                        <li>Authentischen Content für deine Community erstellst</li>
+                        <li>Im DACH-Raum aktiv bist</li>
+                    </ul>
+                </div>
+
+                <div class="for-whom-col not">
+                    <h3>Eher nicht wenn...</h3>
+                    <ul class="for-whom-list">
+                        <li>Nur schnelles Geld ohne echten Content-Aufwand suchst</li>
+                        <li>Keinen Content erstellst oder nicht vorhast, regelmäßig aktiv zu sein</li>
+                        <li>Kein Interesse an langfristigen Kooperationen hast</li>
+                        <li>Nicht bereit bist, Feedback zu geben und die Plattform mitzuformen</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="perk-card">
-                <div class="perk-header">
-                    <div class="perk-badge">Früh dabei</div>
-                    <div class="perk-title">Plätze 11 bis 50</div>
-                    <div class="perk-subtitle">Founding 50</div>
-                </div>
-                <div class="perk-content">
-                    <ul class="perk-list">
-                        <li>Priorisiertes Onboarding</li>
-                        <li>Early Access zu allen Features</li>
-                        <li>Priorisierter Support</li>
-                        <li>Regelmäßige Founder-Updates</li>
-                        <li>Frühe Berücksichtigung bei neuen Deals</li>
-                        <li>Founding 50 Badge</li>
-                    </ul>
-                </div>
+            <div class="for-whom-cta-box">
+                <p>Es geht nicht nur darum, dabei zu sein. Es geht darum, von Anfang an eine Plattform mitzuformen, die für Creator gemacht ist.</p>
+                <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
             </div>
-
-            <div class="perk-card">
-                <div class="perk-header">
-                    <div class="perk-badge">Founding</div>
-                    <div class="perk-title">Plätze 51 bis 100</div>
-                    <div class="perk-subtitle">Founding 100</div>
-                </div>
-                <div class="perk-content">
-                    <ul class="perk-list">
-                        <li>Onboarding-Support</li>
-                        <li>Early Access</li>
-                        <li>Regelmäßige Updates</li>
-                        <li>Feedback-Möglichkeit</li>
-                        <li>Zukünftige exklusive Perks</li>
-                        <li>Founding 100 Badge</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <p class="micro-text" style="text-align: center; margin-top: 2rem;">Je früher du beitrittst, desto stärker sind die Vorteile. Sobald ein Tier voll ist, gibt es keinen Weg zurück.</p>
-    </section>
-
-    <section class="section">
-        <div class="section-label">Ist das für dich?</div>
-        <h2>Für wen das <span class="italic-accent">gedacht</span> ist</h2>
-
-        <div class="for-whom-container">
-            <div class="for-whom-column">
-                <h3>Passt zu dir wenn...</h3>
-                <ul class="for-whom-list">
-                    <li>Regelmäßig Content auf Instagram/TikTok/YouTube erstellst</li>
-                    <li>Interesse an Brand Deals hast oder bereits welche umsetzt</li>
-                    <li>Mehr Kooperationen willst ohne ständig selbst akquirieren zu müssen</li>
-                    <li>Wert auf Struktur und Transparenz bei Kooperationen legst</li>
-                    <li>Bereit bist eine neue Plattform aktiv mitzugestalten</li>
-                    <li>Authentischen Content für deine Community erstellst</li>
-                    <li>Im DACH-Raum aktiv bist</li>
-                </ul>
-            </div>
-
-            <div class="for-whom-column not">
-                <h3>Eher nicht wenn...</h3>
-                <ul class="for-whom-list">
-                    <li>Nur schnelles Geld ohne echten Content-Aufwand suchst</li>
-                    <li>Keinen Content erstellst oder nicht vorhast regelmäßig aktiv zu sein</li>
-                    <li>Kein Interesse an langfristigen Kooperationen hast</li>
-                    <li>Nicht bereit bist Feedback zu geben und die Plattform mitzuformen</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="for-whom-cta">
-            <p>Es geht nicht nur darum, dabei zu sein. Es geht darum, von Anfang an eine Plattform mitzuformen, die für Creator gemacht ist.</p>
-            <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })" style="margin-top: 0;">Jetzt bewerben</button>
         </div>
     </section>
 
+    <!-- ============ SCARCITY (DARK) ============ -->
     <section class="scarcity">
-        <div class="scarcity-container">
-            <div class="section-label" style="color: #9A8480;">Limitiert</div>
-            <h2>Die Founding Cohort schließt, wenn 100 Creator drin sind</h2>
-            <p class="section-subtitle">Das Founding Creator Programm hat drei Stufen. Jede Stufe bringt eigene Vorteile. Sobald eine Stufe voll ist, rücken neue Bewerbungen in die nächste.</p>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Limitierte Bonus-Plätze</div>
+                <h2>Nur die ersten 100 Creator erhalten <em>Founding-Vorteile</em></h2>
+                <p class="section-subtitle">Mehr als 100 Creator können beitreten, aber das Founding-Bonus-Programm hat nur drei Stufen mit begrenzten Plätzen. Wenn die voll sind, gibt es keine Founding-Vorteile mehr.</p>
+            </div>
 
-            <div class="tier-bars">
+            <div class="tier-bars-grid">
                 <div class="tier-bar">
-                    <div class="tier-name">Founding 10</div>
+                    <div class="tier-bar-name">Founding 10</div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 0%;"></div>
                     </div>
-                    <div class="tier-count">0 / 10</div>
+                    <div class="tier-bar-count">0 / 10 vergeben</div>
                 </div>
                 <div class="tier-bar">
-                    <div class="tier-name">Founding 50</div>
+                    <div class="tier-bar-name">Founding 50</div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 0%;"></div>
                     </div>
-                    <div class="tier-count">0 / 40</div>
+                    <div class="tier-bar-count">0 / 40 vergeben</div>
                 </div>
                 <div class="tier-bar">
-                    <div class="tier-name">Founding 100</div>
+                    <div class="tier-bar-name">Founding 100</div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 0%;"></div>
                     </div>
-                    <div class="tier-count">0 / 50</div>
+                    <div class="tier-bar-count">0 / 50 vergeben</div>
                 </div>
             </div>
 
             <div class="scarcity-counter">
                 <div class="counter-number">100</div>
-                <div class="counter-label">Plätze noch verfügbar</div>
+                <div class="counter-label">Bonus-Plätze noch verfügbar</div>
             </div>
 
             <div class="scarcity-stat">
-                <p>Die Creator Economy wächst jährlich um 23%. Die Nachfrage nach strukturierten Kooperationen steigt. Früh dabei zu sein bedeutet, von Anfang an sichtbar zu sein.</p>
+                <p>Die Creator Economy wächst jährlich um 23%. Die Nachfrage nach strukturierten Kooperationen steigt. Früh dabei zu sein bedeutet, von Anfang an sichtbar zu sein und die stärksten Vorteile zu sichern.</p>
             </div>
         </div>
     </section>
 
-    <section class="section" id="bewerbung">
-        <div class="section-label">Bewerbung</div>
-        <h2>Bewirb dich als <span class="italic-accent">Founding Creator</span></h2>
-        <p class="section-subtitle">Füll das Formular aus und erzähl uns von dir. Nach dem Absenden kannst du direkt deinen persönlichen Founding Creator Call buchen.</p>
+    <!-- ============ APPLICATION FORM ============ -->
+    <section class="form-section" id="bewerbung">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Bewerbung</div>
+                <h2>Bewirb dich als <em>Founding Creator</em></h2>
+                <p class="section-subtitle">Füll das Formular aus und erzähl uns von dir. Nach dem Absenden kannst du direkt deinen persönlichen Founding Creator Call buchen.</p>
+            </div>
 
-        <div class="form-container">
-            <form id="applicationForm">
-                <div class="form-group two-col">
-                    <div class="form-group">
-                        <label>Vorname <span class="required">*</span></label>
-                        <input type="text" name="firstName" required>
+            <div class="form-container">
+                <form id="applicationForm">
+                    <div class="form-two-col">
+                        <div class="form-group">
+                            <label>Vorname <span class="required">*</span></label>
+                            <input type="text" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nachname <span class="required">*</span></label>
+                            <input type="text" name="lastName" required>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label>Nachname <span class="required">*</span></label>
-                        <input type="text" name="lastName" required>
+                        <label>E-Mail <span class="required">*</span></label>
+                        <input type="email" name="email" required>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>E-Mail <span class="required">*</span></label>
-                    <input type="email" name="email" required>
-                </div>
-
-                <div class="form-group two-col">
-                    <div class="form-group">
-                        <label>Instagram Handle</label>
-                        <input type="text" name="instagram">
+                    <div class="form-two-col">
+                        <div class="form-group">
+                            <label>Instagram Handle</label>
+                            <input type="text" name="instagram">
+                        </div>
+                        <div class="form-group">
+                            <label>TikTok Handle</label>
+                            <input type="text" name="tiktok">
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label>TikTok Handle</label>
-                        <input type="text" name="tiktok">
+                        <label>YouTube Kanal</label>
+                        <input type="text" name="youtube">
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>YouTube Kanal</label>
-                    <input type="text" name="youtube">
-                </div>
+                    <div class="form-two-col">
+                        <div class="form-group">
+                            <label>Hauptplattform <span class="required">*</span></label>
+                            <select name="mainPlatform" required>
+                                <option value="">Wählen...</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="TikTok">TikTok</option>
+                                <option value="YouTube">YouTube</option>
+                                <option value="Andere">Andere</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Reichweite <span class="required">*</span></label>
+                            <select name="reach" required>
+                                <option value="">Wählen...</option>
+                                <option value="<1k">Unter 1.000</option>
+                                <option value="1k-10k">1.000 - 10.000</option>
+                                <option value="10k-50k">10.000 - 50.000</option>
+                                <option value="50k-100k">50.000 - 100.000</option>
+                                <option value=">100k">Über 100.000</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <div class="form-group two-col">
                     <div class="form-group">
-                        <label>Hauptplattform <span class="required">*</span></label>
-                        <select name="mainPlatform" required>
+                        <label>Creator Nische <span class="required">*</span></label>
+                        <input type="text" name="niche" placeholder="z.B. Fashion, Beauty, Fitness..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bereits bezahlte Brand Deals gemacht? <span class="required">*</span></label>
+                        <select name="brandDeals" required>
                             <option value="">Wählen...</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="TikTok">TikTok</option>
-                            <option value="YouTube">YouTube</option>
-                            <option value="Andere">Andere</option>
+                            <option value="Ja">Ja</option>
+                            <option value="Nein">Nein</option>
                         </select>
                     </div>
+
                     <div class="form-group">
-                        <label>Reichweite <span class="required">*</span></label>
-                        <select name="reach" required>
-                            <option value="">Wählen...</option>
-                            <option value="<1k">Unter 1.000</option>
-                            <option value="1k-10k">1.000 - 10.000</option>
-                            <option value="10k-50k">10.000 - 50.000</option>
-                            <option value="50k-100k">50.000 - 100.000</option>
-                            <option value=">100k">Über 100.000</option>
-                        </select>
+                        <label>Größte Herausforderung</label>
+                        <textarea name="challenge" placeholder="Was ist deine größte Herausforderung bei Brand Deals?"></textarea>
+                    </div>
+
+                    <button type="submit" class="form-submit">Bewerbung absenden</button>
+                    <p class="form-micro">Nach dem Absenden wirst du weitergeleitet, um deinen persönlichen Founding Creator Call zu buchen.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq-section" id="fragen">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Häufige Fragen</div>
+                <h2>Das wirst du dich vielleicht <em>fragen</em></h2>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Wie funktioniert die Bewerbung als Founding Creator?</h3>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Du füllst das Formular aus und beschreibst dein Creator-Profil. Nach der Bewerbung wirst du zu einem 15-minütigen Call weitergeleitet, in dem wir die Details besprechen und schauen, ob es passt. Es ist völlig unverbindlich und kostenlos.</p>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Creator Nische <span class="required">*</span></label>
-                    <input type="text" name="niche" placeholder="z.B. Fashion, Beauty, Fitness..." required>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Was ist der Unterschied zwischen Founding 10, 50 und 100?</h3>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Je früher du dabei bist, desto stärker sind die Vorteile. Founding 10 bekommt 1:1 Onboarding und direkten Produkteinfluss. Founding 50 bekommt priorisiertes Onboarding und Early Access. Founding 100 bekommt Standard-Support und Zugang. Sobald ein Tier voll ist, können neue Creator nur noch in die nächste Stufe. Nach Platz 100 gibt es keine Founding-Vorteile mehr, aber du kannst trotzdem beitreten.</p>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Bereits bezahlte Brand Deals gemacht? <span class="required">*</span></label>
-                    <select name="brandDeals" required>
-                        <option value="">Wählen...</option>
-                        <option value="Ja">Ja</option>
-                        <option value="Nein">Nein</option>
-                    </select>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Kostet die Plattform etwas?</h3>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Das Founding Creator Programm ist kostenlos. Die Plattform wird ab der Beta in ein Freemium-Modell übergehen. Founding Creator bekommen zeitlich unbegrenzte kostenlose Nutzung.</p>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Größte Herausforderung</label>
-                    <textarea name="challenge" placeholder="Was ist deine größte Herausforderung bei Brand Deals?"></textarea>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Welche Plattformen werden unterstützt?</h3>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>CreatorBridge konzentriert sich auf Instagram, TikTok und YouTube. Das sind die Plattformen, auf denen Brands am aktivsten Kooperationen suchen. Je nach Creator-Mix können weitere Plattformen hinzukommen.</p>
+                    </div>
                 </div>
 
-                <button type="submit" class="form-submit">Bewerbung absenden</button>
-                <p class="form-micro">Nach dem Absenden wirst du weitergeleitet, um deinen persönlichen Founding Creator Call zu buchen.</p>
-            </form>
-        </div>
-    </section>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Wie verdiene ich Geld mit CreatorBridge?</h3>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Du verdienst durch Kooperationen mit Brands, die über CreatorBridge Deals anbieten. Die Plattform vermittelt nur, die Zahlungen erfolgen direkt zwischen dir und der Brand. CreatorBridge nimmt keine Provisionen von Creators.</p>
+                    </div>
+                </div>
 
-    <section class="section" id="fragen">
-        <div class="section-label">Häufige Fragen</div>
-        <h2>Das wirst du dich vielleicht <span class="italic-accent">fragen</span></h2>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Was passiert nach der Bewerbung?</h3>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nach der Bewerbung wirst du zu Calendly weitergeleitet, um einen 15-minütigen Call mit unserem Team zu buchen. Im Call besprechen wir dein Profil, die Plattform und wie du die meisten Benefits rausholst. Danach geht's los.</p>
+                    </div>
+                </div>
 
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Wie funktioniert die Bewerbung als Founding Creator?</h3>
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Du füllst das Formular aus und beschreibst dein Creator-Profil. Nach der Bewerbung wirst du zu einem 15-minütigen Call weitergeleitet, in dem wir die Details besprechen und schauen, ob es passt. Es ist völlig unverbindlich und kostenlos.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Was ist der Unterschied zwischen Founding 10, 50 und 100?</h3>
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Je früher du dabei bist, desto stärker sind die Vorteile. Founding 10 bekommt 1:1 Onboarding und direkten Produkteinfluss. Founding 50 bekommt priorisiertes Onboarding und Early Access. Founding 100 bekommt Standard-Support und Zugang. Sobald ein Tier voll ist, können neue Creator nur noch in die nächste Stufe.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Kostet die Plattform etwas?</h3>
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Das Founding Creator Programm ist kostenlos. Die Plattform wird ab der Beta in ein Freemium-Modell übergehen. Founding Creator bekommen zeitlich unbegrenzte kostenlose Nutzung.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Welche Plattformen werden unterstützt?</h3>
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>CreatorBridge konzentriert sich auf Instagram, TikTok und YouTube. Das sind die Plattformen, auf denen Brands am aktivsten Kooperationen suchen. Je nach Creator-Mix können weitere Plattformen hinzukommen.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Wie verdiene ich Geld mit CreatorBridge?</h3>
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Du verdienst durch Kooperationen mit Brands, die über CreatorBridge Deals anbieten. Die Plattform vermittelt nur – die Zahlungen erfolgen direkt zwischen dir und der Brand. CreatorBridge nimmt keine Provisionen von Creators.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Was passiert nach der Bewerbung?</h3>
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Nach der Bewerbung wirst du zu Calendly weitergeleitet, um einen 15-minütigen Call mit unserem Team zu buchen. Im Call besprechen wir dein Profil, die Plattform und wie du die meisten Benefits rausholst. Danach geht's los.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <h3>Kann ich die Plattform beeinflussen?</h3>
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Ja, besonders als Founding Creator. Dein Feedback ist direkt Teil der Produktentwicklung. Besonders Founding 10 haben direkten Einfluss auf neue Features und Funktionen. Wir bauen die Plattform MIT euch, nicht FÜR euch.</p>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Kann ich die Plattform beeinflussen?</h3>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ja, besonders als Founding Creator. Dein Feedback ist direkt Teil der Produktentwicklung. Besonders Founding 10 haben direkten Einfluss auf neue Features und Funktionen. Wir bauen die Plattform MIT euch, nicht FÜR euch.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ============ FINAL CTA ============ -->
     <section class="final-cta">
-        <div style="max-width: 900px; margin: 0 auto;">
-            <h2>Die Creator, die jetzt handeln, formen die <span class="italic-accent">Zukunft</span> mit</h2>
-            <p class="section-subtitle">100 Plätze. 3 Stufen. Sobald die Founding Cohort voll ist, gibt es nur noch die regelmäßige Warteliste. Keine zweite Chance auf diese Vorteile.</p>
-            <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
-            <p class="micro-text" style="color: rgba(255, 255, 255, 0.8);">Kostenlos. Unverbindlich. 15-Minuten-Call nach der Bewerbung.</p>
+        <div class="container">
+            <div class="final-cta-inner">
+                <h2>Die Creator, die jetzt handeln, formen die <em style="color: var(--gold);">Zukunft</em> mit</h2>
+                <p class="section-subtitle">100 Bonus-Plätze. 3 Stufen. Sobald die Founding Cohort voll ist, gibt es nur noch die reguläre Warteliste. Keine zweite Chance auf diese Vorteile.</p>
+                <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
+                <p class="micro-text">Kostenlos. Unverbindlich. 15-Minuten-Call nach der Bewerbung.</p>
+            </div>
         </div>
     </section>
 
+    <!-- ============ FOOTER ============ -->
     <footer>
-        <p>© 2026 Platri IT GmbH. Alle Rechte vorbehalten.</p>
-        <div>
-            <a href="#">Impressum</a>
-            <a href="#">Datenschutz</a>
+        <div class="footer-inner">
+            <div class="footer-copy">&copy; 2026 Platri IT GmbH. Alle Rechte vorbehalten.</div>
+            <div class="footer-links">
+                <a href="#impressum">Impressum</a>
+                <a href="#datenschutz">Datenschutz</a>
+            </div>
         </div>
     </footer>
 
+    <!-- ============ JSON-LD ============ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1703,7 +1931,7 @@
           "name": "Was ist der Unterschied zwischen Founding 10, 50 und 100?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Je früher du dabei bist, desto stärker sind die Vorteile. Founding 10 bekommt 1:1 Onboarding und direkten Produkteinfluss. Founding 50 bekommt priorisiertes Onboarding und Early Access. Founding 100 bekommt Standard-Support und Zugang. Sobald ein Tier voll ist, können neue Creator nur noch in die nächste Stufe."
+            "text": "Je früher du dabei bist, desto stärker sind die Vorteile. Founding 10 bekommt 1:1 Onboarding und direkten Produkteinfluss. Founding 50 bekommt priorisiertes Onboarding und Early Access. Founding 100 bekommt Standard-Support und Zugang."
           }
         },
         {
@@ -1719,7 +1947,7 @@
           "name": "Welche Plattformen werden unterstützt?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "CreatorBridge konzentriert sich auf Instagram, TikTok und YouTube. Das sind die Plattformen, auf denen Brands am aktivsten Kooperationen suchen. Je nach Creator-Mix können weitere Plattformen hinzukommen."
+            "text": "CreatorBridge konzentriert sich auf Instagram, TikTok und YouTube."
           }
         },
         {
@@ -1727,7 +1955,7 @@
           "name": "Wie verdiene ich Geld mit CreatorBridge?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Du verdienst durch Kooperationen mit Brands, die über CreatorBridge Deals anbieten. Die Plattform vermittelt nur – die Zahlungen erfolgen direkt zwischen dir und der Brand. CreatorBridge nimmt keine Provisionen von Creators."
+            "text": "Du verdienst durch Kooperationen mit Brands, die über CreatorBridge Deals anbieten. Die Plattform vermittelt nur, die Zahlungen erfolgen direkt zwischen dir und der Brand. CreatorBridge nimmt keine Provisionen von Creators."
           }
         },
         {
@@ -1735,7 +1963,7 @@
           "name": "Was passiert nach der Bewerbung?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Nach der Bewerbung wirst du zu Calendly weitergeleitet, um einen 15-minütigen Call mit unserem Team zu buchen. Im Call besprechen wir dein Profil, die Plattform und wie du die meisten Benefits rausholst. Danach geht's los."
+            "text": "Nach der Bewerbung wirst du zu Calendly weitergeleitet, um einen 15-minütigen Call mit unserem Team zu buchen."
           }
         },
         {
@@ -1743,7 +1971,7 @@
           "name": "Kann ich die Plattform beeinflussen?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ja, besonders als Founding Creator. Dein Feedback ist direkt Teil der Produktentwicklung. Besonders Founding 10 haben direkten Einfluss auf neue Features und Funktionen. Wir bauen die Plattform MIT euch, nicht FÜR euch."
+            "text": "Ja, besonders als Founding Creator. Dein Feedback ist direkt Teil der Produktentwicklung."
           }
         }
       ]
@@ -1754,8 +1982,8 @@
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "CreatorBridge - Founding Creator Bewerbung",
-      "description": "Bewirb dich als einer der ersten 100 Founding Creator bei CreatorBridge. Strukturierte Brand Deals, von Creator für Creator.",
+      "name": "CreatorBridge — Founding Creator Bewerbung",
+      "description": "Bewirb dich als einer der ersten Founding Creator bei CreatorBridge. Strukturierte Brand Deals, von Creator für Creator.",
       "publisher": {
         "@type": "Organization",
         "name": "Platri IT GmbH",
@@ -1764,14 +1992,38 @@
     }
     </script>
 
+    <!-- ============ SCRIPTS ============ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 
     <script>
+        // ============ LENIS SMOOTH SCROLL ============
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            smoothWheel: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Connect Lenis to GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+
+        // ============ GSAP SETUP ============
         gsap.registerPlugin(ScrollTrigger);
 
+        // ============ NAVBAR ============
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
+        const navbar = document.getElementById('navbar');
 
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
@@ -1783,105 +2035,154 @@
             });
         });
 
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links (via Lenis)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    lenis.scrollTo(target, { offset: -80 });
+                }
+            });
+        });
+
+        // Override button onclick scrolls to use Lenis
+        document.querySelectorAll('.btn, .nav-cta').forEach(btn => {
+            const existingOnclick = btn.getAttribute('onclick');
+            if (existingOnclick && existingOnclick.includes('scrollIntoView')) {
+                btn.removeAttribute('onclick');
+                const match = existingOnclick.match(/getElementById\('(\w+)'\)/);
+                if (match) {
+                    btn.addEventListener('click', () => {
+                        const target = document.getElementById(match[1]);
+                        if (target) lenis.scrollTo(target, { offset: -80 });
+                    });
+                }
+            }
+        });
+
+        // ============ 3D TILT (SUBTLE) ============
         const dashboardCard = document.querySelector('.dashboard-card');
         const heroMockup = document.querySelector('.hero-mockup');
 
-        heroMockup.addEventListener('mousemove', (e) => {
-            const rect = heroMockup.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 10;
-            const rotateY = -(x - centerX) / 10;
-
-            dashboardCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        });
-
-        heroMockup.addEventListener('mouseleave', () => {
-            dashboardCard.style.transform = 'rotateX(0) rotateY(0) scale(1)';
-        });
-
-        document.querySelectorAll('.card, .feature-card, .perk-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
+        if (heroMockup && dashboardCard) {
+            heroMockup.addEventListener('mousemove', (e) => {
+                const rect = heroMockup.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                const rotateX = (y - centerY) / 15;
-                const rotateY = -(x - centerX) / 15;
+                const rotateX = (y - centerY) / 40;
+                const rotateY = -(x - centerX) / 40;
 
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                dashboardCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
             });
 
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            heroMockup.addEventListener('mouseleave', () => {
+                dashboardCard.style.transform = 'rotateX(0) rotateY(0) scale(1)';
             });
+        }
+
+        // ============ GSAP ANIMATIONS (using .to instead of .from) ============
+        // Hero entrance
+        const heroFadeUps = document.querySelectorAll('.hero .fade-up');
+        heroFadeUps.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(24px)';
+        });
+        gsap.to(heroFadeUps, {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            stagger: 0.12,
+            delay: 0.3,
+            ease: 'power3.out'
         });
 
-        gsap.from('.hero-content > *', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'power2.out'
-        });
+        // Scroll-triggered sections
+        const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section');
+        animateSections.forEach(section => {
+            const elements = section.querySelectorAll('.section-header, .problem-card, .bento-card, .tier-card, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center');
 
-        gsap.utils.toArray('.section').forEach((section, index) => {
-            if (index === 0) return;
+            elements.forEach(el => {
+                gsap.set(el, { opacity: 0, y: 30 });
+            });
 
-            gsap.from(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%',
-                    markers: false
+            ScrollTrigger.create({
+                trigger: section,
+                start: 'top 80%',
+                onEnter: () => {
+                    gsap.to(elements, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.7,
+                        stagger: 0.08,
+                        ease: 'power2.out'
+                    });
                 },
-                opacity: 0,
-                y: 50,
-                duration: 0.8,
-                ease: 'power2.out'
+                once: true
             });
         });
 
-        gsap.utils.toArray('.cards-grid, .features-grid, .perks-container').forEach(grid => {
-            gsap.from(grid.children, {
-                scrollTrigger: {
-                    trigger: grid,
-                    start: 'top 70%',
-                    markers: false
-                },
-                opacity: 0,
-                y: 30,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: 'power2.out'
-            });
+        // Scarcity section
+        const scarcityEls = document.querySelectorAll('.scarcity .section-header, .tier-bar, .scarcity-counter, .scarcity-stat');
+        scarcityEls.forEach(el => gsap.set(el, { opacity: 0, y: 30 }));
+        ScrollTrigger.create({
+            trigger: '.scarcity',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.to(scarcityEls, {
+                    opacity: 1, y: 0,
+                    duration: 0.7,
+                    stagger: 0.1,
+                    ease: 'power2.out'
+                });
+            },
+            once: true
         });
 
+        // Final CTA
+        const finalCtaEls = document.querySelectorAll('.final-cta-inner > *');
+        finalCtaEls.forEach(el => gsap.set(el, { opacity: 0, y: 20 }));
+        ScrollTrigger.create({
+            trigger: '.final-cta',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.to(finalCtaEls, {
+                    opacity: 1, y: 0,
+                    duration: 0.8,
+                    stagger: 0.12,
+                    ease: 'power2.out'
+                });
+            },
+            once: true
+        });
+
+        // ============ FAQ ACCORDION ============
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const item = question.parentElement;
                 const isActive = item.classList.contains('active');
 
                 document.querySelectorAll('.faq-item.active').forEach(activeItem => {
-                    if (activeItem !== item) {
-                        activeItem.classList.remove('active');
-                    }
+                    if (activeItem !== item) activeItem.classList.remove('active');
                 });
 
-                if (!isActive) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
+                item.classList.toggle('active', !isActive);
             });
         });
 
+        // ============ FORM SUBMISSION ============
         const applicationForm = document.getElementById('applicationForm');
         const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
 
@@ -1900,34 +2201,12 @@
                     method: 'POST',
                     body: formData
                 });
-
                 window.location.href = 'danke.html';
             } catch (error) {
                 console.error('Form submission error:', error);
                 alert('Fehler bei der Bewerbung. Bitte versuche es erneut.');
             }
         });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        const style = document.createElement('style');
-        style.textContent = `
-            .card, .feature-card, .perk-card, .dashboard-card {
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
