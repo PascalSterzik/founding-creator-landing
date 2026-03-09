@@ -176,6 +176,11 @@
             font-size: 0.72rem;
             color: var(--text-muted);
         }
+        .countdown-values-row {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
         .countdown-sep {
             color: var(--text-muted);
             font-size: 0.7rem;
@@ -1878,10 +1883,31 @@
 
         @media (max-width: 768px) {
             .navbar { padding: 8px 16px; }
-            .urgency-center { gap: 0.75rem; }
+            .urgency-center { gap: 0; }
             .urgency-divider { display: none; }
-            .countdown-display { display: none; }
-            .spots-indicator { font-size: 0.75rem; }
+            .spots-indicator { display: none; }
+            .countdown-display {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+            .countdown-label {
+                font-size: 0.65rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--text-muted);
+                margin-right: 0;
+                line-height: 1;
+                margin-bottom: 2px;
+            }
+            .countdown-values-row {
+                display: flex;
+                align-items: baseline;
+                gap: 4px;
+            }
+            .countdown-value { font-size: 0.82rem; }
+            .countdown-suffix { font-size: 0.68rem; }
             .nav-cta { padding: 0.5rem 1rem; font-size: 0.78rem; }
 
             .hero { padding: 120px 0 60px; }
@@ -2129,11 +2155,13 @@
             <div class="urgency-divider"></div>
             <div class="countdown-display" id="launchCountdown">
                 <span class="countdown-label">Launch in</span>
-                <span class="countdown-unit"><span class="countdown-value" id="cdDays">--</span><span class="countdown-suffix">T</span></span>
-                <span class="countdown-sep">:</span>
-                <span class="countdown-unit"><span class="countdown-value" id="cdHours">--</span><span class="countdown-suffix">Std</span></span>
-                <span class="countdown-sep">:</span>
-                <span class="countdown-unit"><span class="countdown-value" id="cdMins">--</span><span class="countdown-suffix">Min</span></span>
+                <span class="countdown-values-row">
+                    <span class="countdown-unit"><span class="countdown-value" id="cdDays">--</span><span class="countdown-suffix">T</span></span>
+                    <span class="countdown-sep">:</span>
+                    <span class="countdown-unit"><span class="countdown-value" id="cdHours">--</span><span class="countdown-suffix">Std</span></span>
+                    <span class="countdown-sep">:</span>
+                    <span class="countdown-unit"><span class="countdown-value" id="cdMins">--</span><span class="countdown-suffix">Min</span></span>
+                </span>
             </div>
         </div>
         <button class="nav-cta" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
