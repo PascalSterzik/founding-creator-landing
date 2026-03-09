@@ -140,6 +140,7 @@
             font-weight: 700;
             color: var(--accent);
         }
+        .spots-label-short { display: none; }
 
         .urgency-divider {
             width: 1px;
@@ -156,14 +157,37 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.85rem;
-            border: none;
+            border: 1px solid rgba(255,255,255,0.15);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .nav-cta::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.25) 45deg, transparent 90deg, transparent 360deg);
+            animation: shimmer-rotate 4s linear infinite;
+            z-index: -1;
         }
         .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(201, 140, 131, 0.3);
+            box-shadow: 0 8px 20px rgba(201, 140, 131, 0.3), inset 0 -4px 8px rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.3);
         }
 
         /* ============ HERO ============ */
@@ -245,20 +269,67 @@
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
             color: white;
             box-shadow: 0 4px 16px rgba(201, 140, 131, 0.25);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.1) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.3) 45deg, transparent 90deg, transparent 360deg);
+            animation: shimmer-rotate 4s linear infinite;
+            z-index: -1;
         }
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(201, 140, 131, 0.4);
+            box-shadow: 0 12px 30px rgba(201, 140, 131, 0.4), inset 0 -6px 12px rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .btn-primary:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(201, 140, 131, 0.3), inset 0 -10px 14px rgba(255,255,255,0.15);
+        }
+        @keyframes shimmer-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--accent);
             border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-secondary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(201,140,131,0.15) 45deg, transparent 90deg, transparent 360deg);
+            animation: shimmer-rotate 4s linear infinite;
+            z-index: -1;
         }
         .btn-secondary:hover {
             background: rgba(201, 140, 131, 0.08);
             transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(201, 140, 131, 0.15);
         }
 
         .micro-text {
@@ -1843,12 +1914,14 @@
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 7px 12px; }
-            .navbar-logo { font-size: 1.05rem; }
-            .urgency-center { gap: 0; }
-            .spots-indicator { font-size: 0.75rem; }
-            .spots-indicator .spots-number { font-size: 0.75rem; }
-            .nav-cta { padding: 0.45rem 0.85rem; font-size: 0.72rem; }
+            .navbar { padding: 7px 12px; gap: 6px; }
+            .navbar-logo { font-size: 1rem; }
+            .urgency-center { gap: 0; flex: 1; justify-content: center; min-width: 0; }
+            .spots-indicator { font-size: 0.7rem; gap: 5px; }
+            .spots-indicator .spots-number { font-size: 0.7rem; }
+            .spots-indicator .spots-label-full { display: none; }
+            .spots-indicator .spots-label-short { display: inline; }
+            .nav-cta { padding: 0.4rem 0.75rem; font-size: 0.7rem; flex-shrink: 0; }
 
             .hero { padding: 120px 0 60px; }
             .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -2093,24 +2166,25 @@
         .proof-stats-row {
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
+            gap: 4rem;
         }
         .proof-stat {
             text-align: center;
+            flex: 0 0 auto;
         }
         .proof-stat-number {
             font-family: var(--font-heading);
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 700;
             color: var(--accent);
             line-height: 1;
         }
         .proof-stat-label {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: 6px;
+            margin-top: 8px;
             font-weight: 500;
+            line-height: 1.4;
         }
 
         /* Pain Deep Dive */
@@ -2603,8 +2677,9 @@
             .founder-quote-float { bottom: -10px; right: -10px; font-size: 0.9rem; max-width: 220px; padding: 1rem 1.25rem; }
             .transformation-grid { grid-template-columns: 1fr; }
             .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
-            .proof-stats-row { gap: 2rem; }
-            .proof-stat-number { font-size: 1.8rem; }
+            .proof-stats-row { gap: 1.5rem; }
+            .proof-stat-number { font-size: 1.6rem; }
+            .proof-stat-label { font-size: 0.72rem; }
             .pain-deep, .reality-check, .how-it-works, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
         }
     </style>
@@ -2617,7 +2692,7 @@
         <div class="urgency-center">
             <div class="spots-indicator">
                 <span class="spots-dot"></span>
-                <span><span class="spots-number">100</span> Bonusplätze übrig</span>
+                <span><span class="spots-number">100</span> <span class="spots-label-full">Bonusplätze übrig</span><span class="spots-label-short">Bonus-Spots</span></span>
             </div>
         </div>
         <button class="nav-cta" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
@@ -2822,15 +2897,15 @@
             <div class="proof-stats-row">
                 <div class="proof-stat">
                     <div class="proof-stat-number">92%</div>
-                    <div class="proof-stat-label">der Brands investieren mehr in Creator</div>
+                    <div class="proof-stat-label">der Brands investieren<br>mehr in Creator</div>
                 </div>
                 <div class="proof-stat">
                     <div class="proof-stat-number">480 Mrd. $</div>
-                    <div class="proof-stat-label">Creator Economy bis 2027</div>
+                    <div class="proof-stat-label">Creator Economy<br>bis 2027</div>
                 </div>
                 <div class="proof-stat">
                     <div class="proof-stat-number">100</div>
-                    <div class="proof-stat-label">Founding-Bonusplätze</div>
+                    <div class="proof-stat-label">Founding-<br>Bonusplätze</div>
                 </div>
             </div>
         </div>
