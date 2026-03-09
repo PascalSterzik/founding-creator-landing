@@ -2663,6 +2663,28 @@
             height: auto;
             display: block;
         }
+        /* Dream Mood Strip */
+        .dream-mood-strip {
+            padding: 0;
+            overflow: hidden;
+        }
+        .dream-mood-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+        .dream-mood-grid img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.95);
+            transition: filter 0.5s ease;
+        }
+        .dream-mood-grid img:hover {
+            filter: brightness(1.05);
+        }
+
         .solution-bridge {
             padding: 80px 0;
             background: linear-gradient(180deg, var(--white) 0%, var(--bg-ivory) 100%);
@@ -2800,6 +2822,8 @@
             .founder-quote-float { bottom: -10px; right: -10px; font-size: 0.9rem; max-width: 220px; padding: 1rem 1.25rem; }
             .transformation-grid { grid-template-columns: 1fr; }
             .dream-grid, .dream-grid.reverse, .dream-deep-grid { grid-template-columns: 1fr; direction: ltr; }
+            .dream-mood-grid { grid-template-columns: 1fr; }
+            .dream-mood-grid img { height: 220px; }
             .dream-content, .dream-deep-content { max-width: 100%; }
             .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
             .proof-stats-row { gap: 1.5rem; }
@@ -3104,7 +3128,7 @@
         <div class="container">
             <div class="reality-grid">
                 <div class="reality-image fade-in">
-                    <img src="images/creator-endless-dms.jpg" alt="Creator tippt endlose DMs am Smartphone" loading="lazy">
+                    <img src="images/creator-ghosted-dms.jpg" alt="Smartphone mit unbeantworteten Nachrichten auf dunklem Holztisch" loading="lazy">
                 </div>
                 <div class="reality-content fade-in">
                     <div class="section-label">Der Kreislauf</div>
@@ -3168,7 +3192,7 @@
         <div class="container">
             <div class="dream-deep-grid">
                 <div class="dream-deep-image fade-in">
-                    <img src="images/creator-confident-setup.jpg" alt="Professionelles Creator Setup" loading="lazy">
+                    <img src="images/creator-in-flow.jpg" alt="Creator im Flow beim Editieren mit Kopfhörern" loading="lazy">
                 </div>
                 <div class="dream-deep-content fade-in">
                     <div class="section-label">Das Ziel</div>
@@ -3182,6 +3206,15 @@
                     <p>Nicht irgendwann. <strong>Jetzt.</strong></p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ============ DREAM MOOD STRIP (Visual Montage) ============ -->
+    <section class="dream-mood-strip">
+        <div class="dream-mood-grid">
+            <img src="images/creator-location-free.jpg" alt="Creator arbeitet ortsunabhängig im Zug" loading="lazy">
+            <img src="images/creator-shared-joy.jpg" alt="Freundinnen lachen zusammen über kreative Inhalte" loading="lazy">
+            <img src="images/creator-in-flow.jpg" alt="Creator im kreativen Flow beim Editieren" loading="lazy">
         </div>
     </section>
 
