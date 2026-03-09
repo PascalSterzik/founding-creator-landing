@@ -1882,7 +1882,8 @@
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 8px 16px; }
+            .navbar { padding: 7px 12px; }
+            .navbar-logo { font-size: 1.05rem; }
             .urgency-center { gap: 0; }
             .urgency-divider { display: none; }
             .spots-indicator { display: none; }
@@ -1893,22 +1894,23 @@
                 gap: 0;
             }
             .countdown-label {
-                font-size: 0.65rem;
+                font-size: 0.55rem;
                 text-transform: uppercase;
-                letter-spacing: 0.05em;
+                letter-spacing: 0.06em;
                 color: var(--text-muted);
                 margin-right: 0;
                 line-height: 1;
-                margin-bottom: 2px;
+                margin-bottom: 1px;
             }
             .countdown-values-row {
                 display: flex;
                 align-items: baseline;
-                gap: 4px;
+                gap: 2px;
             }
-            .countdown-value { font-size: 0.82rem; }
-            .countdown-suffix { font-size: 0.68rem; }
-            .nav-cta { padding: 0.5rem 1rem; font-size: 0.78rem; }
+            .countdown-value { font-size: 0.72rem; }
+            .countdown-suffix { font-size: 0.58rem; }
+            .countdown-sep { font-size: 0.6rem; margin: 0; }
+            .nav-cta { padding: 0.45rem 0.85rem; font-size: 0.72rem; }
 
             .hero { padding: 120px 0 60px; }
             .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -2156,11 +2158,11 @@
             <div class="countdown-display" id="launchCountdown">
                 <span class="countdown-label">Launch in</span>
                 <span class="countdown-values-row">
-                    <span class="countdown-unit"><span class="countdown-value" id="cdDays">--</span><span class="countdown-suffix">T</span></span>
+                    <span class="countdown-unit"><span class="countdown-value" id="cdDays">--</span><span class="countdown-suffix">d</span></span>
                     <span class="countdown-sep">:</span>
-                    <span class="countdown-unit"><span class="countdown-value" id="cdHours">--</span><span class="countdown-suffix">Std</span></span>
+                    <span class="countdown-unit"><span class="countdown-value" id="cdHours">--</span><span class="countdown-suffix">h</span></span>
                     <span class="countdown-sep">:</span>
-                    <span class="countdown-unit"><span class="countdown-value" id="cdMins">--</span><span class="countdown-suffix">Min</span></span>
+                    <span class="countdown-unit"><span class="countdown-value" id="cdMins">--</span><span class="countdown-suffix">m</span></span>
                 </span>
             </div>
         </div>
