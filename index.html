@@ -1886,19 +1886,21 @@
             }
             .solution-mobile-header {
                 display: flex;
-                align-items: center;
+                align-items: baseline;
                 justify-content: space-between;
                 margin-bottom: 1rem;
                 padding: 0 0.25rem;
             }
             .solution-mobile-title {
-                font-weight: 700;
-                font-size: 1rem;
+                font-family: var(--font-heading);
+                font-weight: 600;
+                font-size: 1.5rem;
                 color: var(--text);
             }
             .solution-mobile-counter {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 color: var(--text-muted);
+                font-weight: 500;
             }
             .solution-mobile-nav {
                 display: flex;
@@ -2309,6 +2311,12 @@
                 </nav>
 
                 <!-- Right: Dashboard Visuals -->
+                <!-- Mobile header (above dashboard, visible only on mobile) -->
+                <div class="solution-mobile-header">
+                    <div class="solution-mobile-title" id="solutionMobileTitle">Deals entdecken</div>
+                    <div class="solution-mobile-counter" id="solutionMobileCounter">1 / 5</div>
+                </div>
+
                 <div class="solution-dashboard-panel">
                     <!-- Dashboard 1: Deal Marketplace -->
                     <div class="solution-dashboard active" data-dashboard="0">
@@ -2537,10 +2545,6 @@
             </div>
 
             <!-- Mobile navigation (below dashboard) -->
-            <div class="solution-mobile-header">
-                <div class="solution-mobile-title" id="solutionMobileTitle">Deals entdecken</div>
-                <div class="solution-mobile-counter" id="solutionMobileCounter">1 / 5</div>
-            </div>
             <div class="solution-mobile-nav">
                 <button class="solution-mobile-arrow" data-dir="prev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
                 <div class="solution-dots" id="solutionDots">
