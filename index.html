@@ -1474,9 +1474,13 @@
 
         .perks-note {
             text-align: center;
-            margin-top: 2rem;
-            font-size: 0.85rem;
+            margin-top: 1.2rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
         }
 
         /* ============ FOR WHOM ============ */
@@ -2538,20 +2542,22 @@
         .transformation-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 2.5rem;
             margin-top: 3rem;
         }
         .transform-col {
             padding: 2.5rem;
             border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
         }
         .transform-col.before {
-            background: rgba(75,50,45,0.04);
-            border: 1px solid var(--border);
+            background: linear-gradient(135deg, #FDF2F0 0%, #F9E8E4 100%);
+            border: 1px solid rgba(180, 80, 60, 0.15);
         }
         .transform-col.after {
-            background: var(--white);
-            border: 1px solid rgba(201,140,131,0.2);
+            background: linear-gradient(135deg, #F0F9F2 0%, #E4F5E8 100%);
+            border: 1px solid rgba(60, 160, 80, 0.15);
             box-shadow: var(--shadow-md);
         }
         .transform-col h3 {
@@ -2563,13 +2569,13 @@
             align-items: center;
             gap: 10px;
         }
-        .transform-col.before h3 { color: var(--text-muted); }
-        .transform-col.after h3 { color: var(--accent); }
+        .transform-col.before h3 { color: #8B3A2F; }
+        .transform-col.after h3 { color: #2E7D42; }
         .transform-list {
             list-style: none;
         }
         .transform-list li {
-            padding: 0.6rem 0;
+            padding: 0.65rem 0;
             color: var(--text-secondary);
             font-size: 0.95rem;
             line-height: 1.6;
@@ -2577,13 +2583,34 @@
             align-items: flex-start;
             gap: 10px;
         }
+        .transform-list li strong {
+            color: var(--text-primary);
+        }
         .transform-list li .t-icon {
             flex-shrink: 0;
             margin-top: 3px;
             font-size: 0.9rem;
         }
-        .transform-col.before .t-icon { color: var(--text-muted); }
-        .transform-col.after .t-icon { color: #4CAF50; }
+        .transform-col.before .t-icon { color: #B85C4A; }
+        .transform-col.after .t-icon { color: #3DA354; }
+        .transform-image {
+            margin-top: 3rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .transform-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: var(--radius-lg);
+        }
+        .transform-image-caption {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
 
         /* Cost of Inaction */
         .cost-inaction {
@@ -3025,16 +3052,6 @@
                 <div class="section-label">Die Lösung</div>
                 <h2>Eine Plattform, die vom <em>Creator</em> aus denkt</h2>
                 <p class="section-subtitle">Statt darauf zu warten, dass Marken dich finden, wirst du aktiv sichtbar. Bewerbe dich auf Deals, die zu dir passen, und manage alles an einem Ort.</p>
-            </div>
-
-            <div class="solution-intro">
-                <div class="solution-stat">
-                    <div class="solution-stat-number">92%</div>
-                    <div>
-                        <div class="solution-stat-text">der Brands wollen mehr in Influencer-Marketing investieren. Die Nachfrage wächst, aber Creator brauchen einen strukturierten Zugang.</div>
-                        <div class="solution-stat-source">Quelle: Influencer Marketing Hub 2025</div>
-                    </div>
-                </div>
             </div>
 
             <div class="solution-tabs-wrapper">
@@ -3712,9 +3729,8 @@
 
             <div class="tiers-cta">
                 <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
+                <p class="perks-note">Je früher du beitrittst, desto stärker sind die Vorteile. Sobald ein Tier voll ist, rücken neue Bewerbungen in die nächste Stufe. Nach Platz 100 gibt es keine Founding-Vorteile mehr.</p>
             </div>
-
-            <p class="perks-note">Je früher du beitrittst, desto stärker sind die Vorteile. Sobald ein Tier voll ist, rücken neue Bewerbungen in die nächste Stufe. Nach Platz 100 gibt es keine Founding-Vorteile mehr.</p>
         </div>
     </section>
 
@@ -3803,25 +3819,29 @@
                 <div class="transform-col before">
                     <h3><span class="t-icon">○</span> Ohne CreatorBridge</h3>
                     <ul class="transform-list">
-                        <li><span class="t-icon">—</span> Du scrollst durch DMs und hoffst, dass eine Brand antwortet</li>
-                        <li><span class="t-icon">—</span> Preisverhandlungen fühlen sich jedes Mal unangenehm an</li>
-                        <li><span class="t-icon">—</span> Du weißt nie, ob ein Deal fair ist, weil dir der Vergleich fehlt</li>
-                        <li><span class="t-icon">—</span> Du investierst Stunden in Pitches, die ins Leere laufen</li>
-                        <li><span class="t-icon">—</span> Dein Einkommen aus Brand Deals bleibt unberechenbar</li>
-                        <li><span class="t-icon">—</span> Du managst alles allein: Verträge, Briefings, Kommunikation</li>
+                        <li><span class="t-icon">✕</span> Du scrollst durch DMs und <strong>hoffst, dass irgendjemand antwortet</strong></li>
+                        <li><span class="t-icon">✕</span> Preisverhandlungen fühlen sich <strong>jedes Mal unangenehm</strong> an</li>
+                        <li><span class="t-icon">✕</span> Du investierst Stunden in Pitches, die <strong>ins Leere laufen</strong></li>
+                        <li><span class="t-icon">✕</span> Dein Einkommen bleibt <strong>unberechenbar</strong>, der nächste Deal ist Glückssache</li>
+                        <li><span class="t-icon">✕</span> Verträge, Briefings, Kommunikation: <strong>alles auf dir allein</strong></li>
+                        <li><span class="t-icon">✕</span> Du fragst dich, ob es <strong>das wert ist</strong></li>
                     </ul>
                 </div>
                 <div class="transform-col after">
                     <h3><span class="t-icon">◆</span> Mit CreatorBridge</h3>
                     <ul class="transform-list">
-                        <li><span class="t-icon">✓</span> Strukturierte Deal-Anfragen landen direkt in deinem Dashboard</li>
-                        <li><span class="t-icon">✓</span> Transparente Preise und klare Konditionen von Anfang an</li>
-                        <li><span class="t-icon">✓</span> Smart Matching verbindet dich mit Brands, die zu deinem Content passen</li>
-                        <li><span class="t-icon">✓</span> Ein Workspace für alles: Briefings, Deadlines, Kommunikation</li>
-                        <li><span class="t-icon">✓</span> Planbare Brand-Deal-Einnahmen statt zufälliger Anfragen</li>
-                        <li><span class="t-icon">✓</span> Als Founding Creator bekommst du die besten Deals zuerst</li>
+                        <li><span class="t-icon">✓</span> <strong>Brands kommen zu dir</strong>, nicht umgekehrt</li>
+                        <li><span class="t-icon">✓</span> Faire, <strong>transparente Konditionen</strong> von Anfang an</li>
+                        <li><span class="t-icon">✓</span> <strong>Passende Deals</strong> statt blindes Anschreiben</li>
+                        <li><span class="t-icon">✓</span> Mehr Zeit für das, was du liebst: <strong>Content erstellen</strong></li>
+                        <li><span class="t-icon">✓</span> <strong>Planbare Einnahmen</strong> statt Hoffen auf den nächsten Deal</li>
+                        <li><span class="t-icon">✓</span> Du fühlst dich endlich wie ein <strong>echter Professional</strong></li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="transform-image">
+                <img src="images/creator-freedom.jpg" alt="Creator genießt die Freiheit, das zu tun was sie liebt" loading="lazy">
             </div>
         </div>
     </section>
