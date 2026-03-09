@@ -286,181 +286,304 @@
             margin-top: 0.25rem;
         }
 
-        /* ============ HERO MOCKUP (3D Dashboard) ============ */
+        /* ============ HERO MOCKUP (3D Phone) ============ */
         .hero-mockup {
-            perspective: 1200px;
+            perspective: 1400px;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
-        .dashboard-card {
-            width: 100%;
-            max-width: 440px;
-            background: var(--white);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
-            overflow: hidden;
+        .phone-frame {
+            width: 300px;
+            height: 600px;
+            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-radius: 44px;
+            padding: 12px;
+            box-shadow:
+                0 40px 80px rgba(46, 29, 25, 0.25),
+                0 16px 40px rgba(46, 29, 25, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 2px rgba(255, 255, 255, 0.05);
+            transform: rotateY(-8deg) rotateX(4deg);
             transform-style: preserve-3d;
-            transition: transform 0.15s ease-out;
+            position: relative;
         }
 
-        .dashboard-header {
-            padding: 14px 20px;
-            background: linear-gradient(135deg, var(--cocoa) 0%, var(--cocoa-deep) 100%);
-            color: white;
+        .phone-notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: #0d0d0d;
+            border-radius: 0 0 18px 18px;
+            z-index: 10;
+        }
+        .phone-notch::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border-radius: 34px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Phone status bar */
+        .phone-statusbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .window-dots {
-            display: flex;
-            gap: 6px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        .dot:nth-child(1) { background: #FF5F57; }
-        .dot:nth-child(2) { background: #FEBC2E; }
-        .dot:nth-child(3) { background: #28C840; }
-
-        .dashboard-title {
+            padding: 14px 24px 6px;
+            font-size: 0.65rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            opacity: 0.9;
+            color: var(--text);
+            background: var(--white);
         }
 
-        .dashboard-nav {
+        /* App header inside phone */
+        .app-header {
+            padding: 8px 16px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .app-logo {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--cocoa);
+        }
+        .app-logo em { font-style: italic; color: var(--accent); font-weight: 500; }
+        .app-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* App nav tabs */
+        .app-nav {
             display: flex;
             gap: 0;
-            padding: 0 20px;
             border-bottom: 1px solid var(--border);
             background: var(--bg-ivory);
         }
-        .dashboard-nav-item {
-            padding: 10px 16px;
-            font-size: 0.78rem;
+        .app-nav-item {
+            flex: 1;
+            padding: 10px 8px;
+            font-size: 0.68rem;
             font-weight: 500;
             color: var(--text-muted);
+            text-align: center;
             border-bottom: 2px solid transparent;
-            cursor: default;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
         }
-        .dashboard-nav-item.active {
+        .app-nav-item:hover { color: var(--text-secondary); }
+        .app-nav-item.active {
             color: var(--accent);
             border-bottom-color: var(--accent);
             font-weight: 600;
         }
 
-        .dashboard-content { padding: 20px; }
+        /* App content panels */
+        .app-panel { display: none; padding: 14px; }
+        .app-panel.active { display: block; }
 
-        .dashboard-stats-row {
+        /* Stats row inside phone */
+        .app-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
-        .dashboard-stat-card {
+        .app-stat {
             background: var(--bg-ivory);
-            border-radius: var(--radius-sm);
-            padding: 12px;
+            border-radius: 10px;
+            padding: 10px 6px;
             text-align: center;
         }
-        .dashboard-stat-value {
+        .app-stat-value {
             font-family: var(--font-heading);
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: var(--text);
         }
-        .dashboard-stat-label {
-            font-size: 0.7rem;
+        .app-stat-label {
+            font-size: 0.58rem;
             color: var(--text-muted);
             margin-top: 2px;
             font-weight: 500;
         }
 
-        .dashboard-label {
-            font-size: 0.75rem;
+        /* Deal rows inside phone */
+        .app-label {
+            font-size: 0.62rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
         }
 
-        .deal-row {
+        .app-deal {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 10px 12px;
+            gap: 8px;
+            padding: 8px;
             border-radius: 8px;
             margin-bottom: 4px;
             transition: background 0.2s ease;
+            cursor: pointer;
         }
-        .deal-row:hover { background: var(--bg-ivory); }
+        .app-deal:hover { background: var(--bg-ivory); }
 
-        .deal-info { display: flex; align-items: center; gap: 10px; flex: 1; }
-
-        .deal-avatar {
-            width: 32px;
-            height: 32px;
+        .app-deal-avatar {
+            width: 28px;
+            height: 28px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .app-deal-info { flex: 1; min-width: 0; }
+        .app-deal-name {
+            font-weight: 600;
+            font-size: 0.72rem;
+            color: var(--text);
+        }
+        .app-deal-brand {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+        }
+
+        .app-deal-tag {
+            font-size: 0.58rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: var(--radius-pill);
+        }
+        .app-deal-tag.green { background: rgba(40, 200, 64, 0.1); color: #1A9B38; }
+        .app-deal-tag.orange { background: rgba(254, 188, 46, 0.15); color: #B8860B; }
+        .app-deal-tag.pink { background: rgba(201, 140, 131, 0.12); color: var(--accent); }
+
+        .app-deal-amount {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        /* Messages panel */
+        .app-message {
+            display: flex;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            background: var(--bg-ivory);
+        }
+        .app-message-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
             font-weight: 700;
             color: white;
         }
+        .app-message-content { flex: 1; }
+        .app-message-name { font-size: 0.65rem; font-weight: 600; color: var(--text); }
+        .app-message-text { font-size: 0.6rem; color: var(--text-secondary); line-height: 1.5; margin-top: 2px; }
+        .app-message-time { font-size: 0.55rem; color: var(--text-muted); margin-top: 3px; }
 
-        .deal-name {
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text);
+        /* Profile panel */
+        .app-profile-header { text-align: center; margin-bottom: 12px; }
+        .app-profile-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
         }
-        .deal-meta {
-            font-size: 0.72rem;
-            color: var(--text-muted);
+        .app-profile-name { font-weight: 700; font-size: 0.85rem; color: var(--text); }
+        .app-profile-handle { font-size: 0.65rem; color: var(--text-muted); }
+        .app-profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 12px;
         }
+        .app-profile-stat {
+            text-align: center;
+            background: var(--bg-ivory);
+            padding: 8px 4px;
+            border-radius: 8px;
+        }
+        .app-profile-stat-val { font-weight: 700; font-size: 0.8rem; color: var(--text); }
+        .app-profile-stat-lbl { font-size: 0.55rem; color: var(--text-muted); }
 
-        .deal-status {
-            font-size: 0.7rem;
+        .app-badge-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .app-badge-item {
+            font-size: 0.6rem;
             font-weight: 600;
             padding: 4px 10px;
             border-radius: var(--radius-pill);
-        }
-        .deal-status.matched { background: rgba(40, 200, 64, 0.1); color: #1A9B38; }
-        .deal-status.pending { background: rgba(254, 188, 46, 0.15); color: #B8860B; }
-        .deal-status.new { background: rgba(201, 140, 131, 0.12); color: var(--accent); }
-
-        .deal-amount {
-            font-weight: 700;
+            background: rgba(201, 140, 131, 0.1);
             color: var(--accent);
-            font-size: 0.9rem;
-            min-width: 60px;
-            text-align: right;
         }
 
-        .dashboard-footer {
-            padding: 12px 20px;
-            background: var(--bg-ivory);
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border);
-        }
-
+        /* Floating notification cards */
         .floating-card {
             position: absolute;
             background: var(--white);
-            padding: 12px 18px;
+            padding: 10px 16px;
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow-md);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--text);
             z-index: 5;
@@ -468,16 +591,16 @@
         }
 
         .floating-card.top-left {
-            top: 20px;
-            left: -30px;
+            top: 10px;
+            left: -40px;
             opacity: 0;
-            animation: floatIn 0.8s ease-out 0.5s forwards;
+            animation: floatIn 0.8s ease-out 0.8s forwards;
         }
         .floating-card.bottom-right {
-            bottom: 20px;
-            right: -30px;
+            bottom: 30px;
+            right: -40px;
             opacity: 0;
-            animation: floatIn 0.8s ease-out 0.7s forwards;
+            animation: floatIn 0.8s ease-out 1s forwards;
         }
 
         @keyframes floatIn {
@@ -507,13 +630,7 @@
             color: var(--accent);
             margin-bottom: 16px;
         }
-        .section-label::before {
-            content: '';
-            width: 24px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
+        /* section-label line removed per V4 feedback */
 
         .section-subtitle {
             font-size: 1.1rem;
@@ -563,7 +680,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            color: var(--accent);
             background: linear-gradient(135deg, rgba(201, 140, 131, 0.1), rgba(220, 163, 155, 0.15));
         }
 
@@ -749,24 +866,67 @@
             box-shadow: var(--shadow-md);
         }
 
-        .tier-card.featured {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-glow);
-        }
-        .tier-card.featured::before {
-            content: 'Beliebteste Wahl';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
-            text-align: center;
-            padding: 6px;
+        /* Tier availability status */
+        .tier-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             font-size: 0.72rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            margin-top: 0.75rem;
+        }
+        .tier-status.available {
+            background: rgba(40, 200, 64, 0.1);
+            color: #1A9B38;
+        }
+        .tier-status.available::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #28C840;
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        .tier-status.sold-out {
+            background: rgba(154, 132, 128, 0.12);
+            color: var(--text-muted);
+        }
+
+        /* Sold-out tier treatment */
+        .tier-card.sold-out {
+            opacity: 0.55;
+            filter: grayscale(0.3);
+            pointer-events: none;
+        }
+        .tier-card.sold-out .tier-badge {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+        .tier-card.sold-out:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        .tier-missed {
+            padding: 1rem 2rem 1.5rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-style: italic;
+            border-top: 1px dashed var(--border);
+        }
+
+        /* Single CTA below tiers */
+        .tiers-cta {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .tiers-cta .btn {
+            font-size: 1.05rem;
+            padding: 1.1rem 2.5rem;
         }
 
         .tier-header {
@@ -774,9 +934,7 @@
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
-        .tier-card.featured .tier-header {
-            padding-top: 2.5rem;
-        }
+        /* featured header padding removed per V4 */
 
         .tier-badge {
             display: inline-block;
@@ -788,9 +946,7 @@
             font-weight: 600;
             margin-bottom: 0.75rem;
         }
-        .tier-card.featured .tier-badge {
-            background: rgba(201, 140, 131, 0.15);
-        }
+        /* featured badge override removed per V4 */
 
         .tier-name {
             font-family: var(--font-heading);
@@ -920,7 +1076,7 @@
 
         .scarcity .section-header { margin-bottom: 3rem; }
         .scarcity .section-label { color: var(--accent-light); }
-        .scarcity .section-label::before { background: var(--accent-light); }
+        /* scarcity section-label line removed per V4 */
         .scarcity h2 { color: white; }
         .scarcity .section-subtitle { color: rgba(255, 255, 255, 0.75); }
 
@@ -1263,6 +1419,7 @@
             .hero { padding: 120px 0 60px; }
             .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
             .hero-mockup { display: none; }
+            .tiers-cta .btn { width: 100%; justify-content: center; }
 
             .stats-row { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
@@ -1343,75 +1500,164 @@
                 </div>
 
                 <div class="hero-mockup">
-                    <div class="dashboard-card">
-                        <div class="dashboard-header">
-                            <div class="window-dots">
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="phone-statusbar">
+                                <span>9:41</span>
+                                <span style="display: flex; gap: 4px; align-items: center;">
+                                    <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor"><rect x="0" y="6" width="2.5" height="4" rx="0.5"/><rect x="3.5" y="4" width="2.5" height="6" rx="0.5"/><rect x="7" y="2" width="2.5" height="8" rx="0.5"/><rect x="10.5" y="0" width="2.5" height="10" rx="0.5"/></svg>
+                                    <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor"><rect x="0" y="1" width="14" height="8" rx="1.5" stroke="currentColor" stroke-width="1" fill="none"/><rect x="14.5" y="3.5" width="1.5" height="3" rx="0.5"/><rect x="1.5" y="2.5" width="10" height="5" rx="0.5"/></svg>
+                                </span>
                             </div>
-                            <span class="dashboard-title">CreatorBridge Dashboard</span>
-                            <span style="font-size: 0.7rem; opacity: 0.6;">v1.0</span>
-                        </div>
-                        <div class="dashboard-nav">
-                            <div class="dashboard-nav-item active">Übersicht</div>
-                            <div class="dashboard-nav-item">Deals</div>
-                            <div class="dashboard-nav-item">Nachrichten</div>
-                            <div class="dashboard-nav-item">Profil</div>
-                        </div>
-                        <div class="dashboard-content">
-                            <div class="dashboard-stats-row">
-                                <div class="dashboard-stat-card">
-                                    <div class="dashboard-stat-value" style="color: var(--accent);">€2.650</div>
-                                    <div class="dashboard-stat-label">Umsatz</div>
-                                </div>
-                                <div class="dashboard-stat-card">
-                                    <div class="dashboard-stat-value">5</div>
-                                    <div class="dashboard-stat-label">Aktive Deals</div>
-                                </div>
-                                <div class="dashboard-stat-card">
-                                    <div class="dashboard-stat-value">3</div>
-                                    <div class="dashboard-stat-label">Neue Matches</div>
-                                </div>
+
+                            <div class="app-header">
+                                <div class="app-logo">Creator<em>Bridge</em></div>
+                                <div class="app-avatar">LS</div>
                             </div>
-                            <div class="dashboard-label">Aktuelle Kooperationen</div>
-                            <div class="deal-row">
-                                <div class="deal-info">
-                                    <div class="deal-avatar" style="background: linear-gradient(135deg, #E8B4B8, #D4918A);">HP</div>
-                                    <div>
-                                        <div class="deal-name">Hautpflege-Kampagne</div>
-                                        <div class="deal-meta">Beauty Brand Co.</div>
+
+                            <div class="app-nav" id="phoneNav">
+                                <div class="app-nav-item active" data-panel="overview">Übersicht</div>
+                                <div class="app-nav-item" data-panel="deals">Deals</div>
+                                <div class="app-nav-item" data-panel="messages">Inbox</div>
+                                <div class="app-nav-item" data-panel="profile">Profil</div>
+                            </div>
+
+                            <!-- Overview Panel -->
+                            <div class="app-panel active" id="panel-overview">
+                                <div class="app-stats">
+                                    <div class="app-stat">
+                                        <div class="app-stat-value" style="color: var(--accent);">€2.650</div>
+                                        <div class="app-stat-label">Umsatz</div>
+                                    </div>
+                                    <div class="app-stat">
+                                        <div class="app-stat-value">5</div>
+                                        <div class="app-stat-label">Aktive Deals</div>
+                                    </div>
+                                    <div class="app-stat">
+                                        <div class="app-stat-value">3</div>
+                                        <div class="app-stat-label">Matches</div>
                                     </div>
                                 </div>
-                                <div class="deal-status matched">Matched</div>
-                                <div class="deal-amount">€850</div>
+                                <div class="app-label">Aktuelle Kooperationen</div>
+                                <div class="app-deal">
+                                    <div class="app-deal-avatar" style="background: linear-gradient(135deg, #E8B4B8, #D4918A);">HP</div>
+                                    <div class="app-deal-info">
+                                        <div class="app-deal-name">Hautpflege-Kampagne</div>
+                                        <div class="app-deal-brand">Beauty Brand Co.</div>
+                                    </div>
+                                    <div class="app-deal-tag green">Matched</div>
+                                    <div class="app-deal-amount">€850</div>
+                                </div>
+                                <div class="app-deal">
+                                    <div class="app-deal-avatar" style="background: linear-gradient(135deg, #A8C9E6, #7AB0D4);">SK</div>
+                                    <div class="app-deal-info">
+                                        <div class="app-deal-name">Sommer-Kollektion</div>
+                                        <div class="app-deal-brand">Fashion Label X</div>
+                                    </div>
+                                    <div class="app-deal-tag orange">Prüfung</div>
+                                    <div class="app-deal-amount">€1.200</div>
+                                </div>
+                                <div class="app-deal">
+                                    <div class="app-deal-avatar" style="background: linear-gradient(135deg, #B8E6C9, #8AD4A4);">FS</div>
+                                    <div class="app-deal-info">
+                                        <div class="app-deal-name">Fitness-Supplement</div>
+                                        <div class="app-deal-brand">SupFit GmbH</div>
+                                    </div>
+                                    <div class="app-deal-tag pink">Neu</div>
+                                    <div class="app-deal-amount">€600</div>
+                                </div>
                             </div>
-                            <div class="deal-row">
-                                <div class="deal-info">
-                                    <div class="deal-avatar" style="background: linear-gradient(135deg, #A8C9E6, #7AB0D4);">SK</div>
-                                    <div>
-                                        <div class="deal-name">Sommer-Kollektion</div>
-                                        <div class="deal-meta">Fashion Label X</div>
+
+                            <!-- Deals Panel -->
+                            <div class="app-panel" id="panel-deals">
+                                <div class="app-label">Offene Deal-Anfragen</div>
+                                <div class="app-deal">
+                                    <div class="app-deal-avatar" style="background: linear-gradient(135deg, #F0D9A8, #E6C989);">NL</div>
+                                    <div class="app-deal-info">
+                                        <div class="app-deal-name">Nachhaltige Lifestyle</div>
+                                        <div class="app-deal-brand">GreenLiving DE</div>
+                                    </div>
+                                    <div class="app-deal-tag green">Offen</div>
+                                    <div class="app-deal-amount">€950</div>
+                                </div>
+                                <div class="app-deal">
+                                    <div class="app-deal-avatar" style="background: linear-gradient(135deg, #C9A8E6, #B48AD4);">TR</div>
+                                    <div class="app-deal-info">
+                                        <div class="app-deal-name">Tech-Review Serie</div>
+                                        <div class="app-deal-brand">GadgetPro</div>
+                                    </div>
+                                    <div class="app-deal-tag green">Offen</div>
+                                    <div class="app-deal-amount">€1.500</div>
+                                </div>
+                                <div class="app-deal">
+                                    <div class="app-deal-avatar" style="background: linear-gradient(135deg, #E6A8B4, #D48A9B);">RL</div>
+                                    <div class="app-deal-info">
+                                        <div class="app-deal-name">Reise-Logbuch</div>
+                                        <div class="app-deal-brand">WanderLust</div>
+                                    </div>
+                                    <div class="app-deal-tag orange">Bald</div>
+                                    <div class="app-deal-amount">€700</div>
+                                </div>
+                            </div>
+
+                            <!-- Messages Panel -->
+                            <div class="app-panel" id="panel-messages">
+                                <div class="app-label">Neue Nachrichten</div>
+                                <div class="app-message">
+                                    <div class="app-message-avatar" style="background: linear-gradient(135deg, #E8B4B8, #D4918A);">BC</div>
+                                    <div class="app-message-content">
+                                        <div class="app-message-name">Beauty Brand Co.</div>
+                                        <div class="app-message-text">Hi! Wir haben dein Profil geprüft und möchten dir ein exklusives Angebot machen...</div>
+                                        <div class="app-message-time">vor 12 Min.</div>
                                     </div>
                                 </div>
-                                <div class="deal-status pending">In Prüfung</div>
-                                <div class="deal-amount">€1.200</div>
-                            </div>
-                            <div class="deal-row">
-                                <div class="deal-info">
-                                    <div class="deal-avatar" style="background: linear-gradient(135deg, #B8E6C9, #8AD4A4);">FS</div>
-                                    <div>
-                                        <div class="deal-name">Fitness-Supplement</div>
-                                        <div class="deal-meta">SupFit GmbH</div>
+                                <div class="app-message">
+                                    <div class="app-message-avatar" style="background: linear-gradient(135deg, #A8C9E6, #7AB0D4);">FX</div>
+                                    <div class="app-message-content">
+                                        <div class="app-message-name">Fashion Label X</div>
+                                        <div class="app-message-text">Das Briefing für die Sommer-Kollektion ist fertig. Bitte prüfe die Details.</div>
+                                        <div class="app-message-time">vor 2 Std.</div>
                                     </div>
                                 </div>
-                                <div class="deal-status new">Neu</div>
-                                <div class="deal-amount">€600</div>
+                                <div class="app-message">
+                                    <div class="app-message-avatar" style="background: linear-gradient(135deg, #B8E6C9, #8AD4A4);">SF</div>
+                                    <div class="app-message-content">
+                                        <div class="app-message-name">SupFit GmbH</div>
+                                        <div class="app-message-text">Willkommen! Wir freuen uns auf die Zusammenarbeit.</div>
+                                        <div class="app-message-time">Gestern</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="dashboard-footer">
-                            <span>2 Bewerbungen offen</span>
-                            <span>Nächste Deadline: 15. Apr</span>
+
+                            <!-- Profile Panel -->
+                            <div class="app-panel" id="panel-profile">
+                                <div class="app-profile-header">
+                                    <div class="app-profile-avatar">LS</div>
+                                    <div class="app-profile-name">Lisa Schmidt</div>
+                                    <div class="app-profile-handle">@lisacreates</div>
+                                </div>
+                                <div class="app-profile-stats">
+                                    <div class="app-profile-stat">
+                                        <div class="app-profile-stat-val">47K</div>
+                                        <div class="app-profile-stat-lbl">Follower</div>
+                                    </div>
+                                    <div class="app-profile-stat">
+                                        <div class="app-profile-stat-val">8</div>
+                                        <div class="app-profile-stat-lbl">Deals</div>
+                                    </div>
+                                    <div class="app-profile-stat">
+                                        <div class="app-profile-stat-val">4.8</div>
+                                        <div class="app-profile-stat-lbl">Rating</div>
+                                    </div>
+                                </div>
+                                <div class="app-badge-row">
+                                    <span class="app-badge-item">Founding 10</span>
+                                    <span class="app-badge-item">Beauty</span>
+                                    <span class="app-badge-item">Lifestyle</span>
+                                    <span class="app-badge-item">DACH</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1419,7 +1665,7 @@
                         <span style="color: var(--accent); font-weight: 700;">+3</span> Neue Matches
                     </div>
                     <div class="floating-card bottom-right">
-                        <span style="color: #28C840; font-weight: 700;">↑ 24%</span> diesen Monat
+                        <span style="color: #28C840; font-weight: 700;">&#8593; 24%</span> diesen Monat
                     </div>
                 </div>
             </div>
@@ -1437,17 +1683,17 @@
 
             <div class="problem-grid">
                 <div class="problem-card">
-                    <div class="problem-icon">🎲</div>
+                    <div class="problem-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8" cy="8" r="1.2"/><circle cx="16" cy="8" r="1.2"/><circle cx="8" cy="16" r="1.2"/><circle cx="16" cy="16" r="1.2"/><circle cx="12" cy="12" r="1.2"/></svg></div>
                     <h3 class="problem-title">Deals kommen zufällig</h3>
                     <p class="problem-text">Du wartest auf DMs, hoffst auf Empfehlungen und schreibst Marken an, die nie antworten. Ob ein Deal zustande kommt, hängt vom Zufall ab.</p>
                 </div>
                 <div class="problem-card">
-                    <div class="problem-icon">⏰</div>
+                    <div class="problem-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
                     <h3 class="problem-title">Akquise kostet Zeit</h3>
                     <p class="problem-text">Statt Content zu erstellen, verbringst du Stunden damit, Marken zu recherchieren, Pitches zu schreiben und Follow-ups zu schicken.</p>
                 </div>
                 <div class="problem-card">
-                    <div class="problem-icon">💬</div>
+                    <div class="problem-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="10" x2="15" y2="10"/></svg></div>
                     <h3 class="problem-title">Kommunikation ist Chaos</h3>
                     <p class="problem-text">DMs auf Instagram, E-Mails, WhatsApp-Gruppen. Briefings gehen verloren, Deadlines werden verpasst, und niemand hat den Überblick.</p>
                 </div>
@@ -1522,24 +1768,10 @@
                     <h3 class="bento-title">Überblick behalten</h3>
                     <p class="bento-text">Sieh auf einen Blick, welche Deals offen sind, wo du stehst und was als Nächstes ansteht.</p>
                 </div>
-                <div class="bento-card wide">
+                <div class="bento-card">
                     <div class="bento-number">05</div>
-                    <h3 class="bento-title">Neue Chancen finden, automatisch</h3>
+                    <h3 class="bento-title">Neue Chancen finden</h3>
                     <p class="bento-text">Die Plattform zeigt dir laufend neue Kooperationsmöglichkeiten, die zu deiner Nische und Reichweite passen. Du verpasst keinen Deal mehr.</p>
-                    <div class="bento-mockup">
-                        <div class="mockup-row">
-                            <span class="label">3 neue Matches</span>
-                            <span class="value" style="color: var(--accent);">Heute</span>
-                        </div>
-                        <div class="mockup-row">
-                            <span class="label">Nächste Deadline</span>
-                            <span class="value">15. April</span>
-                        </div>
-                        <div class="mockup-row">
-                            <span class="label">Antwortrate</span>
-                            <span class="value" style="color: #28C840;">94%</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -1558,12 +1790,13 @@
                 <p class="section-subtitle">Die ersten Creator formen die Plattform mit. Mehr als 100 Creator können beitreten, aber nur die ersten 100 erhalten exklusive Vorteile. Je früher du dabei bist, desto stärker profitierst du.</p>
             </div>
 
-            <div class="tiers-grid">
-                <div class="tier-card featured">
+            <div class="tiers-grid" id="tiersGrid">
+                <div class="tier-card" data-tier="founding10">
                     <div class="tier-header">
                         <div class="tier-badge">Founding 10</div>
                         <div class="tier-name">Die ersten 10</div>
                         <div class="tier-spots">Exklusivste Vorteile</div>
+                        <div class="tier-status available">Noch erhältlich</div>
                     </div>
                     <div class="tier-content">
                         <ul class="tier-list">
@@ -1577,16 +1810,14 @@
                             <li>Zugang zur privaten Founding-10-Community</li>
                         </ul>
                     </div>
-                    <div class="tier-cta">
-                        <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
-                    </div>
                 </div>
 
-                <div class="tier-card">
+                <div class="tier-card" data-tier="founding50">
                     <div class="tier-header">
                         <div class="tier-badge">Founding 50</div>
                         <div class="tier-name">Plätze 11 bis 50</div>
                         <div class="tier-spots">Starke Vorteile</div>
+                        <div class="tier-status available">Noch erhältlich</div>
                     </div>
                     <div class="tier-content">
                         <ul class="tier-list">
@@ -1599,16 +1830,14 @@
                             <li>Kostenloser Zugang während der Beta</li>
                         </ul>
                     </div>
-                    <div class="tier-cta">
-                        <button class="btn btn-secondary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
-                    </div>
                 </div>
 
-                <div class="tier-card">
+                <div class="tier-card" data-tier="founding100">
                     <div class="tier-header">
                         <div class="tier-badge">Founding 100</div>
                         <div class="tier-name">Plätze 51 bis 100</div>
                         <div class="tier-spots">Basis-Vorteile</div>
+                        <div class="tier-status available">Noch erhältlich</div>
                     </div>
                     <div class="tier-content">
                         <ul class="tier-list">
@@ -1620,10 +1849,11 @@
                             <li>Founding 100 Badge</li>
                         </ul>
                     </div>
-                    <div class="tier-cta">
-                        <button class="btn btn-secondary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
-                    </div>
                 </div>
+            </div>
+
+            <div class="tiers-cta">
+                <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
             </div>
 
             <p class="perks-note">Je früher du beitrittst, desto stärker sind die Vorteile. Sobald ein Tier voll ist, rücken neue Bewerbungen in die nächste Stufe. Nach Platz 100 gibt es keine Founding-Vorteile mehr.</p>
@@ -2070,26 +2300,20 @@
             }
         });
 
-        // ============ 3D TILT (SUBTLE) ============
-        const dashboardCard = document.querySelector('.dashboard-card');
-        const heroMockup = document.querySelector('.hero-mockup');
-
-        if (heroMockup && dashboardCard) {
-            heroMockup.addEventListener('mousemove', (e) => {
-                const rect = heroMockup.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const rotateX = (y - centerY) / 40;
-                const rotateY = -(x - centerX) / 40;
-
-                dashboardCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
-            });
-
-            heroMockup.addEventListener('mouseleave', () => {
-                dashboardCard.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+        // ============ INTERACTIVE PHONE DASHBOARD ============
+        const phoneNav = document.getElementById('phoneNav');
+        if (phoneNav) {
+            phoneNav.querySelectorAll('.app-nav-item').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Switch active tab
+                    phoneNav.querySelectorAll('.app-nav-item').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    // Switch active panel
+                    const panelId = 'panel-' + tab.dataset.panel;
+                    document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('active'));
+                    const targetPanel = document.getElementById(panelId);
+                    if (targetPanel) targetPanel.classList.add('active');
+                });
             });
         }
 
@@ -2112,7 +2336,7 @@
         // Scroll-triggered sections
         const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section');
         animateSections.forEach(section => {
-            const elements = section.querySelectorAll('.section-header, .problem-card, .bento-card, .tier-card, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center');
+            const elements = section.querySelectorAll('.section-header, .problem-card, .bento-card, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center');
 
             elements.forEach(el => {
                 gsap.set(el, { opacity: 0, y: 30 });
@@ -2181,6 +2405,59 @@
                 item.classList.toggle('active', !isActive);
             });
         });
+
+        // ============ TIER AVAILABILITY CONFIG ============
+        // Update these values to control tier status
+        const tierConfig = {
+            founding10: { taken: 0, total: 10 },
+            founding50: { taken: 0, total: 40 },
+            founding100: { taken: 0, total: 50 }
+        };
+
+        function updateTierAvailability() {
+            Object.entries(tierConfig).forEach(([tierId, config]) => {
+                const card = document.querySelector(`[data-tier="${tierId}"]`);
+                if (!card) return;
+                const statusEl = card.querySelector('.tier-status');
+                const isSoldOut = config.taken >= config.total;
+
+                if (isSoldOut) {
+                    card.classList.add('sold-out');
+                    statusEl.className = 'tier-status sold-out';
+                    statusEl.textContent = 'Nicht mehr erhältlich';
+                    // Add "was du verpasst hast" indicator
+                    if (!card.querySelector('.tier-missed')) {
+                        const missed = document.createElement('div');
+                        missed.className = 'tier-missed';
+                        missed.textContent = 'Diese Vorteile sind nicht mehr verfügbar';
+                        card.appendChild(missed);
+                    }
+                } else {
+                    card.classList.remove('sold-out');
+                    statusEl.className = 'tier-status available';
+                    statusEl.textContent = 'Noch erhältlich';
+                }
+            });
+
+            // Update scarcity progress bars
+            Object.entries(tierConfig).forEach(([tierId, config]) => {
+                const bars = document.querySelectorAll('.tier-bar');
+                let barIndex = tierId === 'founding10' ? 0 : tierId === 'founding50' ? 1 : 2;
+                if (bars[barIndex]) {
+                    const fill = bars[barIndex].querySelector('.progress-fill');
+                    const count = bars[barIndex].querySelector('.tier-bar-count');
+                    if (fill) fill.style.width = ((config.taken / config.total) * 100) + '%';
+                    if (count) count.textContent = `${config.taken} / ${config.total} vergeben`;
+                }
+            });
+
+            // Update counter
+            const totalTaken = Object.values(tierConfig).reduce((sum, c) => sum + c.taken, 0);
+            const counterNumber = document.querySelector('.counter-number');
+            if (counterNumber) counterNumber.textContent = 100 - totalTaken;
+        }
+
+        updateTierAvailability();
 
         // ============ FORM SUBMISSION ============
         const applicationForm = document.getElementById('applicationForm');
