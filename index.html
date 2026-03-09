@@ -952,7 +952,7 @@
             border: 1px solid var(--border);
             box-shadow: var(--shadow-lg);
             overflow: hidden;
-            min-height: 480px;
+            height: 520px;
         }
 
         .solution-dashboard {
@@ -965,12 +965,12 @@
             pointer-events: none;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
         .solution-dashboard.active {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
-            position: relative;
         }
 
         /* Dashboard shared styles */
@@ -1878,7 +1878,7 @@
             }
             .solution-tabs-nav { display: none; }
             .solution-dashboard-panel {
-                min-height: auto;
+                height: 440px;
                 border-radius: var(--radius-md);
             }
             .solution-dashboard {
@@ -3119,12 +3119,10 @@
             // Update dashboards
             solutionDashboards.forEach(d => {
                 d.classList.remove('active');
-                d.style.position = 'absolute';
             });
             const target = solutionDashboards[idx];
             if (target) {
                 target.classList.add('active');
-                target.style.position = 'relative';
             }
 
             // Update dots (mobile)
