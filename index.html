@@ -1821,6 +1821,7 @@
         /* Mobile-only elements hidden on desktop */
         .solution-mobile-header { display: none; }
         .solution-mobile-nav { display: none; }
+        .solution-phone-frame { display: none; }
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
@@ -1871,81 +1872,181 @@
             }
             .problem-title { font-size: 1.5rem; }
             .problem-text { font-size: 0.95rem; }
+            /* Solution: Phone Frame on Mobile */
             .solution-tabs-wrapper {
                 grid-template-columns: 1fr;
                 min-height: auto;
                 gap: 0;
             }
             .solution-tabs-nav { display: none; }
-            .solution-dashboard-panel {
-                height: 440px;
-                border-radius: var(--radius-md);
+            .solution-dashboard-panel { display: none; }
+            .solution-mobile-header { display: none !important; }
+            .solution-mobile-nav { display: none !important; }
+            .solution-desktop-arrows { display: none; }
+
+            /* Show phone frame on mobile */
+            .solution-phone-frame {
+                display: block;
+                position: relative;
+                max-width: 340px;
+                margin: 0 auto;
+                background: #1a1a1a;
+                border-radius: 40px;
+                padding: 12px;
+                box-shadow:
+                    0 0 0 1px rgba(255,255,255,0.08) inset,
+                    0 25px 60px rgba(0,0,0,0.2),
+                    0 8px 20px rgba(0,0,0,0.12);
             }
-            .solution-dashboard {
-                padding: 1.5rem;
-            }
-            .solution-mobile-header {
-                display: flex;
-                align-items: baseline;
-                justify-content: space-between;
-                margin-bottom: 1rem;
-                padding: 0 0.25rem;
-            }
-            .solution-mobile-title {
-                font-family: var(--font-heading);
-                font-weight: 600;
-                font-size: 1.5rem;
-                color: var(--text);
-            }
-            .solution-mobile-counter {
-                font-size: 0.9rem;
-                color: var(--text-muted);
-                font-weight: 500;
-            }
-            .solution-mobile-nav {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 1.5rem;
-                margin-top: 1.25rem;
-            }
-            .solution-mobile-arrow {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                border: 1px solid var(--border);
+
+            .phone-screen {
                 background: var(--white);
+                border-radius: 30px;
+                overflow: hidden;
+                position: relative;
+            }
+
+            /* Status bar */
+            .phone-status-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 24px 6px;
+                background: var(--white);
+                position: relative;
+            }
+            .phone-status-time {
+                font-size: 0.82rem;
+                font-weight: 700;
+                color: var(--text);
+                letter-spacing: -0.01em;
+            }
+            .phone-status-icons {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+            }
+            .phone-status-icons svg { color: var(--text); }
+
+            /* Dynamic island */
+            .phone-notch {
+                position: absolute;
+                top: 8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90px;
+                height: 24px;
+                background: #1a1a1a;
+                border-radius: 20px;
+            }
+
+            /* App tab bar */
+            .phone-app-tabs {
+                display: flex;
+                background: var(--bg-ivory);
+                border-bottom: 1px solid var(--border);
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding: 0 4px;
+            }
+            .phone-app-tabs::-webkit-scrollbar { display: none; }
+
+            .phone-app-tab {
+                flex: 1;
+                min-width: 0;
+                padding: 10px 4px 8px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3px;
+                border: none;
+                background: none;
+                cursor: pointer;
+                position: relative;
+                transition: all 0.2s ease;
+            }
+            .phone-app-tab-icon {
+                width: 22px;
+                height: 22px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                cursor: pointer;
-                color: var(--text-secondary);
-                transition: all 0.2s ease;
-                flex-shrink: 0;
+                color: var(--text-muted);
+                transition: color 0.2s ease;
             }
-            .solution-mobile-arrow:active {
-                background: var(--bg-ivory);
-                transform: scale(0.95);
+            .phone-app-tab-icon svg {
+                width: 18px;
+                height: 18px;
             }
-            .solution-dots {
-                display: flex;
-                gap: 6px;
+            .phone-app-tab-label {
+                font-size: 0.6rem;
+                font-weight: 600;
+                color: var(--text-muted);
+                letter-spacing: 0.01em;
+                white-space: nowrap;
+                transition: color 0.2s ease;
             }
-            .solution-dot {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: var(--border-strong);
-                transition: all 0.3s ease;
-            }
-            .solution-dot.active {
+            .phone-app-tab.active .phone-app-tab-icon { color: var(--accent); }
+            .phone-app-tab.active .phone-app-tab-label { color: var(--accent); }
+            .phone-app-tab.active::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 20%;
+                right: 20%;
+                height: 2px;
                 background: var(--accent);
-                width: 24px;
+                border-radius: 2px 2px 0 0;
+            }
+
+            /* Phone content area */
+            .phone-content {
+                height: 420px;
+                overflow-y: auto;
+                position: relative;
+                scrollbar-width: thin;
+                scrollbar-color: var(--border) transparent;
+            }
+            .phone-content::-webkit-scrollbar { width: 3px; }
+            .phone-content::-webkit-scrollbar-track { background: transparent; }
+            .phone-content::-webkit-scrollbar-thumb {
+                background: var(--border);
+                border-radius: 3px;
+            }
+
+            /* Phone dashboard views */
+            .phone-dashboard {
+                position: absolute;
+                inset: 0;
+                padding: 1.25rem;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+            }
+            .phone-dashboard.active {
+                opacity: 1;
+                transform: translateX(0);
+                pointer-events: auto;
+            }
+
+            /* Home indicator */
+            .phone-home-indicator {
+                display: flex;
+                justify-content: center;
+                padding: 6px 0 8px;
+                background: var(--white);
+            }
+            .phone-home-indicator-bar {
+                width: 120px;
+                height: 4px;
+                background: #ccc;
                 border-radius: 4px;
             }
-            .solution-desktop-arrows { display: none; }
-            .solution-mobile-header { display: flex !important; }
-            .solution-mobile-nav { display: flex !important; }
             .dash-deal { grid-template-columns: 1fr auto auto; gap: 0.6rem; }
             .dash-deal-action { display: none; }
             .dash-workspace-grid { grid-template-columns: 1fr; }
@@ -2544,7 +2645,7 @@
                 </div>
             </div>
 
-            <!-- Mobile navigation (below dashboard) -->
+            <!-- Mobile navigation (below dashboard, hidden on mobile when phone frame active) -->
             <div class="solution-mobile-nav">
                 <button class="solution-mobile-arrow" data-dir="prev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
                 <div class="solution-dots" id="solutionDots">
@@ -2555,6 +2656,266 @@
                     <div class="solution-dot" data-dot="4"></div>
                 </div>
                 <button class="solution-mobile-arrow" data-dir="next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+
+            <!-- Mobile Phone Frame -->
+            <div class="solution-phone-frame">
+                <div class="phone-screen">
+                    <!-- Status bar -->
+                    <div class="phone-status-bar">
+                        <div class="phone-status-time">14:32</div>
+                        <div class="phone-notch"></div>
+                        <div class="phone-status-icons">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 0 0-6 0zm-4-4l2 2a7.074 7.074 0 0 1 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+                        </div>
+                    </div>
+
+                    <!-- App tab bar -->
+                    <div class="phone-app-tabs">
+                        <button class="phone-app-tab active" data-phone-tab="0">
+                            <div class="phone-app-tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                            <div class="phone-app-tab-label">Deals</div>
+                        </button>
+                        <button class="phone-app-tab" data-phone-tab="1">
+                            <div class="phone-app-tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                            <div class="phone-app-tab-label">Matches</div>
+                        </button>
+                        <button class="phone-app-tab" data-phone-tab="2">
+                            <div class="phone-app-tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                            <div class="phone-app-tab-label">Workspace</div>
+                        </button>
+                        <button class="phone-app-tab" data-phone-tab="3">
+                            <div class="phone-app-tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+                            <div class="phone-app-tab-label">Überblick</div>
+                        </button>
+                        <button class="phone-app-tab" data-phone-tab="4">
+                            <div class="phone-app-tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                            <div class="phone-app-tab-label">Für dich</div>
+                        </button>
+                    </div>
+
+                    <!-- Content area -->
+                    <div class="phone-content">
+                        <!-- Phone Dashboard 0: Deal Marketplace -->
+                        <div class="phone-dashboard active" data-phone-dashboard="0">
+                            <div class="dash-header">
+                                <div class="dash-header-title">Deal Marketplace</div>
+                                <div class="dash-header-badge">12 neue Deals</div>
+                            </div>
+                            <div class="dash-deal-list">
+                                <div class="dash-deal">
+                                    <div><div class="dash-deal-name">Hautpflege-Kampagne</div><div class="dash-deal-cat">Beauty &bull; IG Reels</div></div>
+                                    <div class="dash-tag green">Offen</div>
+                                    <div class="dash-deal-budget">€850</div>
+                                </div>
+                                <div class="dash-deal">
+                                    <div><div class="dash-deal-name">Sommer-Kollektion Launch</div><div class="dash-deal-cat">Fashion &bull; TikTok + IG</div></div>
+                                    <div class="dash-tag green">Offen</div>
+                                    <div class="dash-deal-budget">€1.200</div>
+                                </div>
+                                <div class="dash-deal">
+                                    <div><div class="dash-deal-name">Fitness-Supplement Review</div><div class="dash-deal-cat">Health &bull; YouTube</div></div>
+                                    <div class="dash-tag orange">Bald</div>
+                                    <div class="dash-deal-budget">€600</div>
+                                </div>
+                                <div class="dash-deal">
+                                    <div><div class="dash-deal-name">Tech-Gadget Unboxing</div><div class="dash-deal-cat">Tech &bull; YT Shorts</div></div>
+                                    <div class="dash-tag green">Offen</div>
+                                    <div class="dash-deal-budget">€950</div>
+                                </div>
+                                <div class="dash-deal">
+                                    <div><div class="dash-deal-name">Reise-Vlog Kooperation</div><div class="dash-deal-cat">Travel &bull; Multi</div></div>
+                                    <div class="dash-tag blue">Eingeladen</div>
+                                    <div class="dash-deal-budget">€2.400</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phone Dashboard 1: Smart Matching -->
+                        <div class="phone-dashboard" data-phone-dashboard="1">
+                            <div class="dash-header">
+                                <div class="dash-header-title">Deine Top-Matches</div>
+                                <div class="dash-header-badge">Basierend auf deinem Profil</div>
+                            </div>
+                            <div class="dash-match-card">
+                                <div class="dash-match-avatar" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">N</div>
+                                <div class="dash-match-info">
+                                    <div class="dash-match-name">NovaSkin Cosmetics</div>
+                                    <div class="dash-match-detail">Beauty &bull; €1.100 &bull; IG Reels</div>
+                                </div>
+                                <div class="dash-match-score">96%</div>
+                            </div>
+                            <div class="dash-match-card">
+                                <div class="dash-match-avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">F</div>
+                                <div class="dash-match-info">
+                                    <div class="dash-match-name">FitLife Germany</div>
+                                    <div class="dash-match-detail">Fitness &bull; €800 &bull; TikTok</div>
+                                </div>
+                                <div class="dash-match-score">91%</div>
+                            </div>
+                            <div class="dash-match-card">
+                                <div class="dash-match-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">S</div>
+                                <div class="dash-match-info">
+                                    <div class="dash-match-name">SunStyle Fashion</div>
+                                    <div class="dash-match-detail">Fashion &bull; €1.500 &bull; Multi</div>
+                                </div>
+                                <div class="dash-match-score">87%</div>
+                            </div>
+                            <div class="dash-match-card">
+                                <div class="dash-match-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">E</div>
+                                <div class="dash-match-info">
+                                    <div class="dash-match-name">EcoVerde</div>
+                                    <div class="dash-match-detail">Nachhaltigkeit &bull; €650 &bull; YT</div>
+                                </div>
+                                <div class="dash-match-score">84%</div>
+                            </div>
+                        </div>
+
+                        <!-- Phone Dashboard 2: Workspace -->
+                        <div class="phone-dashboard" data-phone-dashboard="2">
+                            <div class="dash-header">
+                                <div class="dash-header-title">Workspace</div>
+                                <div class="dash-header-badge">NovaSkin Kampagne</div>
+                            </div>
+                            <div class="dash-workspace-grid" style="grid-template-columns: 1fr;">
+                                <div class="dash-ws-item">
+                                    <div class="dash-ws-item-header">
+                                        <div class="dash-ws-icon" style="background: var(--accent);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                                        <div class="dash-ws-label">Chat</div>
+                                    </div>
+                                    <div class="dash-ws-value">3 ungelesene Nachrichten</div>
+                                </div>
+                                <div class="dash-ws-item">
+                                    <div class="dash-ws-item-header">
+                                        <div class="dash-ws-icon" style="background: #2563EB;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                                        <div class="dash-ws-label">Briefing</div>
+                                    </div>
+                                    <div class="dash-ws-value">Produktfotos, Hashtags, Tonalität</div>
+                                </div>
+                                <div class="dash-ws-item">
+                                    <div class="dash-ws-item-header">
+                                        <div class="dash-ws-icon" style="background: #F59E0B;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                                        <div class="dash-ws-label">Deadline</div>
+                                    </div>
+                                    <div class="dash-ws-value">Content-Abgabe: 28. März</div>
+                                </div>
+                                <div class="dash-ws-item">
+                                    <div class="dash-ws-item-header">
+                                        <div class="dash-ws-icon" style="background: #10B981;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                                        <div class="dash-ws-label">Deliverables</div>
+                                    </div>
+                                    <div class="dash-ws-value">2/4 abgeliefert, 1 in Prüfung</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: rgba(201, 140, 131, 0.06); border-radius: var(--radius-sm); border: 1px solid rgba(201, 140, 131, 0.12);">
+                                <div style="font-size: 0.72rem; color: var(--text-secondary);"><strong style="color: var(--text);">Nächster Schritt:</strong> Story-Draft hochladen</div>
+                            </div>
+                        </div>
+
+                        <!-- Phone Dashboard 3: Analytics -->
+                        <div class="phone-dashboard" data-phone-dashboard="3">
+                            <div class="dash-header">
+                                <div class="dash-header-title">Dein Überblick</div>
+                                <div class="dash-header-badge">März 2026</div>
+                            </div>
+                            <div class="dash-stats-row" style="grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                                <div class="dash-stat-box">
+                                    <div class="dash-stat-num" style="font-size: 1.4rem;">7</div>
+                                    <div class="dash-stat-label">Aktive Deals</div>
+                                </div>
+                                <div class="dash-stat-box">
+                                    <div class="dash-stat-num" style="font-size: 1.4rem;">€4.8k</div>
+                                    <div class="dash-stat-label">Umsatz</div>
+                                </div>
+                                <div class="dash-stat-box">
+                                    <div class="dash-stat-num" style="font-size: 1.4rem;">94%</div>
+                                    <div class="dash-stat-label">Pünktlich</div>
+                                </div>
+                            </div>
+                            <div class="dash-timeline">
+                                <div class="dash-timeline-item">
+                                    <div class="dash-timeline-dot" style="background: #1A9B38;"></div>
+                                    <div class="dash-timeline-text">NovaSkin: Content freigegeben</div>
+                                    <div class="dash-timeline-time">Heute</div>
+                                </div>
+                                <div class="dash-timeline-item">
+                                    <div class="dash-timeline-dot" style="background: #F59E0B;"></div>
+                                    <div class="dash-timeline-text">FitLife: Draft-Review ausstehend</div>
+                                    <div class="dash-timeline-time">Morgen</div>
+                                </div>
+                                <div class="dash-timeline-item">
+                                    <div class="dash-timeline-dot" style="background: #2563EB;"></div>
+                                    <div class="dash-timeline-text">SunStyle: Briefing erhalten</div>
+                                    <div class="dash-timeline-time">In 2 Tagen</div>
+                                </div>
+                                <div class="dash-timeline-item">
+                                    <div class="dash-timeline-dot" style="background: var(--accent);"></div>
+                                    <div class="dash-timeline-text">EcoVerde: Zahlung (€650)</div>
+                                    <div class="dash-timeline-time">Gestern</div>
+                                </div>
+                                <div class="dash-timeline-item">
+                                    <div class="dash-timeline-dot" style="background: #8B5CF6;"></div>
+                                    <div class="dash-timeline-text">TechGear: Neues Angebot</div>
+                                    <div class="dash-timeline-time">Vor 2h</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phone Dashboard 4: Discovery -->
+                        <div class="phone-dashboard" data-phone-dashboard="4">
+                            <div class="dash-header">
+                                <div class="dash-header-title">Für dich empfohlen</div>
+                                <div class="dash-header-badge">Deine Nische</div>
+                            </div>
+                            <div class="dash-discovery-card">
+                                <div class="dash-disc-left">
+                                    <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                    <div>
+                                        <div class="dash-disc-title">Premium Food Brand <span class="dash-new-badge">Neu</span></div>
+                                        <div class="dash-disc-meta">Food &bull; €1.800 &bull; 3 Reels</div>
+                                    </div>
+                                </div>
+                                <div class="dash-disc-match high">95%</div>
+                            </div>
+                            <div class="dash-discovery-card">
+                                <div class="dash-disc-left">
+                                    <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                    <div>
+                                        <div class="dash-disc-title">Sportswear Startup <span class="dash-new-badge">Neu</span></div>
+                                        <div class="dash-disc-meta">Sport &bull; €920 &bull; TikTok</div>
+                                    </div>
+                                </div>
+                                <div class="dash-disc-match high">92%</div>
+                            </div>
+                            <div class="dash-discovery-card">
+                                <div class="dash-disc-left">
+                                    <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                    <div>
+                                        <div class="dash-disc-title">Nachhaltige Skincare</div>
+                                        <div class="dash-disc-meta">Beauty &bull; €1.400 &bull; Long-term</div>
+                                    </div>
+                                </div>
+                                <div class="dash-disc-match med">88%</div>
+                            </div>
+                            <div class="dash-discovery-card">
+                                <div class="dash-disc-left">
+                                    <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                    <div>
+                                        <div class="dash-disc-title">Travel Platform</div>
+                                        <div class="dash-disc-meta">Reise &bull; €2.200 &bull; Vlog</div>
+                                    </div>
+                                </div>
+                                <div class="dash-disc-match med">85%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Home indicator bar -->
+                    <div class="phone-home-indicator">
+                        <div class="phone-home-indicator-bar"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="cta-center">
@@ -3125,7 +3486,7 @@
                 target.classList.add('active');
             }
 
-            // Update dots (mobile)
+            // Update dots (mobile, kept for fallback)
             solutionDots.forEach(d => d.classList.remove('active'));
             const activeDot = document.querySelector(`.solution-dot[data-dot="${idx}"]`);
             if (activeDot) activeDot.classList.add('active');
@@ -3135,6 +3496,14 @@
             const mCounter = document.getElementById('solutionMobileCounter');
             if (mTitle) mTitle.textContent = mobileTitles[idx];
             if (mCounter) mCounter.textContent = (idx + 1) + ' / ' + solutionDashboards.length;
+
+            // Sync phone frame tabs + dashboards
+            const pTabs = document.querySelectorAll('.phone-app-tab');
+            const pDash = document.querySelectorAll('.phone-dashboard');
+            pTabs.forEach(t => t.classList.remove('active'));
+            pDash.forEach(d => d.classList.remove('active'));
+            if (pTabs[idx]) pTabs[idx].classList.add('active');
+            if (pDash[idx]) pDash[idx].classList.add('active');
         }
 
         if (solutionTabs.length && solutionDashboards.length) {
@@ -3162,7 +3531,7 @@
                 dot.addEventListener('click', () => switchSolution(parseInt(dot.dataset.dot)));
             });
 
-            // Touch swipe on dashboard panel
+            // Touch swipe on dashboard panel (desktop tablet fallback)
             const dashPanel = document.querySelector('.solution-dashboard-panel');
             if (dashPanel) {
                 let touchStartX = 0;
@@ -3173,6 +3542,48 @@
                     const diff = touchStartX - touchEndX;
                     if (Math.abs(diff) > 50) {
                         switchSolution(currentSolutionIdx + (diff > 0 ? 1 : -1));
+                    }
+                }, { passive: true });
+            }
+
+            // Phone frame tabs (mobile)
+            const phoneTabs = document.querySelectorAll('.phone-app-tab');
+            const phoneDashboards = document.querySelectorAll('.phone-dashboard');
+
+            function switchPhoneTab(idx) {
+                if (idx < 0 || idx >= phoneDashboards.length) return;
+                phoneTabs.forEach(t => t.classList.remove('active'));
+                phoneDashboards.forEach(d => d.classList.remove('active'));
+                if (phoneTabs[idx]) phoneTabs[idx].classList.add('active');
+                if (phoneDashboards[idx]) phoneDashboards[idx].classList.add('active');
+                // Scroll content area to top
+                const phoneContent = document.querySelector('.phone-content');
+                if (phoneContent) phoneContent.scrollTop = 0;
+                // Also sync desktop tabs
+                currentSolutionIdx = idx;
+                solutionTabs.forEach(t => t.classList.remove('active'));
+                const activeDesktopTab = document.querySelector(`.solution-tab[data-tab="${idx}"]`);
+                if (activeDesktopTab) activeDesktopTab.classList.add('active');
+                solutionDashboards.forEach(d => d.classList.remove('active'));
+                if (solutionDashboards[idx]) solutionDashboards[idx].classList.add('active');
+            }
+
+            phoneTabs.forEach(tab => {
+                tab.addEventListener('click', () => switchPhoneTab(parseInt(tab.dataset.phoneTab)));
+            });
+
+            // Touch swipe on phone content
+            const phoneContent = document.querySelector('.phone-content');
+            if (phoneContent) {
+                let phoneStartX = 0;
+                phoneContent.addEventListener('touchstart', e => { phoneStartX = e.changedTouches[0].screenX; }, { passive: true });
+                phoneContent.addEventListener('touchend', e => {
+                    const diff = phoneStartX - e.changedTouches[0].screenX;
+                    if (Math.abs(diff) > 50) {
+                        const newIdx = currentSolutionIdx + (diff > 0 ? 1 : -1);
+                        if (newIdx >= 0 && newIdx < phoneDashboards.length) {
+                            switchPhoneTab(newIdx);
+                        }
                     }
                 }, { passive: true });
             }
