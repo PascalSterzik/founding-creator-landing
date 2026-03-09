@@ -140,7 +140,9 @@
             font-weight: 700;
             color: var(--accent);
         }
-        .spots-label-short { display: none; }
+        .spots-text {
+            line-height: 1.3;
+        }
 
         .urgency-divider {
             width: 1px;
@@ -157,37 +159,40 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.85rem;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.12);
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             white-space: nowrap;
             position: relative;
             overflow: hidden;
             z-index: 1;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
         }
         .nav-cta::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
-            z-index: 1;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer-slide 3.5s ease-in-out infinite;
+            z-index: 2;
             pointer-events: none;
         }
         .nav-cta::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.25) 45deg, transparent 90deg, transparent 360deg);
-            animation: shimmer-rotate 4s linear infinite;
-            z-index: -1;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(0,0,0,0.04) 100%);
+            z-index: 1;
+            pointer-events: none;
+            border-radius: inherit;
         }
         .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(201, 140, 131, 0.3), inset 0 -4px 8px rgba(255,255,255,0.12);
-            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 8px 20px rgba(201, 140, 131, 0.3), inset 0 -4px 8px rgba(255,255,255,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.25);
         }
 
         /* ============ HERO ============ */
@@ -268,43 +273,46 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
             color: white;
-            box-shadow: 0 4px 16px rgba(201, 140, 131, 0.25);
+            box-shadow: 0 4px 16px rgba(201, 140, 131, 0.25), inset 0 1px 0 rgba(255,255,255,0.15);
             position: relative;
             overflow: hidden;
             z-index: 1;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.12);
         }
         .btn-primary::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.1) 100%);
-            z-index: 1;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            animation: shimmer-slide 3.5s ease-in-out infinite;
+            z-index: 2;
             pointer-events: none;
         }
         .btn-primary::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.3) 45deg, transparent 90deg, transparent 360deg);
-            animation: shimmer-rotate 4s linear infinite;
-            z-index: -1;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(0,0,0,0.04) 100%);
+            z-index: 1;
+            pointer-events: none;
+            border-radius: inherit;
         }
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(201, 140, 131, 0.4), inset 0 -6px 12px rgba(255,255,255,0.15);
-            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 12px 30px rgba(201, 140, 131, 0.4), inset 0 -6px 12px rgba(255,255,255,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.25);
         }
         .btn-primary:active {
             transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(201, 140, 131, 0.3), inset 0 -10px 14px rgba(255,255,255,0.15);
+            box-shadow: 0 4px 16px rgba(201, 140, 131, 0.3), inset 0 -10px 14px rgba(255,255,255,0.1);
         }
-        @keyframes shimmer-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes shimmer-slide {
+            0% { left: -100%; }
+            50% { left: 140%; }
+            100% { left: 140%; }
         }
 
         .btn-secondary {
@@ -313,18 +321,17 @@
             border: 2px solid var(--accent);
             position: relative;
             overflow: hidden;
-            z-index: 1;
         }
-        .btn-secondary::after {
+        .btn-secondary::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(201,140,131,0.15) 45deg, transparent 90deg, transparent 360deg);
-            animation: shimmer-rotate 4s linear infinite;
-            z-index: -1;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201,140,131,0.08), transparent);
+            animation: shimmer-slide 3.5s ease-in-out infinite;
+            pointer-events: none;
         }
         .btn-secondary:hover {
             background: rgba(201, 140, 131, 0.08);
@@ -1917,10 +1924,9 @@
             .navbar { padding: 7px 12px; gap: 6px; }
             .navbar-logo { font-size: 1rem; }
             .urgency-center { gap: 0; flex: 1; justify-content: center; min-width: 0; }
-            .spots-indicator { font-size: 0.7rem; gap: 5px; }
-            .spots-indicator .spots-number { font-size: 0.7rem; }
-            .spots-indicator .spots-label-full { display: none; }
-            .spots-indicator .spots-label-short { display: inline; }
+            .spots-indicator { font-size: 0.65rem; gap: 4px; }
+            .spots-indicator .spots-number { font-size: 0.65rem; }
+            .spots-text { text-align: center; max-width: 7em; }
             .nav-cta { padding: 0.4rem 0.75rem; font-size: 0.7rem; flex-shrink: 0; }
 
             .hero { padding: 120px 0 60px; }
@@ -2692,7 +2698,7 @@
         <div class="urgency-center">
             <div class="spots-indicator">
                 <span class="spots-dot"></span>
-                <span><span class="spots-number">100</span> <span class="spots-label-full">Bonusplätze übrig</span><span class="spots-label-short">Bonus-Spots</span></span>
+                <span class="spots-text">Nur noch <span class="spots-number">100</span> Bonusplätze übrig</span>
             </div>
         </div>
         <button class="nav-cta" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
@@ -2986,7 +2992,7 @@
                 </div>
                 <div class="reality-content fade-in">
                     <div class="section-label">Der Kreislauf</div>
-                    <h2>Du gibst alles. Und bekommst <em>Stille zurück.</em></h2>
+                    <h2>Du gibst alles. Und bekommst <em>nichts.</em></h2>
                     <p>Du stehst morgens auf und checkst dein Handy. Keine neuen Brand-Anfragen. Also öffnest du Instagram, scrollst durch Marken-Accounts, schreibst eine DM. Freundlich, professionell, mit Media Kit im Anhang. Dann die nächste. Und die nächste.</p>
                     <p>Drei Stunden später hast du acht Marken angeschrieben. Content erstellt hast du keinen. Und von den letzten zwölf Anfragen letzte Woche? <strong>Zwei haben geantwortet. Keine davon mit einem Angebot.</strong></p>
                     <p>Das ist nicht Pech. Das ist das System, in dem du feststeckst. Du bist Kreativer und Vertriebler gleichzeitig, obwohl du für eines davon nie ausgebildet wurdest und es dir die Energie raubt, die du für guten Content brauchst.</p>
