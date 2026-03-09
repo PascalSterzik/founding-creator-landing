@@ -147,45 +147,6 @@
             background: var(--border-strong);
         }
 
-        .countdown-display {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-        .countdown-label {
-            margin-right: 2px;
-        }
-        .countdown-unit {
-            display: flex;
-            align-items: baseline;
-            gap: 2px;
-        }
-        .countdown-value {
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: var(--cocoa);
-            font-variant-numeric: tabular-nums;
-            min-width: 1.1em;
-            text-align: center;
-        }
-        .countdown-suffix {
-            font-weight: 500;
-            font-size: 0.72rem;
-            color: var(--text-muted);
-        }
-        .countdown-values-row {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-        }
-        .countdown-sep {
-            color: var(--text-muted);
-            font-size: 0.7rem;
-            margin: 0 1px;
-        }
 
         .nav-cta {
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
@@ -1885,31 +1846,8 @@
             .navbar { padding: 7px 12px; }
             .navbar-logo { font-size: 1.05rem; }
             .urgency-center { gap: 0; }
-            .urgency-divider { display: none; }
-            .spots-indicator { display: none; }
-            .countdown-display {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0;
-            }
-            .countdown-label {
-                font-size: 0.55rem;
-                text-transform: uppercase;
-                letter-spacing: 0.06em;
-                color: var(--text-muted);
-                margin-right: 0;
-                line-height: 1;
-                margin-bottom: 1px;
-            }
-            .countdown-values-row {
-                display: flex;
-                align-items: baseline;
-                gap: 2px;
-            }
-            .countdown-value { font-size: 0.72rem; }
-            .countdown-suffix { font-size: 0.58rem; }
-            .countdown-sep { font-size: 0.6rem; margin: 0; }
+            .spots-indicator { font-size: 0.75rem; }
+            .spots-indicator .spots-number { font-size: 0.75rem; }
             .nav-cta { padding: 0.45rem 0.85rem; font-size: 0.72rem; }
 
             .hero { padding: 120px 0 60px; }
@@ -2238,6 +2176,88 @@
             font-size: 1rem;
             flex-shrink: 0;
             margin-top: 2px;
+        }
+
+        /* Reality Check (Deeper Problem) */
+        .reality-check {
+            padding: 100px 0;
+            background: var(--bg);
+        }
+        .reality-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .reality-image {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 3/4;
+        }
+        .reality-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .reality-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(46,29,25,0.02), rgba(46,29,25,0.12));
+            pointer-events: none;
+        }
+        .reality-content h2 {
+            margin-bottom: 1.5rem;
+        }
+        .reality-content h2 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+        .reality-content p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 1.25rem;
+        }
+        .reality-content p strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .reality-highlight {
+            background: var(--bg-ivory);
+            border-left: 3px solid var(--accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 2rem 0;
+        }
+        .reality-highlight p {
+            font-size: 1.08rem;
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 0;
+        }
+        .reality-stats-row {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        .reality-stat {
+            flex: 1;
+        }
+        .reality-stat-number {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .reality-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
         }
 
         /* How It Works */
@@ -2569,6 +2589,10 @@
         @media (max-width: 768px) {
             .pain-deep-grid { grid-template-columns: 1fr; gap: 2rem; }
             .pain-deep-image { order: -1; }
+            .reality-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .reality-image { order: -1; aspect-ratio: 16/9; }
+            .reality-stats-row { gap: 1.5rem; }
+            .reality-stat-number { font-size: 1.6rem; }
             .hiw-steps::before { left: 20px; }
             .hiw-step-marker { width: 40px; height: 40px; }
             .hiw-step-marker svg { width: 18px; height: 18px; }
@@ -2581,7 +2605,7 @@
             .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
             .proof-stats-row { gap: 2rem; }
             .proof-stat-number { font-size: 1.8rem; }
-            .pain-deep, .how-it-works, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
+            .pain-deep, .reality-check, .how-it-works, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
         }
     </style>
 </head>
@@ -2594,17 +2618,6 @@
             <div class="spots-indicator">
                 <span class="spots-dot"></span>
                 <span><span class="spots-number">100</span> Bonusplätze übrig</span>
-            </div>
-            <div class="urgency-divider"></div>
-            <div class="countdown-display" id="launchCountdown">
-                <span class="countdown-label">Launch in</span>
-                <span class="countdown-values-row">
-                    <span class="countdown-unit"><span class="countdown-value" id="cdDays">--</span><span class="countdown-suffix">d</span></span>
-                    <span class="countdown-sep">:</span>
-                    <span class="countdown-unit"><span class="countdown-value" id="cdHours">--</span><span class="countdown-suffix">h</span></span>
-                    <span class="countdown-sep">:</span>
-                    <span class="countdown-unit"><span class="countdown-value" id="cdMins">--</span><span class="countdown-suffix">m</span></span>
-                </span>
             </div>
         </div>
         <button class="nav-cta" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
@@ -2884,6 +2897,41 @@
                 </div>
                 <div class="pain-deep-image fade-in">
                     <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80" alt="Creator am Smartphone" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ REALITY CHECK (Deeper Problem Agitation) ============ -->
+    <section class="reality-check">
+        <div class="container">
+            <div class="reality-grid">
+                <div class="reality-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80" alt="Creator schaut nachdenklich" loading="lazy">
+                </div>
+                <div class="reality-content fade-in">
+                    <div class="section-label">Der Kreislauf</div>
+                    <h2>Du gibst alles. Und bekommst <em>Stille zurück.</em></h2>
+                    <p>Du stehst morgens auf und checkst dein Handy. Keine neuen Brand-Anfragen. Also öffnest du Instagram, scrollst durch Marken-Accounts, schreibst eine DM. Freundlich, professionell, mit Media Kit im Anhang. Dann die nächste. Und die nächste.</p>
+                    <p>Drei Stunden später hast du acht Marken angeschrieben. Content erstellt hast du keinen. Und von den letzten zwölf Anfragen letzte Woche? <strong>Zwei haben geantwortet. Keine davon mit einem Angebot.</strong></p>
+                    <p>Das ist nicht Pech. Das ist das System, in dem du feststeckst. Du bist Kreativer und Vertriebler gleichzeitig, obwohl du für eines davon nie ausgebildet wurdest und es dir die Energie raubt, die du für guten Content brauchst.</p>
+
+                    <div class="reality-highlight">
+                        <p>Die meisten Creator scheitern nicht am Content. Sie scheitern daran, dass niemand sieht, wie gut sie eigentlich sind.</p>
+                    </div>
+
+                    <p>Du siehst andere Creator mit ähnlicher Reichweite, die ständig Kooperationen posten. Der Unterschied? Sie haben Kontakte, Agenturen oder Zugang zu Netzwerken, die du nicht hast. <strong>Nicht Talent entscheidet über Deals. Zugang entscheidet.</strong></p>
+
+                    <div class="reality-stats-row">
+                        <div class="reality-stat">
+                            <div class="reality-stat-number">70%</div>
+                            <div class="reality-stat-label">der Creator verbringen mehr Zeit mit Akquise als mit Content</div>
+                        </div>
+                        <div class="reality-stat">
+                            <div class="reality-stat-number">&lt;5%</div>
+                            <div class="reality-stat-label">der kalten DMs an Marken führen zu einer Antwort</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3504,7 +3552,7 @@
                     <div class="hiw-step-body">
                         <div class="hiw-step-number">Schritt 3</div>
                         <h3>Zugang erhalten</h3>
-                        <p>Wenn es passt, bekommst du vor dem offiziellen Launch Zugang zur Plattform und alle Founding-Creator-Vorteile.</p>
+                        <p>Wenn es passt, bekommst du sofort Zugang zur Plattform und alle Founding-Creator-Vorteile.</p>
                         <span class="hiw-step-detail">Vor allen anderen starten</span>
                     </div>
                 </div>
@@ -4080,30 +4128,6 @@
             }
         });
 
-        // ============ COUNTDOWN TIMER ============
-        const launchDate = new Date('2026-05-01T00:00:00+02:00').getTime();
-        const cdDays = document.getElementById('cdDays');
-        const cdHours = document.getElementById('cdHours');
-        const cdMins = document.getElementById('cdMins');
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const diff = launchDate - now;
-            if (diff <= 0) {
-                cdDays.textContent = '0';
-                cdHours.textContent = '0';
-                cdMins.textContent = '0';
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            cdDays.textContent = days;
-            cdHours.textContent = hours;
-            cdMins.textContent = mins < 10 ? '0' + mins : mins;
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
 
         // Smooth scroll for anchor links (via Lenis)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -4294,9 +4318,9 @@
         });
 
         // Scroll-triggered sections
-        const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section, .pain-deep, .how-it-works, .transformation, .credibility, .cost-inaction, .social-proof-bar');
+        const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section, .pain-deep, .reality-check, .how-it-works, .transformation, .credibility, .cost-inaction, .social-proof-bar');
         animateSections.forEach(section => {
-            const elements = section.querySelectorAll('.section-header, .solution-tabs-wrapper, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center, .pain-deep-grid, .hiw-step, .transform-col, .cred-card, .cost-inaction-inner, .proof-stats-row');
+            const elements = section.querySelectorAll('.section-header, .solution-tabs-wrapper, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center, .pain-deep-grid, .reality-grid, .hiw-step, .transform-col, .cred-card, .cost-inaction-inner, .proof-stats-row');
 
             elements.forEach(el => {
                 gsap.set(el, { opacity: 0, y: 30 });
