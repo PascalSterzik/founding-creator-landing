@@ -812,8 +812,8 @@
             cursor: default;
         }
         .problem-card:hover {
-            transform: rotateY(-5deg) rotateX(3deg) translateY(-8px);
-            box-shadow: 0 20px 60px rgba(75, 50, 45, 0.15), 0 8px 24px rgba(75, 50, 45, 0.08);
+            transform: rotateY(-2deg) rotateX(1.5deg) translateY(-6px);
+            box-shadow: 0 16px 48px rgba(75, 50, 45, 0.12), 0 6px 20px rgba(75, 50, 45, 0.06);
         }
         .problem-card .problem-number {
             display: inline-block;
@@ -860,6 +860,7 @@
         .stat-callout {
             text-align: center;
             padding: 4rem 2rem;
+            padding-top: 6rem;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -2132,7 +2133,7 @@
             .hero-buttons { flex-direction: column; }
             .btn { width: 100%; justify-content: center; }
             .stats-row { grid-template-columns: 1fr; }
-            .stat-callout { padding: 2.5rem 1rem; }
+            .stat-callout { padding: 2.5rem 1rem; padding-top: 4rem; }
             .stat-callout-number { font-size: 3.5rem; }
             .footer-inner { justify-content: center; text-align: center; }
         }
@@ -2149,10 +2150,12 @@
         .proof-stats-row {
             display: flex;
             justify-content: center;
-            gap: 4rem;
+            gap: 5rem;
         }
         .proof-stat {
-            text-align: center;
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
             flex: 0 0 auto;
         }
         .proof-stat-number {
@@ -2161,13 +2164,14 @@
             font-weight: 700;
             color: var(--accent);
             line-height: 1;
+            white-space: nowrap;
         }
         .proof-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 8px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
             font-weight: 500;
             line-height: 1.4;
+            white-space: nowrap;
         }
 
         /* Pain Deep Dive */
@@ -2663,46 +2667,207 @@
             height: auto;
             display: block;
         }
-        /* Dream Mood Strip */
-        .dream-mood-strip {
-            padding: 0;
-            overflow: hidden;
-        }
-        .dream-mood-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0;
-        }
-        .dream-mood-grid img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            display: block;
-            filter: brightness(0.95);
-            transition: filter 0.5s ease;
-        }
-        .dream-mood-grid img:hover {
-            filter: brightness(1.05);
-        }
-
+        /* Solution Bridge + Phone Scroll */
         .solution-bridge {
-            padding: 80px 0;
+            padding: 80px 0 0;
             background: linear-gradient(180deg, var(--white) 0%, var(--bg-ivory) 100%);
             text-align: center;
+            overflow: hidden;
         }
-        .solution-bridge p {
+        .bridge-subtitle {
             font-size: 1.15rem;
             color: var(--text-secondary);
             line-height: 1.8;
             max-width: 680px;
             margin: 0 auto;
         }
-        .solution-bridge .bridge-arrow {
-            display: block;
-            margin: 2rem auto 0;
+
+        /* Phone Scroll Animation Container */
+        .phone-scroll-container {
+            height: 180vh;
+            position: relative;
+        }
+        .phone-scroll-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+        .phone-scroll-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transform: rotateX(20deg) scale(1.05);
+            transition: none;
+        }
+        .phone-scroll-frame {
+            position: relative;
+            filter: drop-shadow(0 40px 80px rgba(46, 29, 25, 0.25)) drop-shadow(0 15px 30px rgba(46, 29, 25, 0.15));
+        }
+        .phone-scroll-bezel {
+            width: 280px;
+            height: 560px;
+            background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 30%, #0d0d0d 100%);
+            border-radius: 40px;
+            padding: 10px;
+            border: 3px solid #6C6C6C;
+            position: relative;
+            overflow: hidden;
+        }
+        .phone-scroll-notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 22px;
+            background: #000;
+            border-radius: 12px;
+            z-index: 10;
+        }
+        .phone-scroll-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border-radius: 32px;
+            overflow: hidden;
+        }
+
+        /* Phone Dashboard UI */
+        .phone-dash-statusbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px 4px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .phone-dash-statusbar span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .phone-dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 14px 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .phone-dash-logo {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--cocoa);
+        }
+        .phone-dash-logo em {
+            font-style: italic;
             color: var(--accent);
-            font-size: 2rem;
-            opacity: 0.6;
+            font-weight: 500;
+        }
+        .phone-dash-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: white;
+        }
+        .phone-dash-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-ivory);
+        }
+        .phone-dash-nav span {
+            flex: 1;
+            padding: 8px 6px;
+            font-size: 0.62rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-align: center;
+            border-bottom: 2px solid transparent;
+        }
+        .phone-dash-nav span.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            font-weight: 600;
+        }
+        .phone-dash-content {
+            padding: 12px;
+        }
+        .phone-dash-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .phone-dash-stat {
+            background: var(--bg-ivory);
+            border-radius: 8px;
+            padding: 8px 4px;
+            text-align: center;
+        }
+        .phone-dash-stat-val {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .phone-dash-stat-lbl {
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            margin-top: 1px;
+            font-weight: 500;
+        }
+        .phone-dash-section-label {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .phone-dash-deal {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            background: var(--bg-ivory);
+            border-radius: 8px;
+            margin-bottom: 5px;
+            border: 1px solid var(--border);
+        }
+        .phone-dash-deal-name {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .phone-dash-deal-meta {
+            font-size: 0.52rem;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+        .phone-dash-deal-tag {
+            font-size: 0.5rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+        .phone-dash-deal-tag.green {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+        }
+        .phone-dash-deal-tag.blue {
+            background: rgba(59, 130, 246, 0.12);
+            color: #2563eb;
         }
 
         .transform-image {
@@ -2822,13 +2987,15 @@
             .founder-quote-float { bottom: -10px; right: -10px; font-size: 0.9rem; max-width: 220px; padding: 1rem 1.25rem; }
             .transformation-grid { grid-template-columns: 1fr; }
             .dream-grid, .dream-grid.reverse, .dream-deep-grid { grid-template-columns: 1fr; direction: ltr; }
-            .dream-mood-grid { grid-template-columns: 1fr; }
-            .dream-mood-grid img { height: 220px; }
             .dream-content, .dream-deep-content { max-width: 100%; }
+            .phone-scroll-container { height: 140vh; }
+            .phone-scroll-bezel { width: 240px; height: 480px; }
+            .phone-scroll-card { transform: rotateX(20deg) scale(0.7); }
             .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
-            .proof-stats-row { gap: 1.5rem; }
+            .proof-stats-row { flex-direction: column; align-items: center; gap: 1.25rem; }
+            .proof-stat { gap: 0.5rem; }
             .proof-stat-number { font-size: 1.6rem; }
-            .proof-stat-label { font-size: 0.72rem; }
+            .proof-stat-label { font-size: 0.78rem; }
             .pain-deep, .reality-check, .how-it-works, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
         }
     </style>
@@ -3046,15 +3213,15 @@
             <div class="proof-stats-row">
                 <div class="proof-stat">
                     <div class="proof-stat-number">92%</div>
-                    <div class="proof-stat-label">der Brands investieren<br>mehr in Creator</div>
+                    <div class="proof-stat-label">der Brands investieren mehr in Creator</div>
                 </div>
                 <div class="proof-stat">
                     <div class="proof-stat-number">480 Mrd. $</div>
-                    <div class="proof-stat-label">Creator Economy<br>bis 2027</div>
+                    <div class="proof-stat-label">Creator Economy bis 2027</div>
                 </div>
                 <div class="proof-stat">
                     <div class="proof-stat-number">100</div>
-                    <div class="proof-stat-label">Founding-<br>Bonusplätze</div>
+                    <div class="proof-stat-label">Founding-Bonusplätze</div>
                 </div>
             </div>
         </div>
@@ -3066,7 +3233,7 @@
             <div class="section-header">
                 <div class="section-label">Das Problem</div>
                 <h2>Creator-Brand-Kooperationen sind heute <em>Glückssache</em></h2>
-                <p class="section-subtitle">Du erstellst großartigen Content, aber passende Brand Deals? Die kommen eher zufällig. Oder gar nicht. Das liegt nicht an dir, sondern am System.</p>
+                <p class="section-subtitle">Du erstellst großartigen Content, aber passende Brand Deals? Die kommen eher zufällig, zu schlechten Konditionen, oder gar nicht. Das liegt nicht an dir, sondern am System.</p>
             </div>
 
             <div class="problem-cards-grid">
@@ -3106,14 +3273,14 @@
                     <div class="section-label">Das eigentliche Problem</div>
                     <h2>Die Creator Economy wächst. Aber <em>nicht für alle.</em></h2>
                     <p>Die Zahlen klingen gut: Marken investieren so viel wie nie in Influencer-Marketing. Budgets steigen jedes Quartal. Neue Produkte suchen Creator-Partnerschaften.</p>
-                    <p><strong>Aber wer profitiert davon?</strong> Meistens dieselben großen Accounts. Dieselben Management-Agenturen. Dieselben Netzwerke, in die du keinen Zugang hast. Die Deals existieren. Sie kommen nur nicht bei dir an.</p>
-                    <p>Du postest regelmäßig, baust deine Community auf, lieferst guten Content. Und trotzdem schreibst du Marken an, die nie antworten. Oder du wartest auf DMs, die zufällig kommen oder nicht.</p>
+                    <p>Aber wer profitiert davon? Meistens dieselben großen Accounts. Dieselben Management-Agenturen. Dieselben Netzwerke, in die du keinen Zugang hast. <strong>Die Deals existieren, sie kommen nur nicht bei dir an.</strong></p>
+                    <p>Oder sie kommen, aber als Lowball-Angebote mit unklaren Briefings und Bezahlung nach 90 Tagen. Du postest regelmäßig, baust deine Community auf, lieferst guten Content. Und trotzdem: entweder keine Deals oder die falschen.</p>
                     <ul class="pain-bullets">
                         <li>Du weißt nicht, welche Marken gerade Creator suchen</li>
-                        <li>Du hast kein System, um Kooperationen zu finden</li>
+                        <li>Du hast kein System für planbare Kooperationen</li>
                         <li>Du verbringst mehr Zeit mit Akquise als mit Content</li>
                         <li>Deals scheitern an Kommunikationschaos und fehlenden Briefings</li>
-                        <li>Du fühlst dich unsichtbar, obwohl dein Content stark ist</li>
+                        <li>Selbst wenn ein Deal kommt, sind Budget und Konditionen oft unfair</li>
                     </ul>
                 </div>
                 <div class="pain-deep-image fade-in">
@@ -3134,8 +3301,8 @@
                     <div class="section-label">Der Kreislauf</div>
                     <h2>Du gibst alles. Und bekommst <em>nichts.</em></h2>
                     <p>Du stehst morgens auf und checkst dein Handy. Keine neuen Brand-Anfragen. Also öffnest du Instagram, scrollst durch Marken-Accounts, schreibst eine DM. Freundlich, professionell, mit Media Kit im Anhang. Dann die nächste. Und die nächste.</p>
-                    <p>Drei Stunden später hast du acht Marken angeschrieben. Content erstellt hast du keinen. Und von den letzten zwölf Anfragen letzte Woche? <strong>Zwei haben geantwortet. Keine davon mit einem Angebot.</strong></p>
-                    <p>Das ist nicht Pech. Das ist das System, in dem du feststeckst. Du bist Kreativer und Vertriebler gleichzeitig, obwohl du für eines davon nie ausgebildet wurdest und es dir die Energie raubt, die du für guten Content brauchst.</p>
+                    <p>Drei Stunden später hast du acht Marken angeschrieben. Content erstellt hast du keinen. Und von den letzten zwölf Anfragen letzte Woche? Zwei haben geantwortet. <strong>Keine davon mit einem Angebot.</strong></p>
+                    <p>Oder du bekommst Deals, aber die falschen. Schlechtes Budget, unklare Erwartungen, ewiges Hin und Her per DM. Du fragst dich: Lohnt sich das überhaupt? <strong>Du bist gleichzeitig Kreativer, Vertriebler und Projektmanager, obwohl du für zwei davon nie ausgebildet wurdest.</strong></p>
 
                     <div class="reality-highlight">
                         <p>Die meisten Creator scheitern nicht am Content. Sie scheitern daran, dass niemand sieht, wie gut sie eigentlich sind.</p>
@@ -3170,15 +3337,15 @@
                 <div class="dream-content fade-in">
                     <p>Stell dir vor, du wachst morgens auf und öffnest dein Handy. Keine DMs, die du beantworten musst. Kein Pitch, den du fertig schreiben solltest. Stattdessen: eine Benachrichtigung, dass eine Brand sich für dein Profil interessiert. Ein konkretes Angebot. Budget, Timeline, alles klar.</p>
 
-                    <p>Du entscheidest, ob es passt. Nicht umgekehrt.</p>
+                    <p><strong>Du entscheidest, ob es passt. Nicht umgekehrt.</strong></p>
 
-                    <p>Den Rest des Tages verbringst du mit dem, wofür du das alles angefangen hast: <strong>Content erstellen.</strong> Ideen entwickeln. Deine Community aufbauen. Nicht Marken hinterherrennen. Nicht E-Mails formulieren, die nie beantwortet werden. Nicht um dein nächstes Einkommen bangen.</p>
+                    <p>Den Rest des Tages verbringst du mit dem, wofür du das alles angefangen hast: Content erstellen. Ideen entwickeln. Deine Community aufbauen. Nicht Marken hinterherrennen. Nicht E-Mails formulieren, die nie beantwortet werden. <strong>Nicht um dein nächstes Einkommen zittern.</strong></p>
 
                     <div class="dream-highlight">
-                        <p>Du bist kein Bittsteller mehr. Du bist ein Professional, mit dem Brands zusammenarbeiten wollen.</p>
+                        <p>Du bist nicht mehr der, der hinterherläuft. Du bist ein Professional, mit dem Brands zusammenarbeiten wollen.</p>
                     </div>
 
-                    <p>Dein Einkommen ist planbar. Deine Kooperationen sind fair. Und du hast endlich wieder <strong>Zeit für das, was dich als Creator ausmacht.</strong></p>
+                    <p>Dein Einkommen ist planbar. Deine Kooperationen sind fair, transparent und machen Spaß. Und du hast endlich wieder <strong>Zeit für das, was dich als Creator ausmacht.</strong></p>
                 </div>
                 <div class="dream-image fade-in">
                     <img src="images/creator-freedom.jpg" alt="Creator genießt Freiheit und Leichtigkeit" loading="lazy">
@@ -3197,9 +3364,9 @@
                 <div class="dream-deep-content fade-in">
                     <div class="section-label">Das Ziel</div>
                     <h2>Creator sein, ohne dich <em>selbst</em> zu verlieren</h2>
-                    <p>Du hast angefangen, Content zu erstellen, weil du etwas zu sagen hattest. Weil du kreativ bist. Weil du Menschen erreichen wolltest. Nicht, um den ganzen Tag Akquise zu betreiben.</p>
+                    <p>Du hast angefangen, Content zu erstellen, weil du etwas zu sagen hattest. Weil du kreativ bist. Weil du Menschen erreichen wolltest. <strong>Nicht, um den ganzen Tag Akquise zu betreiben.</strong></p>
 
-                    <p>Die besten Creator der Welt haben eines gemeinsam: Sie beschäftigen sich nicht mit dem Geschäftlichen. <strong>Jemand anderes übernimmt das für sie.</strong> Agenturen, Manager, Netzwerke. Aber was, wenn du noch nicht groß genug bist für eine Agentur? Was, wenn du zwischen 5.000 und 100.000 Followern steckst, genau in der Phase, in der Brands dich entdecken könnten, es aber nicht tun?</p>
+                    <p>Die besten Creator der Welt haben eines gemeinsam: Sie beschäftigen sich nicht mit dem Geschäftlichen. Jemand anderes übernimmt das für sie. Agenturen, Manager, Netzwerke. Aber was, wenn du noch nicht groß genug bist für eine Agentur? Was, wenn du zwischen 5.000 und 100.000 Followern steckst, genau in der Phase, in der Brands dich entdecken könnten, es aber nicht tun?</p>
 
                     <p>Genau hier fehlt ein Stück im Puzzle. Nicht noch ein Kurs. Nicht noch ein Tipp. Sondern <strong>ein System, das die Arbeit für dich macht.</strong> Das dich sichtbar macht. Das dir die richtigen Brands bringt. Das Verhandlungen fair gestaltet. Und das dich als Creator ernst nimmt.</p>
 
@@ -3209,24 +3376,85 @@
         </div>
     </section>
 
-    <!-- ============ DREAM MOOD STRIP (Visual Montage) ============ -->
-    <section class="dream-mood-strip">
-        <div class="dream-mood-grid">
-            <img src="images/creator-location-free.jpg" alt="Creator arbeitet ortsunabhängig im Zug" loading="lazy">
-            <img src="images/creator-shared-joy.jpg" alt="Freundinnen lachen zusammen über kreative Inhalte" loading="lazy">
-            <img src="images/creator-in-flow.jpg" alt="Creator im kreativen Flow beim Editieren" loading="lazy">
-        </div>
-    </section>
-
-    <!-- ============ SOLUTION BRIDGE (Transition) ============ -->
-    <section class="solution-bridge fade-in">
+    <!-- ============ SOLUTION BRIDGE + PHONE SCROLL ANIMATION ============ -->
+    <section class="solution-bridge fade-in" id="creatorbridge-reveal">
         <div class="container">
             <div class="section-header">
-                <div class="section-label">Genau dafür gibt es</div>
+                <div class="section-label">Die Lösung</div>
                 <h2>Creator<em>Bridge</em></h2>
             </div>
-            <p>Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen. Aber ohne die Hürden, ohne die Provisionen, ohne den Gatekeeping. Gebaut von Creatorn, für Creator.</p>
-            <span class="bridge-arrow">↓</span>
+            <p class="bridge-subtitle">Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen. Ohne Hürden, ohne Gatekeeping. Gebaut von Creatorn, für Creator.</p>
+        </div>
+
+        <!-- Phone Scroll Container -->
+        <div class="phone-scroll-container">
+            <div class="phone-scroll-sticky">
+                <div class="phone-scroll-card">
+                    <div class="phone-scroll-frame">
+                        <!-- Phone bezel -->
+                        <div class="phone-scroll-bezel">
+                            <div class="phone-scroll-notch"></div>
+                            <div class="phone-scroll-screen">
+                                <!-- Dashboard UI inside phone -->
+                                <div class="phone-dash-statusbar">
+                                    <span>9:41</span>
+                                    <span>
+                                        <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor"><rect x="0" y="6" width="2" height="4" rx="0.5"/><rect x="3" y="4" width="2" height="6" rx="0.5"/><rect x="6" y="2" width="2" height="8" rx="0.5"/><rect x="9" y="0" width="2" height="10" rx="0.5"/></svg>
+                                        <svg width="20" height="10" viewBox="0 0 20 10" fill="currentColor"><rect x="0" y="0" width="17" height="10" rx="2" stroke="currentColor" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="12" height="7" rx="1" fill="currentColor"/><rect x="18" y="3" width="2" height="4" rx="0.5"/></svg>
+                                    </span>
+                                </div>
+                                <div class="phone-dash-header">
+                                    <span class="phone-dash-logo">Creator<em>Bridge</em></span>
+                                    <div class="phone-dash-avatar">CM</div>
+                                </div>
+                                <div class="phone-dash-nav">
+                                    <span class="active">Deals</span>
+                                    <span>Matches</span>
+                                    <span>Inbox</span>
+                                </div>
+                                <div class="phone-dash-content">
+                                    <div class="phone-dash-stats">
+                                        <div class="phone-dash-stat">
+                                            <div class="phone-dash-stat-val" style="color: var(--accent);">€2.650</div>
+                                            <div class="phone-dash-stat-lbl">Umsatz</div>
+                                        </div>
+                                        <div class="phone-dash-stat">
+                                            <div class="phone-dash-stat-val">5</div>
+                                            <div class="phone-dash-stat-lbl">Aktive Deals</div>
+                                        </div>
+                                        <div class="phone-dash-stat">
+                                            <div class="phone-dash-stat-val">3</div>
+                                            <div class="phone-dash-stat-lbl">Neue Matches</div>
+                                        </div>
+                                    </div>
+                                    <div class="phone-dash-section-label">Neue Möglichkeiten</div>
+                                    <div class="phone-dash-deal">
+                                        <div>
+                                            <div class="phone-dash-deal-name">Hautpflege-Kampagne</div>
+                                            <div class="phone-dash-deal-meta">Beauty · Instagram Reels · €850</div>
+                                        </div>
+                                        <div class="phone-dash-deal-tag green">Offen</div>
+                                    </div>
+                                    <div class="phone-dash-deal">
+                                        <div>
+                                            <div class="phone-dash-deal-name">Sommer-Kollektion</div>
+                                            <div class="phone-dash-deal-meta">Fashion · TikTok + IG · €1.200</div>
+                                        </div>
+                                        <div class="phone-dash-deal-tag green">Offen</div>
+                                    </div>
+                                    <div class="phone-dash-deal">
+                                        <div>
+                                            <div class="phone-dash-deal-name">Tech-Gadget Review</div>
+                                            <div class="phone-dash-deal-meta">Tech · YouTube Shorts · €950</div>
+                                        </div>
+                                        <div class="phone-dash-deal-tag blue">Match 96%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -3235,7 +3463,7 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-label">So funktioniert's</div>
-                <h2>Eine Plattform, die vom <em>Creator</em> aus denkt</h2>
+                <h2>So einfach läuft es mit <em>CreatorBridge</em></h2>
                 <p class="section-subtitle">Statt darauf zu warten, dass Marken dich finden, wirst du aktiv sichtbar. Bewerbe dich auf Deals, die zu dir passen, und manage alles an einem Ort.</p>
             </div>
 
@@ -4645,7 +4873,7 @@
             gsap.from(card, {
                 opacity: 0,
                 y: 40,
-                rotateX: 8,
+                rotateX: 4,
                 duration: 0.8,
                 delay: i * 0.15,
                 ease: 'power3.out',
@@ -4663,9 +4891,9 @@
                 const y = e.clientY - rect.top;
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -8;
-                const rotateY = ((x - centerX) / centerX) * 8;
-                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+                const rotateX = ((y - centerY) / centerY) * -3;
+                const rotateY = ((x - centerX) / centerX) * 3;
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
@@ -4705,6 +4933,34 @@
             },
             once: true
         });
+
+        // ============ PHONE SCROLL ANIMATION ============
+        const phoneCard = document.querySelector('.phone-scroll-card');
+        const phoneContainer = document.querySelector('.phone-scroll-container');
+        if (phoneCard && phoneContainer) {
+            const isMobile = window.innerWidth < 768;
+            const startScale = isMobile ? 0.7 : 1.05;
+            const endScale = isMobile ? 0.9 : 1;
+
+            gsap.set(phoneCard, {
+                rotateX: 20,
+                scale: startScale,
+                transformPerspective: 1000
+            });
+
+            gsap.to(phoneCard, {
+                rotateX: 0,
+                scale: endScale,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: phoneContainer,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+        }
 
         // ============ FAQ ACCORDION ============
         document.querySelectorAll('.faq-question').forEach(question => {
