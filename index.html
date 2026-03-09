@@ -2142,6 +2142,391 @@
             .stat-callout-number { font-size: 3.5rem; }
             .footer-inner { justify-content: center; text-align: center; }
         }
+
+        /* ============ NEW LONGFORM SECTIONS ============ */
+
+        /* Social Proof Bar */
+        .social-proof-bar {
+            padding: 3rem 0;
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .proof-stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .proof-stat {
+            text-align: center;
+        }
+        .proof-stat-number {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .proof-stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* Pain Deep Dive */
+        .pain-deep {
+            padding: 100px 0;
+            background: var(--bg-ivory);
+        }
+        .pain-deep-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .pain-deep-content h2 {
+            margin-bottom: 1.5rem;
+        }
+        .pain-deep-content p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 1.25rem;
+        }
+        .pain-deep-content p strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .pain-deep-image {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        .pain-deep-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .pain-deep-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201,140,131,0.08), rgba(75,50,45,0.04));
+            pointer-events: none;
+        }
+        .pain-bullets {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        .pain-bullets li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .pain-bullets li::before {
+            content: '\2717';
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: var(--bg);
+        }
+        .hiw-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hiw-step {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .hiw-step-number {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(201,140,131,0.15);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        .hiw-step h3 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+        .hiw-step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .hiw-connector {
+            display: none;
+        }
+
+        /* Founder Story */
+        .founder-story {
+            padding: 100px 0;
+            background: var(--cocoa-deep);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .founder-story::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,140,131,0.08), transparent 70%);
+            pointer-events: none;
+        }
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .founder-image-col {
+            position: relative;
+        }
+        .founder-image-wrapper {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            position: relative;
+        }
+        .founder-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .founder-quote-float {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--accent);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-family: var(--font-heading);
+            font-style: italic;
+            font-size: 1rem;
+            max-width: 260px;
+            line-height: 1.5;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        .founder-content .section-label {
+            color: var(--accent-light);
+        }
+        .founder-content h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        .founder-content h2 em {
+            color: var(--gold);
+        }
+        .founder-content p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 1.25rem;
+        }
+        .founder-sig {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .founder-sig-line {
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+        .founder-sig-name {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+        }
+        .founder-sig-role {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Transformation / Future Pacing */
+        .transformation {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--bg-ivory) 0%, var(--bg) 100%);
+        }
+        .transformation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .transform-col {
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+        }
+        .transform-col.before {
+            background: rgba(75,50,45,0.04);
+            border: 1px solid var(--border);
+        }
+        .transform-col.after {
+            background: var(--white);
+            border: 1px solid rgba(201,140,131,0.2);
+            box-shadow: var(--shadow-md);
+        }
+        .transform-col h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .transform-col.before h3 { color: var(--text-muted); }
+        .transform-col.after h3 { color: var(--accent); }
+        .transform-list {
+            list-style: none;
+        }
+        .transform-list li {
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .transform-list li .t-icon {
+            flex-shrink: 0;
+            margin-top: 3px;
+            font-size: 0.9rem;
+        }
+        .transform-col.before .t-icon { color: var(--text-muted); }
+        .transform-col.after .t-icon { color: #4CAF50; }
+
+        /* Cost of Inaction */
+        .cost-inaction {
+            padding: 80px 0;
+            background: var(--bg);
+        }
+        .cost-inaction-inner {
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .cost-inaction-inner h2 {
+            margin-bottom: 1.5rem;
+        }
+        .cost-inaction-inner p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 1.25rem;
+        }
+        .cost-inaction-inner p strong {
+            color: var(--text);
+        }
+
+        /* Mid-CTA Break */
+        .cta-break {
+            padding: 60px 0;
+            text-align: center;
+            background: var(--bg-ivory);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .cta-break p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Credibility Section */
+        .credibility {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .credibility-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+        .cred-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+        .cred-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(201,140,131,0.1), rgba(230,201,168,0.15));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            color: var(--accent);
+        }
+        .cred-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .cred-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Mobile responsive for new sections */
+        @media (max-width: 768px) {
+            .pain-deep-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .pain-deep-image { order: -1; }
+            .hiw-steps { grid-template-columns: 1fr; max-width: 400px; }
+            .founder-grid { grid-template-columns: 1fr; }
+            .founder-image-col { max-width: 320px; margin: 0 auto; }
+            .founder-quote-float { bottom: -10px; right: -10px; font-size: 0.9rem; max-width: 220px; padding: 1rem 1.25rem; }
+            .transformation-grid { grid-template-columns: 1fr; }
+            .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
+            .proof-stats-row { gap: 2rem; }
+            .proof-stat-number { font-size: 1.8rem; }
+            .pain-deep, .how-it-works, .founder-story, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
+        }
     </style>
 </head>
 <body>
@@ -2376,6 +2761,30 @@
         </div>
     </section>
 
+    <!-- ============ SOCIAL PROOF BAR ============ -->
+    <div class="social-proof-bar fade-in">
+        <div class="container">
+            <div class="proof-stats-row">
+                <div class="proof-stat">
+                    <div class="proof-stat-number">92%</div>
+                    <div class="proof-stat-label">der Brands investieren mehr in Creator</div>
+                </div>
+                <div class="proof-stat">
+                    <div class="proof-stat-number">480 Mrd. $</div>
+                    <div class="proof-stat-label">Creator Economy bis 2027</div>
+                </div>
+                <div class="proof-stat">
+                    <div class="proof-stat-number">100</div>
+                    <div class="proof-stat-label">Founding-Bonusplätze</div>
+                </div>
+                <div class="proof-stat">
+                    <div class="proof-stat-number">1. Mai</div>
+                    <div class="proof-stat-label">offizieller Launch-Tag</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ============ PROBLEM ============ -->
     <section class="section" id="problem">
         <div class="container">
@@ -2416,6 +2825,39 @@
             </div>
         </div>
     </section>
+
+    <!-- ============ PAIN DEEP DIVE ============ -->
+    <section class="pain-deep">
+        <div class="container">
+            <div class="pain-deep-grid">
+                <div class="pain-deep-content fade-in">
+                    <div class="section-label">Das eigentliche Problem</div>
+                    <h2>Die Creator Economy wächst. Aber <em>nicht für alle.</em></h2>
+                    <p>Die Zahlen klingen gut: Marken investieren so viel wie nie in Influencer-Marketing. Budgets steigen jedes Quartal. Neue Produkte suchen Creator-Partnerschaften.</p>
+                    <p><strong>Aber wer profitiert davon?</strong> Meistens dieselben großen Accounts. Dieselben Management-Agenturen. Dieselben Netzwerke, in die du keinen Zugang hast. Die Deals existieren. Sie kommen nur nicht bei dir an.</p>
+                    <p>Du postest regelmäßig, baust deine Community auf, lieferst guten Content. Und trotzdem schreibst du Marken an, die nie antworten. Oder du wartest auf DMs, die zufällig kommen oder nicht.</p>
+                    <ul class="pain-bullets">
+                        <li>Du weißt nicht, welche Marken gerade Creator suchen</li>
+                        <li>Du hast kein System, um Kooperationen zu finden</li>
+                        <li>Du verbringst mehr Zeit mit Akquise als mit Content</li>
+                        <li>Deals scheitern an Kommunikationschaos und fehlenden Briefings</li>
+                        <li>Du fühlst dich unsichtbar, obwohl dein Content stark ist</li>
+                    </ul>
+                </div>
+                <div class="pain-deep-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80" alt="Creator am Smartphone" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA BREAK 1 ============ -->
+    <div class="cta-break fade-in">
+        <div class="container">
+            <p>Bereit, das zu ändern? Sichere dir jetzt deinen Founding-Creator-Platz.</p>
+            <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
+        </div>
+    </div>
 
     <!-- ============ SOLUTION (Bento Grid + Dashboard Mockups) ============ -->
     <section class="solution-section" id="loesung">
@@ -2994,6 +3436,71 @@
         </div>
     </section>
 
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">So funktioniert's</div>
+                <h2>In 3 Schritten zum <em>Founding Creator</em></h2>
+                <p class="section-subtitle">Kein komplizierter Prozess. Kein wochenlanges Warten. Bewirb dich, sprich mit Carlo und starte als einer der Ersten.</p>
+            </div>
+            <div class="hiw-steps">
+                <div class="hiw-step fade-in">
+                    <div class="hiw-step-number">01</div>
+                    <h3>Bewerbung ausfüllen</h3>
+                    <p>Erzähl uns von deinen Kanälen, deiner Nische und deiner Erfahrung mit Brand Deals. Dauert unter 3 Minuten.</p>
+                </div>
+                <div class="hiw-step fade-in">
+                    <div class="hiw-step-number">02</div>
+                    <h3>Persönlicher Call</h3>
+                    <p>Ein 30-minütiges Gespräch mit Carlo. Kein Verkaufsgespräch. Es geht darum, ob CreatorBridge zu dir passt und was du dir wünschst.</p>
+                </div>
+                <div class="hiw-step fade-in">
+                    <div class="hiw-step-number">03</div>
+                    <h3>Zugang erhalten</h3>
+                    <p>Wenn es passt, bekommst du vor dem offiziellen Launch Zugang zur Plattform und alle Founding-Creator-Vorteile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOUNDER STORY ============ -->
+    <section class="founder-story">
+        <div class="container">
+            <div class="founder-grid">
+                <div class="founder-image-col fade-in">
+                    <div class="founder-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Carlo Menga, Gründer von CreatorBridge" loading="lazy">
+                    </div>
+                    <div class="founder-quote-float">"Die besten Creator verdienen ein besseres System."</div>
+                </div>
+                <div class="founder-content fade-in">
+                    <div class="section-label">Die Vision dahinter</div>
+                    <h2>Warum ich CreatorBridge <em>baue</em></h2>
+                    <p>Ich heiße Carlo, und ich habe jahrelang erlebt, wie frustrierend die Creator-Brand-Beziehung für beide Seiten ist. Creator jagen Deals hinterher. Marken verschwenden Budget an die falschen Partner. Und dazwischen? Chaos aus DMs, verlorenen Briefings und gebrochenen Zusagen.</p>
+                    <p>Ich habe mit über 100 Creatorn und Dutzenden von Marken gesprochen. Immer wieder dasselbe: "Wir wollen zusammenarbeiten, aber es gibt kein gutes System dafür."</p>
+                    <p><strong>CreatorBridge ist dieses System.</strong> Eine Plattform, die Kooperationen strukturiert, transparent macht und den Zufall eliminiert. Von Creator für Creator gebaut, mit echtem Verständnis für beide Seiten.</p>
+                    <p>Aber ich will nicht einfach eine Plattform starten und hoffen, dass sie funktioniert. Ich will sie gemeinsam mit den ersten Creatorn aufbauen. Das ist der Grund für die Founding Cohort: Ihr gestaltet mit, was CreatorBridge wird.</p>
+                    <div class="founder-sig">
+                        <div class="founder-sig-line"></div>
+                        <div>
+                            <div class="founder-sig-name">Carlo Menga</div>
+                            <div class="founder-sig-role">Gründer, CreatorBridge</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA BREAK 2 ============ -->
+    <div class="cta-break fade-in">
+        <div class="container">
+            <p>Carlo nimmt sich persönlich 30 Minuten Zeit für jeden Founding Creator. Plätze sind begrenzt.</p>
+            <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
+        </div>
+    </div>
+
     <!-- ============ PERKS / TIERS ============ -->
     <section class="perks-section" id="vorteile">
         <div class="container">
@@ -3071,6 +3578,46 @@
         </div>
     </section>
 
+    <!-- ============ CREDIBILITY ============ -->
+    <section class="credibility fade-in">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Warum CreatorBridge?</div>
+                <h2>Gebaut von jemandem, der das Problem <em>kennt</em></h2>
+                <p class="section-subtitle">Keine anonyme Plattform, kein Risikokapital-Experiment. CreatorBridge wurde aus echten Erfahrungen im Creator Marketing entwickelt.</p>
+            </div>
+            <div class="credibility-grid">
+                <div class="cred-card">
+                    <div class="cred-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Creator-First Architektur</h3>
+                    <p>Kein Marktplatz, auf dem du dich gegen tausende bewirbst. Brands kommen mit konkreten Deals zu dir, basierend auf deinem Profil und Content.</p>
+                </div>
+                <div class="cred-card">
+                    <div class="cred-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Faire Konditionen</h3>
+                    <p>Transparente Deals, keine versteckten Gebühren, kein Race-to-the-Bottom. Du siehst von Anfang an, was Brand und Creator jeweils erhalten.</p>
+                </div>
+                <div class="cred-card">
+                    <div class="cred-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    </div>
+                    <h3>Community statt Konkurrenz</h3>
+                    <p>Founding Creator sind keine Nummern. Du hast direkten Kontakt zum Team, kannst Features vorschlagen und die Plattform aktiv mitgestalten.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA BREAK 3 ============ -->
+    <div class="cta-break fade-in">
+        <p>Du willst die Plattform mitgestalten, die Creator Marketing verändert?</p>
+        <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
+    </div>
+
     <!-- ============ FOR WHOM ============ -->
     <section class="for-whom-section">
         <div class="container">
@@ -3110,6 +3657,63 @@
             </div>
         </div>
     </section>
+
+    <!-- ============ TRANSFORMATION (Before/After) ============ -->
+    <section class="transformation fade-in">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Die Veränderung</div>
+                <h2>Stell dir vor, wie dein Creator-Alltag in <em>6 Monaten</em> aussieht</h2>
+            </div>
+            <div class="transformation-grid">
+                <div class="transform-col before">
+                    <h3><span class="t-icon">○</span> Ohne CreatorBridge</h3>
+                    <ul class="transform-list">
+                        <li><span class="t-icon">—</span> Du scrollst durch DMs und hoffst, dass eine Brand antwortet</li>
+                        <li><span class="t-icon">—</span> Preisverhandlungen fühlen sich jedes Mal unangenehm an</li>
+                        <li><span class="t-icon">—</span> Du weißt nie, ob ein Deal fair ist, weil dir der Vergleich fehlt</li>
+                        <li><span class="t-icon">—</span> Du investierst Stunden in Pitches, die ins Leere laufen</li>
+                        <li><span class="t-icon">—</span> Dein Einkommen aus Brand Deals bleibt unberechenbar</li>
+                        <li><span class="t-icon">—</span> Du managst alles allein: Verträge, Briefings, Kommunikation</li>
+                    </ul>
+                </div>
+                <div class="transform-col after">
+                    <h3><span class="t-icon">◆</span> Mit CreatorBridge</h3>
+                    <ul class="transform-list">
+                        <li><span class="t-icon">✓</span> Strukturierte Deal-Anfragen landen direkt in deinem Dashboard</li>
+                        <li><span class="t-icon">✓</span> Transparente Preise und klare Konditionen von Anfang an</li>
+                        <li><span class="t-icon">✓</span> Smart Matching verbindet dich mit Brands, die zu deinem Content passen</li>
+                        <li><span class="t-icon">✓</span> Ein Workspace für alles: Briefings, Deadlines, Kommunikation</li>
+                        <li><span class="t-icon">✓</span> Planbare Brand-Deal-Einnahmen statt zufälliger Anfragen</li>
+                        <li><span class="t-icon">✓</span> Als Founding Creator bekommst du die besten Deals zuerst</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ COST OF INACTION ============ -->
+    <section class="cost-inaction fade-in">
+        <div class="container">
+            <div class="cost-inaction-inner">
+                <div class="section-header">
+                    <div class="section-label">Ein ehrliches Wort</div>
+                    <h2>Was passiert, wenn du <em>wartest</em>?</h2>
+                </div>
+                <p>Die Creator Economy ist kein Trend, der verschwindet. Sie wächst. Schnell. Aber mit dem Wachstum kommt auch mehr Konkurrenz. Mehr Creator, die um die gleichen Brand Deals kämpfen. Mehr Rauschen, weniger Sichtbarkeit.</p>
+                <p>Die Creator, die sich jetzt positionieren, die jetzt Strukturen aufbauen, die jetzt Zugang zu den richtigen Brands bekommen: <strong>Das sind die Creator, die in 12 Monaten die Deals machen, von denen andere nur träumen.</strong></p>
+                <p>Das Founding Creator Programm ist kein Newsletter-Opt-in. Es ist eine Einladung, bei etwas Neuem von Anfang an dabei zu sein. Die ersten 100 Plätze mit Bonus-Vorteilen sind begrenzt. Nicht künstlich, sondern weil wir persönlich mit jedem Creator arbeiten wollen.</p>
+                <p><strong>Du kannst warten. Oder du kannst einer der ersten sein.</strong></p>
+                <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })" style="margin-top: 1.5rem;">Founding Creator Platz sichern</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA BREAK 4 ============ -->
+    <div class="cta-break fade-in">
+        <p>100 Bonusplätze. Drei Tiers. Ein Startdatum: 1. Mai 2026.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
+    </div>
 
     <!-- ============ SCARCITY (DARK) ============ -->
     <section class="scarcity">
@@ -3691,9 +4295,9 @@
         });
 
         // Scroll-triggered sections
-        const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section');
+        const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section, .pain-deep, .how-it-works, .founder-story, .transformation, .credibility, .cost-inaction, .social-proof-bar');
         animateSections.forEach(section => {
-            const elements = section.querySelectorAll('.section-header, .solution-tabs-wrapper, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center');
+            const elements = section.querySelectorAll('.section-header, .solution-tabs-wrapper, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center, .pain-deep-grid, .hiw-step, .founder-grid, .transform-col, .cred-card, .cost-inaction-inner, .proof-stats-row');
 
             elements.forEach(el => {
                 gsap.set(el, { opacity: 0, y: 30 });
@@ -3710,6 +4314,19 @@
                         stagger: 0.08,
                         ease: 'power2.out'
                     });
+                },
+                once: true
+            });
+        });
+
+        // ============ CTA BREAKS + STANDALONE FADE-INS ============
+        document.querySelectorAll('.cta-break.fade-in, .credibility.fade-in, .transformation.fade-in, .cost-inaction.fade-in').forEach(el => {
+            gsap.set(el, { opacity: 0, y: 30 });
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                onEnter: () => {
+                    gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' });
                 },
                 once: true
             });
