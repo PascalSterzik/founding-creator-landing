@@ -705,24 +705,33 @@
         }
 
         /* ============ PROBLEM SECTION (Stacking Cards) ============ */
+        #problem .section-header {
+            margin-bottom: 0;
+        }
         .problem-stack-wrapper {
             position: relative;
-            margin-bottom: 3rem;
         }
         .problem-stack-pin {
             position: relative;
-            height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+        }
+        .problem-stack-pin .section-header {
+            margin-bottom: 2rem;
+            flex-shrink: 0;
+        }
+        .problem-cards-area {
+            position: relative;
+            width: 100%;
+            height: 420px;
         }
         .problem-card {
             position: absolute;
-            top: 50%;
+            top: 0;
             left: 0;
             right: 0;
             margin: 0 auto;
-            transform: translateY(-50%);
             width: 100%;
             max-width: 680px;
             background: var(--white);
@@ -1505,29 +1514,13 @@
 
             .stats-row { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
-            .problem-stack-wrapper { margin-bottom: 2rem; }
-            .problem-stack-pin {
-                height: auto !important;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
+            .problem-cards-area { height: 340px; }
             .problem-card {
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                right: auto !important;
-                transform: none !important;
-                filter: none !important;
-                opacity: 1 !important;
-                margin: 0 !important;
-                width: 100%;
-                max-width: 100%;
                 padding: 2rem 1.5rem;
+                max-width: 100%;
             }
             .problem-title { font-size: 1.5rem; }
-            .problem-text { font-size: 1rem; }
+            .problem-text { font-size: 0.95rem; }
             .bento-grid { grid-template-columns: 1fr; }
             .bento-card.wide { grid-column: span 1; }
             .tiers-grid { grid-template-columns: 1fr; }
@@ -1786,14 +1779,14 @@
     <!-- ============ PROBLEM ============ -->
     <section class="section" id="problem">
         <div class="container">
-            <div class="section-header">
-                <div class="section-label">Das Problem</div>
-                <h2>Creator-Brand-Kooperationen sind heute <em>Glückssache</em></h2>
-                <p class="section-subtitle">Du erstellst großartigen Content, aber passende Brand Deals? Die kommen eher zufällig. Oder gar nicht. Das liegt nicht an dir, sondern am System.</p>
-            </div>
-
             <div class="problem-stack-wrapper">
                 <div class="problem-stack-pin">
+                    <div class="section-header">
+                        <div class="section-label">Das Problem</div>
+                        <h2>Creator-Brand-Kooperationen sind heute <em>Glückssache</em></h2>
+                        <p class="section-subtitle">Du erstellst großartigen Content, aber passende Brand Deals? Die kommen eher zufällig. Oder gar nicht. Das liegt nicht an dir, sondern am System.</p>
+                    </div>
+                    <div class="problem-cards-area">
                     <div class="problem-card" data-problem="0">
                         <div class="problem-number">Problem 01</div>
                         <div class="problem-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8" cy="8" r="1.2"/><circle cx="16" cy="8" r="1.2"/><circle cx="8" cy="16" r="1.2"/><circle cx="16" cy="16" r="1.2"/><circle cx="12" cy="12" r="1.2"/></svg></div>
@@ -1811,6 +1804,7 @@
                         <div class="problem-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="10" x2="15" y2="10"/></svg></div>
                         <h3 class="problem-title">Kommunikation ist Chaos</h3>
                         <p class="problem-text">DMs auf Instagram, E-Mails, WhatsApp-Gruppen. Briefings gehen verloren, Deadlines werden verpasst, und niemand hat den Überblick.</p>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -2476,13 +2470,13 @@
         const stackWrapper = document.querySelector('.problem-stack-wrapper');
         const stackPin = document.querySelector('.problem-stack-pin');
 
-        if (problemSection && problemCards.length && window.innerWidth > 768) {
-            // Initial state: all cards hidden except first
+        if (problemSection && problemCards.length) {
+            // Initial state: first card visible, rest hidden below
             problemCards.forEach((card, i) => {
                 gsap.set(card, {
                     opacity: i === 0 ? 1 : 0,
-                    yPercent: i === 0 ? -50 : 20,
-                    scale: i === 0 ? 1 : 0.92,
+                    y: i === 0 ? 0 : 60,
+                    scale: i === 0 ? 1 : 0.95,
                     zIndex: i + 1
                 });
             });
@@ -2490,64 +2484,56 @@
             const stackTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: stackWrapper,
-                    start: 'top 15%',
-                    end: '+=' + (problemCards.length * 80) + '%',
+                    start: 'top 8%',
+                    end: '+=' + (problemCards.length * 70) + '%',
                     pin: stackPin,
-                    scrub: 0.8,
+                    scrub: 0.6,
                     anticipatePin: 1
                 }
             });
 
-            // Card 1 is already visible. Animate card 2 in, blur card 1.
+            // Small pause showing card 1
+            stackTl.to({}, { duration: 0.3 });
+
+            // Card 2 slides up, card 1 blurs
             stackTl.to(problemCards[0], {
-                filter: 'blur(6px)',
-                scale: 0.92,
-                opacity: 0.4,
+                filter: 'blur(5px)',
+                scale: 0.93,
+                opacity: 0.35,
+                y: -15,
                 duration: 1,
                 ease: 'power2.inOut'
-            }, 0.5);
+            }, 0.4);
             stackTl.to(problemCards[1], {
                 opacity: 1,
-                yPercent: -50,
+                y: 0,
                 scale: 1,
                 duration: 1,
                 ease: 'power2.out'
-            }, 0.5);
+            }, 0.4);
 
-            // Animate card 3 in, blur card 2.
+            // Small pause showing card 2
+            stackTl.to({}, { duration: 0.3 });
+
+            // Card 3 slides up, card 2 blurs
             stackTl.to(problemCards[1], {
-                filter: 'blur(6px)',
-                scale: 0.92,
-                opacity: 0.4,
+                filter: 'blur(5px)',
+                scale: 0.93,
+                opacity: 0.35,
+                y: -15,
                 duration: 1,
                 ease: 'power2.inOut'
             }, 2);
             stackTl.to(problemCards[2], {
                 opacity: 1,
-                yPercent: -50,
+                y: 0,
                 scale: 1,
                 duration: 1,
                 ease: 'power2.out'
             }, 2);
 
-            // Hold the last card for a moment
-            stackTl.to(problemCards[2], { duration: 0.5 });
-        } else if (problemCards.length) {
-            // Mobile fallback: simple fade-in
-            problemCards.forEach(card => gsap.set(card, { opacity: 0, y: 20 }));
-            ScrollTrigger.create({
-                trigger: stackWrapper || problemSection,
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(problemCards, {
-                        opacity: 1, y: 0,
-                        duration: 0.7,
-                        stagger: 0.15,
-                        ease: 'power2.out'
-                    });
-                },
-                once: true
-            });
+            // Hold the last card
+            stackTl.to({}, { duration: 0.5 });
         }
 
         // Scarcity section
