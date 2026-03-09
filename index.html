@@ -2246,44 +2246,96 @@
             background: var(--bg);
         }
         .hiw-steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-            margin-top: 3rem;
-            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 3.5rem;
+            max-width: 720px;
             margin-left: auto;
             margin-right: auto;
-        }
-        .hiw-step {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
             position: relative;
         }
+        .hiw-steps::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 28px;
+            bottom: 28px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-light), var(--gold));
+        }
+        .hiw-step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            padding: 2rem 0;
+            position: relative;
+        }
+        .hiw-step-marker {
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .hiw-step:nth-child(1) .hiw-step-marker {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            box-shadow: 0 4px 20px rgba(201,140,131,0.3);
+        }
+        .hiw-step:nth-child(2) .hiw-step-marker {
+            background: linear-gradient(135deg, var(--cocoa), var(--cocoa-deep));
+            box-shadow: 0 4px 20px rgba(75,50,45,0.2);
+        }
+        .hiw-step:nth-child(3) .hiw-step-marker {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            box-shadow: 0 4px 20px rgba(197,164,127,0.3);
+        }
+        .hiw-step-marker svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+            stroke: white;
+            fill: none;
+        }
+        .hiw-step-body {
+            flex: 1;
+            padding-top: 0.25rem;
+        }
         .hiw-step-number {
-            font-family: var(--font-heading);
-            font-size: 3rem;
-            font-weight: 700;
-            color: rgba(201,140,131,0.15);
-            line-height: 1;
-            margin-bottom: 1rem;
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.35rem;
         }
         .hiw-step h3 {
             font-family: var(--font-heading);
-            font-size: 1.35rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--text);
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
         }
         .hiw-step p {
             color: var(--text-secondary);
             font-size: 0.95rem;
             line-height: 1.7;
+            max-width: 480px;
         }
-        .hiw-connector {
-            display: none;
+        .hiw-step-detail {
+            display: inline-block;
+            margin-top: 0.75rem;
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 500;
+            padding: 0.35rem 0.85rem;
+            background: rgba(201,140,131,0.08);
+            border-radius: var(--radius-pill);
         }
 
         /* Founder Story */
@@ -2517,7 +2569,11 @@
         @media (max-width: 768px) {
             .pain-deep-grid { grid-template-columns: 1fr; gap: 2rem; }
             .pain-deep-image { order: -1; }
-            .hiw-steps { grid-template-columns: 1fr; max-width: 400px; }
+            .hiw-steps::before { left: 20px; }
+            .hiw-step-marker { width: 40px; height: 40px; }
+            .hiw-step-marker svg { width: 18px; height: 18px; }
+            .hiw-step { gap: 1.25rem; padding: 1.5rem 0; }
+            .hiw-step h3 { font-size: 1.25rem; }
             .founder-grid { grid-template-columns: 1fr; }
             .founder-image-col { max-width: 320px; margin: 0 auto; }
             .founder-quote-float { bottom: -10px; right: -10px; font-size: 0.9rem; max-width: 220px; padding: 1rem 1.25rem; }
@@ -2525,7 +2581,7 @@
             .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
             .proof-stats-row { gap: 2rem; }
             .proof-stat-number { font-size: 1.8rem; }
-            .pain-deep, .how-it-works, .founder-story, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
+            .pain-deep, .how-it-works, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
         }
     </style>
 </head>
@@ -2566,20 +2622,6 @@
                         <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
                     </div>
                     <p class="micro-text fade-up">Nur die ersten 100 Creator erhalten exklusive Boni</p>
-                    <div class="stats-row fade-up">
-                        <div class="stat-item">
-                            <div class="stat-value">$252 Mrd.</div>
-                            <div class="stat-label">Creator Economy 2025</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">92%</div>
-                            <div class="stat-label">der Brands investieren mehr</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">100</div>
-                            <div class="stat-label">Founding-Bonus-Plätze</div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="hero-mockup">
@@ -2777,10 +2819,6 @@
                     <div class="proof-stat-number">100</div>
                     <div class="proof-stat-label">Founding-Bonusplätze</div>
                 </div>
-                <div class="proof-stat">
-                    <div class="proof-stat-number">1. Mai</div>
-                    <div class="proof-stat-label">offizieller Launch-Tag</div>
-                </div>
             </div>
         </div>
     </div>
@@ -2850,14 +2888,6 @@
             </div>
         </div>
     </section>
-
-    <!-- ============ CTA BREAK 1 ============ -->
-    <div class="cta-break fade-in">
-        <div class="container">
-            <p>Bereit, das zu ändern? Sichere dir jetzt deinen Founding-Creator-Platz.</p>
-            <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
-        </div>
-    </div>
 
     <!-- ============ SOLUTION (Bento Grid + Dashboard Mockups) ============ -->
     <section class="solution-section" id="loesung">
@@ -3446,60 +3476,41 @@
             </div>
             <div class="hiw-steps">
                 <div class="hiw-step fade-in">
-                    <div class="hiw-step-number">01</div>
-                    <h3>Bewerbung ausfüllen</h3>
-                    <p>Erzähl uns von deinen Kanälen, deiner Nische und deiner Erfahrung mit Brand Deals. Dauert unter 3 Minuten.</p>
-                </div>
-                <div class="hiw-step fade-in">
-                    <div class="hiw-step-number">02</div>
-                    <h3>Persönlicher Call</h3>
-                    <p>Ein 30-minütiges Gespräch mit Carlo. Kein Verkaufsgespräch. Es geht darum, ob CreatorBridge zu dir passt und was du dir wünschst.</p>
-                </div>
-                <div class="hiw-step fade-in">
-                    <div class="hiw-step-number">03</div>
-                    <h3>Zugang erhalten</h3>
-                    <p>Wenn es passt, bekommst du vor dem offiziellen Launch Zugang zur Plattform und alle Founding-Creator-Vorteile.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============ FOUNDER STORY ============ -->
-    <section class="founder-story">
-        <div class="container">
-            <div class="founder-grid">
-                <div class="founder-image-col fade-in">
-                    <div class="founder-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Carlo Menga, Gründer von CreatorBridge" loading="lazy">
+                    <div class="hiw-step-marker">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                     </div>
-                    <div class="founder-quote-float">"Die besten Creator verdienen ein besseres System."</div>
+                    <div class="hiw-step-body">
+                        <div class="hiw-step-number">Schritt 1</div>
+                        <h3>Bewerbung ausfüllen</h3>
+                        <p>Erzähl uns von deinen Kanälen, deiner Nische und deiner Erfahrung mit Brand Deals.</p>
+                        <span class="hiw-step-detail">Dauert unter 3 Minuten</span>
+                    </div>
                 </div>
-                <div class="founder-content fade-in">
-                    <div class="section-label">Die Vision dahinter</div>
-                    <h2>Warum ich CreatorBridge <em>baue</em></h2>
-                    <p>Ich heiße Carlo, und ich habe jahrelang erlebt, wie frustrierend die Creator-Brand-Beziehung für beide Seiten ist. Creator jagen Deals hinterher. Marken verschwenden Budget an die falschen Partner. Und dazwischen? Chaos aus DMs, verlorenen Briefings und gebrochenen Zusagen.</p>
-                    <p>Ich habe mit über 100 Creatorn und Dutzenden von Marken gesprochen. Immer wieder dasselbe: "Wir wollen zusammenarbeiten, aber es gibt kein gutes System dafür."</p>
-                    <p><strong>CreatorBridge ist dieses System.</strong> Eine Plattform, die Kooperationen strukturiert, transparent macht und den Zufall eliminiert. Von Creator für Creator gebaut, mit echtem Verständnis für beide Seiten.</p>
-                    <p>Aber ich will nicht einfach eine Plattform starten und hoffen, dass sie funktioniert. Ich will sie gemeinsam mit den ersten Creatorn aufbauen. Das ist der Grund für die Founding Cohort: Ihr gestaltet mit, was CreatorBridge wird.</p>
-                    <div class="founder-sig">
-                        <div class="founder-sig-line"></div>
-                        <div>
-                            <div class="founder-sig-name">Carlo Menga</div>
-                            <div class="founder-sig-role">Gründer, CreatorBridge</div>
-                        </div>
+                <div class="hiw-step fade-in">
+                    <div class="hiw-step-marker">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="hiw-step-body">
+                        <div class="hiw-step-number">Schritt 2</div>
+                        <h3>Persönlicher Call mit Carlo</h3>
+                        <p>Kein Verkaufsgespräch. Es geht darum, ob CreatorBridge zu dir passt und was du dir von der Plattform wünschst.</p>
+                        <span class="hiw-step-detail">30 Minuten, ganz entspannt</span>
+                    </div>
+                </div>
+                <div class="hiw-step fade-in">
+                    <div class="hiw-step-marker">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <div class="hiw-step-body">
+                        <div class="hiw-step-number">Schritt 3</div>
+                        <h3>Zugang erhalten</h3>
+                        <p>Wenn es passt, bekommst du vor dem offiziellen Launch Zugang zur Plattform und alle Founding-Creator-Vorteile.</p>
+                        <span class="hiw-step-detail">Vor allen anderen starten</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- ============ CTA BREAK 2 ============ -->
-    <div class="cta-break fade-in">
-        <div class="container">
-            <p>Carlo nimmt sich persönlich 30 Minuten Zeit für jeden Founding Creator. Plätze sind begrenzt.</p>
-            <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
-        </div>
-    </div>
 
     <!-- ============ PERKS / TIERS ============ -->
     <section class="perks-section" id="vorteile">
@@ -3612,12 +3623,6 @@
         </div>
     </section>
 
-    <!-- ============ CTA BREAK 3 ============ -->
-    <div class="cta-break fade-in">
-        <p>Du willst die Plattform mitgestalten, die Creator Marketing verändert?</p>
-        <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
-    </div>
-
     <!-- ============ FOR WHOM ============ -->
     <section class="for-whom-section">
         <div class="container">
@@ -3702,18 +3707,12 @@
                 </div>
                 <p>Die Creator Economy ist kein Trend, der verschwindet. Sie wächst. Schnell. Aber mit dem Wachstum kommt auch mehr Konkurrenz. Mehr Creator, die um die gleichen Brand Deals kämpfen. Mehr Rauschen, weniger Sichtbarkeit.</p>
                 <p>Die Creator, die sich jetzt positionieren, die jetzt Strukturen aufbauen, die jetzt Zugang zu den richtigen Brands bekommen: <strong>Das sind die Creator, die in 12 Monaten die Deals machen, von denen andere nur träumen.</strong></p>
-                <p>Das Founding Creator Programm ist kein Newsletter-Opt-in. Es ist eine Einladung, bei etwas Neuem von Anfang an dabei zu sein. Die ersten 100 Plätze mit Bonus-Vorteilen sind begrenzt. Nicht künstlich, sondern weil wir persönlich mit jedem Creator arbeiten wollen.</p>
+                <p>Das Founding Creator Programm ist kein Newsletter-Opt-in. Es ist eine Einladung, bei etwas Neuem von Anfang an dabei zu sein. CreatorBridge steht jedem Creator offen, aber die exklusiven Founding-Boni gibt es nur für die ersten 100. Nicht künstlich begrenzt, sondern weil wir persönlich mit den frühen Creatorn arbeiten wollen.</p>
                 <p><strong>Du kannst warten. Oder du kannst einer der ersten sein.</strong></p>
                 <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })" style="margin-top: 1.5rem;">Founding Creator Platz sichern</button>
             </div>
         </div>
     </section>
-
-    <!-- ============ CTA BREAK 4 ============ -->
-    <div class="cta-break fade-in">
-        <p>100 Bonusplätze. Drei Tiers. Ein Startdatum: 1. Mai 2026.</p>
-        <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt bewerben</button>
-    </div>
 
     <!-- ============ SCARCITY (DARK) ============ -->
     <section class="scarcity">
@@ -3801,7 +3800,7 @@
                         <label>YouTube Kanal</label>
                         <input type="text" name="youtube" placeholder="Kanalname oder Link">
                     </div>
-                    <span class="form-hint" style="margin-top: -0.5rem; margin-bottom: 0.75rem;">Nur vorhandene Kanäle angeben, den Rest einfach freilassen.</span>
+                    <span class="form-hint" style="margin-top: -0.5rem; margin-bottom: 0.75rem;">Nicht auf allen Plattformen aktiv? Einfach leer lassen.</span>
 
                     <div class="form-two-col">
                         <div class="form-group">
@@ -3921,7 +3920,7 @@
                         <div class="faq-toggle">+</div>
                     </div>
                     <div class="faq-answer">
-                        <p>Nein. Die 100 Founding-Creator-Plätze sind limitiert und werden nach Reihenfolge der Bewerbungen vergeben. Sobald ein Tier voll ist, rücken neue Bewerber in die nächste Stufe. Wenn alle 100 Plätze vergeben sind, gibt es nur noch die reguläre Warteliste ohne Founding-Vorteile. Je schneller du dich bewirbst, desto bessere Vorteile sicherst du dir.</p>
+                        <p>CreatorBridge steht grundsätzlich jedem Creator offen. Die Founding-Boni sind aber auf die ersten 100 Creator beschränkt und werden nach Reihenfolge der Bewerbungen vergeben. Sobald ein Tier voll ist, rücken neue Bewerber in die nächste Stufe. Wenn alle 100 Bonusplätze vergeben sind, kannst du dich weiterhin anmelden, erhältst aber keine Founding-Vorteile mehr. Je früher du dich bewirbst, desto stärkere Boni sicherst du dir.</p>
                     </div>
                 </div>
 
@@ -3942,8 +3941,8 @@
     <section class="final-cta">
         <div class="container">
             <div class="final-cta-inner">
-                <h2>Werde einer der ersten 100 Founding Creators und sichere dir Zugang zu <em style="color: var(--gold);">neuen Kooperationen</em></h2>
-                <p class="section-subtitle">100 Bonus-Plätze. 3 Stufen. Sobald die Founding Cohort voll ist, gibt es nur noch die reguläre Warteliste. Keine zweite Chance auf diese Vorteile.</p>
+                <h2>Sichere dir deine <em style="color: var(--gold);">Founding-Creator-Vorteile</em></h2>
+                <p class="section-subtitle">Die Plattform steht jedem offen. Aber die exklusiven Founding-Boni gibt es nur für die ersten 100 Creator. 3 Stufen, vergeben nach Reihenfolge.</p>
                 <button class="btn btn-primary" onclick="document.getElementById('bewerbung').scrollIntoView({ behavior: 'smooth' })">Jetzt als Founding Creator bewerben</button>
                 <p class="micro-text">Kostenlos. Unverbindlich. 30-Minuten-Call nach der Bewerbung.</p>
             </div>
@@ -4295,9 +4294,9 @@
         });
 
         // Scroll-triggered sections
-        const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section, .pain-deep, .how-it-works, .founder-story, .transformation, .credibility, .cost-inaction, .social-proof-bar');
+        const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section, .pain-deep, .how-it-works, .transformation, .credibility, .cost-inaction, .social-proof-bar');
         animateSections.forEach(section => {
-            const elements = section.querySelectorAll('.section-header, .solution-tabs-wrapper, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center, .pain-deep-grid, .hiw-step, .founder-grid, .transform-col, .cred-card, .cost-inaction-inner, .proof-stats-row');
+            const elements = section.querySelectorAll('.section-header, .solution-tabs-wrapper, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center, .pain-deep-grid, .hiw-step, .transform-col, .cred-card, .cost-inaction-inner, .proof-stats-row');
 
             elements.forEach(el => {
                 gsap.set(el, { opacity: 0, y: 30 });
@@ -4319,8 +4318,8 @@
             });
         });
 
-        // ============ CTA BREAKS + STANDALONE FADE-INS ============
-        document.querySelectorAll('.cta-break.fade-in, .credibility.fade-in, .transformation.fade-in, .cost-inaction.fade-in').forEach(el => {
+        // ============ STANDALONE FADE-INS ============
+        document.querySelectorAll('.credibility.fade-in, .transformation.fade-in, .cost-inaction.fade-in').forEach(el => {
             gsap.set(el, { opacity: 0, y: 30 });
             ScrollTrigger.create({
                 trigger: el,
