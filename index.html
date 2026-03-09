@@ -817,7 +817,7 @@
             font-style: italic;
         }
 
-        /* ============ SOLUTION / FEATURES (SaaS-Style) ============ */
+        /* ============ SOLUTION / FEATURES (Interactive Tabs + Dashboards) ============ */
         .solution-section {
             padding: 100px 0;
             background: var(--bg-ivory);
@@ -855,81 +855,387 @@
             margin-top: 0.5rem;
         }
 
-        /* Bento Grid for features */
-        .bento-grid {
+        /* Interactive Tabs Layout */
+        .solution-tabs-wrapper {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: auto auto;
-            gap: 1.5rem;
+            grid-template-columns: 340px 1fr;
+            gap: 2.5rem;
+            align-items: start;
+            min-height: 480px;
         }
 
-        .bento-card {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            border: 1px solid var(--border);
+        .solution-tabs-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .solution-tab {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            text-align: left;
+            border-radius: var(--radius-sm);
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
+            border-left: 3px solid transparent;
         }
-        .bento-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: rgba(201, 140, 131, 0.2);
+        .solution-tab:hover {
+            background: rgba(201, 140, 131, 0.04);
         }
-
-        .bento-card.wide {
-            grid-column: span 2;
-        }
-
-        .bento-number {
-            font-family: var(--font-heading);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
-            opacity: 0.6;
-        }
-        .bento-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-        .bento-text {
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-            line-height: 1.7;
+        .solution-tab.active {
+            background: var(--white);
+            border-left-color: var(--accent);
+            box-shadow: var(--shadow-sm);
         }
 
-        /* Inline dashboard mockup for bento card */
-        .bento-mockup {
-            margin-top: 1.5rem;
-            background: var(--bg-ivory);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            border: 1px solid var(--border);
-        }
-
-        .mockup-row {
+        .solution-tab-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.8rem;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(201, 140, 131, 0.08);
+            color: var(--accent);
+            transition: all 0.3s ease;
         }
-        .mockup-row:last-child { border-bottom: none; }
-        .mockup-row .label { color: var(--text-secondary); font-weight: 500; }
-        .mockup-row .value { color: var(--text); font-weight: 600; }
-        .mockup-row .tag {
+        .solution-tab.active .solution-tab-icon {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .solution-tab-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .solution-tab-number {
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            opacity: 0.6;
+            margin-bottom: 2px;
+        }
+        .solution-tab-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .solution-tab-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.35s ease;
+        }
+        .solution-tab.active .solution-tab-desc {
+            max-height: 80px;
+            opacity: 1;
+            margin-top: 6px;
+        }
+
+        /* Dashboard Visual Panel */
+        .solution-dashboard-panel {
+            position: relative;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            min-height: 480px;
+        }
+
+        .solution-dashboard {
+            position: absolute;
+            inset: 0;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+        }
+        .solution-dashboard.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        /* Dashboard shared styles */
+        .dash-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+        .dash-header-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        .dash-header-badge {
             font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            background: rgba(201, 140, 131, 0.1);
+            color: var(--accent);
+        }
+        .dash-tag {
+            display: inline-block;
+            font-size: 0.68rem;
             padding: 2px 8px;
             border-radius: var(--radius-pill);
             font-weight: 600;
         }
-        .mockup-row .tag.green { background: rgba(40, 200, 64, 0.1); color: #1A9B38; }
-        .mockup-row .tag.orange { background: rgba(254, 188, 46, 0.15); color: #B8860B; }
+        .dash-tag.green { background: rgba(40, 200, 64, 0.1); color: #1A9B38; }
+        .dash-tag.orange { background: rgba(254, 188, 46, 0.15); color: #B8860B; }
+        .dash-tag.blue { background: rgba(59, 130, 246, 0.1); color: #2563EB; }
+        .dash-tag.red { background: rgba(239, 68, 68, 0.1); color: #DC2626; }
+        .dash-tag.gray { background: rgba(107, 86, 80, 0.08); color: var(--text-muted); }
+        .dash-tag.accent { background: rgba(201, 140, 131, 0.1); color: var(--accent); }
+
+        /* Dashboard 1: Deal Marketplace */
+        .dash-deal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .dash-deal {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .dash-deal:last-child { border-bottom: none; }
+        .dash-deal-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+        .dash-deal-cat {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .dash-deal-budget {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+            text-align: right;
+        }
+        .dash-deal-action {
+            font-size: 0.72rem;
+            padding: 5px 14px;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Dashboard 2: Match Profile */
+        .dash-match-card {
+            background: var(--bg-ivory);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .dash-match-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+        .dash-match-info { flex: 1; }
+        .dash-match-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+        .dash-match-detail {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .dash-match-score {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Dashboard 3: Workspace */
+        .dash-workspace-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .dash-ws-item {
+            background: var(--bg-ivory);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            border: 1px solid var(--border);
+        }
+        .dash-ws-item-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .dash-ws-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+        .dash-ws-label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text);
+        }
+        .dash-ws-value {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Dashboard 4: Overview / Analytics */
+        .dash-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+        .dash-stat-box {
+            background: var(--bg-ivory);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .dash-stat-num {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .dash-stat-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .dash-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .dash-timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .dash-timeline-item:last-child { border-bottom: none; }
+        .dash-timeline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dash-timeline-text {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            flex: 1;
+        }
+        .dash-timeline-time {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Dashboard 5: Discovery */
+        .dash-discovery-card {
+            background: var(--bg-ivory);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.6rem;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dash-disc-left { display: flex; align-items: center; gap: 0.75rem; }
+        .dash-disc-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(201, 140, 131, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .dash-disc-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+        .dash-disc-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .dash-disc-match {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .dash-disc-match.high { color: #1A9B38; }
+        .dash-disc-match.med { color: var(--accent); }
+        .dash-new-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            padding: 1px 6px;
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            background: rgba(239, 68, 68, 0.1);
+            color: #DC2626;
+            margin-left: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
         .cta-center {
             text-align: center;
@@ -1486,10 +1792,10 @@
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
-            .bento-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .solution-tabs-wrapper {
+                grid-template-columns: 280px 1fr;
+                gap: 1.5rem;
             }
-            .bento-card.wide { grid-column: span 2; }
         }
 
         @media (max-width: 768px) {
@@ -1533,8 +1839,46 @@
             }
             .problem-title { font-size: 1.5rem; }
             .problem-text { font-size: 0.95rem; }
-            .bento-grid { grid-template-columns: 1fr; }
-            .bento-card.wide { grid-column: span 1; }
+            .solution-tabs-wrapper {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            .solution-tabs-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 0;
+                padding-bottom: 0.5rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .solution-tabs-nav::-webkit-scrollbar { display: none; }
+            .solution-tab {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                min-width: 100px;
+                padding: 0.75rem 1rem;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                border-radius: 0;
+            }
+            .solution-tab.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--accent);
+                background: rgba(201, 140, 131, 0.04);
+                box-shadow: none;
+            }
+            .solution-tab-desc { display: none; }
+            .solution-tab-number { display: none; }
+            .solution-tab-title { font-size: 0.8rem; }
+            .solution-tab-icon { width: 32px; height: 32px; }
+            .solution-dashboard-panel { min-height: 400px; }
+            .dash-deal { grid-template-columns: 1fr auto auto; gap: 0.6rem; }
+            .dash-deal-action { display: none; }
+            .dash-workspace-grid { grid-template-columns: 1fr; }
+            .dash-stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+            .dash-stat-num { font-size: 1.4rem; }
+            .solution-stat { grid-template-columns: 1fr; gap: 1rem; }
             .tiers-grid { grid-template-columns: 1fr; }
             .for-whom-grid { grid-template-columns: 1fr; }
             .tier-bars-grid { grid-template-columns: 1fr; }
@@ -1848,48 +2192,270 @@
                 </div>
             </div>
 
-            <div class="bento-grid">
-                <div class="bento-card wide">
-                    <div class="bento-number">01</div>
-                    <h3 class="bento-title">Deals entdecken und bewerben</h3>
-                    <p class="bento-text">Marken stellen Kooperationen ein. Du siehst sofort, was verfügbar ist, welche Anforderungen gelten und wie hoch das Budget ist. Bewirb dich gezielt auf die Deals, die zu deiner Nische passen.</p>
-                    <div class="bento-mockup">
-                        <div class="mockup-row">
-                            <span class="label">Hautpflege-Kampagne</span>
-                            <span class="tag green">Offen</span>
-                            <span class="value">€850</span>
+            <div class="solution-tabs-wrapper">
+                <!-- Left: Tab Navigation -->
+                <nav class="solution-tabs-nav">
+                    <button class="solution-tab active" data-tab="0">
+                        <div class="solution-tab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                        <div class="solution-tab-content">
+                            <div class="solution-tab-number">01</div>
+                            <div class="solution-tab-title">Deals entdecken und bewerben</div>
+                            <div class="solution-tab-desc">Marken stellen Kooperationen ein. Sieh sofort Budget, Anforderungen und bewirb dich gezielt.</div>
                         </div>
-                        <div class="mockup-row">
-                            <span class="label">Sommer-Kollektion Launch</span>
-                            <span class="tag green">Offen</span>
-                            <span class="value">€1.200</span>
+                    </button>
+                    <button class="solution-tab" data-tab="1">
+                        <div class="solution-tab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                        <div class="solution-tab-content">
+                            <div class="solution-tab-number">02</div>
+                            <div class="solution-tab-title">Gematcht werden</div>
+                            <div class="solution-tab-desc">Die Plattform verbindet dich mit Marken, die zu deinem Profil passen. Relevante Matches statt Massenanfragen.</div>
                         </div>
-                        <div class="mockup-row">
-                            <span class="label">Fitness-Supplement Review</span>
-                            <span class="tag orange">Bald</span>
-                            <span class="value">€600</span>
+                    </button>
+                    <button class="solution-tab" data-tab="2">
+                        <div class="solution-tab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+                        <div class="solution-tab-content">
+                            <div class="solution-tab-number">03</div>
+                            <div class="solution-tab-title">Alles an einem Ort</div>
+                            <div class="solution-tab-desc">Kommunikation, Briefings, Deadlines, Deliverables. Kein Wechsel mehr zwischen fünf Tools.</div>
+                        </div>
+                    </button>
+                    <button class="solution-tab" data-tab="3">
+                        <div class="solution-tab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+                        <div class="solution-tab-content">
+                            <div class="solution-tab-number">04</div>
+                            <div class="solution-tab-title">Überblick behalten</div>
+                            <div class="solution-tab-desc">Sieh auf einen Blick, welche Deals offen sind, wo du stehst und was als Nächstes ansteht.</div>
+                        </div>
+                    </button>
+                    <button class="solution-tab" data-tab="4">
+                        <div class="solution-tab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                        <div class="solution-tab-content">
+                            <div class="solution-tab-number">05</div>
+                            <div class="solution-tab-title">Neue Chancen finden</div>
+                            <div class="solution-tab-desc">Laufend neue Kooperationsmöglichkeiten, die zu deiner Nische und Reichweite passen.</div>
+                        </div>
+                    </button>
+                </nav>
+
+                <!-- Right: Dashboard Visuals -->
+                <div class="solution-dashboard-panel">
+                    <!-- Dashboard 1: Deal Marketplace -->
+                    <div class="solution-dashboard active" data-dashboard="0">
+                        <div class="dash-header">
+                            <div class="dash-header-title">Deal Marketplace</div>
+                            <div class="dash-header-badge">12 neue Deals</div>
+                        </div>
+                        <div class="dash-deal-list">
+                            <div class="dash-deal">
+                                <div><div class="dash-deal-name">Hautpflege-Kampagne</div><div class="dash-deal-cat">Beauty &bull; Instagram Reels</div></div>
+                                <div class="dash-tag green">Offen</div>
+                                <div class="dash-deal-budget">€850</div>
+                                <button class="dash-deal-action">Bewerben</button>
+                            </div>
+                            <div class="dash-deal">
+                                <div><div class="dash-deal-name">Sommer-Kollektion Launch</div><div class="dash-deal-cat">Fashion &bull; TikTok + IG</div></div>
+                                <div class="dash-tag green">Offen</div>
+                                <div class="dash-deal-budget">€1.200</div>
+                                <button class="dash-deal-action">Bewerben</button>
+                            </div>
+                            <div class="dash-deal">
+                                <div><div class="dash-deal-name">Fitness-Supplement Review</div><div class="dash-deal-cat">Health &bull; YouTube</div></div>
+                                <div class="dash-tag orange">Bald</div>
+                                <div class="dash-deal-budget">€600</div>
+                                <button class="dash-deal-action" style="opacity:0.5;">Vormerken</button>
+                            </div>
+                            <div class="dash-deal">
+                                <div><div class="dash-deal-name">Tech-Gadget Unboxing</div><div class="dash-deal-cat">Tech &bull; YouTube Shorts</div></div>
+                                <div class="dash-tag green">Offen</div>
+                                <div class="dash-deal-budget">€950</div>
+                                <button class="dash-deal-action">Bewerben</button>
+                            </div>
+                            <div class="dash-deal">
+                                <div><div class="dash-deal-name">Reise-Vlog Kooperation</div><div class="dash-deal-cat">Travel &bull; Multi-Plattform</div></div>
+                                <div class="dash-tag blue">Eingeladen</div>
+                                <div class="dash-deal-budget">€2.400</div>
+                                <button class="dash-deal-action">Annehmen</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="bento-card">
-                    <div class="bento-number">02</div>
-                    <h3 class="bento-title">Gematcht werden</h3>
-                    <p class="bento-text">Die Plattform verbindet dich mit Marken, die zu deinem Profil passen. Relevante Matches statt Massenanfragen.</p>
-                </div>
-                <div class="bento-card">
-                    <div class="bento-number">03</div>
-                    <h3 class="bento-title">Alles an einem Ort</h3>
-                    <p class="bento-text">Kommunikation, Briefings, Deadlines, Deliverables. Kein Wechsel mehr zwischen fünf verschiedenen Tools.</p>
-                </div>
-                <div class="bento-card">
-                    <div class="bento-number">04</div>
-                    <h3 class="bento-title">Überblick behalten</h3>
-                    <p class="bento-text">Sieh auf einen Blick, welche Deals offen sind, wo du stehst und was als Nächstes ansteht.</p>
-                </div>
-                <div class="bento-card">
-                    <div class="bento-number">05</div>
-                    <h3 class="bento-title">Neue Chancen finden</h3>
-                    <p class="bento-text">Die Plattform zeigt dir laufend neue Kooperationsmöglichkeiten, die zu deiner Nische und Reichweite passen. Du verpasst keinen Deal mehr.</p>
+
+                    <!-- Dashboard 2: Smart Matching -->
+                    <div class="solution-dashboard" data-dashboard="1">
+                        <div class="dash-header">
+                            <div class="dash-header-title">Deine Top-Matches</div>
+                            <div class="dash-header-badge">Basierend auf deinem Profil</div>
+                        </div>
+                        <div class="dash-match-card">
+                            <div class="dash-match-avatar" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">N</div>
+                            <div class="dash-match-info">
+                                <div class="dash-match-name">NovaSkin Cosmetics</div>
+                                <div class="dash-match-detail">Beauty &bull; €1.100 Budget &bull; IG Reels</div>
+                            </div>
+                            <div class="dash-match-score">96%</div>
+                        </div>
+                        <div class="dash-match-card">
+                            <div class="dash-match-avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">F</div>
+                            <div class="dash-match-info">
+                                <div class="dash-match-name">FitLife Germany</div>
+                                <div class="dash-match-detail">Fitness &bull; €800 Budget &bull; TikTok</div>
+                            </div>
+                            <div class="dash-match-score">91%</div>
+                        </div>
+                        <div class="dash-match-card">
+                            <div class="dash-match-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">S</div>
+                            <div class="dash-match-info">
+                                <div class="dash-match-name">SunStyle Fashion</div>
+                                <div class="dash-match-detail">Fashion &bull; €1.500 Budget &bull; Multi</div>
+                            </div>
+                            <div class="dash-match-score">87%</div>
+                        </div>
+                        <div class="dash-match-card">
+                            <div class="dash-match-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">E</div>
+                            <div class="dash-match-info">
+                                <div class="dash-match-name">EcoVerde</div>
+                                <div class="dash-match-detail">Nachhaltigkeit &bull; €650 Budget &bull; YouTube</div>
+                            </div>
+                            <div class="dash-match-score">84%</div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard 3: Workspace -->
+                    <div class="solution-dashboard" data-dashboard="2">
+                        <div class="dash-header">
+                            <div class="dash-header-title">Workspace</div>
+                            <div class="dash-header-badge">NovaSkin Kampagne</div>
+                        </div>
+                        <div class="dash-workspace-grid">
+                            <div class="dash-ws-item">
+                                <div class="dash-ws-item-header">
+                                    <div class="dash-ws-icon" style="background: var(--accent);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                                    <div class="dash-ws-label">Chat</div>
+                                </div>
+                                <div class="dash-ws-value">3 ungelesene Nachrichten vom Brand Manager</div>
+                            </div>
+                            <div class="dash-ws-item">
+                                <div class="dash-ws-item-header">
+                                    <div class="dash-ws-icon" style="background: #2563EB;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                                    <div class="dash-ws-label">Briefing</div>
+                                </div>
+                                <div class="dash-ws-value">Produktfotos, Hashtags, Tonalität festgelegt</div>
+                            </div>
+                            <div class="dash-ws-item">
+                                <div class="dash-ws-item-header">
+                                    <div class="dash-ws-icon" style="background: #F59E0B;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                                    <div class="dash-ws-label">Deadline</div>
+                                </div>
+                                <div class="dash-ws-value">Content-Abgabe: 28. März 2026</div>
+                            </div>
+                            <div class="dash-ws-item">
+                                <div class="dash-ws-item-header">
+                                    <div class="dash-ws-icon" style="background: #10B981;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+                                    <div class="dash-ws-label">Deliverables</div>
+                                </div>
+                                <div class="dash-ws-value">2/4 abgeliefert, 1 in Prüfung</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(201, 140, 131, 0.06); border-radius: var(--radius-sm); border: 1px solid rgba(201, 140, 131, 0.12);">
+                            <div style="font-size: 0.78rem; color: var(--text-secondary);"><strong style="color: var(--text);">Nächster Schritt:</strong> Story-Draft hochladen und zur Freigabe einreichen</div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard 4: Overview / Analytics -->
+                    <div class="solution-dashboard" data-dashboard="3">
+                        <div class="dash-header">
+                            <div class="dash-header-title">Dein Überblick</div>
+                            <div class="dash-header-badge">März 2026</div>
+                        </div>
+                        <div class="dash-stats-row">
+                            <div class="dash-stat-box">
+                                <div class="dash-stat-num">7</div>
+                                <div class="dash-stat-label">Aktive Deals</div>
+                            </div>
+                            <div class="dash-stat-box">
+                                <div class="dash-stat-num">€4.8k</div>
+                                <div class="dash-stat-label">Umsatz (Monat)</div>
+                            </div>
+                            <div class="dash-stat-box">
+                                <div class="dash-stat-num">94%</div>
+                                <div class="dash-stat-label">Pünktlich-Rate</div>
+                            </div>
+                        </div>
+                        <div class="dash-timeline">
+                            <div class="dash-timeline-item">
+                                <div class="dash-timeline-dot" style="background: #1A9B38;"></div>
+                                <div class="dash-timeline-text">NovaSkin: Content freigegeben</div>
+                                <div class="dash-timeline-time">Heute</div>
+                            </div>
+                            <div class="dash-timeline-item">
+                                <div class="dash-timeline-dot" style="background: #F59E0B;"></div>
+                                <div class="dash-timeline-text">FitLife: Draft-Review ausstehend</div>
+                                <div class="dash-timeline-time">Morgen</div>
+                            </div>
+                            <div class="dash-timeline-item">
+                                <div class="dash-timeline-dot" style="background: #2563EB;"></div>
+                                <div class="dash-timeline-text">SunStyle: Briefing erhalten</div>
+                                <div class="dash-timeline-time">In 2 Tagen</div>
+                            </div>
+                            <div class="dash-timeline-item">
+                                <div class="dash-timeline-dot" style="background: var(--accent);"></div>
+                                <div class="dash-timeline-text">EcoVerde: Zahlung eingegangen (€650)</div>
+                                <div class="dash-timeline-time">Gestern</div>
+                            </div>
+                            <div class="dash-timeline-item">
+                                <div class="dash-timeline-dot" style="background: #8B5CF6;"></div>
+                                <div class="dash-timeline-text">TechGear: Neues Angebot erhalten</div>
+                                <div class="dash-timeline-time">Vor 2h</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard 5: Discovery -->
+                    <div class="solution-dashboard" data-dashboard="4">
+                        <div class="dash-header">
+                            <div class="dash-header-title">Für dich empfohlen</div>
+                            <div class="dash-header-badge">Basierend auf deiner Nische</div>
+                        </div>
+                        <div class="dash-discovery-card">
+                            <div class="dash-disc-left">
+                                <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                <div>
+                                    <div class="dash-disc-title">Premium Food Brand <span class="dash-new-badge">Neu</span></div>
+                                    <div class="dash-disc-meta">Food &bull; €1.800 &bull; 3 Reels + Story</div>
+                                </div>
+                            </div>
+                            <div class="dash-disc-match high">95%</div>
+                        </div>
+                        <div class="dash-discovery-card">
+                            <div class="dash-disc-left">
+                                <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                <div>
+                                    <div class="dash-disc-title">Sportswear Startup <span class="dash-new-badge">Neu</span></div>
+                                    <div class="dash-disc-meta">Sport &bull; €920 &bull; TikTok Serie</div>
+                                </div>
+                            </div>
+                            <div class="dash-disc-match high">92%</div>
+                        </div>
+                        <div class="dash-discovery-card">
+                            <div class="dash-disc-left">
+                                <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                <div>
+                                    <div class="dash-disc-title">Nachhaltige Skincare</div>
+                                    <div class="dash-disc-meta">Beauty &bull; €1.400 &bull; Long-term</div>
+                                </div>
+                            </div>
+                            <div class="dash-disc-match med">88%</div>
+                        </div>
+                        <div class="dash-discovery-card">
+                            <div class="dash-disc-left">
+                                <div class="dash-disc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                <div>
+                                    <div class="dash-disc-title">Travel Platform</div>
+                                    <div class="dash-disc-meta">Reise &bull; €2.200 &bull; Vlog + Reels</div>
+                                </div>
+                            </div>
+                            <div class="dash-disc-match med">85%</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -2435,6 +3001,28 @@
             });
         }
 
+        // ============ SOLUTION TABS (Notion-style) ============
+        const solutionTabs = document.querySelectorAll('.solution-tab');
+        const solutionDashboards = document.querySelectorAll('.solution-dashboard');
+        if (solutionTabs.length && solutionDashboards.length) {
+            solutionTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const idx = tab.dataset.tab;
+                    solutionTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    solutionDashboards.forEach(d => {
+                        d.classList.remove('active');
+                        d.style.position = 'absolute';
+                    });
+                    const target = document.querySelector(`.solution-dashboard[data-dashboard="${idx}"]`);
+                    if (target) {
+                        target.classList.add('active');
+                        target.style.position = 'relative';
+                    }
+                });
+            });
+        }
+
         // ============ GSAP ANIMATIONS (using .to instead of .from) ============
         // Hero entrance
         const heroFadeUps = document.querySelectorAll('.hero .fade-up');
@@ -2454,7 +3042,7 @@
         // Scroll-triggered sections
         const animateSections = document.querySelectorAll('.section, .solution-section, .perks-section, .for-whom-section, .form-section, .faq-section');
         animateSections.forEach(section => {
-            const elements = section.querySelectorAll('.section-header, .bento-card, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center');
+            const elements = section.querySelectorAll('.section-header, .solution-tabs-wrapper, .tier-card, .tiers-cta, .for-whom-col, .for-whom-cta-box, .stat-callout, .solution-intro, .form-container, .faq-item, .cta-center');
 
             elements.forEach(el => {
                 gsap.set(el, { opacity: 0, y: 30 });
