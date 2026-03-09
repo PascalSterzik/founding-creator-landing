@@ -1790,6 +1790,38 @@
             transform: translateY(24px);
         }
 
+        /* Desktop arrows on dashboard panel */
+        .solution-desktop-arrows {
+            position: absolute;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+        .solution-desktop-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+        .solution-desktop-arrow:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Mobile-only elements hidden on desktop */
+        .solution-mobile-header { display: none; }
+        .solution-mobile-nav { display: none; }
+
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
             .solution-tabs-wrapper {
@@ -1842,37 +1874,76 @@
             .solution-tabs-wrapper {
                 grid-template-columns: 1fr;
                 min-height: auto;
-            }
-            .solution-tabs-nav {
-                flex-direction: row;
-                overflow-x: auto;
                 gap: 0;
-                padding-bottom: 0.5rem;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
             }
-            .solution-tabs-nav::-webkit-scrollbar { display: none; }
-            .solution-tab {
-                flex-direction: column;
+            .solution-tabs-nav { display: none; }
+            .solution-dashboard-panel {
+                min-height: auto;
+                border-radius: var(--radius-md);
+            }
+            .solution-dashboard {
+                padding: 1.5rem;
+            }
+            .solution-mobile-header {
+                display: flex;
                 align-items: center;
-                text-align: center;
-                min-width: 100px;
-                padding: 0.75rem 1rem;
-                border-left: none;
-                border-bottom: 3px solid transparent;
-                border-radius: 0;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+                padding: 0 0.25rem;
             }
-            .solution-tab.active {
-                border-left-color: transparent;
-                border-bottom-color: var(--accent);
-                background: rgba(201, 140, 131, 0.04);
-                box-shadow: none;
+            .solution-mobile-title {
+                font-weight: 700;
+                font-size: 1rem;
+                color: var(--text);
             }
-            .solution-tab-desc { display: none; }
-            .solution-tab-number { display: none; }
-            .solution-tab-title { font-size: 0.8rem; }
-            .solution-tab-icon { width: 32px; height: 32px; }
-            .solution-dashboard-panel { min-height: 400px; }
+            .solution-mobile-counter {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+            }
+            .solution-mobile-nav {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1.5rem;
+                margin-top: 1.25rem;
+            }
+            .solution-mobile-arrow {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1px solid var(--border);
+                background: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: var(--text-secondary);
+                transition: all 0.2s ease;
+                flex-shrink: 0;
+            }
+            .solution-mobile-arrow:active {
+                background: var(--bg-ivory);
+                transform: scale(0.95);
+            }
+            .solution-dots {
+                display: flex;
+                gap: 6px;
+            }
+            .solution-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--border-strong);
+                transition: all 0.3s ease;
+            }
+            .solution-dot.active {
+                background: var(--accent);
+                width: 24px;
+                border-radius: 4px;
+            }
+            .solution-desktop-arrows { display: none; }
+            .solution-mobile-header { display: flex !important; }
+            .solution-mobile-nav { display: flex !important; }
             .dash-deal { grid-template-columns: 1fr auto auto; gap: 0.6rem; }
             .dash-deal-action { display: none; }
             .dash-workspace-grid { grid-template-columns: 1fr; }
@@ -2457,6 +2528,29 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Desktop arrows -->
+                <div class="solution-desktop-arrows">
+                    <button class="solution-desktop-arrow" data-dir="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                    <button class="solution-desktop-arrow" data-dir="next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                </div>
+            </div>
+
+            <!-- Mobile navigation (below dashboard) -->
+            <div class="solution-mobile-header">
+                <div class="solution-mobile-title" id="solutionMobileTitle">Deals entdecken</div>
+                <div class="solution-mobile-counter" id="solutionMobileCounter">1 / 5</div>
+            </div>
+            <div class="solution-mobile-nav">
+                <button class="solution-mobile-arrow" data-dir="prev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                <div class="solution-dots" id="solutionDots">
+                    <div class="solution-dot active" data-dot="0"></div>
+                    <div class="solution-dot" data-dot="1"></div>
+                    <div class="solution-dot" data-dot="2"></div>
+                    <div class="solution-dot" data-dot="3"></div>
+                    <div class="solution-dot" data-dot="4"></div>
+                </div>
+                <button class="solution-mobile-arrow" data-dir="next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
             </div>
 
             <div class="cta-center">
@@ -3001,26 +3095,85 @@
             });
         }
 
-        // ============ SOLUTION TABS (Notion-style) ============
+        // ============ SOLUTION TABS (Notion-style + mobile carousel) ============
         const solutionTabs = document.querySelectorAll('.solution-tab');
         const solutionDashboards = document.querySelectorAll('.solution-dashboard');
+        const solutionDots = document.querySelectorAll('.solution-dot');
+        const mobileTitles = ['Deals entdecken', 'Gematcht werden', 'Alles an einem Ort', 'Überblick', 'Neue Chancen'];
+        let currentSolutionIdx = 0;
+
+        function switchSolution(idx) {
+            if (idx < 0) idx = solutionDashboards.length - 1;
+            if (idx >= solutionDashboards.length) idx = 0;
+            currentSolutionIdx = idx;
+
+            // Update tabs (desktop)
+            solutionTabs.forEach(t => t.classList.remove('active'));
+            const activeTab = document.querySelector(`.solution-tab[data-tab="${idx}"]`);
+            if (activeTab) activeTab.classList.add('active');
+
+            // Update dashboards
+            solutionDashboards.forEach(d => {
+                d.classList.remove('active');
+                d.style.position = 'absolute';
+            });
+            const target = solutionDashboards[idx];
+            if (target) {
+                target.classList.add('active');
+                target.style.position = 'relative';
+            }
+
+            // Update dots (mobile)
+            solutionDots.forEach(d => d.classList.remove('active'));
+            const activeDot = document.querySelector(`.solution-dot[data-dot="${idx}"]`);
+            if (activeDot) activeDot.classList.add('active');
+
+            // Update mobile title + counter
+            const mTitle = document.getElementById('solutionMobileTitle');
+            const mCounter = document.getElementById('solutionMobileCounter');
+            if (mTitle) mTitle.textContent = mobileTitles[idx];
+            if (mCounter) mCounter.textContent = (idx + 1) + ' / ' + solutionDashboards.length;
+        }
+
         if (solutionTabs.length && solutionDashboards.length) {
+            // Desktop tabs
             solutionTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const idx = tab.dataset.tab;
-                    solutionTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    solutionDashboards.forEach(d => {
-                        d.classList.remove('active');
-                        d.style.position = 'absolute';
-                    });
-                    const target = document.querySelector(`.solution-dashboard[data-dashboard="${idx}"]`);
-                    if (target) {
-                        target.classList.add('active');
-                        target.style.position = 'relative';
-                    }
+                tab.addEventListener('click', () => switchSolution(parseInt(tab.dataset.tab)));
+            });
+
+            // Desktop arrows
+            document.querySelectorAll('.solution-desktop-arrow').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchSolution(currentSolutionIdx + (btn.dataset.dir === 'next' ? 1 : -1));
                 });
             });
+
+            // Mobile arrows
+            document.querySelectorAll('.solution-mobile-arrow').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchSolution(currentSolutionIdx + (btn.dataset.dir === 'next' ? 1 : -1));
+                });
+            });
+
+            // Mobile dots
+            solutionDots.forEach(dot => {
+                dot.addEventListener('click', () => switchSolution(parseInt(dot.dataset.dot)));
+            });
+
+            // Touch swipe on dashboard panel
+            const dashPanel = document.querySelector('.solution-dashboard-panel');
+            if (dashPanel) {
+                let touchStartX = 0;
+                let touchEndX = 0;
+                dashPanel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+                dashPanel.addEventListener('touchend', e => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchStartX - touchEndX;
+                    if (Math.abs(diff) > 50) {
+                        switchSolution(currentSolutionIdx + (diff > 0 ? 1 : -1));
+                    }
+                }, { passive: true });
+            }
         }
 
         // ============ GSAP ANIMATIONS (using .to instead of .from) ============
