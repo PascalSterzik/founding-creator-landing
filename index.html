@@ -2705,34 +2705,91 @@
         }
         .phone-scroll-frame {
             position: relative;
-            filter: drop-shadow(0 40px 80px rgba(46, 29, 25, 0.25)) drop-shadow(0 15px 30px rgba(46, 29, 25, 0.15));
+            filter: drop-shadow(0 40px 80px rgba(46, 29, 25, 0.3)) drop-shadow(0 15px 30px rgba(46, 29, 25, 0.2));
         }
         .phone-scroll-bezel {
-            width: 280px;
-            height: 560px;
+            width: 300px;
+            height: 620px;
             background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 30%, #0d0d0d 100%);
-            border-radius: 40px;
+            border-radius: 48px;
             padding: 10px;
-            border: 3px solid #6C6C6C;
+            border: 2px solid rgba(120,120,120,0.4);
             position: relative;
             overflow: hidden;
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.08),
+                inset 0 1px 0 rgba(255,255,255,0.12),
+                0 0 0 1px rgba(0,0,0,0.3);
+        }
+        /* Side button: power */
+        .phone-scroll-bezel::before {
+            content: '';
+            position: absolute;
+            top: 120px;
+            right: -4px;
+            width: 3px;
+            height: 50px;
+            background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 50%, #3a3a3a 100%);
+            border-radius: 0 2px 2px 0;
+            z-index: 5;
+        }
+        /* Side buttons: volume */
+        .phone-scroll-bezel::after {
+            content: '';
+            position: absolute;
+            top: 140px;
+            left: -4px;
+            width: 3px;
+            height: 36px;
+            background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 50%, #3a3a3a 100%);
+            border-radius: 2px 0 0 2px;
+            z-index: 5;
+            box-shadow: 0 -20px 0 0 #2e2e2e;
+        }
+        /* Top highlight shimmer */
+        .phone-scroll-frame::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 70%, transparent 100%);
+            z-index: 20;
+            border-radius: 48px;
+            pointer-events: none;
         }
         .phone-scroll-notch {
             position: absolute;
-            top: 12px;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90px;
-            height: 22px;
+            width: 100px;
+            height: 28px;
             background: #000;
-            border-radius: 12px;
+            border-radius: 16px;
             z-index: 10;
+        }
+        /* Camera dot inside Dynamic Island */
+        .phone-scroll-notch::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 24px;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle at 40% 40%, #1a2a3a 0%, #0a0f15 60%, #000 100%);
+            border-radius: 50%;
+            box-shadow:
+                inset 0 0 2px rgba(50,80,120,0.4),
+                0 0 1px rgba(255,255,255,0.1);
         }
         .phone-scroll-screen {
             width: 100%;
             height: 100%;
             background: var(--white);
-            border-radius: 32px;
+            border-radius: 38px;
             overflow: hidden;
         }
 
@@ -2991,8 +3048,9 @@
             .dream-content, .dream-deep-content { max-width: 100%; }
             .phone-scroll-container { height: 70vh; margin-top: 1rem; }
             .phone-scroll-sticky { top: 10vh; padding-top: 0; }
-            .phone-scroll-bezel { width: 240px; height: 480px; }
-            .phone-scroll-card { transform: rotateX(16deg) scale(0.85); }
+            .phone-scroll-bezel { width: 280px; height: 580px; border-radius: 44px; }
+            .phone-scroll-screen { border-radius: 34px; }
+            .phone-scroll-card { transform: rotateX(16deg) scale(0.92); }
             .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
             .proof-stats-row { gap: 0.75rem; }
             .proof-stat { flex: 1 1 0; min-width: 0; }
