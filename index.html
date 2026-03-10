@@ -812,8 +812,8 @@
             cursor: default;
         }
         .problem-card:hover {
-            transform: rotateY(-2deg) rotateX(1.5deg) translateY(-6px);
-            box-shadow: 0 16px 48px rgba(75, 50, 45, 0.12), 0 6px 20px rgba(75, 50, 45, 0.06);
+            transform: rotateY(-1.5deg) rotateX(1deg) translateY(-5px);
+            box-shadow: 0 14px 40px rgba(75, 50, 45, 0.10), 0 5px 16px rgba(75, 50, 45, 0.05);
         }
         .problem-card .problem-number {
             display: inline-block;
@@ -860,7 +860,7 @@
         .stat-callout {
             text-align: center;
             padding: 4rem 2rem;
-            padding-top: 6rem;
+            padding-top: 8rem;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -2133,7 +2133,7 @@
             .hero-buttons { flex-direction: column; }
             .btn { width: 100%; justify-content: center; }
             .stats-row { grid-template-columns: 1fr; }
-            .stat-callout { padding: 2.5rem 1rem; padding-top: 4rem; }
+            .stat-callout { padding: 2.5rem 1rem; padding-top: 5rem; }
             .stat-callout-number { font-size: 3.5rem; }
             .footer-inner { justify-content: center; text-align: center; }
         }
@@ -2150,24 +2150,22 @@
         .proof-stats-row {
             display: flex;
             justify-content: center;
-            gap: 5rem;
+            gap: 6rem;
         }
         .proof-stat {
-            display: flex;
-            align-items: baseline;
-            gap: 0.6rem;
+            text-align: center;
             flex: 0 0 auto;
         }
         .proof-stat-number {
             font-family: var(--font-heading);
-            font-size: 2.4rem;
+            font-size: 2.6rem;
             font-weight: 700;
             color: var(--accent);
             line-height: 1;
-            white-space: nowrap;
+            margin-bottom: 0.5rem;
         }
         .proof-stat-label {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             font-weight: 500;
             line-height: 1.4;
@@ -2684,22 +2682,24 @@
 
         /* Phone Scroll Animation Container */
         .phone-scroll-container {
-            height: 180vh;
+            height: 120vh;
             position: relative;
+            margin-top: 3rem;
         }
         .phone-scroll-sticky {
             position: sticky;
-            top: 0;
-            height: 100vh;
+            top: 10vh;
+            height: 90vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
+            padding-top: 2rem;
             perspective: 1000px;
         }
         .phone-scroll-card {
             transform-style: preserve-3d;
             will-change: transform;
-            transform: rotateX(20deg) scale(1.05);
+            transform: rotateX(16deg) scale(1);
             transition: none;
         }
         .phone-scroll-frame {
@@ -2988,14 +2988,14 @@
             .transformation-grid { grid-template-columns: 1fr; }
             .dream-grid, .dream-grid.reverse, .dream-deep-grid { grid-template-columns: 1fr; direction: ltr; }
             .dream-content, .dream-deep-content { max-width: 100%; }
-            .phone-scroll-container { height: 140vh; }
+            .phone-scroll-container { height: 100vh; margin-top: 2rem; }
+            .phone-scroll-sticky { top: 5vh; padding-top: 1rem; }
             .phone-scroll-bezel { width: 240px; height: 480px; }
-            .phone-scroll-card { transform: rotateX(20deg) scale(0.7); }
+            .phone-scroll-card { transform: rotateX(16deg) scale(0.85); }
             .credibility-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
-            .proof-stats-row { flex-direction: column; align-items: center; gap: 1.25rem; }
-            .proof-stat { gap: 0.5rem; }
+            .proof-stats-row { gap: 1.5rem; }
             .proof-stat-number { font-size: 1.6rem; }
-            .proof-stat-label { font-size: 0.78rem; }
+            .proof-stat-label { font-size: 0.72rem; white-space: normal; }
             .pain-deep, .reality-check, .how-it-works, .transformation, .credibility, .cost-inaction { padding: 60px 0; }
         }
     </style>
@@ -3274,7 +3274,7 @@
                     <h2>Die Creator Economy wächst. Aber <em>nicht für alle.</em></h2>
                     <p>Die Zahlen klingen gut: Marken investieren so viel wie nie in Influencer-Marketing. Budgets steigen jedes Quartal. Neue Produkte suchen Creator-Partnerschaften.</p>
                     <p>Aber wer profitiert davon? Meistens dieselben großen Accounts. Dieselben Management-Agenturen. Dieselben Netzwerke, in die du keinen Zugang hast. <strong>Die Deals existieren, sie kommen nur nicht bei dir an.</strong></p>
-                    <p>Oder sie kommen, aber als Lowball-Angebote mit unklaren Briefings und Bezahlung nach 90 Tagen. Du postest regelmäßig, baust deine Community auf, lieferst guten Content. Und trotzdem: entweder keine Deals oder die falschen.</p>
+                    <p>Oder sie kommen, aber als <strong>Lowball-Angebote mit unklaren Briefings</strong> und Bezahlung nach 90 Tagen. Du postest regelmäßig, baust deine Community auf, lieferst guten Content. Und trotzdem: <strong>entweder keine Deals oder die falschen.</strong></p>
                     <ul class="pain-bullets">
                         <li>Du weißt nicht, welche Marken gerade Creator suchen</li>
                         <li>Du hast kein System für planbare Kooperationen</li>
@@ -3301,8 +3301,8 @@
                     <div class="section-label">Der Kreislauf</div>
                     <h2>Du gibst alles. Und bekommst <em>nichts.</em></h2>
                     <p>Du stehst morgens auf und checkst dein Handy. Keine neuen Brand-Anfragen. Also öffnest du Instagram, scrollst durch Marken-Accounts, schreibst eine DM. Freundlich, professionell, mit Media Kit im Anhang. Dann die nächste. Und die nächste.</p>
-                    <p>Drei Stunden später hast du acht Marken angeschrieben. Content erstellt hast du keinen. Und von den letzten zwölf Anfragen letzte Woche? Zwei haben geantwortet. <strong>Keine davon mit einem Angebot.</strong></p>
-                    <p>Oder du bekommst Deals, aber die falschen. Schlechtes Budget, unklare Erwartungen, ewiges Hin und Her per DM. Du fragst dich: Lohnt sich das überhaupt? <strong>Du bist gleichzeitig Kreativer, Vertriebler und Projektmanager, obwohl du für zwei davon nie ausgebildet wurdest.</strong></p>
+                    <p>Drei Stunden später hast du acht Marken angeschrieben. <strong>Content erstellt hast du keinen.</strong> Und von den letzten zwölf Anfragen letzte Woche? Zwei haben geantwortet. <strong>Keine davon mit einem Angebot.</strong></p>
+                    <p>Oder du bekommst Deals, aber die falschen. Schlechtes Budget, unklare Erwartungen, <strong>ewiges Hin und Her per DM.</strong> Du fragst dich: Lohnt sich das überhaupt? Du bist gleichzeitig Kreativer, Vertriebler und Projektmanager, <strong>obwohl du für zwei davon nie ausgebildet wurdest.</strong></p>
 
                     <div class="reality-highlight">
                         <p>Die meisten Creator scheitern nicht am Content. Sie scheitern daran, dass niemand sieht, wie gut sie eigentlich sind.</p>
@@ -3364,9 +3364,9 @@
                 <div class="dream-deep-content fade-in">
                     <div class="section-label">Das Ziel</div>
                     <h2>Creator sein, ohne dich <em>selbst</em> zu verlieren</h2>
-                    <p>Du hast angefangen, Content zu erstellen, weil du etwas zu sagen hattest. Weil du kreativ bist. Weil du Menschen erreichen wolltest. <strong>Nicht, um den ganzen Tag Akquise zu betreiben.</strong></p>
+                    <p>Du hast angefangen, Content zu erstellen, weil du etwas zu sagen hattest. Weil du kreativ bist. Weil du Menschen erreichen wolltest. <strong>Akquise war nie der Plan.</strong></p>
 
-                    <p>Die besten Creator der Welt haben eines gemeinsam: Sie beschäftigen sich nicht mit dem Geschäftlichen. Jemand anderes übernimmt das für sie. Agenturen, Manager, Netzwerke. Aber was, wenn du noch nicht groß genug bist für eine Agentur? Was, wenn du zwischen 5.000 und 100.000 Followern steckst, genau in der Phase, in der Brands dich entdecken könnten, es aber nicht tun?</p>
+                    <p>Die besten Creator der Welt haben eines gemeinsam: <strong>Jemand anderes kümmert sich ums Geschäftliche.</strong> Agenturen, Manager, Netzwerke. Aber was, wenn du noch nicht groß genug bist für eine Agentur? Was, wenn du zwischen 5.000 und 100.000 Followern steckst, genau in der Phase, in der Brands dich entdecken könnten, es aber nicht tun?</p>
 
                     <p>Genau hier fehlt ein Stück im Puzzle. Nicht noch ein Kurs. Nicht noch ein Tipp. Sondern <strong>ein System, das die Arbeit für dich macht.</strong> Das dich sichtbar macht. Das dir die richtigen Brands bringt. Das Verhandlungen fair gestaltet. Und das dich als Creator ernst nimmt.</p>
 
@@ -4891,9 +4891,9 @@
                 const y = e.clientY - rect.top;
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -3;
-                const rotateY = ((x - centerX) / centerX) * 3;
-                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+                const rotateX = ((y - centerY) / centerY) * -2;
+                const rotateY = ((x - centerX) / centerX) * 2;
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
@@ -4939,11 +4939,11 @@
         const phoneContainer = document.querySelector('.phone-scroll-container');
         if (phoneCard && phoneContainer) {
             const isMobile = window.innerWidth < 768;
-            const startScale = isMobile ? 0.7 : 1.05;
-            const endScale = isMobile ? 0.9 : 1;
+            const startScale = isMobile ? 0.85 : 1;
+            const endScale = isMobile ? 0.95 : 1;
 
             gsap.set(phoneCard, {
-                rotateX: 20,
+                rotateX: 16,
                 scale: startScale,
                 transformPerspective: 1000
             });
