@@ -4,7 +4,7 @@ import FadeIn from '@/components/motion/FadeIn';
 
 export default function PainDeepDive() {
   const painPoints = [
-    'Die Algorithm sagt dir nicht, wer deine idealenBrands sind',
+    'Der Algorithmus sagt dir nicht, wer deine idealen Brands sind',
     'Brands sehen Millionen Creator – wie findest du sie?',
     'Deine beste Arbeit ist unsichtbar für die richtigen Menschen',
     'Selbst wenn Brands dich finden: Verhandlungen sind chaotisch',

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import FadeIn from '@/components/motion/FadeIn';
+import { X, Check } from 'lucide-react';
 
 const Transformation = () => {
   const beforeItems = [
@@ -44,13 +45,13 @@ const Transformation = () => {
               className="p-8 rounded-[var(--radius-lg)] bg-gradient-to-br from-[rgba(201,140,131,0.08)] to-[rgba(201,140,131,0.04)] border border-[var(--border)]"
             >
               <h3 className="text-2xl font-bold text-[var(--text)] mb-6 flex items-center gap-2">
-                <span className="text-xl">✕</span>
+                <X size={20} style={{ color: 'var(--text-muted)' }} />
                 Ohne CreatorBridge
               </h3>
               <div className="space-y-4">
                 {beforeItems.map((item, idx) => (
                   <div key={idx} className="flex gap-3 items-start">
-                    <span className="text-[var(--text-muted)] mt-1 flex-shrink-0">✕</span>
+                    <X size={16} className="mt-1 flex-shrink-0" style={{ color: 'var(--text-muted)' }} />
                     <p className="text-[var(--text-secondary)] font-medium leading-relaxed">
                       {item}
                     </p>
@@ -66,13 +67,13 @@ const Transformation = () => {
               className="p-8 rounded-[var(--radius-lg)] bg-gradient-to-br from-[rgba(201,140,131,0.12)] to-[rgba(201,140,131,0.06)] border border-[var(--border)]"
             >
               <h3 className="text-2xl font-bold text-[var(--text)] mb-6 flex items-center gap-2">
-                <span className="text-xl">✓</span>
+                <Check size={20} style={{ color: 'var(--accent)' }} />
                 Mit CreatorBridge
               </h3>
               <div className="space-y-4">
                 {afterItems.map((item, idx) => (
                   <div key={idx} className="flex gap-3 items-start">
-                    <span className="text-[var(--accent)] mt-1 flex-shrink-0">✓</span>
+                    <Check size={16} className="mt-1 flex-shrink-0" style={{ color: 'var(--accent)' }} />
                     <p className="text-[var(--text)] font-medium leading-relaxed">
                       {item}
                     </p>

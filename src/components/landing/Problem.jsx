@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useTransform } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
+import { Dice5, Clock, MessageCircle } from 'lucide-react';
 
 const ProblemCard = ({ number, icon: Icon, title, description, delay }) => {
   const mouseX = useMotionValue(0);
@@ -64,12 +65,12 @@ const ProblemCard = ({ number, icon: Icon, title, description, delay }) => {
 
           {Icon && (
             <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center"
               style={{
-                color: 'var(--accent)',
-                fontSize: '2rem',
+                backgroundColor: 'rgba(201, 140, 131, 0.12)',
               }}
             >
-              {Icon}
+              <Icon size={24} style={{ color: 'var(--accent)' }} />
             </div>
           )}
 
@@ -106,21 +107,21 @@ export default function Problem() {
   const problems = [
     {
       number: '01',
-      icon: '🎲',
+      icon: Dice5,
       title: 'Deals kommen zufällig',
       description:
         'Du wartest auf DMs, hoffst auf Empfehlungen und bist von Glück abhängig, ob die richtige Brand deine Arbeit sieht.',
     },
     {
       number: '02',
-      icon: '⏱️',
+      icon: Clock,
       title: 'Akquise kostet Zeit',
       description:
         'Statt Content zu erstellen, verbringst du Stunden mit Recherche, Kaltakquise und E-Mails an Brands, die nie antworten.',
     },
     {
       number: '03',
-      icon: '💬',
+      icon: MessageCircle,
       title: 'Kommunikation ist Chaos',
       description:
         'DMs auf Instagram, E-Mails, WhatsApp-Gruppen, Notion-Seiten – Absprachen sind dezentralisiert und ständig verloren gegangen.',

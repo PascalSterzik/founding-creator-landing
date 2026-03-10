@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import FadeIn from '@/components/motion/FadeIn';
+import { CheckCircle } from 'lucide-react';
 
 const ApplicationForm = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -68,7 +69,7 @@ const ApplicationForm = () => {
         {submitted ? (
           <FadeIn>
             <div className="bg-white rounded-[var(--radius-lg)] shadow-lg p-8 md:p-12 text-center border-2 border-[var(--accent)]">
-              <div className="mb-4 text-5xl">✓</div>
+              <div className="mb-4"><CheckCircle size={48} style={{ color: 'var(--accent)' }} /></div>
               <h3 className="text-2xl font-bold text-[var(--text)] mb-2">
                 Vielen Dank für deine Bewerbung!
               </h3>

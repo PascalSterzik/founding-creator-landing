@@ -6,22 +6,10 @@ export default function PhoneMockup({
   width = 300,
   children,
   className = '',
-  showFloatingCards = true,
   tilt = true,
 }) {
-  const screenWidth = width - 16;
+  const screenWidth = width - 18;
   const screenHeight = (screenWidth / 9) * 19.5;
-
-  const floatingCardVariants = {
-    initial: { opacity: 0, y: -10 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -10 },
-  };
-
-  const floatingPulse = {
-    scale: [1, 1.05, 1],
-    transition: { duration: 2, repeat: Infinity },
-  };
 
   return (
     <motion.div
@@ -30,172 +18,308 @@ export default function PhoneMockup({
         width: `${width}px`,
         perspective: '1200px',
       }}
-      animate={tilt ? { rotateY: -8, rotateX: 4 } : { rotateY: 0, rotateX: 0 }}
-      transition={{ type: 'spring', stiffness: 100 }}
+      animate={
+        tilt
+          ? { rotateY: [-8, 8, -2], rotateX: [4, -4, 2] }
+          : { rotateY: 0, rotateX: 0 }
+      }
+      transition={{
+        type: 'spring',
+        stiffness: 40,
+        damping: 15,
+        duration: 6,
+        repeat: Infinity,
+      }}
+      whileHover={tilt ? { rotateY: -12, rotateX: 6 } : {}}
     >
-      {/* Phone frame outer */}
+      {/* Outer glow/light environment */}
       <div
-        className="relative rounded-[44px] overflow-hidden shadow-2xl"
+        className="absolute inset-0 rounded-[50px] pointer-events-none"
         style={{
-          width: `${width}px`,
-          height: `${screenHeight + 16}px`,
-          background: 'linear-gradient(135deg, #2a2a2a 0%, #0d0d0d 100%)',
           boxShadow: `
-            0 0 40px rgba(0, 0, 0, 0.5),
-            inset 0 1px 2px rgba(255, 255, 255, 0.1),
-            inset 0 -1px 2px rgba(0, 0, 0, 0.8)
+            0 0 80px rgba(255, 255, 255, 0.08),
+            0 0 40px rgba(0, 0, 0, 0.3)
           `,
         }}
+      />
+
+      {/* Phone frame outer (titanium) */}
+      <div
+        className="relative rounded-[48px] overflow-visible"
+        style={{
+          width: `${width}px`,
+          height: `${screenHeight + 18}px`,
+        }}
       >
-        {/* Frame inner border highlight */}
+        {/* Titanium frame with metallic gradient */}
         <div
-          className="absolute inset-0 rounded-[44px] pointer-events-none"
+          className="absolute inset-0 rounded-[48px] overflow-hidden"
           style={{
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            boxShadow: 'inset 0 1px 3px rgba(255, 255, 255, 0.1)',
-          }}
-        />
-
-        {/* Screen container with padding */}
-        <div
-          className="absolute rounded-[34px] overflow-hidden"
-          style={{
-            width: `${screenWidth}px`,
-            height: `${screenHeight}px`,
-            top: '8px',
-            left: '8px',
-            background: 'var(--bg)',
-            boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
-          }}
-        >
-          {children}
-        </div>
-
-        {/* Dynamic Island */}
-        <div
-          className="absolute left-1/2 transform -translate-x-1/2 rounded-[20px] z-40"
-          style={{
-            width: '100px',
-            height: '24px',
-            top: '10px',
-            background: 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.8)',
+            background: `linear-gradient(
+              135deg,
+              #3a3a3c 0%,
+              #1d1d1f 25%,
+              #0f0f11 50%,
+              #1a1a1c 75%,
+              #2d2d2f 100%
+            )`,
+            boxShadow: `
+              /* Outer glow */
+              0 20px 60px rgba(0, 0, 0, 0.6),
+              0 8px 24px rgba(0, 0, 0, 0.5),
+              /* Subtle top light */
+              inset 0 1px 2px rgba(255, 255, 255, 0.08),
+              /* Rim shadow */
+              inset 0 -1px 3px rgba(0, 0, 0, 0.9)
+            `,
           }}
         >
-          {/* Camera lens */}
+          {/* Frame inner edge highlight */}
           <div
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 rounded-full"
+            className="absolute inset-0 rounded-[48px] pointer-events-none"
             style={{
-              width: '8px',
-              height: '8px',
-              background: '#050505',
-              boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              boxShadow: 'inset 0 0.5px 1px rgba(255, 255, 255, 0.12)',
+            }}
+          />
+
+          {/* Screen bezel */}
+          <div
+            className="absolute rounded-[42px] overflow-hidden"
+            style={{
+              width: `${screenWidth}px`,
+              height: `${screenHeight}px`,
+              top: '9px',
+              left: '9px',
+              background: 'var(--bg)',
+              boxShadow: `
+                /* Screen inset shadow */
+                inset 0 1px 3px rgba(0, 0, 0, 0.15),
+                inset 0 0px 1px rgba(0, 0, 0, 0.5)
+              `,
+              border: '1px solid rgba(0, 0, 0, 0.3)',
+            }}
+          >
+            {children}
+          </div>
+
+          {/* Dynamic Island - Premium camera module */}
+          <div
+            className="absolute left-1/2 transform -translate-x-1/2 rounded-full z-40"
+            style={{
+              width: '120px',
+              height: '28px',
+              top: '12px',
+              background: `linear-gradient(
+                180deg,
+                #1a1a1c 0%,
+                #0d0d0f 50%,
+                #050505 100%
+              )`,
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              boxShadow: `
+                inset 0 1px 2px rgba(255, 255, 255, 0.08),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.95),
+                0 2px 8px rgba(0, 0, 0, 0.4)
+              `,
+            }}
+          >
+            {/* Main camera lens (left) */}
+            <div
+              className="absolute left-5 top-1/2 transform -translate-y-1/2"
+              style={{
+                width: '14px',
+                height: '14px',
+                background: `radial-gradient(
+                  circle at 35% 35%,
+                  rgba(100, 100, 100, 0.3) 0%,
+                  #050505 50%
+                )`,
+                borderRadius: '50%',
+                boxShadow: `
+                  inset 0 1px 3px rgba(0, 0, 0, 0.95),
+                  inset -1px -1px 3px rgba(0, 0, 0, 0.8),
+                  0 0 2px rgba(0, 0, 0, 0.5)
+                `,
+              }}
+            >
+              {/* Lens glass shine */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: `radial-gradient(
+                    circle at 25% 25%,
+                    rgba(255, 255, 255, 0.2) 0%,
+                    transparent 70%
+                  )`,
+                }}
+              />
+            </div>
+
+            {/* Secondary lens (right) */}
+            <div
+              className="absolute left-24 top-1/2 transform -translate-y-1/2"
+              style={{
+                width: '10px',
+                height: '10px',
+                background: `radial-gradient(
+                  circle at 35% 35%,
+                  rgba(80, 80, 80, 0.2) 0%,
+                  #050505 50%
+                )`,
+                borderRadius: '50%',
+                boxShadow: `
+                  inset 0 1px 2px rgba(0, 0, 0, 0.95),
+                  inset -1px -1px 2px rgba(0, 0, 0, 0.8)
+                `,
+              }}
+            />
+          </div>
+
+          {/* Power Button (Right side - thicker and visible) */}
+          <div
+            className="absolute right-0 top-32 rounded-sm"
+            style={{
+              width: '4px',
+              height: '36px',
+              marginRight: '-2px',
+              background: `linear-gradient(
+                90deg,
+                #3a3a3c 0%,
+                #1a1a1c 50%,
+                #0f0f11 100%
+              )`,
+              boxShadow: `
+                inset -1px 0 1px rgba(255, 255, 255, 0.12),
+                inset 1px 0 1px rgba(0, 0, 0, 0.8),
+                0 2px 4px rgba(0, 0, 0, 0.4)
+              `,
+            }}
+          />
+
+          {/* Volume Up (Left side) */}
+          <div
+            className="absolute left-0 top-24 rounded-sm"
+            style={{
+              width: '4px',
+              height: '28px',
+              marginLeft: '-2px',
+              background: `linear-gradient(
+                90deg,
+                #0f0f11 0%,
+                #1a1a1c 50%,
+                #3a3a3c 100%
+              )`,
+              boxShadow: `
+                inset 1px 0 1px rgba(255, 255, 255, 0.12),
+                inset -1px 0 1px rgba(0, 0, 0, 0.8),
+                0 2px 4px rgba(0, 0, 0, 0.4)
+              `,
+            }}
+          />
+
+          {/* Action Button / Silent Switch (Left side) */}
+          <div
+            className="absolute left-0 top-56 rounded-sm"
+            style={{
+              width: '4px',
+              height: '20px',
+              marginLeft: '-2px',
+              background: `linear-gradient(
+                90deg,
+                #0f0f11 0%,
+                #1a1a1c 50%,
+                #3a3a3c 100%
+              )`,
+              boxShadow: `
+                inset 1px 0 1px rgba(255, 255, 255, 0.12),
+                inset -1px 0 1px rgba(0, 0, 0, 0.8),
+                0 2px 4px rgba(0, 0, 0, 0.4)
+              `,
+            }}
+          />
+
+          {/* Volume Down (Left side) */}
+          <div
+            className="absolute left-0 top-80 rounded-sm"
+            style={{
+              width: '4px',
+              height: '28px',
+              marginLeft: '-2px',
+              background: `linear-gradient(
+                90deg,
+                #0f0f11 0%,
+                #1a1a1c 50%,
+                #3a3a3c 100%
+              )`,
+              boxShadow: `
+                inset 1px 0 1px rgba(255, 255, 255, 0.12),
+                inset -1px 0 1px rgba(0, 0, 0, 0.8),
+                0 2px 4px rgba(0, 0, 0, 0.4)
+              `,
+            }}
+          />
+
+          {/* Premium glass reflection - top light */}
+          <div
+            className="absolute top-0 left-0 right-0 rounded-[48px] pointer-events-none"
+            style={{
+              height: '45%',
+              background: `linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0.04) 25%,
+                transparent 60%
+              )`,
+              opacity: 0.6,
+            }}
+          />
+
+          {/* Glass reflection - subtle mid-light */}
+          <div
+            className="absolute top-1/4 left-1/4 rounded-full pointer-events-none"
+            style={{
+              width: '80px',
+              height: '80px',
+              background: `radial-gradient(
+                circle at 30% 30%,
+                rgba(255, 255, 255, 0.08) 0%,
+                transparent 70%
+              )`,
+              opacity: 0.5,
+            }}
+          />
+
+          {/* Glass reflection - bottom edge shine */}
+          <div
+            className="absolute bottom-0 left-0 right-0 rounded-[48px] pointer-events-none"
+            style={{
+              height: '20%',
+              background: `linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.04) 100%
+              )`,
+              opacity: 0.4,
             }}
           />
         </div>
-
-        {/* Side buttons */}
-        {/* Power button (right side) */}
-        <div
-          className="absolute right-0 top-24 rounded-md"
-          style={{
-            width: '3px',
-            height: '30px',
-            backgroundColor: '#1a1a1a',
-            boxShadow: 'inset -1px 0 1px rgba(255, 255, 255, 0.1)',
-          }}
-        />
-
-        {/* Volume up (left side) */}
-        <div
-          className="absolute left-0 top-20 rounded-md"
-          style={{
-            width: '3px',
-            height: '24px',
-            backgroundColor: '#1a1a1a',
-            boxShadow: 'inset 1px 0 1px rgba(255, 255, 255, 0.1)',
-          }}
-        />
-
-        {/* Silent switch (left side) */}
-        <div
-          className="absolute left-0 top-48 rounded-md"
-          style={{
-            width: '3px',
-            height: '20px',
-            backgroundColor: '#1a1a1a',
-            boxShadow: 'inset 1px 0 1px rgba(255, 255, 255, 0.1)',
-          }}
-        />
-
-        {/* Volume down (left side) */}
-        <div
-          className="absolute left-0 top-72 rounded-md"
-          style={{
-            width: '3px',
-            height: '24px',
-            backgroundColor: '#1a1a1a',
-            boxShadow: 'inset 1px 0 1px rgba(255, 255, 255, 0.1)',
-          }}
-        />
-
-        {/* Glass reflection/shine */}
-        <div
-          className="absolute top-0 left-0 right-0 rounded-[44px] pointer-events-none opacity-30"
-          style={{
-            height: '40%',
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%)',
-          }}
-        />
       </div>
 
-      {/* Floating notification cards */}
-      {showFloatingCards && (
-        <>
-          {/* Top-left card */}
-          <motion.div
-            className="absolute top-8 -left-32 bg-white rounded-2xl shadow-lg p-3 z-50"
-            style={{
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.15)',
-            }}
-            initial="initial"
-            animate="animate"
-            variants={floatingCardVariants}
-            transition={{ delay: 0.2 }}
-          >
-            <motion.div animate={floatingPulse}>
-              <div style={{ color: 'var(--cocoa)', fontSize: '12px', fontWeight: '600' }}>
-                +3 Neue Matches
-              </div>
-              <div style={{ color: 'var(--text-muted)', fontSize: '10px' }}>
-                Beauty & Lifestyle
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Bottom-right card */}
-          <motion.div
-            className="absolute bottom-8 -right-32 bg-white rounded-2xl shadow-lg p-3 z-50"
-            style={{
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.15)',
-            }}
-            initial="initial"
-            animate="animate"
-            variants={floatingCardVariants}
-            transition={{ delay: 0.4 }}
-          >
-            <motion.div animate={floatingPulse}>
-              <div style={{ color: 'var(--cocoa)', fontSize: '12px', fontWeight: '600' }}>
-                ↑ 24% diesen Monat
-              </div>
-              <div style={{ color: 'var(--text-muted)', fontSize: '10px' }}>
-                Engagement Rate
-              </div>
-            </motion.div>
-          </motion.div>
-        </>
-      )}
+      {/* Cast shadow for depth */}
+      <div
+        className="absolute inset-x-0 bottom-0 pointer-events-none"
+        style={{
+          height: '120px',
+          transform: 'translateY(100%)',
+          background: `radial-gradient(
+            ellipse 60% 40% at 50% 0%,
+            rgba(0, 0, 0, 0.2) 0%,
+            transparent 70%
+          )`,
+          borderRadius: '50%',
+        }}
+      />
     </motion.div>
   );
 }

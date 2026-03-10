@@ -11,7 +11,7 @@ export default function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.12,
         delayChildren: 0.2,
       },
     },
@@ -22,7 +22,7 @@ export default function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
+      transition: { duration: 0.7, ease: 'easeOut' },
     },
   };
 
@@ -37,34 +37,53 @@ export default function Hero() {
         `,
       }}
     >
-      {/* Animated background elements */}
+      {/* Premium animated background blobs */}
       <motion.div
-        className="absolute top-20 left-10 w-72 h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
+        className="absolute top-10 left-5 w-80 h-80 rounded-full opacity-25 blur-3xl pointer-events-none"
         style={{
           background: `linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%)`,
         }}
         animate={{
-          y: [0, 30, 0],
-          x: [0, 20, 0],
+          y: [0, 50, 0],
+          x: [0, 30, 0],
+          scale: [1, 1.1, 1],
         }}
         transition={{
-          duration: 6,
+          duration: 8,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
       />
 
       <motion.div
-        className="absolute bottom-20 right-10 w-96 h-96 rounded-full opacity-15 blur-3xl pointer-events-none"
+        className="absolute -bottom-10 right-0 w-96 h-96 rounded-full opacity-20 blur-3xl pointer-events-none"
         style={{
           background: `linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%)`,
         }}
         animate={{
-          y: [0, -40, 0],
-          x: [0, -30, 0],
+          y: [0, -60, 0],
+          x: [0, -40, 0],
+          scale: [1, 1.15, 1],
         }}
         transition={{
-          duration: 8,
+          duration: 10,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+
+      <motion.div
+        className="absolute top-1/3 -right-32 w-64 h-64 rounded-full opacity-15 blur-3xl pointer-events-none"
+        style={{
+          background: `linear-gradient(90deg, var(--accent) 0%, rgba(230, 201, 168, 0.6) 100%)`,
+        }}
+        animate={{
+          y: [0, 40, 0],
+          x: [0, -50, 0],
+          scale: [1, 0.95, 1],
+        }}
+        transition={{
+          duration: 12,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
@@ -79,26 +98,38 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
           >
-            {/* Badge */}
+            {/* Premium badge with shimmer */}
             <motion.div variants={itemVariants}>
               <div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full backdrop-blur-sm relative overflow-hidden"
                 style={{
-                  backgroundColor: 'var(--bg-ivory)',
-                  border: '1px solid var(--border)',
+                  background: 'rgba(230, 201, 168, 0.2)',
+                  border: '1px solid rgba(201, 140, 131, 0.3)',
                 }}
               >
+                {/* Badge shimmer overlay */}
                 <motion.div
-                  className="w-2 h-2 rounded-full"
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)',
+                  }}
+                  animate={{ x: ['-100%', '100%'] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+
+                <motion.div
+                  className="w-2 h-2 rounded-full flex-shrink-0 relative z-10"
                   style={{ backgroundColor: 'var(--accent)' }}
-                  animate={{ scale: [1, 1.4, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{ duration: 2.5, repeat: Infinity }}
                 />
                 <span
+                  className="relative z-10"
                   style={{
                     color: 'var(--text-secondary)',
                     fontSize: '13px',
                     fontWeight: '600',
+                    letterSpacing: '0.5px',
                   }}
                 >
                   Founding Creator Bewerbungen offen
@@ -106,99 +137,80 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Headline */}
+            {/* Decorative accent line */}
+            <motion.div
+              variants={itemVariants}
+              className="relative h-1 w-12 rounded-full"
+              style={{ backgroundColor: 'var(--accent)' }}
+            />
+
+            {/* Premium headline */}
             <motion.div variants={itemVariants} className="space-y-4">
               <h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight"
                 style={{ color: 'var(--cocoa)' }}
               >
                 Brand Deals sollten nicht vom{' '}
-                <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>
+                <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: '900' }}>
                   Zufall
                 </span>{' '}
                 abhängen
               </h1>
             </motion.div>
 
-            {/* Subtitle */}
+            {/* Premium subtitle */}
             <motion.p
               variants={itemVariants}
               style={{
                 color: 'var(--text-secondary)',
                 fontSize: '18px',
-                lineHeight: '1.6',
+                lineHeight: '1.7',
+                letterSpacing: '0.3px',
               }}
+              className="max-w-xl"
             >
               Verbinde dich mit Brands, die zu deinem Publikum passen. Verdiene Geld mit Inhalten, die du ohnehin erstellst. CreatorBridge macht Monetarisierung einfach.
             </motion.p>
 
-            {/* CTA Button */}
-            <motion.div variants={itemVariants}>
+            {/* Premium CTA Button with enhanced animations */}
+            <motion.div variants={itemVariants} className="pt-2">
               <motion.button
-                className="relative px-8 py-4 rounded-full text-white font-bold text-lg overflow-hidden w-full sm:w-auto"
+                className="relative px-8 py-4 rounded-full text-white font-bold text-lg overflow-hidden w-full sm:w-auto transition-all duration-300"
                 style={{
                   background: `linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)`,
-                  boxShadow: '0 10px 40px rgba(201, 140, 131, 0.3)',
+                  boxShadow: '0 20px 60px rgba(201, 140, 131, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                  letterSpacing: '0.5px',
                 }}
-                whileHover={{ scale: 1.05, boxShadow: '0 15px 50px rgba(201, 140, 131, 0.4)' }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{
+                  scale: 1.04,
+                  boxShadow: '0 25px 80px rgba(201, 140, 131, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                }}
+                whileTap={{ scale: 0.97 }}
               >
+                {/* Shimmer/shine effect */}
                 <motion.div
                   className="absolute inset-0 rounded-full"
                   style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent)',
                   }}
                   animate={{ x: ['100%', '-100%'] }}
-                  transition={{ duration: 2.5, repeat: Infinity }}
+                  transition={{ duration: 3, repeat: Infinity }}
                 />
-                <span className="relative">Jetzt bewerben</span>
+                <span className="relative">Jetzt als Founding Creator bewerben</span>
               </motion.button>
             </motion.div>
 
-            {/* Micro text */}
+            {/* Micro text with checkmark */}
             <motion.p
               variants={itemVariants}
               style={{
                 color: 'var(--text-muted)',
                 fontSize: '13px',
+                letterSpacing: '0.3px',
               }}
             >
               ✓ Nur die ersten 100 Creator erhalten exklusive Boni
             </motion.p>
-
-            {/* Stats row */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-6 pt-6 border-t"
-              style={{ borderColor: 'var(--border)' }}
-            >
-              {[
-                { label: 'Creator', value: '500+' },
-                { label: 'Brand Deals', value: '1,200+' },
-                { label: 'Avg Earning', value: '€1,850' },
-              ].map((stat, idx) => (
-                <div key={idx} className="flex-1">
-                  <div
-                    style={{
-                      color: 'var(--cocoa)',
-                      fontSize: '24px',
-                      fontWeight: '700',
-                    }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div
-                    style={{
-                      color: 'var(--text-muted)',
-                      fontSize: '13px',
-                      marginTop: '4px',
-                    }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
 
           {/* Right content - Phone mockup */}
@@ -208,7 +220,7 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <PhoneMockup width={320} showFloatingCards={true}>
+            <PhoneMockup width={320}>
               <PhoneAppUI />
             </PhoneMockup>
           </motion.div>
