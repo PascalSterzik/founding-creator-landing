@@ -95,7 +95,7 @@ export default function SolutionFeatures() {
         <FadeIn delay={0.1}>
           <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text)] mb-4 max-w-3xl">
             So einfach läuft es mit{' '}
-            <span className="italic text-[var(--accent)]">CreatorBridge</span>
+            <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '700' }}>Creator</span><span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600' }}>Bridge</span>
           </h2>
         </FadeIn>
 

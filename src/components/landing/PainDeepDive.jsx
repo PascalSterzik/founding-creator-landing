@@ -1,22 +1,13 @@
 'use client';
 
 import FadeIn from '@/components/motion/FadeIn';
-import { motion } from 'framer-motion';
-import { TrendingDown, Ghost, MessageSquareOff, Clock, EyeOff } from 'lucide-react';
+import Image from 'next/image';
 
 export default function PainDeepDive() {
-  const painPoints = [
-    { icon: EyeOff, text: 'Der Algorithmus sagt dir nicht, wer deine idealen Brands sind' },
-    { icon: Ghost, text: 'Brands sehen Millionen Creator, aber du bist unsichtbar' },
-    { icon: TrendingDown, text: 'Deine beste Arbeit erreicht die richtigen Menschen nicht' },
-    { icon: MessageSquareOff, text: 'Selbst wenn Brands dich finden: Verhandlungen sind chaotisch' },
-    { icon: Clock, text: 'Die meisten Deals gehen an bekannte Gesichter, nicht an die beste Arbeit' },
-  ];
-
   return (
     <section className="py-20 md:py-32 px-6 md:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Left: Text */}
           <FadeIn>
             <div>
@@ -56,8 +47,8 @@ export default function PainDeepDive() {
                     lineHeight: '1.7',
                   }}
                 >
-                  Die Zahlen sind beeindruckend: Der Creator-Markt wächst explosiv, Milliarden
-                  fließen in Kooperationen. Aber die Realität für einzelne Creator ist düster.
+                  Die Zahlen klingen gut: Marken investieren so viel wie nie in Influencer-Marketing.
+                  Budgets steigen jedes Quartal. Neue Produkte suchen Creator-Partnerschaften.
                 </p>
 
                 <p
@@ -67,9 +58,9 @@ export default function PainDeepDive() {
                     lineHeight: '1.7',
                   }}
                 >
-                  Es ist ein <strong>Visibility-Problem</strong>. Du kannst talentiert sein,
-                  dein Content kann viral gehen, aber wenn die richtige Brand dich nicht sieht,
-                  passiert nichts.
+                  Aber wer profitiert davon? Meistens dieselben großen Accounts. Dieselben
+                  Management-Agenturen. Dieselben Netzwerke, in die du keinen Zugang hast.{' '}
+                  <strong>Die Deals existieren, sie kommen nur nicht bei dir an.</strong>
                 </p>
 
                 <p
@@ -79,53 +70,51 @@ export default function PainDeepDive() {
                     lineHeight: '1.7',
                   }}
                 >
-                  Und das ist erst der Anfang. Selbst wenn eine Brand dich findet, beginnt das
-                  echte Chaos: unorganisierte Verhandlungen, fehlende Infrastruktur,
-                  Miscommunications, die Deals platzen lassen.
+                  Oder sie kommen, aber als{' '}
+                  <strong>Lowball-Angebote mit unklaren Briefings</strong> und Bezahlung nach 90 Tagen.
+                  Du postest regelmäßig, baust deine Community auf, lieferst guten Content. Und
+                  trotzdem: <strong>entweder keine Deals oder die falschen.</strong>
                 </p>
               </div>
+
+              <ul className="space-y-3">
+                {[
+                  'Du weißt nicht, welche Marken gerade Creator suchen',
+                  'Du hast kein System für planbare Kooperationen',
+                  'Du verbringst mehr Zeit mit Akquise als mit Content',
+                  'Deals scheitern an Kommunikationschaos und fehlenden Briefings',
+                  'Selbst wenn ein Deal kommt, sind Budget und Konditionen oft unfair',
+                ].map((point, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span
+                      className="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full"
+                      style={{ backgroundColor: 'var(--accent)' }}
+                    />
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                      {point}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </FadeIn>
 
-          {/* Right: Visual pain point cards */}
+          {/* Right: Image */}
           <FadeIn delay={0.2}>
-            <div className="space-y-4">
-              {painPoints.map((point, index) => {
-                const Icon = point.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.4 }}
-                    className="flex items-start gap-4 p-5 rounded-2xl transition-all duration-300"
-                    style={{
-                      backgroundColor: 'rgba(201, 140, 131, 0.06)',
-                      border: '1px solid var(--border)',
-                    }}
-                  >
-                    <div
-                      className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                      style={{
-                        backgroundColor: 'rgba(201, 140, 131, 0.12)',
-                      }}
-                    >
-                      <Icon size={20} style={{ color: 'var(--accent)' }} />
-                    </div>
-                    <p
-                      style={{
-                        color: 'var(--text-secondary)',
-                        fontSize: '0.95rem',
-                        lineHeight: '1.6',
-                        fontWeight: '500',
-                      }}
-                    >
-                      {point.text}
-                    </p>
-                  </motion.div>
-                );
-              })}
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.12)',
+              }}
+            >
+              <Image
+                src="/images/creator-frustration-scroll.jpg"
+                alt="Creator frustriert am Smartphone im dunklen Zimmer"
+                width={800}
+                height={600}
+                className="w-full h-auto object-cover"
+                style={{ aspectRatio: '4/3' }}
+              />
             </div>
           </FadeIn>
         </div>

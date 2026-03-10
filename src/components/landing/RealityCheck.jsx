@@ -1,49 +1,29 @@
 'use client';
 
 import FadeIn from '@/components/motion/FadeIn';
+import Image from 'next/image';
 
 export default function RealityCheck() {
   return (
     <section className="py-20 md:py-32 px-6 md:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
-          {/* Left: Image Placeholder */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+          {/* Left: Image */}
           <FadeIn>
             <div
+              className="rounded-2xl overflow-hidden order-2 md:order-1"
               style={{
-                backgroundColor: '#E8E0DB',
-                borderRadius: 'var(--radius-lg)',
-                aspectRatio: '1 / 1.1',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '2px dashed var(--border)',
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.12)',
               }}
-              className="w-full order-2 md:order-1"
             >
-              <div
-                style={{
-                  textAlign: 'center',
-                  color: 'var(--text-muted)',
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                  }}
-                >
-                  Der Kreislauf
-                </p>
-                <p
-                  style={{
-                    fontSize: '0.875rem',
-                    marginTop: '0.5rem',
-                  }}
-                >
-                  [Image Placeholder]
-                </p>
-              </div>
+              <Image
+                src="/images/creator-ghosted-dms.jpg"
+                alt="Smartphone mit unbeantworteten Nachrichten auf dunklem Holztisch"
+                width={800}
+                height={900}
+                className="w-full h-auto object-cover"
+                style={{ aspectRatio: '1/1.1' }}
+              />
             </div>
           </FadeIn>
 
@@ -66,7 +46,6 @@ export default function RealityCheck() {
               <h2
                 style={{
                   color: 'var(--text)',
-                  fontFamily: 'var(--font-heading)',
                   fontSize: 'clamp(1.875rem, 5vw, 2.75rem)',
                   fontWeight: '700',
                   lineHeight: '1.2',
@@ -87,9 +66,9 @@ export default function RealityCheck() {
                     lineHeight: '1.7',
                   }}
                 >
-                  Der Kreislauf ist brutal. Du produzierst großartigen Content – dein bester
-                  Einsatz. Aber danach?{' '}
-                  <strong>Du arbeitest wie ein Unternehmer für Peanuts.</strong>
+                  Du stehst morgens auf und checkst dein Handy. Keine neuen Brand-Anfragen. Also
+                  öffnest du Instagram, scrollst durch Marken-Accounts, schreibst eine DM.
+                  Freundlich, professionell, mit Media Kit im Anhang. Dann die nächste.
                 </p>
 
                 <p
@@ -99,9 +78,10 @@ export default function RealityCheck() {
                     lineHeight: '1.7',
                   }}
                 >
-                  Du spendierst Stunden damit, Brands anzuschreiben – echte Unternehmen mit
-                  Budgets, die das 100x übersteigen, was sie dir zahlen würden. Deine Nachrichten
-                  werden ignoriert. Du hoffst auf Glück.
+                  Drei Stunden später hast du acht Marken angeschrieben.{' '}
+                  <strong>Content erstellt hast du keinen.</strong> Und von den letzten zwölf
+                  Anfragen letzte Woche? Zwei haben geantwortet.{' '}
+                  <strong>Keine davon mit einem Angebot.</strong>
                 </p>
 
                 <p
@@ -111,20 +91,8 @@ export default function RealityCheck() {
                     lineHeight: '1.7',
                   }}
                 >
-                  Selbst wenn eine Brand antwortet, folgender Albtraum: keine Struktur, keine
-                  Klarheit über die Anforderungen, Miscommunications, die Deals platzen lassen.
-                  Und dann fängst du wieder von vorne an.
-                </p>
-
-                <p
-                  style={{
-                    color: 'var(--text-secondary)',
-                    fontSize: '1rem',
-                    lineHeight: '1.7',
-                  }}
-                >
-                  Die Konsequenz: Du verdienst weniger, als du könntest. Du burnest aus. Und dein
-                  Content leidet, weil du {'"'}Busywork{'"'} machst statt zu schaffen.
+                  Du bist gleichzeitig kreativer Vertriebler und Projektmanager.
+                  Und Creator? Das kommt irgendwo dazwischen.
                 </p>
               </div>
 
@@ -132,7 +100,7 @@ export default function RealityCheck() {
               <div
                 style={{
                   backgroundColor: 'var(--cocoa)',
-                  borderRadius: 'var(--radius-lg)',
+                  borderRadius: '16px',
                   padding: '1.75rem',
                   marginBottom: '2rem',
                 }}
@@ -157,7 +125,6 @@ export default function RealityCheck() {
                     <div
                       style={{
                         color: 'var(--accent)',
-                        fontFamily: 'var(--font-heading)',
                         fontSize: '2rem',
                         fontWeight: '700',
                         lineHeight: '1.2',
@@ -183,7 +150,6 @@ export default function RealityCheck() {
                     <div
                       style={{
                         color: 'var(--accent)',
-                        fontFamily: 'var(--font-heading)',
                         fontSize: '2rem',
                         fontWeight: '700',
                         lineHeight: '1.2',

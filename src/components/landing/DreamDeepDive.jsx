@@ -1,6 +1,7 @@
 'use client';
 
 import FadeIn from '@/components/motion/FadeIn';
+import Image from 'next/image';
 
 export default function DreamDeepDive() {
   return (
@@ -8,67 +9,73 @@ export default function DreamDeepDive() {
       <div className="container mx-auto px-6 lg:px-12">
         {/* Label */}
         <FadeIn>
-          <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4">
-            DAS ZIEL
+          <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 uppercase">
+            Das Ziel
           </p>
         </FadeIn>
 
         {/* Heading */}
         <FadeIn delay={0.1}>
           <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text)] mb-12 max-w-3xl">
-            Creator sein, ohne dich <span className="italic text-[var(--accent)]">selbst</span> zu
-            verlieren
+            Creator sein, ohne dich{' '}
+            <span className="italic text-[var(--accent)]">selbst</span> zu verlieren
           </h2>
         </FadeIn>
 
         {/* 2-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left: Image Placeholder */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left: Image */}
           <FadeIn delay={0.2}>
-            <div className="relative aspect-square lg:aspect-auto lg:h-full min-h-96 rounded-lg overflow-hidden bg-gradient-to-br from-[var(--gold)] to-[var(--bg-ivory)] border border-[var(--border)] flex items-center justify-center order-2 lg:order-1">
-              <div className="text-center">
-                <p className="text-[var(--text-muted)] text-sm font-medium">
-                  Bildplatzhalter
-                </p>
-                <p className="text-[var(--text-muted)] text-xs mt-2">
-                  Creator im Workflow
-                </p>
-              </div>
+            <div
+              className="rounded-2xl overflow-hidden order-2 lg:order-1"
+              style={{
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.12)',
+              }}
+            >
+              <Image
+                src="/images/creator-in-flow.jpg"
+                alt="Creator im Flow beim Editieren mit Kopfhörern"
+                width={800}
+                height={800}
+                className="w-full h-auto object-cover"
+                style={{ aspectRatio: '1/1' }}
+              />
             </div>
           </FadeIn>
 
           {/* Right: Text Content */}
           <div className="space-y-6 order-1 lg:order-2">
-            {/* Paragraph 1 */}
             <FadeIn delay={0.3}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                Du bist Creator geworden, weil du kreativ bist. Die Akquise? War nie der Plan. Nie
-                die Leidenschaft. Nie wirklich dein Ding.
+                Du hast angefangen, Content zu erstellen, weil du etwas zu sagen hattest. Weil du
+                kreativ bist. Weil du Menschen erreichen wolltest.{' '}
+                <span className="font-bold text-[var(--text)]">Akquise war nie der Plan.</span>
               </p>
             </FadeIn>
 
-            {/* Paragraph 2 */}
             <FadeIn delay={0.4}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                Die besten Creators der Welt haben jemanden, der das Business für sie macht. Jemanden,
-                der verhandelt, organisiert, die Zahlen im Blick hat. Das ist keine Ausnahme. Das ist
-                der Standard. Und das funktioniert nicht nur bei 500k Followern. Das funktioniert auch
-                bei 5k. Bei 100k. Bei dir.
+                Die besten Creator der Welt haben eines gemeinsam:{' '}
+                <span className="font-bold text-[var(--text)]">
+                  Jemand anderes kümmert sich ums Geschäftliche.
+                </span>{' '}
+                Agenturen, Manager, Netzwerke. Aber was, wenn du noch nicht groß genug bist für
+                eine Agentur?
               </p>
             </FadeIn>
 
-            {/* Paragraph 3 */}
             <FadeIn delay={0.5}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                Das, was dir bisher fehlte: ein System. Ein Tool. Ein{' '}
+                Genau hier fehlt ein Stück im Puzzle. Nicht noch ein Kurs. Nicht noch ein Tipp.
+                Sondern{' '}
                 <span className="font-bold text-[var(--text)]">
-                  ein System, das die Arbeit für dich macht
-                </span>
-                .
+                  ein System, das die Arbeit für dich macht.
+                </span>{' '}
+                Das dich sichtbar macht. Das dir die richtigen Brands bringt. Das Verhandlungen
+                fair gestaltet.
               </p>
             </FadeIn>
 
-            {/* Final Statement */}
             <FadeIn delay={0.6}>
               <p className="text-2xl font-bold text-[var(--text)] mt-8">
                 Nicht irgendwann. <span className="italic text-[var(--accent)]">Jetzt.</span>
