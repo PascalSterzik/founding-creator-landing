@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FDFAF9;
+  --bg-warm: #F5EAEA;
+  --bg-ivory: #FCF7F4;
+  --text: #3A2520;
+  --text-secondary: #6B5650;
+  --text-muted: #9A8480;
+  --accent: #C98C83;
+  --accent-hover: #B87A71;
+  --accent-light: #DCA39B;
+  --gold: #E6C9A8;
+  --gold-dark: #C5A47F;
+  --cocoa: #4B322D;
+  --cocoa-deep: #2E1D19;
+  --border: rgba(75, 50, 45, 0.08);
+  --border-strong: rgba(75, 50, 45, 0.14);
+  --glass: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.35);
+  --white: #FFFFFF;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-xl: 40px;
+  --radius-pill: 100px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    line-height: 1.7;
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--text);
+  }
+
+  h1 { letter-spacing: -0.02em; }
+  h2 { letter-spacing: -0.015em; }
+}
+
+/* Noise texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Button shimmer animation */
+@keyframes shimmer-slide {
+  0% { left: -100%; }
+  45% { left: 150%; }
+  100% { left: 150%; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Smooth card hover */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Selection color */
+::selection {
+  background: rgba(201, 140, 131, 0.2);
+  color: var(--cocoa-deep);
+}
