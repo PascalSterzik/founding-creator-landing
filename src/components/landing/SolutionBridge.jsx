@@ -1,17 +1,24 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
 import PhoneMockup from './PhoneMockup';
+import PhoneAppUI from './PhoneAppUI';
 
+/* ─── Phase constants ─── */
+// Phase 0: 0.00 - 0.15  → Phone tilts in (ContainerScroll)
+// Phase 1: 0.15 - 0.30  → App opening (logo + "Willkommen, Creator.")
+// Phase 2: 0.30 - 0.45  → Transition to dashboard
+// Phase 3: 0.45 - 0.75  → Dashboard visible + notifications fly in + interactive
+// Phase 4: 0.75 - 0.85  → Fade out / release sticky
+
+/* ─── Phone App Open Screen ─── */
 function PhoneAppOpen({ progress }) {
-  // progress: 0 = start, 1 = fully open
-  // Logo appears first, then "Willkommen Creator" fades in
-  const logoOpacity = Math.min(1, progress * 3); // 0 to 0.33 -> 0 to 1
-  const logoScale = 0.8 + Math.min(0.2, progress * 0.6); // 0.8 to 1
-  const textOpacity = Math.max(0, (progress - 0.4) * 2.5); // 0.4 to 0.8 -> 0 to 1
-  const textY = Math.max(0, (1 - Math.max(0, (progress - 0.4) * 2.5)) * 20); // slides up
+  const logoOpacity = Math.min(1, progress * 4);
+  const logoScale = 0.85 + Math.min(0.15, progress * 0.5);
+  const textOpacity = Math.max(0, (progress - 0.35) * 3);
+  const textY = Math.max(0, (1 - Math.max(0, (progress - 0.35) * 3)) * 15);
 
   return (
     <div
@@ -48,7 +55,6 @@ function PhoneAppOpen({ progress }) {
         style={{
           opacity: logoOpacity,
           transform: `scale(${logoScale})`,
-          transition: 'transform 0.1s ease-out',
         }}
         className="flex items-center gap-1 mb-4"
       >
@@ -75,7 +81,7 @@ function PhoneAppOpen({ progress }) {
         </span>
       </div>
 
-      {/* Willkommen Creator text */}
+      {/* "Willkommen, Creator." */}
       <div
         style={{
           opacity: textOpacity,
@@ -95,7 +101,7 @@ function PhoneAppOpen({ progress }) {
         </p>
       </div>
 
-      {/* Subtle loading indicator */}
+      {/* Loading bar */}
       <div
         className="absolute bottom-16 left-1/2 -translate-x-1/2"
         style={{ opacity: textOpacity * 0.6 }}
@@ -107,9 +113,8 @@ function PhoneAppOpen({ progress }) {
           <div
             className="h-full rounded-full"
             style={{
-              width: `${Math.min(100, progress * 120)}%`,
+              width: `${Math.min(100, progress * 130)}%`,
               background: 'linear-gradient(90deg, var(--accent), var(--gold))',
-              transition: 'width 0.2s ease-out',
             }}
           />
         </div>
@@ -118,6 +123,26 @@ function PhoneAppOpen({ progress }) {
   );
 }
 
+/* ─── Side Notification Card ─── */
+function NotificationCard({ children, delay = 0, side = 'left', visible }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: side === 'left' ? -40 : 40, scale: 0.9 }}
+      animate={visible ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: side === 'left' ? -40 : 40, scale: 0.9 }}
+      transition={{ duration: 0.5, delay: visible ? delay : 0, ease: [0.22, 1, 0.36, 1] }}
+      className="px-5 py-3.5 rounded-2xl backdrop-blur-md border whitespace-nowrap"
+      style={{
+        background: 'rgba(255, 255, 255, 0.92)',
+        borderColor: 'var(--border)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06)',
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Main Component ─── */
 export default function SolutionBridge() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -125,36 +150,66 @@ export default function SolutionBridge() {
     offset: ['start end', 'end start'],
   });
 
-  // ContainerScroll-style transforms
-  const rotateX = useTransform(scrollYProgress, [0.1, 0.5], [20, 0]);
-  const scale = useTransform(scrollYProgress, [0.1, 0.5], [0.85, 1]);
-  const translateY = useTransform(scrollYProgress, [0.1, 0.5], [100, 0]);
-  const opacity = useTransform(scrollYProgress, [0.05, 0.25], [0, 1]);
+  // ContainerScroll transforms (Phase 0)
+  const rotateX = useTransform(scrollYProgress, [0.05, 0.2], [25, 0]);
+  const scale = useTransform(scrollYProgress, [0.05, 0.2], [0.82, 1]);
+  const translateY = useTransform(scrollYProgress, [0.05, 0.2], [120, 0]);
+  const phoneOpacity = useTransform(scrollYProgress, [0.03, 0.15], [0, 1]);
 
-  // App opening progress (tied to scroll after phone is visible)
+  // Phase tracking
+  const [phase, setPhase] = useState(0);
   const [appProgress, setAppProgress] = useState(0);
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [sectionOpacity, setSectionOpacity] = useState(1);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
-      // Map scroll 0.3-0.7 to app progress 0-1
-      const p = Math.max(0, Math.min(1, (v - 0.3) / 0.4));
+      // App opening progress (Phase 1)
+      const p = Math.max(0, Math.min(1, (v - 0.15) / 0.15));
       setAppProgress(p);
+
+      // Dashboard appears (Phase 2+)
+      setShowDashboard(v > 0.32);
+
+      // Notifications fly in (Phase 3)
+      setShowNotifications(v > 0.42);
+
+      // Fade out (Phase 4)
+      if (v > 0.78) {
+        setSectionOpacity(Math.max(0, 1 - (v - 0.78) / 0.1));
+      } else {
+        setSectionOpacity(1);
+      }
+
+      // Phase
+      if (v < 0.15) setPhase(0);
+      else if (v < 0.30) setPhase(1);
+      else if (v < 0.45) setPhase(2);
+      else if (v < 0.75) setPhase(3);
+      else setPhase(4);
     });
     return unsubscribe;
   }, [scrollYProgress]);
 
   return (
-    <section ref={containerRef} className="py-20 lg:py-32 relative" style={{ minHeight: '120vh' }}>
-      <div className="sticky top-20 pb-20">
+    <section
+      ref={containerRef}
+      className="relative"
+      style={{ minHeight: '350vh' }}
+    >
+      <div
+        className="sticky top-0 min-h-screen flex flex-col justify-center overflow-hidden"
+        style={{ opacity: sectionOpacity }}
+      >
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Label */}
+          {/* Header text */}
           <FadeIn>
             <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 text-center uppercase">
               Die Lösung
             </p>
           </FadeIn>
 
-          {/* Heading with logo styling */}
           <FadeIn delay={0.1}>
             <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--text)] mb-4 text-center max-w-3xl mx-auto">
               <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
@@ -172,31 +227,158 @@ export default function SolutionBridge() {
             </h2>
           </FadeIn>
 
-          {/* Subtitle */}
           <FadeIn delay={0.2}>
-            <h3 className="text-lg lg:text-xl text-[var(--text-secondary)] mb-12 text-center max-w-2xl mx-auto font-light">
+            <h3 className="text-lg lg:text-xl text-[var(--text-secondary)] mb-10 text-center max-w-2xl mx-auto font-light">
               Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen.
             </h3>
           </FadeIn>
 
-          {/* Phone with ContainerScroll animation */}
-          <div
-            className="flex justify-center mt-8"
-            style={{ perspective: '1000px' }}
-          >
-            <motion.div
-              style={{
-                rotateX,
-                scale,
-                translateY,
-                opacity,
-              }}
-              className="w-full max-w-sm"
-            >
-              <PhoneMockup width={320} flat>
-                <PhoneAppOpen progress={appProgress} />
-              </PhoneMockup>
-            </motion.div>
+          {/* Phone + Notifications layout */}
+          <div className="flex items-center justify-center gap-6 lg:gap-10 relative">
+            {/* Left notifications (desktop only) */}
+            <div className="hidden lg:flex flex-col gap-4 items-end w-56">
+              <NotificationCard side="left" delay={0} visible={showNotifications}>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' }}>
+                    <span className="text-white text-sm">📈</span>
+                  </div>
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>+€2.650</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>Umsatz diesen Monat</div>
+                  </div>
+                </div>
+              </NotificationCard>
+
+              <NotificationCard side="left" delay={0.15} visible={showNotifications}>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' }}>
+                    <span className="text-white text-sm">⭐</span>
+                  </div>
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* Phone with ContainerScroll animation */}
+            <div style={{ perspective: '1000px' }}>
+              <motion.div
+                style={{
+                  rotateX,
+                  scale,
+                  translateY,
+                  opacity: phoneOpacity,
+                }}
+              >
+                <PhoneMockup width={320} flat interactive={showDashboard}>
+                  <AnimatePresence mode="wait">
+                    {showDashboard ? (
+                      <motion.div
+                        key="dashboard"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="w-full h-full"
+                      >
+                        <PhoneAppUI />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="appopen"
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-full h-full"
+                      >
+                        <PhoneAppOpen progress={appProgress} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </PhoneMockup>
+              </motion.div>
+            </div>
+
+            {/* Right notifications (desktop only) */}
+            <div className="hidden lg:flex flex-col gap-4 items-start w-56">
+              <NotificationCard side="right" delay={0.08} visible={showNotifications}>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)' }}>
+                    <span className="text-white text-sm">🤝</span>
+                  </div>
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>+3 neue Deals</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>warten auf dich</div>
+                  </div>
+                </div>
+              </NotificationCard>
+
+              <NotificationCard side="right" delay={0.25} visible={showNotifications}>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)' }}>
+                    <span className="text-white text-sm">💬</span>
+                  </div>
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>2 Nachrichten</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>Beauty Brand Co.</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+          </div>
+
+          {/* Mobile notifications (below phone) */}
+          <div className="lg:hidden flex flex-wrap justify-center gap-3 mt-6">
+            <AnimatePresence>
+              {showNotifications && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="px-4 py-2.5 rounded-xl border"
+                    style={{
+                      background: 'rgba(255,255,255,0.92)',
+                      borderColor: 'var(--border)',
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    }}
+                  >
+                    <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                    className="px-4 py-2.5 rounded-xl border"
+                    style={{
+                      background: 'rgba(255,255,255,0.92)',
+                      borderColor: 'var(--border)',
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    }}
+                  >
+                    <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€2.650</span>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    className="px-4 py-2.5 rounded-xl border"
+                    style={{
+                      background: 'rgba(255,255,255,0.92)',
+                      borderColor: 'var(--border)',
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    }}
+                  >
+                    <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>💬 2 Nachrichten</span>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
