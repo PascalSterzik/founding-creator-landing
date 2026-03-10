@@ -172,18 +172,19 @@ export default function Hero() {
               Verbinde dich mit Brands, die zu deinem Publikum passen. Verdiene Geld mit Inhalten, die du ohnehin erstellst. CreatorBridge macht Monetarisierung einfach.
             </motion.p>
 
-            {/* Premium CTA Button with enhanced animations */}
+            {/* Premium CTA Button */}
             <motion.div variants={itemVariants} className="pt-2">
-              <motion.button
-                className="relative px-8 py-4 rounded-full text-white font-bold text-lg overflow-hidden w-full sm:w-auto transition-all duration-300"
+              <motion.a
+                href="#bewerbung"
+                className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-lg overflow-hidden w-full sm:w-auto cursor-pointer no-underline"
                 style={{
-                  background: `linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)`,
-                  boxShadow: '0 20px 60px rgba(201, 140, 131, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                  background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)',
+                  boxShadow: '0 16px 48px rgba(201, 140, 131, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                   letterSpacing: '0.5px',
                 }}
                 whileHover={{
                   scale: 1.04,
-                  boxShadow: '0 25px 80px rgba(201, 140, 131, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                  boxShadow: '0 20px 64px rgba(201, 140, 131, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
                 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -191,13 +192,13 @@ export default function Hero() {
                 <motion.div
                   className="absolute inset-0 rounded-full"
                   style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent)',
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
                   }}
                   animate={{ x: ['100%', '-100%'] }}
-                  transition={{ duration: 3, repeat: Infinity }}
+                  transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
                 />
                 <span className="relative">Jetzt als Founding Creator bewerben</span>
-              </motion.button>
+              </motion.a>
             </motion.div>
 
             {/* Micro text with checkmark */}

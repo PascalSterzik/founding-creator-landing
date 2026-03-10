@@ -94,9 +94,12 @@ export default function ForWhom() {
               Es geht nicht nur darum, dabei zu sein. Es geht darum, mit den richtigen Menschen
               an den richtigen Deals zu arbeiten. Wenn das nach dir klingt, lass uns sprechen.
             </p>
-            <button className="bg-white text-[var(--accent)] px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300">
-              Lass uns ein Call buchen
-            </button>
+            <a
+              href="#bewerbung"
+              className="inline-block bg-white text-[var(--accent)] px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 no-underline"
+            >
+              Jetzt bewerben
+            </a>
           </div>
         </FadeIn>
       </div>

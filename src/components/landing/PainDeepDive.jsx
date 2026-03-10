@@ -1,14 +1,16 @@
 'use client';
 
 import FadeIn from '@/components/motion/FadeIn';
+import { motion } from 'framer-motion';
+import { TrendingDown, Ghost, MessageSquareOff, Clock, EyeOff } from 'lucide-react';
 
 export default function PainDeepDive() {
   const painPoints = [
-    'Der Algorithmus sagt dir nicht, wer deine idealen Brands sind',
-    'Brands sehen Millionen Creator – wie findest du sie?',
-    'Deine beste Arbeit ist unsichtbar für die richtigen Menschen',
-    'Selbst wenn Brands dich finden: Verhandlungen sind chaotisch',
-    'Die meisten Deals gehen an bekannte Gesichter – nicht an die beste Arbeit',
+    { icon: EyeOff, text: 'Der Algorithmus sagt dir nicht, wer deine idealen Brands sind' },
+    { icon: Ghost, text: 'Brands sehen Millionen Creator, aber du bist unsichtbar' },
+    { icon: TrendingDown, text: 'Deine beste Arbeit erreicht die richtigen Menschen nicht' },
+    { icon: MessageSquareOff, text: 'Selbst wenn Brands dich finden: Verhandlungen sind chaotisch' },
+    { icon: Clock, text: 'Die meisten Deals gehen an bekannte Gesichter, nicht an die beste Arbeit' },
   ];
 
   return (
@@ -34,7 +36,6 @@ export default function PainDeepDive() {
               <h2
                 style={{
                   color: 'var(--text)',
-                  fontFamily: 'var(--font-heading)',
                   fontSize: 'clamp(1.875rem, 5vw, 2.75rem)',
                   fontWeight: '700',
                   lineHeight: '1.2',
@@ -67,7 +68,7 @@ export default function PainDeepDive() {
                   }}
                 >
                   Es ist ein <strong>Visibility-Problem</strong>. Du kannst talentiert sein,
-                  dein Content kann viral gehen – aber wenn die richtige Brand dich nicht sieht,
+                  dein Content kann viral gehen, aber wenn die richtige Brand dich nicht sieht,
                   passiert nichts.
                 </p>
 
@@ -83,85 +84,48 @@ export default function PainDeepDive() {
                   Miscommunications, die Deals platzen lassen.
                 </p>
               </div>
+            </div>
+          </FadeIn>
 
-              <div className="space-y-3">
-                <p
-                  style={{
-                    color: 'var(--text)',
-                    fontSize: '0.95rem',
-                    fontWeight: '600',
-                    marginBottom: '0.75rem',
-                  }}
-                >
-                  Die größten Probleme:
-                </p>
-                <ul className="space-y-2">
-                  {painPoints.map((point, index) => (
-                    <li
-                      key={index}
+          {/* Right: Visual pain point cards */}
+          <FadeIn delay={0.2}>
+            <div className="space-y-4">
+              {painPoints.map((point, index) => {
+                const Icon = point.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.4 }}
+                    className="flex items-start gap-4 p-5 rounded-2xl transition-all duration-300"
+                    style={{
+                      backgroundColor: 'rgba(201, 140, 131, 0.06)',
+                      border: '1px solid var(--border)',
+                    }}
+                  >
+                    <div
+                      className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{
+                        backgroundColor: 'rgba(201, 140, 131, 0.12)',
+                      }}
+                    >
+                      <Icon size={20} style={{ color: 'var(--accent)' }} />
+                    </div>
+                    <p
                       style={{
                         color: 'var(--text-secondary)',
                         fontSize: '0.95rem',
                         lineHeight: '1.6',
-                        paddingLeft: '1.5rem',
+                        fontWeight: '500',
                       }}
-                      className="relative"
                     >
-                      <span
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          color: 'var(--accent)',
-                          fontWeight: '700',
-                        }}
-                      >
-                        •
-                      </span>
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* Right: Image Placeholder */}
-          <FadeIn delay={0.2}>
-            <div
-              style={{
-                backgroundColor: '#E8E0DB',
-                borderRadius: 'var(--radius-lg)',
-                aspectRatio: '1 / 1.1',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '2px dashed var(--border)',
-              }}
-              className="w-full"
-            >
-              <div
-                style={{
-                  textAlign: 'center',
-                  color: 'var(--text-muted)',
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                  }}
-                >
-                  Creator Frustration
-                </p>
-                <p
-                  style={{
-                    fontSize: '0.875rem',
-                    marginTop: '0.5rem',
-                  }}
-                >
-                  [Image Placeholder]
-                </p>
-              </div>
+                      {point.text}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
           </FadeIn>
         </div>

@@ -132,7 +132,7 @@ export default function SolutionFeatures() {
                     {isActive && (
                       <motion.div
                         layoutId="activeBar"
-                        className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--accent)] rounded-l-xl"
+                        className="absolute left-0 top-3 bottom-3 w-[3px] bg-[var(--accent)] rounded-full"
                       />
                     )}
 

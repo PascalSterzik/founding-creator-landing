@@ -23,7 +23,11 @@ const FinalCTA = () => {
         <FadeIn delay={0.2}>
           <a
             href="#bewerbung"
-            className="inline-block px-10 py-4 bg-gradient-to-r from-[var(--accent)] to-[var(--gold)] hover:from-[var(--accent-hover)] hover:to-[var(--accent)] text-white font-bold rounded-[var(--radius-md)] transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+            className="inline-block px-10 py-4 rounded-full text-white font-bold text-base transition-all duration-300 hover:scale-105"
+            style={{
+              background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)',
+              boxShadow: '0 12px 40px rgba(201, 140, 131, 0.4)',
+            }}
           >
             Jetzt bewerben
           </a>

@@ -1,17 +1,17 @@
 'use client';
 
 import FadeIn from '@/components/motion/FadeIn';
-import { Check } from 'lucide-react';
+import { Check, Crown, Star, Sparkles } from 'lucide-react';
 
 export default function Perks() {
   const tiers = [
     {
-      name: 'Die ersten 10',
-      label: 'Founding 10',
+      name: 'Founding 10',
       range: 'Plätze 1 bis 10',
       subtitle: 'Exklusivste Vorteile',
       badge: 'Noch erhältlich',
-      badgeColor: 'bg-green-100 text-green-700',
+      badgeColor: 'bg-green-50 text-green-700 border-green-200',
+      icon: Crown,
       perks: [
         'Persönliches 1:1 Onboarding mit dem Gründerteam',
         'Direkter Einfluss auf die Produktentwicklung',
@@ -24,12 +24,12 @@ export default function Perks() {
       isHighlighted: true,
     },
     {
-      name: 'Plätze 11 bis 50',
-      label: 'Founding 50',
-      range: 'Founding 50',
+      name: 'Founding 50',
+      range: 'Plätze 11 bis 50',
       subtitle: 'Starke Vorteile',
       badge: 'Verfügbar',
-      badgeColor: 'bg-blue-100 text-blue-700',
+      badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+      icon: Star,
       perks: [
         'Priorisiertes Gruppen-Onboarding',
         'Early Access zu allen Features',
@@ -41,12 +41,12 @@ export default function Perks() {
       isHighlighted: false,
     },
     {
-      name: 'Plätze 51 bis 100',
-      label: 'Founding 100',
-      range: 'Founding 100',
+      name: 'Founding 100',
+      range: 'Plätze 51 bis 100',
       subtitle: 'Basis-Vorteile',
       badge: 'Verfügbar',
-      badgeColor: 'bg-blue-100 text-blue-700',
+      badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+      icon: Sparkles,
       perks: [
         'Onboarding-Support',
         'Early Access',
@@ -79,82 +79,106 @@ export default function Perks() {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {tiers.map((tier, index) => (
-            <FadeIn key={tier.label} delay={index * 0.15}>
-              <div
-                className={`relative h-full rounded-2xl overflow-hidden transition-all duration-300 ${
-                  tier.isHighlighted
-                    ? 'md:scale-105 border-2 border-[var(--gold)] bg-white shadow-xl'
-                    : 'border border-[var(--border)] bg-white shadow-md hover:shadow-lg'
-                }`}
-              >
-                {/* Glow effect for highlighted card */}
-                {tier.isHighlighted && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)] to-[var(--accent)] opacity-5 pointer-events-none" />
-                )}
-
-                {/* Top border accent */}
+          {tiers.map((tier, index) => {
+            const Icon = tier.icon;
+            return (
+              <FadeIn key={tier.name} delay={index * 0.15}>
                 <div
-                  className={`absolute top-0 left-0 right-0 h-1 ${
+                  className={`relative h-full rounded-2xl overflow-hidden transition-all duration-300 ${
                     tier.isHighlighted
-                      ? 'bg-gradient-to-r from-[var(--gold)] to-[var(--accent)]'
-                      : 'bg-gradient-to-r from-[var(--accent)] to-transparent'
+                      ? 'md:scale-105 border-2 border-[var(--gold)] bg-white shadow-xl'
+                      : 'border border-[var(--border)] bg-white shadow-md hover:shadow-lg'
                   }`}
-                />
+                >
+                  {/* Glow effect for highlighted card */}
+                  {tier.isHighlighted && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)] to-[var(--accent)] opacity-5 pointer-events-none" />
+                  )}
 
-                <div className="p-8 relative z-10">
-                  {/* Badge */}
-                  <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 ${tier.badgeColor}`}>
-                    {tier.badge}
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-2xl font-bold text-[var(--text)] mb-1">
-                    {tier.name}
-                  </h3>
-                  <p className="text-sm text-[var(--text-secondary)] mb-4">
-                    {tier.subtitle}
-                  </p>
-
-                  {/* Divider */}
-                  <div className="h-px bg-[var(--border)] my-6" />
-
-                  {/* Perks List */}
-                  <ul className="space-y-4 mb-8">
-                    {tier.perks.map((perk, i) => (
-                      <li key={i} className="flex gap-3 items-start">
-                        <Check className="w-5 h-5 text-[var(--accent)] flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-[var(--text-secondary)]">{perk}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA Button */}
-                  <button
-                    className={`w-full py-3 px-6 rounded-full font-semibold transition-all duration-300 ${
+                  {/* Top border accent */}
+                  <div
+                    className={`absolute top-0 left-0 right-0 h-1 ${
                       tier.isHighlighted
-                        ? 'bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] text-white hover:shadow-lg hover:scale-105'
-                        : 'border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white'
+                        ? 'bg-gradient-to-r from-[var(--gold)] to-[var(--accent)]'
+                        : 'bg-gradient-to-r from-[var(--accent)] to-transparent'
                     }`}
-                  >
-                    Jetzt beitreten
-                  </button>
+                  />
+
+                  <div className="p-8 relative z-10">
+                    {/* Icon + Badge row */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center"
+                        style={{
+                          backgroundColor: tier.isHighlighted
+                            ? 'rgba(230, 201, 168, 0.2)'
+                            : 'rgba(201, 140, 131, 0.1)',
+                        }}
+                      >
+                        <Icon
+                          size={20}
+                          style={{
+                            color: tier.isHighlighted ? 'var(--gold-dark)' : 'var(--accent)',
+                          }}
+                        />
+                      </div>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold border ${tier.badgeColor}`}
+                      >
+                        {tier.badge}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-2xl font-bold text-[var(--text)] mb-1">
+                      {tier.name}
+                    </h3>
+                    <p className="text-sm text-[var(--text-secondary)] mb-2">
+                      {tier.range}
+                    </p>
+                    <p className="text-sm font-medium text-[var(--text-muted)] mb-4">
+                      {tier.subtitle}
+                    </p>
+
+                    {/* Divider */}
+                    <div className="h-px bg-[var(--border)] my-5" />
+
+                    {/* Perks List */}
+                    <ul className="space-y-3">
+                      {tier.perks.map((perk, i) => (
+                        <li key={i} className="flex gap-3 items-start">
+                          <Check className="w-4 h-4 text-[var(--accent)] flex-shrink-0 mt-0.5" />
+                          <span className="text-sm text-[var(--text-secondary)]">{perk}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </FadeIn>
-          ))}
+              </FadeIn>
+            );
+          })}
         </div>
 
-        {/* Bottom Note */}
+        {/* Single CTA for all tiers */}
         <FadeIn delay={0.45}>
-          <div className="bg-white border border-[var(--border)] rounded-2xl p-6 text-center">
-            <p className="text-[var(--text-secondary)]">
+          <div className="text-center">
+            <p className="text-[var(--text-secondary)] mb-6">
               Alle Founding Creator Spots sind reserviert für echte Creator mit etabliertem
               Publikum im DACH-Raum.{' '}
               <span className="text-[var(--accent)] font-semibold">
                 Verfügbarkeit ist limitiert.
               </span>
             </p>
+            <a
+              href="#bewerbung"
+              className="inline-block px-10 py-4 rounded-full text-white font-bold text-base transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)',
+                boxShadow: '0 12px 40px rgba(201, 140, 131, 0.3)',
+              }}
+            >
+              Jetzt als Founding Creator bewerben
+            </a>
           </div>
         </FadeIn>
       </div>
