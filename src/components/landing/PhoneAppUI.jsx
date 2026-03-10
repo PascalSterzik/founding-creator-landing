@@ -151,7 +151,7 @@ const OverviewTab = () => (
           amount: '€850',
           status: 'Matched',
           color: '#10b981',
-          icon: '✨',
+          initials: 'BC',
         },
         {
           name: 'Sommer-Kollektion',
@@ -159,7 +159,7 @@ const OverviewTab = () => (
           amount: '€1.200',
           status: 'Prüfung',
           color: '#f59e0b',
-          icon: '👗',
+          initials: 'FL',
         },
         {
           name: 'Fitness-Supplement',
@@ -167,7 +167,7 @@ const OverviewTab = () => (
           amount: '€600',
           status: 'Neu',
           color: '#ec4899',
-          icon: '💪',
+          initials: 'SF',
         },
       ].map((deal, idx) => (
         <motion.div
@@ -185,7 +185,12 @@ const OverviewTab = () => (
         >
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-3 flex-1">
-              <div className="text-lg mt-0.5">{deal.icon}</div>
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5"
+                style={{ backgroundColor: `${deal.color}18`, color: deal.color }}
+              >
+                {deal.initials}
+              </div>
               <div className="flex-1">
                 <div style={{ color: 'var(--cocoa)', fontSize: '13px', fontWeight: '600', letterSpacing: '-0.2px' }}>
                   {deal.name}
