@@ -91,9 +91,9 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
+          {/* Left content (order-2 on mobile so phone appears first) */}
           <motion.div
-            className="space-y-8"
+            className="space-y-8 order-2 lg:order-1"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -130,7 +130,7 @@ export default function Hero() {
             <motion.div variants={itemVariants} className="pt-2">
               <motion.a
                 href="#bewerbung"
-                className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-lg overflow-hidden w-full sm:w-auto cursor-pointer no-underline"
+                className="relative inline-flex items-center justify-center px-8 sm:px-10 py-4 rounded-full text-white font-bold text-base sm:text-lg overflow-hidden w-full sm:w-auto cursor-pointer no-underline whitespace-nowrap"
                 style={{
                   background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
                   boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
@@ -179,9 +179,9 @@ export default function Hero() {
             </motion.p>
           </motion.div>
 
-          {/* Right content - Phone mockup */}
+          {/* Right content - Phone mockup (order-1 on mobile so it appears first) */}
           <motion.div
-            className="flex items-center justify-center lg:justify-end"
+            className="flex items-center justify-center lg:justify-end order-1 lg:order-2"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
