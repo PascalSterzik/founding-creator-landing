@@ -3,10 +3,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const TOTAL_SLOTS = 100;
+const REMAINING_SLOTS = 100; // Update this as slots fill up
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
+
+  const filledPercent = ((REMAINING_SLOTS / TOTAL_SLOTS) * 100);
 
   useEffect(() => {
     setIsVisible(true);
@@ -96,23 +101,42 @@ export default function Navbar() {
               </span>
             </motion.a>
 
-            {/* Center/Right: Urgency Indicator (hidden on mobile). Centered when CTA is hidden, stays left of CTA when visible */}
-            <div className={`hidden sm:flex items-center gap-2 ${!showCTA ? 'ml-auto' : ''}`}>
-              <motion.div
-                className="w-2 h-2 rounded-full flex-shrink-0"
-                style={{ backgroundColor: '#10b981' }}
-                animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span
-                style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                }}
-              >
-                Nur noch 100 Bonusplätze
-              </span>
+            {/* Center/Right: Urgency Indicator with progress bar (hidden on mobile) */}
+            <div className={`hidden sm:flex items-center gap-3 ${!showCTA ? 'ml-auto' : ''}`}>
+              <div className="flex flex-col items-center gap-1">
+                <span
+                  style={{
+                    color: 'var(--text-secondary)',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    letterSpacing: '0.2px',
+                  }}
+                >
+                  <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>/</span>
+                  <span>{TOTAL_SLOTS}</span>
+                  {' '}Bonusplätze
+                </span>
+                {/* Progress bar */}
+                <div
+                  className="rounded-full overflow-hidden"
+                  style={{
+                    width: '100px',
+                    height: '4px',
+                    backgroundColor: 'rgba(201, 140, 131, 0.12)',
+                  }}
+                >
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{
+                      background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+                    }}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${filledPercent}%` }}
+                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+                  />
+                </div>
+              </div>
             </div>
 
             {/* CTA Button (right) - fades in after scroll/time delay */}

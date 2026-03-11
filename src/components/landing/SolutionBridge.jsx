@@ -164,10 +164,12 @@ export default function SolutionBridge() {
     offset: ['start end', 'end start'],
   });
 
-  // 3D tilt animation: slower, more dramatic rise from below
-  const rotateX = useTransform(scrollYProgress, [0.08, 0.28], [25, 0]);
-  const phoneScale = useTransform(scrollYProgress, [0.08, 0.28], [0.8, 1.05]);
-  const phoneTranslateY = useTransform(scrollYProgress, [0.08, 0.28], [120, 0]);
+  /* 3D tilt animation: TRUE perspective rotation (like ContainerScroll).
+     The phone rotates on the X axis from 20deg tilted back to 0deg flat,
+     giving a dramatic "rising from below" 3D effect. */
+  const rotateX = useTransform(scrollYProgress, [0.08, 0.30], [20, 0]);
+  const phoneScale = useTransform(scrollYProgress, [0.08, 0.30], [0.85, 1.05]);
+  const phoneTranslateY = useTransform(scrollYProgress, [0.08, 0.30], [100, 0]);
   const phoneOpacity = useTransform(scrollYProgress, [0.06, 0.16], [0, 1]);
 
   // Phase tracking for app content and scroll-triggered notifications
@@ -178,18 +180,18 @@ export default function SolutionBridge() {
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
       // App opening progress: starts later, takes longer (more time to see phone first)
-      const p = Math.max(0, Math.min(1, (v - 0.22) / 0.12));
+      const p = Math.max(0, Math.min(1, (v - 0.24) / 0.12));
       setAppProgress(p);
 
       // Dashboard appears after phone has fully risen and app has opened
-      setShowDashboard(v > 0.38);
+      setShowDashboard(v > 0.40);
 
       // Scroll-triggered notifications: fast pops AFTER dashboard is visible
-      if (v < 0.40) setVisibleNotifs(0);
-      else if (v < 0.43) setVisibleNotifs(1);
-      else if (v < 0.46) setVisibleNotifs(2);
-      else if (v < 0.49) setVisibleNotifs(3);
-      else if (v < 0.52) setVisibleNotifs(4);
+      if (v < 0.42) setVisibleNotifs(0);
+      else if (v < 0.45) setVisibleNotifs(1);
+      else if (v < 0.48) setVisibleNotifs(2);
+      else if (v < 0.51) setVisibleNotifs(3);
+      else if (v < 0.54) setVisibleNotifs(4);
       else setVisibleNotifs(5);
     });
     return unsubscribe;
@@ -199,7 +201,7 @@ export default function SolutionBridge() {
     <section
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '250vh' }}
+      style={{ minHeight: '300vh' }}
     >
       {/* ─── Header text: scrolls normally (NOT sticky) ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
@@ -241,8 +243,9 @@ export default function SolutionBridge() {
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
             {/* ─── Mobile 3D overlay notifications (positioned around the phone) ─── */}
-            {/* Notification 1: Top-left, stays at top-left */}
-            <div className="lg:hidden absolute z-10" style={{ left: '0%', top: '3%' }}>
+
+            {/* Notification 1: "+3 neue Deals" - ABOVE the logo / top of phone */}
+            <div className="lg:hidden absolute z-10" style={{ left: '2%', top: '-4%' }}>
               <NotificationCard visible={visibleNotifs >= 1}>
                 <div className="flex items-center gap-2">
                   <img src="/images/creator-brand-handshake.jpg" alt="" className="w-8 h-8 rounded-lg object-cover" />
@@ -254,7 +257,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 2: Right side, below tabs, narrower with two-line text */}
+            {/* Notification 2: "+€850" - Right side, UNCHANGED position */}
             <div className="lg:hidden absolute z-10" style={{ right: '-4%', top: '18%' }}>
               <NotificationCard visible={visibleNotifs >= 2}>
                 <div className="text-center" style={{ minWidth: '60px' }}>
@@ -264,8 +267,8 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 3: Left side, lower half where there's space */}
-            <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '52%' }}>
+            {/* Notification 3: Star Rating - moved UP from 52% to 42% */}
+            <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '42%' }}>
               <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-2">
                   <StarRating rating={4.8} />
@@ -274,8 +277,8 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 4: Right side, lower half */}
-            <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '56%' }}>
+            {/* Notification 4: Messages - moved DOWN from 56% to 62% */}
+            <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '62%' }}>
               <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-2">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -286,8 +289,8 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 5: Bottom, full revenue chart card */}
-            <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '0%', transform: 'translateX(-50%)', width: '85%', maxWidth: '300px' }}>
+            {/* Notification 5: Revenue chart - moved DOWN a bit (bottom: -8%) */}
+            <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '-8%', transform: 'translateX(-50%)', width: '85%', maxWidth: '300px' }}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.3, y: 20 }}
                 animate={
@@ -465,7 +468,7 @@ export default function SolutionBridge() {
               </motion.div>
             </div>
 
-            {/* ─── PHONE (centered) with 3D tilt + rise from below ─── */}
+            {/* ─── PHONE (centered) with TRUE 3D perspective tilt + rise ─── */}
             <motion.div
               style={{
                 rotateX,
@@ -504,10 +507,11 @@ export default function SolutionBridge() {
               </PhoneMockup>
             </motion.div>
           </div>
-
-          {/* Old mobile notifications removed - now above the phone */}
         </div>
       </div>
+
+      {/* Bottom spacer for more distance to next section */}
+      <div style={{ height: '12vh' }} />
     </section>
   );
 }
