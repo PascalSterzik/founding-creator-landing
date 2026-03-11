@@ -111,12 +111,16 @@ function NotificationCard({ children, visible, large = false, style: posStyle = 
   );
 }
 
-/* ─── Stock image URLs (Unsplash small, load in browser) ─── */
-const STOCK_IMAGES = {
-  fashion: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=80&h=80&fit=crop&crop=faces',
-  beauty: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=80&h=80&fit=crop&crop=center',
-  fitness: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=80&h=80&fit=crop&crop=faces',
-  food: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=80&h=80&fit=crop&crop=center',
+/* ─── Contextual images for notification popups ─── */
+const NOTIF_IMAGES = {
+  // Revenue/earnings growth chart
+  revenue: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=120&h=120&fit=crop&crop=center',
+  // Business handshake / new deals
+  deals: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=120&h=120&fit=crop&crop=center',
+  // Star rating / positive feedback
+  rating: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=120&h=120&fit=crop&crop=center',
+  // Chat / messages
+  messages: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=120&h=120&fit=crop&crop=center',
 };
 
 /* ─── Main Component ─── */
@@ -207,12 +211,12 @@ export default function SolutionBridge() {
               <NotificationCard visible={visibleNotifs >= 1} large>
                 <div className="flex items-center gap-3.5">
                   <img
-                    src={STOCK_IMAGES.fashion}
-                    alt="Fashion Brand"
-                    className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
+                    src={NOTIF_IMAGES.revenue}
+                    alt="Umsatz steigt"
+                    className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
                   />
                   <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '15px', fontWeight: '700', letterSpacing: '-0.3px' }}>+€2.650</div>
+                    <div style={{ color: '#10b981', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+€2.650</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>Umsatz diesen Monat</div>
                   </div>
                 </div>
@@ -223,12 +227,12 @@ export default function SolutionBridge() {
               <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-3">
                   <img
-                    src={STOCK_IMAGES.food}
-                    alt="Food Brand"
-                    className="w-10 h-10 rounded-xl object-cover flex-shrink-0"
+                    src={NOTIF_IMAGES.rating}
+                    alt="Top Rating"
+                    className="w-11 h-11 rounded-xl object-cover flex-shrink-0"
                   />
                   <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
+                    <div style={{ color: '#f59e0b', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
                   </div>
                 </div>
@@ -240,12 +244,12 @@ export default function SolutionBridge() {
               <NotificationCard visible={visibleNotifs >= 2} large>
                 <div className="flex items-center gap-3.5">
                   <img
-                    src={STOCK_IMAGES.beauty}
-                    alt="Beauty Brand"
-                    className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
+                    src={NOTIF_IMAGES.deals}
+                    alt="Neue Deals"
+                    className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
                   />
                   <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '15px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>warten auf dich</div>
                   </div>
                 </div>
@@ -256,9 +260,9 @@ export default function SolutionBridge() {
               <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-3">
                   <img
-                    src={STOCK_IMAGES.fitness}
-                    alt="Fitness Brand"
-                    className="w-10 h-10 rounded-xl object-cover flex-shrink-0"
+                    src={NOTIF_IMAGES.messages}
+                    alt="Neue Nachrichten"
+                    className="w-11 h-11 rounded-xl object-cover flex-shrink-0"
                   />
                   <div>
                     <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>2 Nachrichten</div>
@@ -320,7 +324,7 @@ export default function SolutionBridge() {
                   className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
                   style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
                 >
-                  <img src={STOCK_IMAGES.beauty} alt="" className="w-7 h-7 rounded-lg object-cover" />
+                  <img src={NOTIF_IMAGES.deals} alt="" className="w-7 h-7 rounded-lg object-cover" />
                   <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
                 </motion.div>
               )}
@@ -333,7 +337,7 @@ export default function SolutionBridge() {
                   className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
                   style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
                 >
-                  <img src={STOCK_IMAGES.fashion} alt="" className="w-7 h-7 rounded-lg object-cover" />
+                  <img src={NOTIF_IMAGES.revenue} alt="" className="w-7 h-7 rounded-lg object-cover" />
                   <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€2.650</span>
                 </motion.div>
               )}
@@ -346,7 +350,7 @@ export default function SolutionBridge() {
                   className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
                   style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
                 >
-                  <img src={STOCK_IMAGES.fitness} alt="" className="w-7 h-7 rounded-lg object-cover" />
+                  <img src={NOTIF_IMAGES.messages} alt="" className="w-7 h-7 rounded-lg object-cover" />
                   <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>2 Nachrichten</span>
                 </motion.div>
               )}

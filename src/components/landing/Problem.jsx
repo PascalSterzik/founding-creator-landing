@@ -131,7 +131,8 @@ export default function Problem() {
       title: 'Deals kommen zufällig',
       description:
         'Du wartest auf DMs, hoffst auf Empfehlungen und bist von Glück abhängig, ob die richtige Brand deine Arbeit sieht.',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=400&fit=crop&crop=faces',
+      // Dice on dark background: randomness/luck concept
+      image: 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600&h=400&fit=crop&crop=center',
     },
     {
       number: '02',
@@ -139,7 +140,8 @@ export default function Problem() {
       title: 'Akquise kostet Zeit',
       description:
         'Statt Content zu erstellen, verbringst du Stunden mit Recherche, Kaltakquise und E-Mails an Brands, die nie antworten.',
-      image: 'https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=600&h=400&fit=crop',
+      // Person overwhelmed at laptop, stressed with work
+      image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop&crop=center',
     },
     {
       number: '03',
@@ -147,6 +149,7 @@ export default function Problem() {
       title: 'Kommunikation ist Chaos',
       description:
         'DMs auf Instagram, E-Mails, WhatsApp-Gruppen, Notion-Seiten. Absprachen sind dezentralisiert und ständig verloren gegangen.',
+      // 3D chat/message bubble icon (keeping this one, it fits)
       image: 'https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=600&h=400&fit=crop',
     },
   ];

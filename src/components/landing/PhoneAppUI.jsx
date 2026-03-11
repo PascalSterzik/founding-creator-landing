@@ -69,46 +69,49 @@ const AppHeader = () => (
         Bridge
       </span>
     </div>
-    <div
-      className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-transform hover:scale-105"
-      style={{
-        background: 'linear-gradient(135deg, var(--accent) 0%, rgba(var(--accent-rgb), 0.8) 100%)',
-        color: 'white',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
-      }}
-    >
-      LS
-    </div>
+    <img
+      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces"
+      alt="Lisa Schmidt"
+      className="w-8 h-8 rounded-full object-cover transition-transform hover:scale-105"
+      style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)' }}
+    />
   </div>
 );
 
-const TabBar = ({ activeTab, onTabChange }) => (
-  <div
-    className="flex items-center justify-around border-b"
-    style={{ borderColor: 'var(--border)' }}
-  >
-    {TABS.map((tab) => (
-      <button
-        key={tab.key}
-        onClick={() => onTabChange(tab.key)}
-        className="flex-1 py-3.5 text-xs font-semibold relative transition-colors duration-200"
+const TabBar = ({ activeTab, onTabChange }) => {
+  const activeIndex = TABS.findIndex((t) => t.key === activeTab);
+  const tabCount = TABS.length;
+
+  return (
+    <div
+      className="relative flex items-center justify-around border-b"
+      style={{ borderColor: 'var(--border)' }}
+    >
+      {TABS.map((tab) => (
+        <button
+          key={tab.key}
+          onClick={() => onTabChange(tab.key)}
+          className="flex-1 py-3.5 text-xs font-semibold relative transition-colors duration-200"
+          style={{
+            color: activeTab === tab.key ? 'var(--accent)' : 'var(--text-secondary)',
+          }}
+        >
+          {tab.label}
+        </button>
+      ))}
+      {/* Sliding underline (pure CSS transition, no layoutId) */}
+      <div
+        className="absolute bottom-0 h-1 rounded-t-full"
         style={{
-          color: activeTab === tab.key ? 'var(--accent)' : 'var(--text-secondary)',
+          backgroundColor: 'var(--accent)',
+          width: `${100 / tabCount}%`,
+          left: `${(activeIndex / tabCount) * 100}%`,
+          transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
-      >
-        {tab.label}
-        {activeTab === tab.key && (
-          <motion.div
-            layoutId="activeTab"
-            className="absolute bottom-0 left-0 right-0 h-1 rounded-t-full"
-            style={{ backgroundColor: 'var(--accent)' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          />
-        )}
-      </button>
-    ))}
-  </div>
-);
+      />
+    </div>
+  );
+};
 
 const OverviewTab = () => (
   <div className="space-y-4 pb-6">
@@ -152,6 +155,7 @@ const OverviewTab = () => (
           status: 'Matched',
           color: '#10b981',
           initials: 'BC',
+          image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=80&h=80&fit=crop&crop=center',
         },
         {
           name: 'Sommer-Kollektion',
@@ -160,6 +164,7 @@ const OverviewTab = () => (
           status: 'Prüfung',
           color: '#f59e0b',
           initials: 'FL',
+          image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=80&h=80&fit=crop&crop=center',
         },
         {
           name: 'Fitness-Supplement',
@@ -168,6 +173,7 @@ const OverviewTab = () => (
           status: 'Neu',
           color: '#ec4899',
           initials: 'SF',
+          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=80&h=80&fit=crop&crop=center',
         },
       ].map((deal, idx) => (
         <motion.div
@@ -185,12 +191,21 @@ const OverviewTab = () => (
         >
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-3 flex-1">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5"
-                style={{ backgroundColor: `${deal.color}18`, color: deal.color }}
-              >
-                {deal.initials}
-              </div>
+              {deal.image ? (
+                <img
+                  src={deal.image}
+                  alt={deal.name}
+                  className="w-8 h-8 rounded-full object-cover flex-shrink-0 mt-0.5"
+                  style={{ border: `2px solid ${deal.color}30` }}
+                />
+              ) : (
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5"
+                  style={{ backgroundColor: `${deal.color}18`, color: deal.color }}
+                >
+                  {deal.initials}
+                </div>
+              )}
               <div className="flex-1">
                 <div style={{ color: 'var(--cocoa)', fontSize: '13px', fontWeight: '600', letterSpacing: '-0.2px' }}>
                   {deal.name}
@@ -350,15 +365,13 @@ const ProfileTab = () => (
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
       }}
     >
-      <div
-        className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0 relative"
-        style={{
-          background: 'linear-gradient(135deg, var(--accent) 0%, rgba(var(--accent-rgb), 0.8) 100%)',
-          color: 'white',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-        }}
-      >
-        LS
+      <div className="relative flex-shrink-0">
+        <img
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces"
+          alt="Lisa Schmidt"
+          className="w-14 h-14 rounded-full object-cover"
+          style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
+        />
         <div
           className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full flex items-center justify-center"
           style={{ backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
