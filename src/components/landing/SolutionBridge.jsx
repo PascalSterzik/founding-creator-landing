@@ -184,12 +184,12 @@ export default function SolutionBridge() {
       // Dashboard appears
       setShowDashboard(v > 0.30);
 
-      // Scroll-triggered notifications: each one at a specific scroll position
-      if (v < 0.34) setVisibleNotifs(0);
-      else if (v < 0.39) setVisibleNotifs(1);
-      else if (v < 0.44) setVisibleNotifs(2);
-      else if (v < 0.49) setVisibleNotifs(3);
-      else if (v < 0.54) setVisibleNotifs(4);
+      // Scroll-triggered notifications: tighter intervals for faster pops
+      if (v < 0.32) setVisibleNotifs(0);
+      else if (v < 0.35) setVisibleNotifs(1);
+      else if (v < 0.38) setVisibleNotifs(2);
+      else if (v < 0.41) setVisibleNotifs(3);
+      else if (v < 0.44) setVisibleNotifs(4);
       else setVisibleNotifs(5);
     });
     return unsubscribe;
@@ -199,7 +199,7 @@ export default function SolutionBridge() {
     <section
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '400vh' }}
+      style={{ minHeight: '250vh' }}
     >
       {/* ─── Header text: scrolls normally (NOT sticky) ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
@@ -238,64 +238,63 @@ export default function SolutionBridge() {
       {/* ─── Sticky phone + notifications (phone stays centered while user scrolls) ─── */}
       <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-20">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Mobile notifications: ABOVE the phone */}
-          <div className="lg:hidden relative flex flex-wrap justify-center gap-2 mb-4" style={{ minHeight: '40px' }}>
-            <AnimatePresence>
-              {visibleNotifs >= 1 && (
-                <motion.div
-                  key="m1"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-3 py-2 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}
-                >
-                  <img src="/images/creator-brand-handshake.jpg" alt="" className="w-6 h-6 rounded-lg object-cover" />
-                  <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
-                </motion.div>
-              )}
-              {visibleNotifs >= 2 && (
-                <motion.div
-                  key="m2"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-3 py-2 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}
-                >
-                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#10b981' }}>+€850</span>
-                </motion.div>
-              )}
-              {visibleNotifs >= 3 && (
-                <motion.div
-                  key="m3"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-3 py-2 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}
-                >
+          <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
+
+            {/* ─── Mobile 3D overlay notifications (positioned around the phone) ─── */}
+            {/* Notification 1: Top-left of phone */}
+            <div className="lg:hidden absolute z-10" style={{ left: '2%', top: '5%' }}>
+              <NotificationCard visible={visibleNotifs >= 1}>
+                <div className="flex items-center gap-2">
+                  <img src="/images/creator-brand-handshake.jpg" alt="" className="w-8 h-8 rounded-lg object-cover" />
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '12px', fontWeight: '700' }}>+3 neue Deals</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '10px' }}>warten auf dich</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* Notification 2: Top-right of phone */}
+            <div className="lg:hidden absolute z-10" style={{ right: '2%', top: '10%' }}>
+              <NotificationCard visible={visibleNotifs >= 2}>
+                <div className="flex items-center gap-2">
+                  <span style={{ color: '#10b981', fontSize: '13px', fontWeight: '800' }}>+€850</span>
+                  <span style={{ color: 'var(--text-secondary)', fontSize: '10px' }}>Neuer Deal</span>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* Notification 3: Left side, middle */}
+            <div className="lg:hidden absolute z-10" style={{ left: '0%', top: '38%' }}>
+              <NotificationCard visible={visibleNotifs >= 3}>
+                <div className="flex items-center gap-2">
                   <StarRating rating={4.8} />
                   <span style={{ fontSize: '12px', fontWeight: '700', color: '#f59e0b' }}>4.8</span>
-                </motion.div>
-              )}
-              {visibleNotifs >= 5 && (
-                <motion.div
-                  key="m5"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-3 py-2 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}
-                >
-                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#10b981' }}>€2.650</span>
-                  <span style={{ fontSize: '10px', fontWeight: '600', color: '#10b981' }}>+34%</span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                </div>
+              </NotificationCard>
+            </div>
 
-          <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
+            {/* Notification 4: Right side, middle */}
+            <div className="lg:hidden absolute z-10" style={{ right: '0%', top: '42%' }}>
+              <NotificationCard visible={visibleNotifs >= 4}>
+                <div className="flex items-center gap-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                  <span style={{ color: 'var(--cocoa)', fontSize: '12px', fontWeight: '700' }}>2 Nachrichten</span>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* Notification 5: Bottom, centered below phone */}
+            <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '2%', transform: 'translateX(-50%)' }}>
+              <NotificationCard visible={visibleNotifs >= 5}>
+                <div className="flex items-center gap-3">
+                  <span style={{ color: '#10b981', fontSize: '14px', fontWeight: '800' }}>€2.650</span>
+                  <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ backgroundColor: '#10b98118', color: '#10b981' }}>+34% ↑</span>
+                </div>
+              </NotificationCard>
+            </div>
 
             {/* ─── LEFT SIDE notifications (desktop) ─── */}
 

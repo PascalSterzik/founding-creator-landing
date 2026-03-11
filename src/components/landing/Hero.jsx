@@ -90,10 +90,10 @@ export default function Hero() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left content (order-2 on mobile so phone appears first) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Text content: always first on mobile, left column on desktop */}
           <motion.div
-            className="space-y-8 order-2 lg:order-1"
+            className="space-y-8 order-1 lg:order-1"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -126,11 +126,11 @@ export default function Hero() {
               Verbinde dich mit Brands, die zu deinem Publikum passen. Verdiene Geld mit Inhalten, die du ohnehin erstellst. <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '700' }}>Creator</span><span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600' }}>Bridge</span> macht Monetarisierung einfach.
             </motion.p>
 
-            {/* Premium CTA Button */}
-            <motion.div variants={itemVariants} className="pt-2">
+            {/* Desktop-only CTA Button (stays in left column) */}
+            <motion.div variants={itemVariants} className="pt-2 hidden lg:block">
               <motion.a
                 href="#bewerbung"
-                className="relative inline-flex items-center justify-center px-8 sm:px-10 py-4 rounded-full text-white font-bold text-base sm:text-lg overflow-hidden w-full sm:w-auto cursor-pointer no-underline whitespace-nowrap"
+                className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-lg overflow-hidden cursor-pointer no-underline whitespace-nowrap"
                 style={{
                   background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
                   boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
@@ -146,14 +146,12 @@ export default function Hero() {
                   boxShadow: '0 2px 8px rgba(201, 140, 131, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
                 }}
               >
-                {/* Top highlight for 3D effect */}
                 <div
                   className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none"
                   style={{
                     background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)',
                   }}
                 />
-                {/* Shimmer/shine effect */}
                 <motion.div
                   className="absolute inset-0 rounded-full"
                   style={{
@@ -166,9 +164,10 @@ export default function Hero() {
               </motion.a>
             </motion.div>
 
-            {/* Micro text with checkmark */}
+            {/* Desktop-only micro text */}
             <motion.p
               variants={itemVariants}
+              className="hidden lg:block"
               style={{
                 color: 'var(--text-muted)',
                 fontSize: '13px',
@@ -179,9 +178,9 @@ export default function Hero() {
             </motion.p>
           </motion.div>
 
-          {/* Right content - Phone mockup (order-1 on mobile so it appears first) */}
+          {/* Phone mockup: second on mobile, right column on desktop */}
           <motion.div
-            className="flex items-center justify-center lg:justify-end order-1 lg:order-2"
+            className="flex items-center justify-center lg:justify-end order-2 lg:order-2"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -189,6 +188,55 @@ export default function Hero() {
             <PhoneMockup width={320} interactive>
               <PhoneAppUI />
             </PhoneMockup>
+          </motion.div>
+
+          {/* Mobile-only CTA Button: third on mobile, hidden on desktop */}
+          <motion.div
+            className="order-3 lg:hidden text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+          >
+            <motion.a
+              href="#bewerbung"
+              className="relative inline-flex items-center justify-center px-8 py-4 rounded-full text-white font-bold text-base overflow-hidden w-full cursor-pointer no-underline whitespace-nowrap"
+              style={{
+                background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                letterSpacing: '0.5px',
+              }}
+              whileTap={{
+                scale: 0.97,
+                boxShadow: '0 2px 8px rgba(201, 140, 131, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
+              }}
+            >
+              <div
+                className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none"
+                style={{
+                  background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)',
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
+                }}
+                animate={{ x: ['100%', '-100%'] }}
+                transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
+              />
+              <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
+            </motion.a>
+            <p
+              className="mt-4"
+              style={{
+                color: 'var(--text-muted)',
+                fontSize: '13px',
+                letterSpacing: '0.3px',
+              }}
+            >
+              ✓ Nur die ersten 100 Creator erhalten exklusive Boni
+            </p>
           </motion.div>
         </div>
       </div>

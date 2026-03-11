@@ -1,13 +1,26 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useMotionValue, useTransform, useInView } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
 
 const ProblemCard = ({ title, description, image, delay }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isTapped, setIsTapped] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { amount: 0.6 });
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const isExpanded = isMobile ? isTapped : isHovered;
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -21,18 +34,24 @@ const ProblemCard = ({ title, description, image, delay }) => {
     setIsHovered(false);
   };
 
+  const handleClick = () => {
+    if (isMobile) setIsTapped((prev) => !prev);
+  };
+
   const rotateX = useTransform(mouseY, [0, 400], [1.5, -1.5]);
   const rotateY = useTransform(mouseX, [0, 300], [-1.5, 1.5]);
 
   return (
     <FadeIn delay={delay}>
       <motion.div
+        ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
         style={{
-          rotateX,
-          rotateY,
+          rotateX: isMobile ? 0 : rotateX,
+          rotateY: isMobile ? 0 : rotateY,
           transformStyle: 'preserve-3d',
         }}
         className="h-full"
@@ -47,7 +66,7 @@ const ProblemCard = ({ title, description, image, delay }) => {
           {/* Full background image */}
           <motion.div
             className="absolute inset-0"
-            animate={{ scale: isHovered ? 1.05 : 1 }}
+            animate={{ scale: isExpanded ? 1.05 : 1 }}
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <img
@@ -62,7 +81,7 @@ const ProblemCard = ({ title, description, image, delay }) => {
           <div
             className="absolute inset-0"
             style={{
-              background: isHovered
+              background: isExpanded
                 ? 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 100%)'
                 : 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 45%, transparent 100%)',
               transition: 'background 0.5s ease',
@@ -73,7 +92,7 @@ const ProblemCard = ({ title, description, image, delay }) => {
           <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-7">
             {/* Title (always visible) */}
             <motion.h3
-              animate={{ y: isHovered ? -8 : 0 }}
+              animate={{ y: isExpanded ? -8 : 0 }}
               transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
               style={{
                 color: '#FFFFFF',
@@ -87,13 +106,34 @@ const ProblemCard = ({ title, description, image, delay }) => {
               {title}
             </motion.h3>
 
-            {/* Description (revealed on hover) */}
+            {/* Mobile: "Tippen zum Aufklappen" hint */}
+            {isMobile && !isTapped && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isInView ? 1 : 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="flex items-center gap-1.5 mt-3"
+              >
+                <motion.span
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                  style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}
+                >
+                  ↑
+                </motion.span>
+                <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: '500' }}>
+                  Tippen zum Aufklappen
+                </span>
+              </motion.div>
+            )}
+
+            {/* Description (revealed on hover/tap) */}
             <motion.div
               initial={{ opacity: 0, height: 0, marginTop: 0 }}
               animate={{
-                opacity: isHovered ? 1 : 0,
-                height: isHovered ? 'auto' : 0,
-                marginTop: isHovered ? 12 : 0,
+                opacity: isExpanded ? 1 : 0,
+                height: isExpanded ? 'auto' : 0,
+                marginTop: isExpanded ? 12 : 0,
               }}
               transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
               style={{ overflow: 'hidden' }}

@@ -77,6 +77,70 @@ const statusColors = {
   review: '#ec4899',
 };
 
+function DashboardPreview({ activeTab, compact = false }) {
+  if (activeTab < 0 || !DASHBOARD_VIEWS[activeTab]) return null;
+  return (
+    <div
+      className={`relative rounded-xl overflow-hidden border flex flex-col justify-center ${compact ? 'p-5' : 'p-8 min-h-96 lg:min-h-[500px]'}`}
+      style={{
+        backgroundColor: 'var(--bg-ivory)',
+        borderColor: 'var(--border)',
+      }}
+    >
+      {/* Premium grid background */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--cocoa)" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      </div>
+      <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-5 pointer-events-none" style={{ background: 'var(--accent)', filter: 'blur(80px)' }} />
+      <div className="relative z-10">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h3 className={`font-bold mb-5 ${compact ? 'text-lg' : 'text-2xl mb-8'}`} style={{ color: 'var(--text)' }}>
+              {DASHBOARD_VIEWS[activeTab].title}
+            </h3>
+            <div className="space-y-3">
+              {DASHBOARD_VIEWS[activeTab].items.map((item, idx) => {
+                const borderColor = statusColors[item.status] || 'var(--text-muted)';
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.08 }}
+                    className="flex items-center justify-between p-4 rounded-lg bg-white border transition-shadow hover:shadow-md"
+                    style={{ borderColor: 'var(--border)', borderLeft: `4px solid ${borderColor}` }}
+                  >
+                    <p className="text-sm font-bold" style={{ color: 'var(--text)' }}>{item.label}</p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-bold" style={{ color: 'var(--accent)' }}>{item.value}</span>
+                      <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ backgroundColor: `${borderColor}15`, color: borderColor }}>
+                        {item.tag}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
 export default function SolutionFeatures() {
   const [activeTab, setActiveTab] = useState(0);
   const IconComponent = FEATURES[activeTab].icon;
@@ -106,10 +170,10 @@ export default function SolutionFeatures() {
           </p>
         </FadeIn>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        {/* Desktop: Tabs left + Dashboard right */}
+        <div className="hidden lg:grid grid-cols-3 gap-12">
           {/* Left: Feature Tabs */}
-          <FadeIn delay={0.3} className="lg:col-span-1">
+          <FadeIn delay={0.3} className="col-span-1">
             <div className="space-y-3">
               {FEATURES.map((feature) => {
                 const Icon = feature.icon;
@@ -121,24 +185,14 @@ export default function SolutionFeatures() {
                     className="w-full text-left p-6 rounded-xl border transition-all relative group"
                     style={{
                       backgroundColor: isActive ? 'white' : 'transparent',
-                      borderColor: isActive ? 'var(--border)' : 'var(--border)',
+                      borderColor: isActive ? 'var(--accent)' : 'var(--border)',
                       boxShadow: isActive
                         ? '0 4px 12px rgba(0, 0, 0, 0.05)'
                         : 'none',
                     }}
                     whileHover={{ y: -2 }}
                   >
-                    {/* Left accent bar for active state */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeBar"
-                        className="absolute left-0 top-3 bottom-3 w-[3px] bg-[var(--accent)] rounded-full"
-                      />
-                    )}
-
-                    {/* Content */}
                     <div className="flex gap-4">
-                      {/* Icon in rounded square */}
                       <div
                         className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-all"
                         style={{
@@ -154,8 +208,6 @@ export default function SolutionFeatures() {
                           }}
                         />
                       </div>
-
-                      {/* Text */}
                       <div className="flex-1 min-w-0">
                         <p
                           className="text-sm font-bold transition-colors"
@@ -169,9 +221,7 @@ export default function SolutionFeatures() {
                         </p>
                         <h3
                           className="text-base font-bold mt-1 transition-colors"
-                          style={{
-                            color: 'var(--text)',
-                          }}
+                          style={{ color: 'var(--text)' }}
                         >
                           {feature.title}
                         </h3>
@@ -196,116 +246,85 @@ export default function SolutionFeatures() {
           </FadeIn>
 
           {/* Right: Dashboard Preview */}
-          <FadeIn delay={0.4} className="lg:col-span-2">
-            <div
-              className="relative rounded-xl overflow-hidden p-8 border min-h-96 lg:min-h-[500px] flex flex-col justify-center"
-              style={{
-                backgroundColor: 'var(--bg-ivory)',
-                borderColor: 'var(--border)',
-              }}
-            >
-              {/* Premium grid background */}
-              <div className="absolute inset-0 opacity-30 pointer-events-none">
-                <svg
-                  width="100%"
-                  height="100%"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <defs>
-                    <pattern
-                      id="grid"
-                      width="40"
-                      height="40"
-                      patternUnits="userSpaceOnUse"
-                    >
-                      <path
-                        d="M 40 0 L 0 0 0 40"
-                        fill="none"
-                        stroke="var(--cocoa)"
-                        strokeWidth="0.5"
-                      />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
-                </svg>
-              </div>
-
-              {/* Gradient overlay accent */}
-              <div
-                className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-5 pointer-events-none"
-                style={{
-                  background: 'var(--accent)',
-                  filter: 'blur(80px)',
-                }}
-              />
-
-              {/* Content */}
-              <div className="relative z-10">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeTab}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <h3
-                      className="text-2xl font-bold mb-8"
-                      style={{ color: 'var(--text)' }}
-                    >
-                      {DASHBOARD_VIEWS[activeTab].title}
-                    </h3>
-
-                    <div className="space-y-3">
-                      {DASHBOARD_VIEWS[activeTab].items.map((item, idx) => {
-                        const borderColor =
-                          statusColors[item.status] || 'var(--text-muted)';
-                        return (
-                          <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.08 }}
-                            className="flex items-center justify-between p-4 rounded-lg bg-white border transition-shadow hover:shadow-md"
-                            style={{
-                              borderColor: 'var(--border)',
-                              borderLeft: `4px solid ${borderColor}`,
-                            }}
-                          >
-                            <div>
-                              <p
-                                className="text-sm font-bold"
-                                style={{ color: 'var(--text)' }}
-                              >
-                                {item.label}
-                              </p>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <span
-                                className="text-sm font-bold"
-                                style={{ color: 'var(--accent)' }}
-                              >
-                                {item.value}
-                              </span>
-                              <span
-                                className="text-xs font-semibold px-3 py-1 rounded-full"
-                                style={{
-                                  backgroundColor: `${borderColor}15`,
-                                  color: borderColor,
-                                }}
-                              >
-                                {item.tag}
-                              </span>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
+          <FadeIn delay={0.4} className="col-span-2">
+            <DashboardPreview activeTab={activeTab} />
           </FadeIn>
+        </div>
+
+        {/* Mobile: Accordion style (tab + dashboard inline) */}
+        <div className="lg:hidden space-y-3">
+          {FEATURES.map((feature) => {
+            const Icon = feature.icon;
+            const isActive = activeTab === feature.id;
+            return (
+              <FadeIn key={feature.id} delay={feature.id * 0.08}>
+                <div>
+                  <motion.button
+                    onClick={() => setActiveTab(isActive ? -1 : feature.id)}
+                    className="w-full text-left p-5 rounded-xl border transition-all"
+                    style={{
+                      backgroundColor: isActive ? 'white' : 'transparent',
+                      borderColor: isActive ? 'var(--accent)' : 'var(--border)',
+                      boxShadow: isActive ? '0 4px 12px rgba(0, 0, 0, 0.05)' : 'none',
+                      borderBottomLeftRadius: isActive ? 0 : undefined,
+                      borderBottomRightRadius: isActive ? 0 : undefined,
+                    }}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div
+                        className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{
+                          backgroundColor: isActive ? 'var(--accent)' : 'var(--bg-ivory)',
+                        }}
+                      >
+                        <Icon size={20} style={{ color: isActive ? 'white' : 'var(--text)' }} />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs font-bold" style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
+                          {feature.number}
+                        </p>
+                        <h3 className="text-sm font-bold mt-0.5" style={{ color: 'var(--text)' }}>
+                          {feature.title}
+                        </h3>
+                      </div>
+                      <motion.div
+                        animate={{ rotate: isActive ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </motion.div>
+                    </div>
+                  </motion.button>
+
+                  {/* Accordion panel: description + dashboard */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ overflow: 'hidden' }}
+                      >
+                        <div
+                          className="border border-t-0 rounded-b-xl p-5"
+                          style={{ borderColor: 'var(--accent)' }}
+                        >
+                          <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-secondary)' }}>
+                            {feature.description}
+                          </p>
+                          <DashboardPreview activeTab={activeTab} compact />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </FadeIn>
+            );
+          })}
         </div>
       </div>
     </section>
