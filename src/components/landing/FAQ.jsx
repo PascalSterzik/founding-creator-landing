@@ -63,10 +63,11 @@ const FAQ = () => {
           </div>
         </FadeIn>
 
-        <div className="space-y-4">
-          {faqs.map((faq, idx) => (
-            <FadeIn key={idx} delay={idx * 0.05}>
+        <FadeIn delay={0.1}>
+          <div className="space-y-4">
+            {faqs.map((faq, idx) => (
               <div
+                key={idx}
                 className="border-2 border-[var(--border)] rounded-[var(--radius-md)] overflow-hidden transition-all duration-200 hover:border-[var(--accent)]"
               >
                 <button
@@ -98,9 +99,9 @@ const FAQ = () => {
                   )}
                 </AnimatePresence>
               </div>
-            </FadeIn>
-          ))}
-        </div>
+            ))}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

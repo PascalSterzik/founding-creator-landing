@@ -29,29 +29,23 @@ export default function DreamDeepDive() {
           </FadeIn>
 
           {/* Right: Heading + Text */}
-          <div className="space-y-6 order-1 lg:order-2">
-            <FadeIn delay={0.1}>
+          <FadeIn delay={0.1} className="order-1 lg:order-2">
+            <div className="space-y-6">
               <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-1 uppercase">
                 Das Ziel
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.15}>
               <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text)] mb-6 max-w-lg">
                 Creator sein, ohne dich{' '}
                 <span className="italic text-[var(--accent)]">selbst</span> zu verlieren
               </h2>
-            </FadeIn>
 
-            <FadeIn delay={0.2}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 Du hast angefangen, Content zu erstellen, weil du etwas zu sagen hattest. Weil du
                 kreativ bist. Weil du Menschen erreichen wolltest.{' '}
                 <span className="font-bold text-[var(--text)]">Akquise war nie der Plan.</span>
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.25}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 Die besten Creator der Welt haben eines gemeinsam:{' '}
                 <span className="font-bold text-[var(--text)]">
@@ -60,9 +54,7 @@ export default function DreamDeepDive() {
                 Agenturen, Manager, Netzwerke. Aber was, wenn du noch nicht groß genug bist für
                 eine Agentur?
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.3}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 Genau hier fehlt ein Stück im Puzzle. Nicht noch ein Kurs. Nicht noch ein Tipp.
                 Sondern{' '}
@@ -72,14 +64,12 @@ export default function DreamDeepDive() {
                 Das dich sichtbar macht. Das dir die richtigen Brands bringt. Das Verhandlungen
                 fair gestaltet.
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.35}>
               <p className="text-2xl font-bold text-[var(--text)] mt-4">
                 Nicht irgendwann. <span className="italic text-[var(--accent)]">Jetzt.</span>
               </p>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
         </div>
       </div>
     </section>

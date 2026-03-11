@@ -97,9 +97,16 @@ export default function ForWhom() {
             </p>
             <a
               href="#bewerbung"
-              className="inline-block bg-white text-[var(--accent)] px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 no-underline"
+              className="relative inline-flex items-center justify-center px-8 py-3 rounded-full text-white font-semibold overflow-hidden cursor-pointer no-underline whitespace-nowrap transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                letterSpacing: '0.5px',
+              }}
             >
-              Jetzt bewerben
+              <span className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)' }} />
+              <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
             </a>
           </div>
         </FadeIn>

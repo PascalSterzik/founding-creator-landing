@@ -171,13 +171,16 @@ export default function Perks() {
             </p>
             <a
               href="#bewerbung"
-              className="inline-block px-10 py-4 rounded-full text-white font-bold text-base transition-all duration-300 hover:scale-105"
+              className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base overflow-hidden cursor-pointer no-underline whitespace-nowrap transition-all duration-300 hover:scale-105"
               style={{
-                background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)',
-                boxShadow: '0 12px 40px rgba(201, 140, 131, 0.3)',
+                background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                letterSpacing: '0.5px',
               }}
             >
-              Jetzt als Founding Creator bewerben
+              <span className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)' }} />
+              <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </a>
           </div>
         </FadeIn>

@@ -362,7 +362,7 @@ export default function SolutionBridge() {
       </div>
 
       {/* ─── Sticky phone + notifications: CLOSER to text, shorter sticky ─── */}
-      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-6 md:pt-2">
+      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-20 md:pt-2">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 

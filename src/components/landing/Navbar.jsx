@@ -159,7 +159,7 @@ export default function Navbar() {
                 width: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
                 marginLeft: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
               }}
-              style={{ overflow: 'hidden' }}
+              style={{ overflow: 'visible' }}
             >
               <motion.button
                 onClick={scrollToForm}

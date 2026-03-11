@@ -126,8 +126,13 @@ export default function Hero() {
               Verbinde dich mit Brands, die zu deinem Publikum passen. Verdiene Geld mit Inhalten, die du ohnehin erstellst. <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '700' }}>Creator</span><span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600' }}>Bridge</span> macht Monetarisierung einfach.
             </motion.p>
 
-            {/* Desktop-only CTA Button (stays in left column) */}
-            <motion.div variants={itemVariants} className="pt-2 hidden lg:block">
+            {/* Desktop-only CTA Button (stays in left column) - 4s delay */}
+            <motion.div
+              className="pt-2 hidden lg:block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 4 }}
+            >
               <motion.a
                 href="#bewerbung"
                 className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-lg overflow-hidden cursor-pointer no-underline whitespace-nowrap"
@@ -164,10 +169,12 @@ export default function Hero() {
               </motion.a>
             </motion.div>
 
-            {/* Desktop-only micro text */}
+            {/* Desktop-only micro text - appears with CTA */}
             <motion.p
-              variants={itemVariants}
               className="hidden lg:block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 4.3 }}
               style={{
                 color: 'var(--text-muted)',
                 fontSize: '13px',
@@ -195,7 +202,7 @@ export default function Hero() {
             className="order-3 lg:hidden text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
+            transition={{ duration: 0.7, delay: 4 }}
           >
             <motion.a
               href="#bewerbung"

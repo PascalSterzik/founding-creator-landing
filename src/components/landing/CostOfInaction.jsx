@@ -17,15 +17,13 @@ const CostOfInaction = () => {
           </div>
         </FadeIn>
 
-        <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed">
-          <FadeIn delay={0.1}>
+        <FadeIn delay={0.1}>
+          <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed">
             <p>
               Die Creator Economy wächst. Jeden Tag melden sich neue Creator an, probieren es aus,
               bauen ihre Reichweite auf. Die Konkurrenz wird größer. Die Deals werden knapper.
             </p>
-          </FadeIn>
 
-          <FadeIn delay={0.2}>
             <p>
               <strong className="text-[var(--text)]">
                 Die Creator, die sich jetzt positionieren, die sich jetzt damit beschäftigen, wie sie
@@ -33,32 +31,33 @@ const CostOfInaction = () => {
               </strong>{' '}
               Das sind die Creator, die in 12 Monaten die Deals machen, von denen andere nur träumen.
             </p>
-          </FadeIn>
 
-          <FadeIn delay={0.3}>
             <p>
               Dieses Founding Creator Programm ist nicht ein Newsletter opt-in. Es ist nicht ein
               verkappter Sales Funnel. Es ist dein Einstieg in ein System, das dir hilft, profitabel
               zu wachsen, während du noch Zeit für echten Content hast.
             </p>
-          </FadeIn>
 
-          <FadeIn delay={0.4}>
             <p>
               <strong className="text-[var(--text)]">
                 Du kannst warten. Oder du kannst einer der ersten sein.
               </strong>
             </p>
-          </FadeIn>
-        </div>
+          </div>
 
-        <FadeIn delay={0.5}>
           <div className="text-center mt-10">
             <a
               href="#bewerbung"
-              className="inline-block px-8 py-3 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-semibold rounded-[var(--radius-md)] transition-colors duration-200"
+              className="relative inline-flex items-center justify-center px-8 py-3 rounded-full text-white font-semibold overflow-hidden cursor-pointer no-underline whitespace-nowrap transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                letterSpacing: '0.5px',
+              }}
             >
-              Zum Bewerbungsformular
+              <span className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)' }} />
+              <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Zum Bewerbungsformular</span>
             </a>
           </div>
         </FadeIn>

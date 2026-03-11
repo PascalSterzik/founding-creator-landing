@@ -10,21 +10,17 @@ export default function DreamVision() {
         {/* 2-Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Text Content: order-2 on mobile (image first), order-1 on desktop (text-left) */}
-          <div className="space-y-6 order-2 lg:order-1">
-            <FadeIn>
+          <FadeIn className="order-2 lg:order-1">
+            <div className="space-y-6">
               <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-1 uppercase">
                 Die Vision
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.1}>
               <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text)] mb-6 max-w-lg">
                 Was wäre, wenn es{' '}
                 <span className="italic text-[var(--accent)]">anders</span> laufen könnte?
               </h2>
-            </FadeIn>
 
-            <FadeIn delay={0.2}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 Stell dir vor, du wachst morgens auf und öffnest dein Handy. Keine DMs, die du
                 beantworten musst. Stattdessen:{' '}
@@ -33,34 +29,26 @@ export default function DreamVision() {
                 </span>{' '}
                 Ein konkretes Angebot. Budget, Timeline, alles klar.
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.25}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 <span className="font-bold text-[var(--text)]">
                   Du entscheidest, ob es passt. Nicht umgekehrt.
                 </span>
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.3}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 Den Rest des Tages verbringst du mit dem, wofür du das alles angefangen hast:{' '}
                 <span className="font-bold text-[var(--text)]">Content erstellen.</span>{' '}
                 Ideen entwickeln. Deine Community aufbauen.
               </p>
-            </FadeIn>
 
-            <FadeIn delay={0.35}>
               <div className="bg-[var(--bg-ivory)] border border-[var(--border)] rounded-2xl p-6">
                 <p className="text-lg font-bold text-[var(--text)]">
                   Du bist nicht mehr der, der hinterherläuft. Du bist ein Professional, mit dem
                   Brands zusammenarbeiten wollen.
                 </p>
               </div>
-            </FadeIn>
 
-            <FadeIn delay={0.4}>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 Dein Einkommen ist planbar. Deine Kooperationen sind fair, transparent und machen
                 Spaß. Und du hast endlich wieder{' '}
@@ -68,8 +56,8 @@ export default function DreamVision() {
                   Zeit für das, was dich als Creator ausmacht.
                 </span>
               </p>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
 
           {/* Image: order-1 on mobile (appears first), order-2 on desktop (image-right) */}
           <FadeIn delay={0.2} className="order-1 lg:order-2">

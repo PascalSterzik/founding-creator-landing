@@ -120,55 +120,51 @@ export default function RealityCheck() {
 
               {/* Stats Row */}
               <div className="grid grid-cols-2 gap-6">
-                <FadeIn delay={0.3}>
-                  <div>
-                    <div
-                      style={{
-                        color: 'var(--accent)',
-                        fontSize: '2rem',
-                        fontWeight: '700',
-                        lineHeight: '1.2',
-                        marginBottom: '0.5rem',
-                      }}
-                    >
-                      70%
-                    </div>
-                    <p
-                      style={{
-                        color: 'var(--text-secondary)',
-                        fontSize: '0.9rem',
-                        lineHeight: '1.5',
-                      }}
-                    >
-                      der Creator verbringen mehr Zeit mit Akquise als mit Content
-                    </p>
+                <div>
+                  <div
+                    style={{
+                      color: 'var(--accent)',
+                      fontSize: '2rem',
+                      fontWeight: '700',
+                      lineHeight: '1.2',
+                      marginBottom: '0.5rem',
+                    }}
+                  >
+                    70%
                   </div>
-                </FadeIn>
+                  <p
+                    style={{
+                      color: 'var(--text-secondary)',
+                      fontSize: '0.9rem',
+                      lineHeight: '1.5',
+                    }}
+                  >
+                    der Creator verbringen mehr Zeit mit Akquise als mit Content
+                  </p>
+                </div>
 
-                <FadeIn delay={0.4}>
-                  <div>
-                    <div
-                      style={{
-                        color: 'var(--accent)',
-                        fontSize: '2rem',
-                        fontWeight: '700',
-                        lineHeight: '1.2',
-                        marginBottom: '0.5rem',
-                      }}
-                    >
-                      &lt;5%
-                    </div>
-                    <p
-                      style={{
-                        color: 'var(--text-secondary)',
-                        fontSize: '0.9rem',
-                        lineHeight: '1.5',
-                      }}
-                    >
-                      der kalten DMs an Marken führen zu einer Antwort
-                    </p>
+                <div>
+                  <div
+                    style={{
+                      color: 'var(--accent)',
+                      fontSize: '2rem',
+                      fontWeight: '700',
+                      lineHeight: '1.2',
+                      marginBottom: '0.5rem',
+                    }}
+                  >
+                    &lt;5%
                   </div>
-                </FadeIn>
+                  <p
+                    style={{
+                      color: 'var(--text-secondary)',
+                      fontSize: '0.9rem',
+                      lineHeight: '1.5',
+                    }}
+                  >
+                    der kalten DMs an Marken führen zu einer Antwort
+                  </p>
+                </div>
               </div>
             </div>
           </FadeIn>
