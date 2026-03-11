@@ -40,15 +40,15 @@ const FEATURES = [
 ];
 
 /* ─────────────────────────────────────────────────
-   Brand Image Component — real SVG brand avatars
-   Each brand gets its own unique image from /public/brands/
+   Brand Image Component — real brand icons/logos
+   Uses actual brand images from /public/brands/
    ───────────────────────────────────────────────── */
 function BrandImage({ src, alt, size = 40 }) {
   return (
     <img
       src={src}
       alt={alt}
-      className="rounded-xl flex-shrink-0 object-cover"
+      className="rounded-full flex-shrink-0 object-cover"
       style={{
         width: `${size}px`,
         height: `${size}px`,
@@ -63,10 +63,10 @@ function BrandImage({ src, alt, size = 40 }) {
    ───────────────────────────────────────────────── */
 function DealsDiscoveryDashboard({ compact }) {
   const deals = [
-    { brand: 'GlowSkin Co.', category: 'Beauty', amount: '€1.200', match: 95, type: 'Instagram Reel', deadline: '3 Tage', image: '/brands/glowskin.svg', catColor: '#ec4899' },
-    { brand: 'FitLife Pro', category: 'Fitness', amount: '€850', match: 88, type: 'TikTok + Story', deadline: '5 Tage', image: '/brands/fitlife.svg', catColor: '#10b981' },
-    { brand: 'Urban Style', category: 'Fashion', amount: '€2.100', match: 82, type: 'YouTube Review', deadline: '7 Tage', image: '/brands/urbanstyle.svg', catColor: '#8b5cf6' },
-    { brand: 'TechWave', category: 'Tech', amount: '€650', match: 76, type: 'Instagram Post', deadline: '4 Tage', image: '/brands/techwave.svg', catColor: '#3b82f6' },
+    { brand: 'L\'Oréal', category: 'Beauty', amount: '€1.200', match: 95, type: 'Instagram Reel', deadline: '3 Tage', image: '/brands/loreal.jpeg', catColor: '#ec4899' },
+    { brand: 'Gymshark', category: 'Fitness', amount: '€850', match: 88, type: 'TikTok + Story', deadline: '5 Tage', image: '/brands/gymshark.png', catColor: '#10b981' },
+    { brand: 'Zara', category: 'Fashion', amount: '€2.100', match: 82, type: 'YouTube Review', deadline: '7 Tage', image: '/brands/zara.jpeg', catColor: '#8b5cf6' },
+    { brand: 'Samsung', category: 'Tech', amount: '€650', match: 76, type: 'Instagram Post', deadline: '4 Tage', image: '/brands/samsung.jpeg', catColor: '#3b82f6' },
   ];
   const filters = ['Alle', 'Beauty', 'Fashion', 'Tech', 'Fitness', 'Food'];
 
@@ -163,14 +163,14 @@ function DealsDiscoveryDashboard({ compact }) {
    ───────────────────────────────────────────────── */
 function BrandMarketplaceDashboard({ compact }) {
   const brands = [
-    { name: 'Nike', category: 'Sports', image: '/brands/nike.svg', color: '#f59e0b', match: 97, budget: '€1.500+', deals: 12 },
-    { name: 'L\'Oréal', category: 'Beauty', image: '/brands/loreal.svg', color: '#ec4899', match: 94, budget: '€800+', deals: 8 },
-    { name: 'Adidas', category: 'Sports', image: '/brands/adidas.svg', color: '#f59e0b', match: 91, budget: '€1.200+', deals: 15 },
-    { name: 'Sephora', category: 'Beauty', image: '/brands/sephora.svg', color: '#ec4899', match: 89, budget: '€600+', deals: 6 },
-    { name: 'Zara', category: 'Fashion', image: '/brands/zara.svg', color: '#8b5cf6', match: 86, budget: '€900+', deals: 4 },
-    { name: 'Samsung', category: 'Tech', image: '/brands/samsung.svg', color: '#3b82f6', match: 83, budget: '€2.000+', deals: 10 },
-    { name: 'H&M', category: 'Fashion', image: '/brands/hm.svg', color: '#8b5cf6', match: 81, budget: '€500+', deals: 7 },
-    { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.svg', color: '#10b981', match: 78, budget: '€750+', deals: 5 },
+    { name: 'Nike', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 97, budget: '€1.500+', deals: 12 },
+    { name: 'L\'Oréal', category: 'Beauty', image: '/brands/loreal.jpeg', color: '#ec4899', match: 94, budget: '€800+', deals: 8 },
+    { name: 'Adidas', category: 'Sports', image: '/brands/adidas.png', color: '#f59e0b', match: 91, budget: '€1.200+', deals: 15 },
+    { name: 'Sephora', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 89, budget: '€600+', deals: 6 },
+    { name: 'Zara', category: 'Fashion', image: '/brands/zara.jpeg', color: '#8b5cf6', match: 86, budget: '€900+', deals: 4 },
+    { name: 'Samsung', category: 'Tech', image: '/brands/samsung.jpeg', color: '#3b82f6', match: 83, budget: '€2.000+', deals: 10 },
+    { name: 'H&M', category: 'Fashion', image: '/brands/hm.jpeg', color: '#8b5cf6', match: 81, budget: '€500+', deals: 7 },
+    { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 78, budget: '€750+', deals: 5 },
   ];
 
   return (
@@ -524,8 +524,9 @@ function DashboardPreview({ activeTab, compact = false }) {
       style={{
         backgroundColor: 'var(--bg-ivory)',
         borderColor: 'var(--border)',
-        /* Desktop: fill full height of parent (grid stretch); Mobile: auto */
-        height: compact ? 'auto' : '100%',
+        /* FIXED size: all tabs must be identical. Desktop: fixed height, Mobile: auto */
+        height: compact ? 'auto' : '480px',
+        width: '100%',
       }}
     >
       {/* Subtle grid background */}

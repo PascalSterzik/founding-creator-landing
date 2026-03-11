@@ -51,10 +51,11 @@ export default function Navbar() {
           {/* Nav pill: starts narrow (logo + Bonusplätze), expands when CTA appears */}
           <motion.nav
             className="flex items-center mt-4 px-4 sm:px-8 py-3 w-full"
+            initial={{ maxWidth: '30rem' }}
             animate={{
               maxWidth: showCTA ? '64rem' : '30rem',
             }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
             style={{
               borderRadius: '100px',
               backdropFilter: 'blur(20px)',
@@ -149,24 +150,26 @@ export default function Navbar() {
             {/* CTA Button wrapper: width grows from 0, then button fades in ultra-slowly */}
             <motion.div
               className="flex-shrink-0"
+              initial={{ width: 0, marginLeft: 0 }}
               animate={{
                 width: showCTA ? 160 : 0,
                 marginLeft: showCTA ? 12 : 0,
               }}
               transition={{
-                width: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-                marginLeft: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+                width: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
+                marginLeft: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
               }}
               style={{ overflow: 'hidden' }}
             >
               <motion.button
                 onClick={scrollToForm}
                 className="relative px-5 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer whitespace-nowrap"
+                initial={{ opacity: 0 }}
                 animate={{
                   opacity: showCTA ? 1 : 0,
                 }}
                 transition={{
-                  opacity: { duration: 5, ease: 'easeOut', delay: 0.4 },
+                  opacity: { duration: 1.5, ease: 'easeOut', delay: 0.6 },
                 }}
                 style={{
                   background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',

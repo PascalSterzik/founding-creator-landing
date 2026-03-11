@@ -287,9 +287,18 @@ export default function SolutionBridge() {
   const [appProgress, setAppProgress] = useState(0);
   const [showDashboard, setShowDashboard] = useState(false);
   const [visibleNotifs, setVisibleNotifs] = useState(0);
+  const hasCompletedRef = useRef(false);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
+      // Once animation completes, persist the final state forever
+      if (hasCompletedRef.current) {
+        setAppProgress(1);
+        setShowDashboard(true);
+        setVisibleNotifs(5);
+        return;
+      }
+
       // App opening
       const p = Math.max(0, Math.min(1, (v - 0.24) / 0.12));
       setAppProgress(p);
@@ -303,7 +312,11 @@ export default function SolutionBridge() {
       else if (v < 0.46) setVisibleNotifs(2);
       else if (v < 0.48) setVisibleNotifs(3);
       else if (v < 0.50) setVisibleNotifs(4);
-      else setVisibleNotifs(5);
+      else {
+        setVisibleNotifs(5);
+        // Mark animation as complete: won't replay on re-scroll
+        hasCompletedRef.current = true;
+      }
     });
     return unsubscribe;
   }, [scrollYProgress]);
@@ -357,8 +370,8 @@ export default function SolutionBridge() {
                  MOBILE NOTIFICATIONS
                 ════════════════════════════════════════════ */}
 
-            {/* Notification 1: "+3 neue Deals" - above the phone */}
-            <div className="lg:hidden absolute z-10" style={{ left: '2%', top: '-4%' }}>
+            {/* Notification 1: "+3 neue Deals" - just above the phone logo area */}
+            <div className="lg:hidden absolute z-10" style={{ left: '2%', top: '2%' }}>
               <NotificationCard visible={visibleNotifs >= 1}>
                 <div className="flex items-center gap-2">
                   <img src="/images/creator-brand-handshake.jpg" alt="" className="w-8 h-8 rounded-lg object-cover" />
@@ -380,8 +393,8 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 3: Stars - just above revenue */}
-            <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '55%' }}>
+            {/* Notification 3: Stars - lower, just above the dashboard/revenue popup */}
+            <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '68%' }}>
               <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-2">
                   <StarRating rating={4.8} />
@@ -391,7 +404,7 @@ export default function SolutionBridge() {
             </div>
 
             {/* Notification 4: Messages */}
-            <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '62%' }}>
+            <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '74%' }}>
               <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-2">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
