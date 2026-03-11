@@ -16,13 +16,12 @@ export default function Navbar() {
   useEffect(() => {
     setIsVisible(true);
 
-    // Show CTA after 15 seconds OR when scrolling past PainDeepDive section
-    const timer = setTimeout(() => setShowCTA(true), 15000);
+    // Show CTA after 20 seconds OR when scrolling past 2000px
+    const timer = setTimeout(() => setShowCTA(true), 20000);
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-      // Show CTA once user scrolls past ~1500px (further into the page)
-      if (window.scrollY > 1500) setShowCTA(true);
+      if (window.scrollY > 2000) setShowCTA(true);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -51,7 +50,7 @@ export default function Navbar() {
         >
           {/* Wide pill-shaped container */}
           <motion.nav
-            className="flex items-center justify-between w-full max-w-5xl mt-4 px-4 sm:px-8 py-3"
+            className="flex items-center w-full max-w-5xl mt-4 px-4 sm:px-8 py-3"
             style={{
               borderRadius: '100px',
               backdropFilter: 'blur(20px)',
@@ -66,6 +65,7 @@ export default function Navbar() {
                 ? '0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04)'
                 : '0 4px 16px rgba(0, 0, 0, 0.06)',
               transition: 'background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease',
+              justifyContent: showCTA ? 'space-between' : 'space-between',
             }}
           >
             {/* Logo (left) */}
@@ -101,53 +101,59 @@ export default function Navbar() {
               </span>
             </motion.a>
 
-            {/* Center/Right: Urgency Indicator with progress bar (hidden on mobile) */}
-            <div className={`hidden sm:flex items-center gap-3 ${!showCTA ? 'ml-auto' : ''}`}>
-              <div className="flex flex-col items-center gap-1">
-                <span
+            {/* Center: Urgency Indicator with progress bar (hidden on mobile) */}
+            {/* When no CTA: centered via flex-1 spacers. When CTA: stays in middle */}
+            {!showCTA && <div className="hidden sm:block flex-1" />}
+            <div className={`hidden sm:flex flex-col items-center gap-1 ${showCTA ? '' : ''}`}>
+              <span
+                style={{
+                  color: 'var(--text-secondary)',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  letterSpacing: '0.2px',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
+                <span style={{ color: 'var(--text-muted)' }}> von </span>
+                <span>{TOTAL_SLOTS}</span>
+                {' '}Bonusplätze
+              </span>
+              {/* Progress bar - matches text width */}
+              <div
+                className="rounded-full overflow-hidden"
+                style={{
+                  width: '140px',
+                  height: '3px',
+                  backgroundColor: 'rgba(201, 140, 131, 0.12)',
+                }}
+              >
+                <motion.div
+                  className="h-full rounded-full"
                   style={{
-                    color: 'var(--text-secondary)',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    letterSpacing: '0.2px',
+                    background: 'linear-gradient(90deg, var(--accent), #d4a099)',
                   }}
-                >
-                  <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
-                  <span style={{ color: 'var(--text-muted)' }}>/</span>
-                  <span>{TOTAL_SLOTS}</span>
-                  {' '}Bonusplätze
-                </span>
-                {/* Progress bar */}
-                <div
-                  className="rounded-full overflow-hidden"
-                  style={{
-                    width: '100px',
-                    height: '4px',
-                    backgroundColor: 'rgba(201, 140, 131, 0.12)',
+                  initial={{ width: 0 }}
+                  animate={{ width: `${filledPercent}%` }}
+                  transition={{
+                    duration: 3,
+                    ease: [0.16, 1, 0.3, 1], // fast start, slow end
+                    delay: 0.8,
                   }}
-                >
-                  <motion.div
-                    className="h-full rounded-full"
-                    style={{
-                      background: 'linear-gradient(90deg, var(--accent), #d4a099)',
-                    }}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${filledPercent}%` }}
-                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-                  />
-                </div>
+                />
               </div>
             </div>
+            {!showCTA && <div className="hidden sm:block flex-1" />}
 
-            {/* CTA Button (right) - fades in after scroll/time delay */}
+            {/* CTA Button (right) - ultra-slow fade at 2000px */}
             <AnimatePresence>
               {showCTA && (
                 <motion.button
                   onClick={scrollToForm}
                   className="relative px-5 sm:px-6 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer flex-shrink-0"
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
                     boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',

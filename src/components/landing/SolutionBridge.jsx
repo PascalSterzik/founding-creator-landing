@@ -111,39 +111,145 @@ function NotificationCard({ children, visible, style: posStyle = {} }) {
   );
 }
 
-/* ─── SVG Revenue Growth Chart (Beacons-inspired) ─── */
-const RevenueChart = () => (
-  <svg viewBox="0 0 280 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-    {/* Grid lines */}
-    <line x1="0" y1="20" x2="280" y2="20" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
-    <line x1="0" y1="40" x2="280" y2="40" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
-    <line x1="0" y1="60" x2="280" y2="60" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
-    <line x1="0" y1="80" x2="280" y2="80" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
-    {/* Area fill */}
-    <path
-      d="M0 85 L40 75 L80 68 L120 55 L160 40 L200 30 L240 18 L280 8 L280 100 L0 100Z"
-      fill="url(#revenueGradient)"
-    />
-    {/* Line */}
-    <path
-      d="M0 85 L40 75 L80 68 L120 55 L160 40 L200 30 L240 18 L280 8"
-      stroke="#10b981"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
-    {/* Endpoint dot */}
-    <circle cx="280" cy="8" r="4" fill="#10b981"/>
-    <circle cx="280" cy="8" r="7" fill="#10b981" opacity="0.2"/>
-    <defs>
-      <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="100">
-        <stop offset="0%" stopColor="#10b981" stopOpacity="0.25"/>
-        <stop offset="100%" stopColor="#10b981" stopOpacity="0.02"/>
-      </linearGradient>
-    </defs>
-  </svg>
-);
+/* ─── Animated Revenue Chart (line draws + number counts up) ─── */
+function AnimatedRevenueCard({ visible, style: posStyle = {}, className: extraClass = '' }) {
+  const [animProgress, setAnimProgress] = useState(0);
+
+  useEffect(() => {
+    if (!visible) {
+      setAnimProgress(0);
+      return;
+    }
+    // Animate from 0 to 1 over ~2 seconds with easing
+    let start = null;
+    let raf;
+    const duration = 2000;
+    const animate = (ts) => {
+      if (!start) start = ts;
+      const elapsed = ts - start;
+      const t = Math.min(1, elapsed / duration);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - t, 3);
+      setAnimProgress(eased);
+      if (t < 1) raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, [visible]);
+
+  // Revenue data points
+  const dataPoints = [420, 680, 850, 1200, 1650, 2100, 2650];
+  const months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul'];
+  const maxVal = 3000;
+  const chartW = 280;
+  const chartH = 80;
+
+  // How many points to show based on animation progress
+  const visibleCount = Math.max(1, Math.ceil(animProgress * dataPoints.length));
+  const currentValue = Math.round(dataPoints[visibleCount - 1] * (visibleCount === dataPoints.length ? animProgress / (visibleCount / dataPoints.length) : 1));
+  const displayValue = Math.round(2650 * animProgress);
+
+  // Build path only for visible points
+  const points = dataPoints.slice(0, visibleCount).map((v, i) => {
+    const x = (i / (dataPoints.length - 1)) * chartW;
+    const y = chartH - (v / maxVal) * chartH;
+    return { x, y };
+  });
+
+  // If partially through last segment, interpolate
+  const fractional = (animProgress * dataPoints.length) - Math.floor(animProgress * dataPoints.length);
+  if (visibleCount < dataPoints.length && fractional > 0) {
+    const nextIdx = visibleCount;
+    const prevIdx = visibleCount - 1;
+    const prevX = (prevIdx / (dataPoints.length - 1)) * chartW;
+    const prevY = chartH - (dataPoints[prevIdx] / maxVal) * chartH;
+    const nextX = (nextIdx / (dataPoints.length - 1)) * chartW;
+    const nextY = chartH - (dataPoints[nextIdx] / maxVal) * chartH;
+    points.push({
+      x: prevX + (nextX - prevX) * fractional,
+      y: prevY + (nextY - prevY) * fractional,
+    });
+  }
+
+  const linePath = points.length > 0 ? `M${points.map(p => `${p.x},${p.y}`).join(' L')}` : '';
+  const areaPath = points.length > 0 ? `${linePath} L${points[points.length - 1].x},${chartH} L${points[0].x},${chartH}Z` : '';
+  const lastPoint = points[points.length - 1];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.3, y: 20 }}
+      animate={
+        visible
+          ? { opacity: 1, scale: 1, y: 0 }
+          : { opacity: 0, scale: 0.3, y: 20 }
+      }
+      transition={
+        visible
+          ? {
+              scale: { type: 'spring', stiffness: 300, damping: 20 },
+              opacity: { duration: 0.25 },
+              y: { type: 'spring', stiffness: 300, damping: 20 },
+            }
+          : { duration: 0.15 }
+      }
+      className={`rounded-2xl backdrop-blur-md border ${extraClass}`}
+      style={{
+        background: 'rgba(255, 255, 255, 0.97)',
+        borderColor: 'rgba(0,0,0,0.06)',
+        boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.06)',
+        ...posStyle,
+      }}
+    >
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <div style={{ color: 'var(--text-muted)', fontSize: '10px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            Monatlicher Umsatz
+          </div>
+          <div style={{ color: '#10b981', fontSize: '22px', fontWeight: '700', letterSpacing: '-0.5px', marginTop: '1px' }}>
+            €{displayValue.toLocaleString('de-DE')}
+          </div>
+        </div>
+        <div
+          className="px-2.5 py-1 rounded-full text-xs font-bold"
+          style={{ backgroundColor: '#10b98118', color: '#10b981', opacity: animProgress > 0.8 ? 1 : 0, transition: 'opacity 0.3s' }}
+        >
+          +34% ↑
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${chartW} ${chartH + 16}`} fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+        {/* Grid lines */}
+        <line x1="0" y1="20" x2={chartW} y2="20" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+        <line x1="0" y1="40" x2={chartW} y2="40" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+        <line x1="0" y1="60" x2={chartW} y2="60" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+        {/* Area fill */}
+        {areaPath && (
+          <path d={areaPath} fill="url(#revenueGradAnim)" />
+        )}
+        {/* Line */}
+        {linePath && (
+          <path d={linePath} stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        )}
+        {/* Moving endpoint dot */}
+        {lastPoint && (
+          <>
+            <circle cx={lastPoint.x} cy={lastPoint.y} r="5" fill="#10b981" opacity="0.2"/>
+            <circle cx={lastPoint.x} cy={lastPoint.y} r="3" fill="#10b981"/>
+          </>
+        )}
+        <defs>
+          <linearGradient id="revenueGradAnim" x1="0" y1="0" x2="0" y2={chartH}>
+            <stop offset="0%" stopColor="#10b981" stopOpacity="0.25"/>
+            <stop offset="100%" stopColor="#10b981" stopOpacity="0.02"/>
+          </linearGradient>
+        </defs>
+        {/* X-axis labels */}
+        {months.map((m, i) => (
+          <text key={i} x={(i / (months.length - 1)) * chartW} y={chartH + 12} textAnchor="middle" fontSize="8" fill="rgba(0,0,0,0.3)">{m}</text>
+        ))}
+      </svg>
+    </motion.div>
+  );
+}
 
 /* ─── Star Rating SVG ─── */
 const StarRating = ({ rating = 4.8 }) => (
@@ -165,33 +271,32 @@ export default function SolutionBridge() {
   });
 
   /* 3D tilt animation: TRUE perspective rotation (like ContainerScroll).
-     The phone rotates on the X axis from 20deg tilted back to 0deg flat,
-     giving a dramatic "rising from below" 3D effect. */
+     The phone rotates on the X axis from 20deg tilted back to 0deg flat. */
   const rotateX = useTransform(scrollYProgress, [0.08, 0.30], [20, 0]);
   const phoneScale = useTransform(scrollYProgress, [0.08, 0.30], [0.85, 1.05]);
   const phoneTranslateY = useTransform(scrollYProgress, [0.08, 0.30], [100, 0]);
   const phoneOpacity = useTransform(scrollYProgress, [0.06, 0.16], [0, 1]);
 
-  // Phase tracking for app content and scroll-triggered notifications
+  // Phase tracking
   const [appProgress, setAppProgress] = useState(0);
   const [showDashboard, setShowDashboard] = useState(false);
   const [visibleNotifs, setVisibleNotifs] = useState(0);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
-      // App opening progress: starts later, takes longer (more time to see phone first)
+      // App opening
       const p = Math.max(0, Math.min(1, (v - 0.24) / 0.12));
       setAppProgress(p);
 
-      // Dashboard appears after phone has fully risen and app has opened
+      // Dashboard appears after phone risen + app opened
       setShowDashboard(v > 0.40);
 
-      // Scroll-triggered notifications: fast pops AFTER dashboard is visible
+      // Notifications: fast pops AFTER dashboard
       if (v < 0.42) setVisibleNotifs(0);
-      else if (v < 0.45) setVisibleNotifs(1);
-      else if (v < 0.48) setVisibleNotifs(2);
-      else if (v < 0.51) setVisibleNotifs(3);
-      else if (v < 0.54) setVisibleNotifs(4);
+      else if (v < 0.44) setVisibleNotifs(1);
+      else if (v < 0.46) setVisibleNotifs(2);
+      else if (v < 0.48) setVisibleNotifs(3);
+      else if (v < 0.50) setVisibleNotifs(4);
       else setVisibleNotifs(5);
     });
     return unsubscribe;
@@ -201,9 +306,9 @@ export default function SolutionBridge() {
     <section
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '300vh' }}
+      style={{ minHeight: '280vh' }}
     >
-      {/* ─── Header text: scrolls normally (NOT sticky) ─── */}
+      {/* ─── Header text: scrolls normally ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
         <div className="text-center mb-8">
           <FadeIn>
@@ -237,14 +342,16 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* ─── Sticky phone + notifications (phone stays centered while user scrolls) ─── */}
-      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-20">
+      {/* ─── Sticky phone + notifications ─── */}
+      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-24 md:pt-20">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
-            {/* ─── Mobile 3D overlay notifications (positioned around the phone) ─── */}
+            {/* ════════════════════════════════════════════
+                 MOBILE NOTIFICATIONS
+                ════════════════════════════════════════════ */}
 
-            {/* Notification 1: "+3 neue Deals" - ABOVE the logo / top of phone */}
+            {/* Notification 1: "+3 neue Deals" - above the phone */}
             <div className="lg:hidden absolute z-10" style={{ left: '2%', top: '-4%' }}>
               <NotificationCard visible={visibleNotifs >= 1}>
                 <div className="flex items-center gap-2">
@@ -257,7 +364,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 2: "+€850" - Right side, UNCHANGED position */}
+            {/* Notification 2: "+€850" - right side, UNCHANGED */}
             <div className="lg:hidden absolute z-10" style={{ right: '-4%', top: '18%' }}>
               <NotificationCard visible={visibleNotifs >= 2}>
                 <div className="text-center" style={{ minWidth: '60px' }}>
@@ -267,8 +374,8 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 3: Star Rating - moved UP from 52% to 42% */}
-            <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '42%' }}>
+            {/* Notification 3: Stars - positioned just above revenue (moved from 42% to 55%) */}
+            <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '55%' }}>
               <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-2">
                   <StarRating rating={4.8} />
@@ -277,7 +384,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 4: Messages - moved DOWN from 56% to 62% */}
+            {/* Notification 4: Messages - moved down to 62% */}
             <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '62%' }}>
               <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-2">
@@ -289,66 +396,23 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 5: Revenue chart - moved DOWN a bit (bottom: -8%) */}
-            <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '-8%', transform: 'translateX(-50%)', width: '85%', maxWidth: '300px' }}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.3, y: 20 }}
-                animate={
-                  visibleNotifs >= 5
-                    ? { opacity: 1, scale: 1, y: 0 }
-                    : { opacity: 0, scale: 0.3, y: 20 }
-                }
-                transition={
-                  visibleNotifs >= 5
-                    ? {
-                        scale: { type: 'spring', stiffness: 300, damping: 20 },
-                        opacity: { duration: 0.25 },
-                        y: { type: 'spring', stiffness: 300, damping: 20 },
-                      }
-                    : { duration: 0.15 }
-                }
-                className="rounded-2xl backdrop-blur-md border"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.97)',
-                  borderColor: 'rgba(0,0,0,0.06)',
-                  boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.06)',
-                  padding: '14px',
-                }}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <div style={{ color: 'var(--text-muted)', fontSize: '10px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Monatlicher Umsatz
-                    </div>
-                    <div style={{ color: '#10b981', fontSize: '22px', fontWeight: '700', letterSpacing: '-0.5px', marginTop: '1px' }}>
-                      €2.650
-                    </div>
-                  </div>
-                  <div
-                    className="px-2.5 py-1 rounded-full text-xs font-bold"
-                    style={{ backgroundColor: '#10b98118', color: '#10b981' }}
-                  >
-                    +34% ↑
-                  </div>
-                </div>
-                <RevenueChart />
-                <div className="flex justify-between mt-1.5" style={{ color: 'var(--text-muted)', fontSize: '9px' }}>
-                  <span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span><span>Jul</span>
-                </div>
-              </motion.div>
+            {/* Notification 5: Animated Revenue - mobile (raised from -8% to -3%) */}
+            <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '-3%', transform: 'translateX(-50%)', width: '85%', maxWidth: '300px' }}>
+              <AnimatedRevenueCard
+                visible={visibleNotifs >= 5}
+                style={{ padding: '14px' }}
+              />
             </div>
 
-            {/* ─── LEFT SIDE notifications (desktop) ─── */}
+            {/* ════════════════════════════════════════════
+                 DESKTOP NOTIFICATIONS
+                ════════════════════════════════════════════ */}
 
-            {/* Notification 1: Deals (handshake image restored) */}
+            {/* Notification 1: Deals - left */}
             <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 380px)', top: '5%' }}>
               <NotificationCard visible={visibleNotifs >= 1}>
                 <div className="flex items-center gap-3.5">
-                  <img
-                    src="/images/creator-brand-handshake.jpg"
-                    alt="Neue Deals"
-                    className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
-                  />
+                  <img src="/images/creator-brand-handshake.jpg" alt="Neue Deals" className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
                   <div>
                     <div style={{ color: 'var(--cocoa)', fontSize: '15px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>warten auf dich</div>
@@ -357,31 +421,11 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 3: Star Rating */}
-            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 330px)', top: '42%' }}>
-              <NotificationCard visible={visibleNotifs >= 3}>
-                <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0">
-                    <StarRating rating={4.8} />
-                  </div>
-                  <div>
-                    <div style={{ color: '#f59e0b', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
-                  </div>
-                </div>
-              </NotificationCard>
-            </div>
-
-            {/* ─── RIGHT SIDE notifications (desktop) ─── */}
-
-            {/* Notification 2: New Deal Amount (+€850) */}
+            {/* Notification 2: +€850 - right */}
             <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 390px)', top: '8%' }}>
               <NotificationCard visible={visibleNotifs >= 2}>
                 <div className="flex items-center gap-3.5">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#10b98112' }}
-                  >
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#10b98112' }}>
                     <span style={{ color: '#10b981', fontSize: '15px', fontWeight: '800' }}>+€850</span>
                   </div>
                   <div>
@@ -392,14 +436,24 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 4: Messages */}
+            {/* Notification 3: Star Rating - left */}
+            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 330px)', top: '42%' }}>
+              <NotificationCard visible={visibleNotifs >= 3}>
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0"><StarRating rating={4.8} /></div>
+                  <div>
+                    <div style={{ color: '#f59e0b', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* Notification 4: Messages - right */}
             <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 350px)', top: '46%' }}>
               <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: 'rgba(201, 140, 131, 0.12)' }}
-                  >
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
@@ -412,60 +466,12 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* ─── Notification 5: REVENUE CHART (floating popup, MUCH LARGER) ─── */}
-            <div className="hidden lg:block absolute z-20" style={{ right: 'calc(50% - 460px)', bottom: '5%' }}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.3, y: 30 }}
-                animate={
-                  visibleNotifs >= 5
-                    ? { opacity: 1, scale: 1, y: 0 }
-                    : { opacity: 0, scale: 0.3, y: 30 }
-                }
-                transition={
-                  visibleNotifs >= 5
-                    ? {
-                        scale: { type: 'spring', stiffness: 300, damping: 20 },
-                        opacity: { duration: 0.25 },
-                        y: { type: 'spring', stiffness: 300, damping: 20 },
-                      }
-                    : { duration: 0.15 }
-                }
-                className="rounded-2xl backdrop-blur-md border"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.97)',
-                  borderColor: 'rgba(0,0,0,0.06)',
-                  boxShadow: '0 24px 64px rgba(0, 0, 0, 0.14), 0 8px 24px rgba(0, 0, 0, 0.08)',
-                  width: '320px',
-                  padding: '20px',
-                }}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <div style={{ color: 'var(--text-muted)', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Monatlicher Umsatz
-                    </div>
-                    <div style={{ color: '#10b981', fontSize: '26px', fontWeight: '700', letterSpacing: '-0.5px', marginTop: '2px' }}>
-                      €2.650
-                    </div>
-                  </div>
-                  <div
-                    className="px-3 py-1.5 rounded-full text-xs font-bold"
-                    style={{ backgroundColor: '#10b98118', color: '#10b981' }}
-                  >
-                    +34% ↑
-                  </div>
-                </div>
-                <RevenueChart />
-                <div className="flex justify-between mt-2" style={{ color: 'var(--text-muted)', fontSize: '10px' }}>
-                  <span>Jan</span>
-                  <span>Feb</span>
-                  <span>Mär</span>
-                  <span>Apr</span>
-                  <span>Mai</span>
-                  <span>Jun</span>
-                  <span>Jul</span>
-                </div>
-              </motion.div>
+            {/* Notification 5: ANIMATED Revenue Chart - BOTTOM CENTER (over phone) on desktop */}
+            <div className="hidden lg:block absolute z-20" style={{ left: '50%', bottom: '-5%', transform: 'translateX(-50%)', width: '340px' }}>
+              <AnimatedRevenueCard
+                visible={visibleNotifs >= 5}
+                style={{ padding: '18px' }}
+              />
             </div>
 
             {/* ─── PHONE (centered) with TRUE 3D perspective tilt + rise ─── */}
@@ -510,8 +516,8 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* Bottom spacer for more distance to next section */}
-      <div style={{ height: '12vh' }} />
+      {/* Large bottom spacer for much more distance to next section */}
+      <div style={{ height: '25vh' }} />
     </section>
   );
 }
