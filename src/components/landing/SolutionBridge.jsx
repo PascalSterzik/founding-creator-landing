@@ -80,7 +80,7 @@ function PhoneAppOpen({ progress }) {
 }
 
 /* ─── Notification Card (scroll-triggered pop) ─── */
-function NotificationCard({ children, visible, large = false, style: posStyle = {} }) {
+function NotificationCard({ children, visible, style: posStyle = {} }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.3 }}
@@ -97,7 +97,7 @@ function NotificationCard({ children, visible, large = false, style: posStyle = 
             }
           : { duration: 0.15 }
       }
-      className={`rounded-2xl backdrop-blur-md border ${large ? 'px-5 py-4' : 'px-4 py-3'}`}
+      className="rounded-2xl backdrop-blur-md border px-4 py-3"
       style={{
         background: 'rgba(255, 255, 255, 0.97)',
         borderColor: 'rgba(0,0,0,0.06)',
@@ -111,33 +111,33 @@ function NotificationCard({ children, visible, large = false, style: posStyle = 
   );
 }
 
-/* ─── SVG Revenue Growth Chart (Beacons-inspired, large) ─── */
+/* ─── SVG Revenue Growth Chart (Beacons-inspired) ─── */
 const RevenueChart = () => (
-  <svg viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+  <svg viewBox="0 0 280 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
     {/* Grid lines */}
-    <line x1="0" y1="28" x2="280" y2="28" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
-    <line x1="0" y1="56" x2="280" y2="56" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
-    <line x1="0" y1="84" x2="280" y2="84" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
-    <line x1="0" y1="112" x2="280" y2="112" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    <line x1="0" y1="20" x2="280" y2="20" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    <line x1="0" y1="40" x2="280" y2="40" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    <line x1="0" y1="60" x2="280" y2="60" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    <line x1="0" y1="80" x2="280" y2="80" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
     {/* Area fill */}
     <path
-      d="M0 120 L40 105 L80 95 L120 80 L160 55 L200 40 L240 25 L280 10 L280 140 L0 140Z"
+      d="M0 85 L40 75 L80 68 L120 55 L160 40 L200 30 L240 18 L280 8 L280 100 L0 100Z"
       fill="url(#revenueGradient)"
     />
     {/* Line */}
     <path
-      d="M0 120 L40 105 L80 95 L120 80 L160 55 L200 40 L240 25 L280 10"
+      d="M0 85 L40 75 L80 68 L120 55 L160 40 L200 30 L240 18 L280 8"
       stroke="#10b981"
-      strokeWidth="3"
+      strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       fill="none"
     />
     {/* Endpoint dot */}
-    <circle cx="280" cy="10" r="5" fill="#10b981"/>
-    <circle cx="280" cy="10" r="8" fill="#10b981" opacity="0.2"/>
+    <circle cx="280" cy="8" r="4" fill="#10b981"/>
+    <circle cx="280" cy="8" r="7" fill="#10b981" opacity="0.2"/>
     <defs>
-      <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="140">
+      <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="100">
         <stop offset="0%" stopColor="#10b981" stopOpacity="0.25"/>
         <stop offset="100%" stopColor="#10b981" stopOpacity="0.02"/>
       </linearGradient>
@@ -155,14 +155,6 @@ const StarRating = ({ rating = 4.8 }) => (
     ))}
   </div>
 );
-
-/* ─── Contextual images for notification popups ─── */
-const NOTIF_IMAGES = {
-  // Brand partnership deal
-  deals: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=120&h=120&fit=crop&crop=center',
-  // Chat / messages from brands
-  messages: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=120&h=120&fit=crop&crop=center',
-};
 
 /* ─── Main Component ─── */
 export default function SolutionBridge() {
@@ -193,11 +185,12 @@ export default function SolutionBridge() {
       setShowDashboard(v > 0.30);
 
       // Scroll-triggered notifications: each one at a specific scroll position
-      if (v < 0.36) setVisibleNotifs(0);
-      else if (v < 0.41) setVisibleNotifs(1);
-      else if (v < 0.46) setVisibleNotifs(2);
-      else if (v < 0.51) setVisibleNotifs(3);
-      else setVisibleNotifs(4);
+      if (v < 0.34) setVisibleNotifs(0);
+      else if (v < 0.39) setVisibleNotifs(1);
+      else if (v < 0.44) setVisibleNotifs(2);
+      else if (v < 0.49) setVisibleNotifs(3);
+      else if (v < 0.54) setVisibleNotifs(4);
+      else setVisibleNotifs(5);
     });
     return unsubscribe;
   }, [scrollYProgress]);
@@ -239,24 +232,121 @@ export default function SolutionBridge() {
               Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen.
             </h3>
           </FadeIn>
+        </div>
+      </div>
 
-          {/* ─── LARGE Revenue Chart (Beacons-style, above phone) ─── */}
-          <FadeIn delay={0.3}>
-            <div className="max-w-md mx-auto mb-4">
-              <div
-                className="rounded-2xl p-6 border"
+      {/* ─── Sticky phone + notifications (phone stays centered while user scrolls) ─── */}
+      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
+
+            {/* ─── LEFT SIDE notifications (desktop) ─── */}
+
+            {/* Notification 1: Deals (handshake image restored) */}
+            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 380px)', top: '5%' }}>
+              <NotificationCard visible={visibleNotifs >= 1}>
+                <div className="flex items-center gap-3.5">
+                  <img
+                    src="/images/creator-brand-handshake.jpg"
+                    alt="Neue Deals"
+                    className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
+                  />
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '15px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>warten auf dich</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* Notification 3: Star Rating */}
+            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 330px)', top: '42%' }}>
+              <NotificationCard visible={visibleNotifs >= 3}>
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0">
+                    <StarRating rating={4.8} />
+                  </div>
+                  <div>
+                    <div style={{ color: '#f59e0b', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* ─── RIGHT SIDE notifications (desktop) ─── */}
+
+            {/* Notification 2: New Deal Amount (+€850) */}
+            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 390px)', top: '8%' }}>
+              <NotificationCard visible={visibleNotifs >= 2}>
+                <div className="flex items-center gap-3.5">
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: '#10b98112' }}
+                  >
+                    <span style={{ color: '#10b981', fontSize: '15px', fontWeight: '800' }}>+€850</span>
+                  </div>
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '15px', fontWeight: '700', letterSpacing: '-0.3px' }}>Neuer Deal</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>Beauty Brand Co.</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* Notification 4: Messages */}
+            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 350px)', top: '46%' }}>
+              <NotificationCard visible={visibleNotifs >= 4}>
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: 'rgba(201, 140, 131, 0.12)' }}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>2 Nachrichten</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>Beauty Brand Co.</div>
+                  </div>
+                </div>
+              </NotificationCard>
+            </div>
+
+            {/* ─── Notification 5: REVENUE CHART (floating popup, MUCH LARGER) ─── */}
+            <div className="hidden lg:block absolute z-20" style={{ right: 'calc(50% - 460px)', bottom: '5%' }}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.3, y: 30 }}
+                animate={
+                  visibleNotifs >= 5
+                    ? { opacity: 1, scale: 1, y: 0 }
+                    : { opacity: 0, scale: 0.3, y: 30 }
+                }
+                transition={
+                  visibleNotifs >= 5
+                    ? {
+                        scale: { type: 'spring', stiffness: 300, damping: 20 },
+                        opacity: { duration: 0.25 },
+                        y: { type: 'spring', stiffness: 300, damping: 20 },
+                      }
+                    : { duration: 0.15 }
+                }
+                className="rounded-2xl backdrop-blur-md border"
                 style={{
-                  backgroundColor: 'white',
-                  borderColor: 'var(--border)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
+                  background: 'rgba(255, 255, 255, 0.97)',
+                  borderColor: 'rgba(0,0,0,0.06)',
+                  boxShadow: '0 24px 64px rgba(0, 0, 0, 0.14), 0 8px 24px rgba(0, 0, 0, 0.08)',
+                  width: '320px',
+                  padding: '20px',
                 }}
               >
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <div style={{ color: 'var(--text-muted)', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <div style={{ color: 'var(--text-muted)', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                       Monatlicher Umsatz
                     </div>
-                    <div style={{ color: '#10b981', fontSize: '28px', fontWeight: '700', letterSpacing: '-0.5px', marginTop: '2px' }}>
+                    <div style={{ color: '#10b981', fontSize: '26px', fontWeight: '700', letterSpacing: '-0.5px', marginTop: '2px' }}>
                       €2.650
                     </div>
                   </div>
@@ -277,79 +367,7 @@ export default function SolutionBridge() {
                   <span>Jun</span>
                   <span>Jul</span>
                 </div>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </div>
-
-      {/* ─── Sticky phone + notifications (phone stays centered while user scrolls) ─── */}
-      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
-            {/* LEFT SIDE notifications (desktop) */}
-            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 370px)', top: '5%' }}>
-              <NotificationCard visible={visibleNotifs >= 1} large>
-                <div className="flex items-center gap-3.5">
-                  <img
-                    src={NOTIF_IMAGES.deals}
-                    alt="Neue Deals"
-                    className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
-                  />
-                  <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>warten auf dich</div>
-                  </div>
-                </div>
-              </NotificationCard>
-            </div>
-
-            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 320px)', top: '40%' }}>
-              <NotificationCard visible={visibleNotifs >= 3}>
-                <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0">
-                    <StarRating rating={4.8} />
-                  </div>
-                  <div>
-                    <div style={{ color: '#f59e0b', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
-                  </div>
-                </div>
-              </NotificationCard>
-            </div>
-
-            {/* RIGHT SIDE notifications (desktop) */}
-            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 380px)', top: '10%' }}>
-              <NotificationCard visible={visibleNotifs >= 2} large>
-                <div className="flex items-center gap-3.5">
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#10b98115' }}
-                  >
-                    <span style={{ color: '#10b981', fontSize: '18px', fontWeight: '700' }}>+€850</span>
-                  </div>
-                  <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>Neuer Deal</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>Beauty Brand Co.</div>
-                  </div>
-                </div>
-              </NotificationCard>
-            </div>
-
-            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 340px)', top: '48%' }}>
-              <NotificationCard visible={visibleNotifs >= 4}>
-                <div className="flex items-center gap-3">
-                  <img
-                    src={NOTIF_IMAGES.messages}
-                    alt="Neue Nachrichten"
-                    className="w-11 h-11 rounded-xl object-cover flex-shrink-0"
-                  />
-                  <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>2 Nachrichten</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>Beauty Brand Co.</div>
-                  </div>
-                </div>
-              </NotificationCard>
+              </motion.div>
             </div>
 
             {/* ─── PHONE (centered) with 3D tilt + rise from below ─── */}
@@ -404,7 +422,7 @@ export default function SolutionBridge() {
                   className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
                   style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
                 >
-                  <img src={NOTIF_IMAGES.deals} alt="" className="w-7 h-7 rounded-lg object-cover" />
+                  <img src="/images/creator-brand-handshake.jpg" alt="" className="w-7 h-7 rounded-lg object-cover" />
                   <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
                 </motion.div>
               )}
@@ -417,7 +435,7 @@ export default function SolutionBridge() {
                   className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
                   style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
                 >
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€2.650</span>
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€850</span>
                 </motion.div>
               )}
               {visibleNotifs >= 3 && (
@@ -429,8 +447,21 @@ export default function SolutionBridge() {
                   className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
                   style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
                 >
-                  <img src={NOTIF_IMAGES.messages} alt="" className="w-7 h-7 rounded-lg object-cover" />
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>2 Nachrichten</span>
+                  <StarRating rating={4.8} />
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#f59e0b' }}>4.8</span>
+                </motion.div>
+              )}
+              {visibleNotifs >= 5 && (
+                <motion.div
+                  key="m5"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                >
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>€2.650 Umsatz</span>
+                  <span style={{ fontSize: '11px', fontWeight: '600', color: '#10b981' }}>+34%</span>
                 </motion.div>
               )}
             </AnimatePresence>

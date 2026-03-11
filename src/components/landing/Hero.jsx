@@ -98,13 +98,6 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
           >
-            {/* Decorative accent line */}
-            <motion.div
-              variants={itemVariants}
-              className="relative h-1 w-12 rounded-full"
-              style={{ backgroundColor: 'var(--accent)' }}
-            />
-
             {/* Premium headline */}
             <motion.div variants={itemVariants} className="space-y-4">
               <h1

@@ -73,7 +73,7 @@ const ProblemCard = ({ number, icon: Icon, title, description, image, delay }) =
                 color: '#FFFFFF',
                 fontSize: '1rem',
                 fontWeight: '700',
-                fontFamily: 'var(--font-heading)',
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
                 boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
               }}
             >
@@ -97,7 +97,7 @@ const ProblemCard = ({ number, icon: Icon, title, description, image, delay }) =
             <h3
               style={{
                 color: 'var(--text)',
-                fontFamily: 'var(--font-heading)',
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: '1.25rem',
                 fontWeight: '700',
                 lineHeight: '1.3',
@@ -131,8 +131,8 @@ export default function Problem() {
       title: 'Deals kommen zufällig',
       description:
         'Du wartest auf DMs, hoffst auf Empfehlungen und bist von Glück abhängig, ob die richtige Brand deine Arbeit sieht.',
-      // Dice: randomness/luck concept
-      image: 'https://images.unsplash.com/photo-1585504198199-20277593b94f?w=600&h=400&fit=crop&crop=center',
+      // Creator frustrated scrolling through phone, waiting for DMs
+      image: '/images/creator-frustration-scroll.jpg',
     },
     {
       number: '02',
@@ -140,8 +140,8 @@ export default function Problem() {
       title: 'Akquise kostet Zeit',
       description:
         'Statt Content zu erstellen, verbringst du Stunden mit Recherche, Kaltakquise und E-Mails an Brands, die nie antworten.',
-      // Creator overwhelmed, stressed at desk with too many tasks
-      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop&crop=center',
+      // Creator working late, exhausted from endless outreach
+      image: '/images/creator-late-night-grind.jpg',
     },
     {
       number: '03',
@@ -149,8 +149,8 @@ export default function Problem() {
       title: 'Kommunikation ist Chaos',
       description:
         'DMs auf Instagram, E-Mails, WhatsApp-Gruppen, Notion-Seiten. Absprachen sind dezentralisiert und ständig verloren gegangen.',
-      // 3D chat/message bubble icon (keeping this one, it fits)
-      image: 'https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=600&h=400&fit=crop',
+      // Creator overwhelmed by endless DMs and messages
+      image: '/images/creator-endless-dms.jpg',
     },
   ];
 
@@ -175,7 +175,7 @@ export default function Problem() {
             <h2
               style={{
                 color: 'var(--text)',
-                fontFamily: 'var(--font-heading)',
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 'clamp(1.875rem, 5vw, 2.75rem)',
                 fontWeight: '700',
                 lineHeight: '1.2',
@@ -231,7 +231,7 @@ export default function Problem() {
             <div
               style={{
                 color: 'var(--accent)',
-                fontFamily: 'var(--font-heading)',
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: '2rem',
                 fontWeight: '700',
                 lineHeight: '1.2',

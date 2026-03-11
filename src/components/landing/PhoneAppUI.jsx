@@ -70,7 +70,7 @@ const AppHeader = () => (
       </span>
     </div>
     <img
-      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces"
+      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces&facepad=1.5"
       alt="Lisa Schmidt"
       className="w-8 h-8 rounded-full object-cover transition-transform hover:scale-105"
       style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)' }}
@@ -114,9 +114,9 @@ const TabBar = ({ activeTab, onTabChange }) => {
 };
 
 const OverviewTab = () => (
-  <div className="space-y-4 pb-6">
+  <div className="space-y-5 pb-6">
     {/* Premium Stats Cards */}
-    <div className="grid grid-cols-3 gap-2 px-3 pt-3">
+    <div className="grid grid-cols-3 gap-2.5 px-4 pt-4">
       {[
         { label: 'Umsatz', value: '€2.650', accent: '#10b981' },
         { label: 'Aktiv', value: '5 Deals', accent: '#f59e0b' },
@@ -146,7 +146,7 @@ const OverviewTab = () => (
     </div>
 
     {/* Deal Cards */}
-    <div className="space-y-2 px-3">
+    <div className="space-y-3 px-4">
       {[
         {
           name: 'Hautpflege-Kampagne',
@@ -173,7 +173,7 @@ const OverviewTab = () => (
           status: 'Neu',
           color: '#ec4899',
           initials: 'SF',
-          image: 'https://images.unsplash.com/photo-1622818425450-74d3f516b9cc?w=80&h=80&fit=crop&crop=center',
+          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=80&h=80&fit=crop&crop=center',
         },
       ].map((deal, idx) => (
         <motion.div
@@ -254,7 +254,7 @@ const DealsTab = () => (
         amount: '€1.500',
         initials: 'GP',
         color: '#3b82f6',
-        image: 'https://images.unsplash.com/photo-1468495244123-6c6c332ee34d?w=80&h=80&fit=crop&crop=center',
+        image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=80&h=80&fit=crop&crop=center',
       },
       {
         name: 'Reise-Logbuch',
@@ -262,7 +262,7 @@ const DealsTab = () => (
         amount: '€700',
         initials: 'WL',
         color: '#8b5cf6',
-        image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=80&h=80&fit=crop&crop=center',
+        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=80&h=80&fit=crop&crop=center',
       },
     ].map((deal, idx) => (
       <motion.div
@@ -379,7 +379,7 @@ const ProfileTab = () => (
     >
       <div className="relative flex-shrink-0">
         <img
-          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces"
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=faces&facepad=1.2"
           alt="Lisa Schmidt"
           className="w-14 h-14 rounded-full object-cover"
           style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
