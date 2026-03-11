@@ -97,7 +97,7 @@ export default function Navbar() {
             </motion.a>
 
             {/* Center/Right: Urgency Indicator (hidden on mobile). Centered when CTA is hidden, stays left of CTA when visible */}
-            <div className={`hidden sm:flex items-center gap-2 ${!showCTA ? 'ml-auto' : ''}`}
+            <div className={`hidden sm:flex items-center gap-2 ${!showCTA ? 'ml-auto' : ''}`}>
               <motion.div
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ backgroundColor: '#10b981' }}
