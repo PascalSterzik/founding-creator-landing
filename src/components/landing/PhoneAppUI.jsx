@@ -116,7 +116,7 @@ const TabBar = ({ activeTab, onTabChange }) => {
 const OverviewTab = () => (
   <div className="space-y-4 pb-6">
     {/* Premium Stats Cards */}
-    <div className="grid grid-cols-3 gap-3 px-4 pt-4">
+    <div className="grid grid-cols-3 gap-2 px-3 pt-3">
       {[
         { label: 'Umsatz', value: '€2.650', accent: '#10b981' },
         { label: 'Aktiv', value: '5 Deals', accent: '#f59e0b' },
@@ -127,17 +127,17 @@ const OverviewTab = () => (
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.05 }}
-          className="p-3.5 rounded-2xl relative overflow-hidden group cursor-pointer transition-transform hover:scale-102"
+          className="p-2.5 rounded-xl relative overflow-hidden group cursor-pointer transition-transform hover:scale-102"
           style={{
             background: `linear-gradient(135deg, var(--bg-ivory) 0%, rgba(var(--accent-rgb), 0.05) 100%)`,
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
             borderLeft: `3px solid ${stat.accent}`,
           }}
         >
-          <div style={{ color: 'var(--text-muted)', fontSize: '10px', fontWeight: '600', letterSpacing: '0.3px', textTransform: 'uppercase' }}>
+          <div style={{ color: 'var(--text-muted)', fontSize: '9px', fontWeight: '600', letterSpacing: '0.3px', textTransform: 'uppercase' }}>
             {stat.label}
           </div>
-          <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', marginTop: '6px', letterSpacing: '-0.3px' }}>
+          <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700', marginTop: '4px', letterSpacing: '-0.3px' }}>
             {stat.value}
           </div>
           <div className="absolute top-1 right-2 w-1 h-1 rounded-full" style={{ backgroundColor: stat.accent, opacity: 0.3 }}></div>
@@ -146,7 +146,7 @@ const OverviewTab = () => (
     </div>
 
     {/* Deal Cards */}
-    <div className="space-y-2.5 px-4">
+    <div className="space-y-2 px-3">
       {[
         {
           name: 'Hautpflege-Kampagne',
@@ -155,7 +155,7 @@ const OverviewTab = () => (
           status: 'Matched',
           color: '#10b981',
           initials: 'BC',
-          image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=80&h=80&fit=crop&crop=center',
+          image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=80&h=80&fit=crop&crop=center',
         },
         {
           name: 'Sommer-Kollektion',
@@ -173,7 +173,7 @@ const OverviewTab = () => (
           status: 'Neu',
           color: '#ec4899',
           initials: 'SF',
-          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=80&h=80&fit=crop&crop=center',
+          image: 'https://images.unsplash.com/photo-1622818425450-74d3f516b9cc?w=80&h=80&fit=crop&crop=center',
         },
       ].map((deal, idx) => (
         <motion.div
@@ -246,6 +246,7 @@ const DealsTab = () => (
         amount: '€950',
         initials: 'GL',
         color: '#10b981',
+        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=80&h=80&fit=crop&crop=center',
       },
       {
         name: 'Tech-Review Serie',
@@ -253,6 +254,7 @@ const DealsTab = () => (
         amount: '€1.500',
         initials: 'GP',
         color: '#3b82f6',
+        image: 'https://images.unsplash.com/photo-1468495244123-6c6c332ee34d?w=80&h=80&fit=crop&crop=center',
       },
       {
         name: 'Reise-Logbuch',
@@ -260,6 +262,7 @@ const DealsTab = () => (
         amount: '€700',
         initials: 'WL',
         color: '#8b5cf6',
+        image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=80&h=80&fit=crop&crop=center',
       },
     ].map((deal, idx) => (
       <motion.div
@@ -276,15 +279,24 @@ const DealsTab = () => (
       >
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 flex-1">
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 transition-transform group-hover:scale-110"
-              style={{
-                backgroundColor: `${deal.color}20`,
-                color: deal.color,
-              }}
-            >
-              {deal.initials}
-            </div>
+            {deal.image ? (
+              <img
+                src={deal.image}
+                alt={deal.name}
+                className="w-10 h-10 rounded-full object-cover flex-shrink-0 transition-transform group-hover:scale-110"
+                style={{ border: `2px solid ${deal.color}30` }}
+              />
+            ) : (
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 transition-transform group-hover:scale-110"
+                style={{
+                  backgroundColor: `${deal.color}20`,
+                  color: deal.color,
+                }}
+              >
+                {deal.initials}
+              </div>
+            )}
             <div className="flex-1 min-w-0">
               <div style={{ color: 'var(--cocoa)', fontSize: '13px', fontWeight: '600', letterSpacing: '-0.2px' }}>
                 {deal.name}

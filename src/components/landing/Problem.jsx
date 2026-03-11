@@ -131,8 +131,8 @@ export default function Problem() {
       title: 'Deals kommen zufällig',
       description:
         'Du wartest auf DMs, hoffst auf Empfehlungen und bist von Glück abhängig, ob die richtige Brand deine Arbeit sieht.',
-      // Dice on dark background: randomness/luck concept
-      image: 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600&h=400&fit=crop&crop=center',
+      // Dice: randomness/luck concept
+      image: 'https://images.unsplash.com/photo-1585504198199-20277593b94f?w=600&h=400&fit=crop&crop=center',
     },
     {
       number: '02',
@@ -140,8 +140,8 @@ export default function Problem() {
       title: 'Akquise kostet Zeit',
       description:
         'Statt Content zu erstellen, verbringst du Stunden mit Recherche, Kaltakquise und E-Mails an Brands, die nie antworten.',
-      // Person overwhelmed at laptop, stressed with work
-      image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop&crop=center',
+      // Creator overwhelmed, stressed at desk with too many tasks
+      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop&crop=center',
     },
     {
       number: '03',

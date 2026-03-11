@@ -111,15 +111,56 @@ function NotificationCard({ children, visible, large = false, style: posStyle = 
   );
 }
 
+/* ─── SVG Revenue Growth Chart (Beacons-inspired, large) ─── */
+const RevenueChart = () => (
+  <svg viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+    {/* Grid lines */}
+    <line x1="0" y1="28" x2="280" y2="28" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    <line x1="0" y1="56" x2="280" y2="56" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    <line x1="0" y1="84" x2="280" y2="84" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    <line x1="0" y1="112" x2="280" y2="112" stroke="rgba(0,0,0,0.04)" strokeWidth="1"/>
+    {/* Area fill */}
+    <path
+      d="M0 120 L40 105 L80 95 L120 80 L160 55 L200 40 L240 25 L280 10 L280 140 L0 140Z"
+      fill="url(#revenueGradient)"
+    />
+    {/* Line */}
+    <path
+      d="M0 120 L40 105 L80 95 L120 80 L160 55 L200 40 L240 25 L280 10"
+      stroke="#10b981"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    {/* Endpoint dot */}
+    <circle cx="280" cy="10" r="5" fill="#10b981"/>
+    <circle cx="280" cy="10" r="8" fill="#10b981" opacity="0.2"/>
+    <defs>
+      <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="140">
+        <stop offset="0%" stopColor="#10b981" stopOpacity="0.25"/>
+        <stop offset="100%" stopColor="#10b981" stopOpacity="0.02"/>
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+/* ─── Star Rating SVG ─── */
+const StarRating = ({ rating = 4.8 }) => (
+  <div className="flex items-center gap-0.5">
+    {[1, 2, 3, 4, 5].map((star) => (
+      <svg key={star} width="14" height="14" viewBox="0 0 24 24" fill={star <= Math.floor(rating) ? '#f59e0b' : star <= rating ? 'url(#halfStar)' : 'none'} stroke="#f59e0b" strokeWidth="2">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    ))}
+  </div>
+);
+
 /* ─── Contextual images for notification popups ─── */
 const NOTIF_IMAGES = {
-  // Revenue/earnings growth chart
-  revenue: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=120&h=120&fit=crop&crop=center',
-  // Business handshake / new deals
-  deals: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=120&h=120&fit=crop&crop=center',
-  // Star rating / positive feedback
-  rating: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=120&h=120&fit=crop&crop=center',
-  // Chat / messages
+  // Brand partnership deal
+  deals: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=120&h=120&fit=crop&crop=center',
+  // Chat / messages from brands
   messages: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=120&h=120&fit=crop&crop=center',
 };
 
@@ -136,9 +177,6 @@ export default function SolutionBridge() {
   const phoneScale = useTransform(scrollYProgress, [0.05, 0.22], [0.8, 1.05]);
   const phoneTranslateY = useTransform(scrollYProgress, [0.05, 0.22], [120, 0]);
   const phoneOpacity = useTransform(scrollYProgress, [0.03, 0.12], [0, 1]);
-
-  // Text stays visible, but fades slightly once notifications arrive
-  const sectionTextOpacity = useTransform(scrollYProgress, [0.30, 0.38], [1, 0.15]);
 
   // Phase tracking for app content and scroll-triggered notifications
   const [appProgress, setAppProgress] = useState(0);
@@ -170,54 +208,97 @@ export default function SolutionBridge() {
       className="relative"
       style={{ minHeight: '400vh' }}
     >
-      <div className="sticky top-0 min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* ─── Header text: scrolls normally (NOT sticky) ─── */}
+      <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
+        <div className="text-center mb-8">
+          <FadeIn>
+            <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 uppercase">
+              Die Lösung
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--text)] mb-4 max-w-3xl mx-auto">
+              <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+                Creator
+              </span>
+              <span
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  color: 'var(--accent)',
+                  fontStyle: 'italic',
+                }}
+              >
+                Bridge
+              </span>
+            </h2>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <h3 className="text-lg lg:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto font-light mb-8">
+              Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen.
+            </h3>
+          </FadeIn>
+
+          {/* ─── LARGE Revenue Chart (Beacons-style, above phone) ─── */}
+          <FadeIn delay={0.3}>
+            <div className="max-w-md mx-auto mb-4">
+              <div
+                className="rounded-2xl p-6 border"
+                style={{
+                  backgroundColor: 'white',
+                  borderColor: 'var(--border)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
+                }}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <div style={{ color: 'var(--text-muted)', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      Monatlicher Umsatz
+                    </div>
+                    <div style={{ color: '#10b981', fontSize: '28px', fontWeight: '700', letterSpacing: '-0.5px', marginTop: '2px' }}>
+                      €2.650
+                    </div>
+                  </div>
+                  <div
+                    className="px-3 py-1.5 rounded-full text-xs font-bold"
+                    style={{ backgroundColor: '#10b98118', color: '#10b981' }}
+                  >
+                    +34% ↑
+                  </div>
+                </div>
+                <RevenueChart />
+                <div className="flex justify-between mt-2" style={{ color: 'var(--text-muted)', fontSize: '10px' }}>
+                  <span>Jan</span>
+                  <span>Feb</span>
+                  <span>Mär</span>
+                  <span>Apr</span>
+                  <span>Mai</span>
+                  <span>Jun</span>
+                  <span>Jul</span>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+
+      {/* ─── Sticky phone + notifications (phone stays centered while user scrolls) ─── */}
+      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* ─── Header text (stays visible, fades slightly when dashboard shows) ─── */}
-          <motion.div style={{ opacity: sectionTextOpacity }} className="text-center mb-8">
-            <FadeIn>
-              <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 uppercase">
-                Die Lösung
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.1}>
-              <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--text)] mb-4 max-w-3xl mx-auto">
-                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
-                  Creator
-                </span>
-                <span
-                  style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    color: 'var(--accent)',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  Bridge
-                </span>
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <h3 className="text-lg lg:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto font-light">
-                Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen.
-              </h3>
-            </FadeIn>
-          </motion.div>
-
-          {/* ─── Phone + Notifications ─── */}
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
             {/* LEFT SIDE notifications (desktop) */}
             <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 370px)', top: '5%' }}>
               <NotificationCard visible={visibleNotifs >= 1} large>
                 <div className="flex items-center gap-3.5">
                   <img
-                    src={NOTIF_IMAGES.revenue}
-                    alt="Umsatz steigt"
+                    src={NOTIF_IMAGES.deals}
+                    alt="Neue Deals"
                     className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
                   />
                   <div>
-                    <div style={{ color: '#10b981', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+€2.650</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>Umsatz diesen Monat</div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>warten auf dich</div>
                   </div>
                 </div>
               </NotificationCard>
@@ -226,11 +307,9 @@ export default function SolutionBridge() {
             <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 320px)', top: '40%' }}>
               <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-3">
-                  <img
-                    src={NOTIF_IMAGES.rating}
-                    alt="Top Rating"
-                    className="w-11 h-11 rounded-xl object-cover flex-shrink-0"
-                  />
+                  <div className="flex-shrink-0">
+                    <StarRating rating={4.8} />
+                  </div>
                   <div>
                     <div style={{ color: '#f59e0b', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
@@ -243,14 +322,15 @@ export default function SolutionBridge() {
             <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 380px)', top: '10%' }}>
               <NotificationCard visible={visibleNotifs >= 2} large>
                 <div className="flex items-center gap-3.5">
-                  <img
-                    src={NOTIF_IMAGES.deals}
-                    alt="Neue Deals"
-                    className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
-                  />
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: '#10b98115' }}
+                  >
+                    <span style={{ color: '#10b981', fontSize: '18px', fontWeight: '700' }}>+€850</span>
+                  </div>
                   <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
-                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>warten auf dich</div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>Neuer Deal</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>Beauty Brand Co.</div>
                   </div>
                 </div>
               </NotificationCard>
@@ -272,7 +352,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* ─── PHONE with 3D tilt + rise from below ─── */}
+            {/* ─── PHONE (centered) with 3D tilt + rise from below ─── */}
             <motion.div
               style={{
                 rotateX,
@@ -337,7 +417,6 @@ export default function SolutionBridge() {
                   className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
                   style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
                 >
-                  <img src={NOTIF_IMAGES.revenue} alt="" className="w-7 h-7 rounded-lg object-cover" />
                   <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€2.650</span>
                 </motion.div>
               )}
