@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
-import { Dice5, Clock, MessageCircle } from 'lucide-react';
 
-const ProblemCard = ({ icon: Icon, title, description, image, delay }) => {
+const ProblemCard = ({ title, description, image, delay }) => {
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -22,7 +21,7 @@ const ProblemCard = ({ icon: Icon, title, description, image, delay }) => {
     setIsHovered(false);
   };
 
-  const rotateX = useTransform(mouseY, [0, 300], [1.5, -1.5]);
+  const rotateX = useTransform(mouseY, [0, 400], [1.5, -1.5]);
   const rotateY = useTransform(mouseX, [0, 300], [-1.5, 1.5]);
 
   return (
@@ -39,77 +38,72 @@ const ProblemCard = ({ icon: Icon, title, description, image, delay }) => {
         className="h-full"
       >
         <div
+          className="relative h-full cursor-pointer overflow-hidden"
           style={{
-            backgroundColor: '#FFFFFF',
-            boxShadow: '0 2px 8px rgba(75, 50, 45, 0.08)',
             borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--border)',
-            overflow: 'hidden',
+            minHeight: '420px',
           }}
-          className="h-full flex flex-col cursor-pointer"
         >
-          {/* Image + Title overlay area */}
-          <div className="relative overflow-hidden" style={{ minHeight: '280px' }}>
-            {/* Image slides up on hover to reveal text below */}
-            <motion.div
-              className="relative"
-              animate={{ y: isHovered ? -60 : 0 }}
+          {/* Full background image */}
+          <motion.div
+            className="absolute inset-0"
+            animate={{ scale: isHovered ? 1.05 : 1 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </motion.div>
+
+          {/* Dark gradient overlay for text readability */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: isHovered
+                ? 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 100%)'
+                : 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 45%, transparent 100%)',
+              transition: 'background 0.5s ease',
+            }}
+          />
+
+          {/* Text content at bottom */}
+          <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-7">
+            {/* Title (always visible) */}
+            <motion.h3
+              animate={{ y: isHovered ? -8 : 0 }}
               transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{
+                color: '#FFFFFF',
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: '1.5rem',
+                fontWeight: '700',
+                lineHeight: '1.3',
+                textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              }}
             >
-              <div className="relative h-56 overflow-hidden">
-                <img
-                  src={image}
-                  alt={title}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: 'linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.4) 100%)',
-                  }}
-                />
-              </div>
+              {title}
+            </motion.h3>
 
-              {/* Icon + Title below image (moves with image) */}
-              <div className="px-6 pt-5 pb-4">
-                {Icon && (
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
-                    style={{
-                      backgroundColor: 'rgba(201, 140, 131, 0.12)',
-                    }}
-                  >
-                    <Icon size={20} style={{ color: 'var(--accent)' }} />
-                  </div>
-                )}
-
-                <h3
-                  style={{
-                    color: 'var(--text)',
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '1.25rem',
-                    fontWeight: '700',
-                    lineHeight: '1.3',
-                  }}
-                >
-                  {title}
-                </h3>
-              </div>
-            </motion.div>
-
-            {/* Description text revealed on hover (stays in place, image slides up to show it) */}
+            {/* Description (revealed on hover) */}
             <motion.div
-              className="absolute bottom-0 left-0 right-0 px-6 pb-5"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isHovered ? 1 : 0 }}
-              transition={{ duration: 0.3, delay: isHovered ? 0.1 : 0 }}
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{
+                opacity: isHovered ? 1 : 0,
+                height: isHovered ? 'auto' : 0,
+                marginTop: isHovered ? 12 : 0,
+              }}
+              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{ overflow: 'hidden' }}
             >
               <p
                 style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.6',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.65',
+                  textShadow: '0 1px 4px rgba(0,0,0,0.4)',
                 }}
               >
                 {description}
@@ -125,25 +119,22 @@ const ProblemCard = ({ icon: Icon, title, description, image, delay }) => {
 export default function Problem() {
   const problems = [
     {
-      icon: Dice5,
       title: 'Deals kommen zufällig',
       description:
-        'Du wartest auf DMs, hoffst auf Empfehlungen und bist von Glück abhängig, ob die richtige Brand deine Arbeit sieht.',
-      image: '/images/creator-frustration-scroll.jpg',
+        'Du wartest auf DMs, hoffst auf Empfehlungen und bist von Glück abhängig, ob die richtige Brand deine Arbeit sieht. Kein System, kein Plan. Nur Hoffen und Warten.',
+      image: '/images/problem-deals-random.png',
     },
     {
-      icon: Clock,
       title: 'Akquise kostet Zeit',
       description:
-        'Statt Content zu erstellen, verbringst du Stunden mit Recherche, Kaltakquise und E-Mails an Brands, die nie antworten.',
-      image: '/images/creator-late-night-grind.jpg',
+        'Statt Content zu erstellen, verbringst du Stunden mit Recherche, Kaltakquise und E-Mails an Brands, die nie antworten. Du bist Creator geworden, um kreativ zu sein, nicht um Pitches zu schreiben.',
+      image: '/images/problem-akquise-time.png',
     },
     {
-      icon: MessageCircle,
       title: 'Kommunikation ist Chaos',
       description:
-        'DMs auf Instagram, E-Mails, WhatsApp-Gruppen, Notion-Seiten. Absprachen sind dezentralisiert und ständig verloren gegangen.',
-      image: '/images/creator-endless-dms.jpg',
+        'DMs auf Instagram, E-Mails, WhatsApp-Gruppen, Notion-Seiten. Absprachen sind dezentralisiert und Infos gehen ständig verloren. Wo war nochmal die Deadline?',
+      image: '/images/problem-communication-chaos.png',
     },
   ];
 
@@ -195,11 +186,10 @@ export default function Problem() {
         </FadeIn>
 
         {/* Problem Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 md:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16 md:mb-20">
           {problems.map((problem, index) => (
             <ProblemCard
               key={index}
-              icon={problem.icon}
               title={problem.title}
               description={problem.description}
               image={problem.image}

@@ -80,12 +80,12 @@ export default function DreamVision() {
               }}
             >
               <Image
-                src="/images/creator-filming-content.png"
-                alt="Creator filmt Content mit Ring Light, glücklich und professionell"
-                width={1216}
-                height={832}
+                src="/images/creator-freedom.jpg"
+                alt="Junge Frau sitzt draußen in der Sonne, glücklich am Handy, weißes Kleid, Kaffee"
+                width={800}
+                height={600}
                 className="w-full h-auto object-cover"
-                style={{ aspectRatio: '3/2' }}
+                style={{ aspectRatio: '4/3' }}
               />
             </div>
           </FadeIn>

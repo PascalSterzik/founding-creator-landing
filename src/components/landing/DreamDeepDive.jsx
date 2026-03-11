@@ -18,12 +18,12 @@ export default function DreamDeepDive() {
               }}
             >
               <Image
-                src="/images/creator-in-flow.jpg"
-                alt="Creator im Flow beim Editieren mit Kopfhörern"
-                width={800}
-                height={800}
+                src="/images/creator-filming-content.png"
+                alt="Creator filmt Content mit Ring Light, professionelles Setup"
+                width={1216}
+                height={832}
                 className="w-full h-auto object-cover"
-                style={{ aspectRatio: '1/1' }}
+                style={{ aspectRatio: '3/2' }}
               />
             </div>
           </FadeIn>
