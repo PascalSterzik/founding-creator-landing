@@ -9,8 +9,8 @@ export default function DreamVision() {
       <div className="container mx-auto px-6 lg:px-12">
         {/* 2-Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Text Content: order-2 on mobile (image first), order-2 on desktop (image-left, text-right for alternating pattern) */}
-          <div className="space-y-6 order-2 lg:order-2">
+          {/* Text Content: order-2 on mobile (image first), order-1 on desktop (text-left) */}
+          <div className="space-y-6 order-2 lg:order-1">
             <FadeIn>
               <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-1 uppercase">
                 Die Vision
@@ -71,8 +71,8 @@ export default function DreamVision() {
             </FadeIn>
           </div>
 
-          {/* Image: order-1 on mobile (appears first), order-1 on desktop (image-left for alternating pattern) */}
-          <FadeIn delay={0.2} className="order-1 lg:order-1">
+          {/* Image: order-1 on mobile (appears first), order-2 on desktop (image-right) */}
+          <FadeIn delay={0.2} className="order-1 lg:order-2">
             <div
               className="rounded-2xl overflow-hidden"
               style={{

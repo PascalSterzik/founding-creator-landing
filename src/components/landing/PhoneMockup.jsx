@@ -84,6 +84,56 @@ export default function PhoneMockup({
           draggable={false}
         />
       </picture>
+
+      {/* ===== DYNAMIC ISLAND / CAMERA ===== */}
+      <div
+        className="absolute z-20 pointer-events-none"
+        style={{
+          top: `${(SCREEN.top / IMG_H) * 100 + 0.6}%`,
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        {/* Dynamic Island pill */}
+        <div
+          style={{
+            width: `${width * 0.27}px`,
+            height: `${width * 0.065}px`,
+            borderRadius: '100px',
+            background: '#000',
+            position: 'relative',
+            boxShadow: '0 0 0 1px rgba(0,0,0,0.15)',
+          }}
+        >
+          {/* Front camera lens */}
+          <div
+            style={{
+              position: 'absolute',
+              right: `${width * 0.028}px`,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: `${width * 0.03}px`,
+              height: `${width * 0.03}px`,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle at 40% 35%, #2a2a3e 0%, #0a0a12 60%, #000 100%)',
+              boxShadow: 'inset 0 0.5px 1px rgba(255,255,255,0.08), 0 0 0 0.5px rgba(255,255,255,0.05)',
+            }}
+          >
+            {/* Lens reflection */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '20%',
+                left: '25%',
+                width: '35%',
+                height: '35%',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(80,100,180,0.5) 0%, transparent 70%)',
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

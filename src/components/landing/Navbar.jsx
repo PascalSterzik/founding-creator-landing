@@ -16,8 +16,8 @@ export default function Navbar() {
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-      // Show CTA once user scrolls past ~800px (roughly PainDeepDive area)
-      if (window.scrollY > 800) setShowCTA(true);
+      // Show CTA once user scrolls past ~1500px (further into the page)
+      if (window.scrollY > 1500) setShowCTA(true);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -96,8 +96,8 @@ export default function Navbar() {
               </span>
             </motion.a>
 
-            {/* Center: Urgency Indicator (hidden on mobile) */}
-            <div className="hidden sm:flex items-center gap-2">
+            {/* Center/Right: Urgency Indicator (hidden on mobile). Centered when CTA is hidden, stays left of CTA when visible */}
+            <div className={`hidden sm:flex items-center gap-2 ${!showCTA ? 'ml-auto' : ''}`}
               <motion.div
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ backgroundColor: '#10b981' }}
@@ -121,9 +121,9 @@ export default function Navbar() {
                 <motion.button
                   onClick={scrollToForm}
                   className="relative px-5 sm:px-6 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer flex-shrink-0"
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
                     boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',

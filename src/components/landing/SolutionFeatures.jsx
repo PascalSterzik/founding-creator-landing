@@ -220,7 +220,7 @@ export default function SolutionFeatures() {
                           {feature.number}
                         </p>
                         <h3
-                          className="text-base font-bold mt-1 transition-colors"
+                          className="text-lg font-bold mt-1 transition-colors"
                           style={{ color: 'var(--text)' }}
                         >
                           {feature.title}
@@ -280,10 +280,10 @@ export default function SolutionFeatures() {
                         <Icon size={20} style={{ color: isActive ? 'white' : 'var(--text)' }} />
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs font-bold" style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
+                        <p className="text-sm font-bold" style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
                           {feature.number}
                         </p>
-                        <h3 className="text-sm font-bold mt-0.5" style={{ color: 'var(--text)' }}>
+                        <h3 className="text-base font-bold mt-0.5" style={{ color: 'var(--text)' }}>
                           {feature.title}
                         </h3>
                       </div>

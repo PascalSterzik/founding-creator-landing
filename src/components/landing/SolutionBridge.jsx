@@ -164,11 +164,11 @@ export default function SolutionBridge() {
     offset: ['start end', 'end start'],
   });
 
-  // 3D tilt animation: starts tilted, flattens as you scroll
-  const rotateX = useTransform(scrollYProgress, [0.05, 0.22], [25, 0]);
-  const phoneScale = useTransform(scrollYProgress, [0.05, 0.22], [0.8, 1.05]);
-  const phoneTranslateY = useTransform(scrollYProgress, [0.05, 0.22], [120, 0]);
-  const phoneOpacity = useTransform(scrollYProgress, [0.03, 0.12], [0, 1]);
+  // 3D tilt animation: slower, more dramatic rise from below
+  const rotateX = useTransform(scrollYProgress, [0.08, 0.28], [25, 0]);
+  const phoneScale = useTransform(scrollYProgress, [0.08, 0.28], [0.8, 1.05]);
+  const phoneTranslateY = useTransform(scrollYProgress, [0.08, 0.28], [120, 0]);
+  const phoneOpacity = useTransform(scrollYProgress, [0.06, 0.16], [0, 1]);
 
   // Phase tracking for app content and scroll-triggered notifications
   const [appProgress, setAppProgress] = useState(0);
@@ -177,19 +177,19 @@ export default function SolutionBridge() {
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
-      // App opening progress
-      const p = Math.max(0, Math.min(1, (v - 0.15) / 0.12));
+      // App opening progress: starts later, takes longer (more time to see phone first)
+      const p = Math.max(0, Math.min(1, (v - 0.22) / 0.12));
       setAppProgress(p);
 
-      // Dashboard appears
-      setShowDashboard(v > 0.30);
+      // Dashboard appears after phone has fully risen and app has opened
+      setShowDashboard(v > 0.38);
 
-      // Scroll-triggered notifications: tighter intervals for faster pops
-      if (v < 0.32) setVisibleNotifs(0);
-      else if (v < 0.35) setVisibleNotifs(1);
-      else if (v < 0.38) setVisibleNotifs(2);
-      else if (v < 0.41) setVisibleNotifs(3);
-      else if (v < 0.44) setVisibleNotifs(4);
+      // Scroll-triggered notifications: fast pops AFTER dashboard is visible
+      if (v < 0.40) setVisibleNotifs(0);
+      else if (v < 0.43) setVisibleNotifs(1);
+      else if (v < 0.46) setVisibleNotifs(2);
+      else if (v < 0.49) setVisibleNotifs(3);
+      else if (v < 0.52) setVisibleNotifs(4);
       else setVisibleNotifs(5);
     });
     return unsubscribe;
@@ -241,8 +241,8 @@ export default function SolutionBridge() {
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
             {/* ─── Mobile 3D overlay notifications (positioned around the phone) ─── */}
-            {/* Notification 1: Top-left of phone */}
-            <div className="lg:hidden absolute z-10" style={{ left: '2%', top: '5%' }}>
+            {/* Notification 1: Top-left, stays at top-left */}
+            <div className="lg:hidden absolute z-10" style={{ left: '0%', top: '3%' }}>
               <NotificationCard visible={visibleNotifs >= 1}>
                 <div className="flex items-center gap-2">
                   <img src="/images/creator-brand-handshake.jpg" alt="" className="w-8 h-8 rounded-lg object-cover" />
@@ -254,18 +254,18 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 2: Top-right of phone */}
-            <div className="lg:hidden absolute z-10" style={{ right: '2%', top: '10%' }}>
+            {/* Notification 2: Right side, below tabs, narrower with two-line text */}
+            <div className="lg:hidden absolute z-10" style={{ right: '-4%', top: '18%' }}>
               <NotificationCard visible={visibleNotifs >= 2}>
-                <div className="flex items-center gap-2">
-                  <span style={{ color: '#10b981', fontSize: '13px', fontWeight: '800' }}>+€850</span>
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '10px' }}>Neuer Deal</span>
+                <div className="text-center" style={{ minWidth: '60px' }}>
+                  <div style={{ color: '#10b981', fontSize: '14px', fontWeight: '800', lineHeight: '1.2' }}>+€850</div>
+                  <div style={{ color: 'var(--text-secondary)', fontSize: '10px', marginTop: '2px' }}>Neuer Deal</div>
                 </div>
               </NotificationCard>
             </div>
 
-            {/* Notification 3: Left side, middle */}
-            <div className="lg:hidden absolute z-10" style={{ left: '0%', top: '38%' }}>
+            {/* Notification 3: Left side, lower half where there's space */}
+            <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '52%' }}>
               <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-2">
                   <StarRating rating={4.8} />
@@ -274,8 +274,8 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 4: Right side, middle */}
-            <div className="lg:hidden absolute z-10" style={{ right: '0%', top: '42%' }}>
+            {/* Notification 4: Right side, lower half */}
+            <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '56%' }}>
               <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-2">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -286,14 +286,53 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 5: Bottom, centered below phone */}
-            <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '2%', transform: 'translateX(-50%)' }}>
-              <NotificationCard visible={visibleNotifs >= 5}>
-                <div className="flex items-center gap-3">
-                  <span style={{ color: '#10b981', fontSize: '14px', fontWeight: '800' }}>€2.650</span>
-                  <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ backgroundColor: '#10b98118', color: '#10b981' }}>+34% ↑</span>
+            {/* Notification 5: Bottom, full revenue chart card */}
+            <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '0%', transform: 'translateX(-50%)', width: '85%', maxWidth: '300px' }}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.3, y: 20 }}
+                animate={
+                  visibleNotifs >= 5
+                    ? { opacity: 1, scale: 1, y: 0 }
+                    : { opacity: 0, scale: 0.3, y: 20 }
+                }
+                transition={
+                  visibleNotifs >= 5
+                    ? {
+                        scale: { type: 'spring', stiffness: 300, damping: 20 },
+                        opacity: { duration: 0.25 },
+                        y: { type: 'spring', stiffness: 300, damping: 20 },
+                      }
+                    : { duration: 0.15 }
+                }
+                className="rounded-2xl backdrop-blur-md border"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.97)',
+                  borderColor: 'rgba(0,0,0,0.06)',
+                  boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.06)',
+                  padding: '14px',
+                }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <div style={{ color: 'var(--text-muted)', fontSize: '10px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      Monatlicher Umsatz
+                    </div>
+                    <div style={{ color: '#10b981', fontSize: '22px', fontWeight: '700', letterSpacing: '-0.5px', marginTop: '1px' }}>
+                      €2.650
+                    </div>
+                  </div>
+                  <div
+                    className="px-2.5 py-1 rounded-full text-xs font-bold"
+                    style={{ backgroundColor: '#10b98118', color: '#10b981' }}
+                  >
+                    +34% ↑
+                  </div>
                 </div>
-              </NotificationCard>
+                <RevenueChart />
+                <div className="flex justify-between mt-1.5" style={{ color: 'var(--text-muted)', fontSize: '9px' }}>
+                  <span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span><span>Jul</span>
+                </div>
+              </motion.div>
             </div>
 
             {/* ─── LEFT SIDE notifications (desktop) ─── */}

@@ -20,7 +20,8 @@ const ProblemCard = ({ title, description, image, delay }) => {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  const isExpanded = isMobile ? isTapped : isHovered;
+  // Mobile: always show text (no interaction needed). Desktop: hover to reveal.
+  const isExpanded = isMobile ? true : isHovered;
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -106,28 +107,7 @@ const ProblemCard = ({ title, description, image, delay }) => {
               {title}
             </motion.h3>
 
-            {/* Mobile: "Tippen zum Aufklappen" hint */}
-            {isMobile && !isTapped && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isInView ? 1 : 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="flex items-center gap-1.5 mt-3"
-              >
-                <motion.span
-                  animate={{ y: [0, -3, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                  style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}
-                >
-                  ↑
-                </motion.span>
-                <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontWeight: '500' }}>
-                  Tippen zum Aufklappen
-                </span>
-              </motion.div>
-            )}
-
-            {/* Description (revealed on hover/tap) */}
+            {/* Description (always visible on mobile, revealed on hover on desktop) */}
             <motion.div
               initial={{ opacity: 0, height: 0, marginTop: 0 }}
               animate={{
