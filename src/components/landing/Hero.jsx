@@ -98,45 +98,6 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
           >
-            {/* Premium badge with shimmer */}
-            <motion.div variants={itemVariants}>
-              <div
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full backdrop-blur-sm relative overflow-hidden"
-                style={{
-                  background: 'rgba(230, 201, 168, 0.2)',
-                  border: '1px solid rgba(201, 140, 131, 0.3)',
-                }}
-              >
-                {/* Badge shimmer overlay */}
-                <motion.div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)',
-                  }}
-                  animate={{ x: ['-100%', '100%'] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-
-                <motion.div
-                  className="w-2 h-2 rounded-full flex-shrink-0 relative z-10"
-                  style={{ backgroundColor: 'var(--accent)' }}
-                  animate={{ scale: [1, 1.5, 1] }}
-                  transition={{ duration: 2.5, repeat: Infinity }}
-                />
-                <span
-                  className="relative z-10"
-                  style={{
-                    color: 'var(--text-secondary)',
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    letterSpacing: '0.5px',
-                  }}
-                >
-                  Founding Creator Bewerbungen offen
-                </span>
-              </div>
-            </motion.div>
-
             {/* Decorative accent line */}
             <motion.div
               variants={itemVariants}

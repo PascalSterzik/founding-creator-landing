@@ -106,41 +106,44 @@ function PhoneAppOpen({ progress }) {
   );
 }
 
-/* ─── Notification Card (pops from center outward) ─── */
-function NotificationCard({ children, delay = 0, side = 'left', visible, large = false }) {
-  // Pop from center: start at x=0 (center), pop outward
-  const xTarget = side === 'left' ? -20 : 20;
-
+/* ─── Notification Card (scroll-triggered pop) ─── */
+function NotificationCard({ children, visible, large = false, style: posStyle = {} }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.3, x: 0 }}
+      initial={{ opacity: 0, scale: 0.3 }}
       animate={
         visible
-          ? { opacity: 1, scale: 1, x: xTarget }
-          : { opacity: 0, scale: 0.3, x: 0 }
+          ? { opacity: 1, scale: 1 }
+          : { opacity: 0, scale: 0.3 }
       }
       transition={
         visible
           ? {
-              duration: 0.45,
-              delay,
-              scale: { type: 'spring', stiffness: 400, damping: 15, delay },
-              opacity: { duration: 0.2, delay },
+              scale: { type: 'spring', stiffness: 350, damping: 18 },
+              opacity: { duration: 0.2 },
             }
-          : { duration: 0.2 }
+          : { duration: 0.15 }
       }
-      className={`rounded-2xl backdrop-blur-md border ${large ? 'px-6 py-5' : 'px-5 py-3.5'}`}
+      className={`rounded-2xl backdrop-blur-md border ${large ? 'px-5 py-4' : 'px-4 py-3'}`}
       style={{
-        background: 'rgba(255, 255, 255, 0.95)',
+        background: 'rgba(255, 255, 255, 0.97)',
         borderColor: 'rgba(0,0,0,0.06)',
-        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06)',
-        whiteSpace: 'nowrap',
+        boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.06)',
+        ...posStyle,
       }}
     >
       {children}
     </motion.div>
   );
 }
+
+/* ─── Stock image URLs (Unsplash small, load in browser) ─── */
+const STOCK_IMAGES = {
+  fashion: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=80&h=80&fit=crop&crop=faces',
+  beauty: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=80&h=80&fit=crop&crop=center',
+  fitness: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=80&h=80&fit=crop&crop=faces',
+  food: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=80&h=80&fit=crop&crop=center',
+};
 
 /* ─── Main Component ─── */
 export default function SolutionBridge() {
@@ -150,31 +153,31 @@ export default function SolutionBridge() {
     offset: ['start end', 'end start'],
   });
 
-  // Scroll-driven transforms
-  const phoneScale = useTransform(scrollYProgress, [0.08, 0.25], [0.85, 1]);
-  const phoneTranslateY = useTransform(scrollYProgress, [0.08, 0.25], [80, 0]);
-  const phoneOpacity = useTransform(scrollYProgress, [0.05, 0.18], [0, 1]);
+  // 3D tilt animation: starts tilted, flattens as you scroll
+  const rotateX = useTransform(scrollYProgress, [0.05, 0.22], [25, 0]);
+  const phoneScale = useTransform(scrollYProgress, [0.05, 0.22], [0.8, 1]);
+  const phoneOpacity = useTransform(scrollYProgress, [0.03, 0.12], [0, 1]);
 
-  // Text fades out as phone takes over
-  const textOpacity = useTransform(scrollYProgress, [0.18, 0.3], [1, 0]);
-  const textTranslateY = useTransform(scrollYProgress, [0.18, 0.3], [0, -40]);
-
-  // Phase tracking
+  // Phase tracking for app content and scroll-triggered notifications
   const [appProgress, setAppProgress] = useState(0);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
+  const [visibleNotifs, setVisibleNotifs] = useState(0);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
       // App opening progress
-      const p = Math.max(0, Math.min(1, (v - 0.18) / 0.14));
+      const p = Math.max(0, Math.min(1, (v - 0.15) / 0.12));
       setAppProgress(p);
 
       // Dashboard appears
-      setShowDashboard(v > 0.35);
+      setShowDashboard(v > 0.30);
 
-      // Notifications pop in
-      setShowNotifications(v > 0.42);
+      // Scroll-triggered notifications: each one at a specific scroll position
+      if (v < 0.38) setVisibleNotifs(0);
+      else if (v < 0.43) setVisibleNotifs(1);
+      else if (v < 0.48) setVisibleNotifs(2);
+      else if (v < 0.53) setVisibleNotifs(3);
+      else setVisibleNotifs(4);
     });
     return unsubscribe;
   }, [scrollYProgress]);
@@ -183,12 +186,12 @@ export default function SolutionBridge() {
     <section
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '350vh' }}
+      style={{ minHeight: '400vh' }}
     >
-      <div className="sticky top-0 min-h-screen flex flex-col justify-center overflow-hidden">
+      <div className="sticky top-0 min-h-screen flex flex-col items-center justify-center overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* ─── Header text (fades out as phone takes over) ─── */}
-          <motion.div style={{ opacity: textOpacity, y: textTranslateY }} className="text-center mb-8">
+          {/* ─── Header text (stays visible) ─── */}
+          <div className="text-center mb-8">
             <FadeIn>
               <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 uppercase">
                 Die Lösung
@@ -217,38 +220,35 @@ export default function SolutionBridge() {
                 Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen.
               </h3>
             </FadeIn>
-          </motion.div>
+          </div>
 
           {/* ─── Phone + Notifications ─── */}
-          <div className="relative flex items-center justify-center">
-            {/* Notification cards positioned absolutely around phone */}
+          <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
             {/* LEFT SIDE notifications (desktop) */}
-            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 340px)', top: '8%' }}>
-              <NotificationCard side="left" delay={0} visible={showNotifications} large>
+            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 370px)', top: '5%' }}>
+              <NotificationCard visible={visibleNotifs >= 1} large>
                 <div className="flex items-center gap-3.5">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white' }}
-                  >
-                    <TrendUpIcon />
-                  </div>
+                  <img
+                    src={STOCK_IMAGES.fashion}
+                    alt="Fashion Brand"
+                    className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
+                  />
                   <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+€2.650</div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '15px', fontWeight: '700', letterSpacing: '-0.3px' }}>+€2.650</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>Umsatz diesen Monat</div>
                   </div>
                 </div>
               </NotificationCard>
             </div>
 
-            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 300px)', top: '38%' }}>
-              <NotificationCard side="left" delay={0.2} visible={showNotifications}>
+            <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 320px)', top: '40%' }}>
+              <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white' }}
-                  >
-                    <StarIcon />
-                  </div>
+                  <img
+                    src={STOCK_IMAGES.food}
+                    alt="Food Brand"
+                    className="w-10 h-10 rounded-xl object-cover flex-shrink-0"
+                  />
                   <div>
                     <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>4.8 Rating</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>von 5 Brands</div>
@@ -258,32 +258,30 @@ export default function SolutionBridge() {
             </div>
 
             {/* RIGHT SIDE notifications (desktop) */}
-            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 360px)', top: '12%' }}>
-              <NotificationCard side="right" delay={0.1} visible={showNotifications} large>
+            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 380px)', top: '10%' }}>
+              <NotificationCard visible={visibleNotifs >= 2} large>
                 <div className="flex items-center gap-3.5">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)', color: 'white' }}
-                  >
-                    <BriefcaseIcon />
-                  </div>
+                  <img
+                    src={STOCK_IMAGES.beauty}
+                    alt="Beauty Brand"
+                    className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
+                  />
                   <div>
-                    <div style={{ color: 'var(--cocoa)', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
+                    <div style={{ color: 'var(--cocoa)', fontSize: '15px', fontWeight: '700', letterSpacing: '-0.3px' }}>+3 neue Deals</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '12px', marginTop: '2px' }}>warten auf dich</div>
                   </div>
                 </div>
               </NotificationCard>
             </div>
 
-            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 320px)', top: '45%' }}>
-              <NotificationCard side="right" delay={0.3} visible={showNotifications}>
+            <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 340px)', top: '48%' }}>
+              <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', color: 'white' }}
-                  >
-                    <ChatIcon />
-                  </div>
+                  <img
+                    src={STOCK_IMAGES.fitness}
+                    alt="Fitness Brand"
+                    className="w-10 h-10 rounded-xl object-cover flex-shrink-0"
+                  />
                   <div>
                     <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700' }}>2 Nachrichten</div>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '11px' }}>Beauty Brand Co.</div>
@@ -292,16 +290,17 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* ─── PHONE ─── */}
+            {/* ─── PHONE with 3D tilt ─── */}
             <motion.div
               style={{
+                rotateX,
                 scale: phoneScale,
-                y: phoneTranslateY,
                 opacity: phoneOpacity,
+                transformOrigin: 'center bottom',
               }}
               className="relative z-0"
             >
-              <PhoneMockup width={340} interactive={showDashboard}>
+              <PhoneMockup width={360} interactive={showDashboard}>
                 <AnimatePresence mode="wait">
                   {showDashboard ? (
                     <motion.div
@@ -333,45 +332,44 @@ export default function SolutionBridge() {
           {/* Mobile notifications (below phone) */}
           <div className="lg:hidden flex flex-wrap justify-center gap-3 mt-6">
             <AnimatePresence>
-              {showNotifications && (
-                <>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                    className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
-                    style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
-                  >
-                    <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)', color: 'white' }}>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                    </div>
-                    <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 15, delay: 0.1 }}
-                    className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
-                    style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
-                  >
-                    <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white' }}>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-                    </div>
-                    <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€2.650</span>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 15, delay: 0.2 }}
-                    className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
-                    style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
-                  >
-                    <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', color: 'white' }}>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    </div>
-                    <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>2 Nachrichten</span>
-                  </motion.div>
-                </>
+              {visibleNotifs >= 1 && (
+                <motion.div
+                  key="m1"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                >
+                  <img src={STOCK_IMAGES.beauty} alt="" className="w-7 h-7 rounded-lg object-cover" />
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
+                </motion.div>
+              )}
+              {visibleNotifs >= 2 && (
+                <motion.div
+                  key="m2"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                >
+                  <img src={STOCK_IMAGES.fashion} alt="" className="w-7 h-7 rounded-lg object-cover" />
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€2.650</span>
+                </motion.div>
+              )}
+              {visibleNotifs >= 3 && (
+                <motion.div
+                  key="m3"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                >
+                  <img src={STOCK_IMAGES.fitness} alt="" className="w-7 h-7 rounded-lg object-cover" />
+                  <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>2 Nachrichten</span>
+                </motion.div>
               )}
             </AnimatePresence>
           </div>
