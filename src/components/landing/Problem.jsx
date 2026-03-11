@@ -122,7 +122,7 @@ export default function Problem() {
       title: 'Deals kommen zufällig',
       description:
         'Du wartest auf DMs, hoffst auf Empfehlungen und bist von Glück abhängig, ob die richtige Brand deine Arbeit sieht. Kein System, kein Plan. Nur Hoffen und Warten.',
-      image: '/images/problem-deals-random.png',
+      image: '/images/creator-late-night-grind.jpg',
     },
     {
       title: 'Akquise kostet Zeit',

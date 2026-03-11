@@ -70,7 +70,7 @@ const AppHeader = () => (
       </span>
     </div>
     <img
-      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces&facepad=1.5"
+      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces&facepad=1.1"
       alt="Lisa Schmidt"
       className="w-8 h-8 rounded-full object-cover transition-transform hover:scale-105"
       style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)' }}
@@ -154,7 +154,7 @@ const OverviewTab = () => (
           status: 'Matched',
           color: '#10b981',
           initials: 'BC',
-          image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=80&h=80&fit=crop&crop=center',
+          image: 'https://images.unsplash.com/photo-1570194065650-d99fb4a38d15?w=80&h=80&fit=crop&crop=center',
         },
         {
           name: 'Sommer-Kollektion',
@@ -172,7 +172,7 @@ const OverviewTab = () => (
           status: 'Neu',
           color: '#ec4899',
           initials: 'SF',
-          image: 'https://images.unsplash.com/photo-1594498653385-d5172c532c00?w=80&h=80&fit=crop&crop=center',
+          image: 'https://images.unsplash.com/photo-1622484212850-eb596d769edc?w=80&h=80&fit=crop&crop=center',
         },
       ].map((deal, idx) => (
         <motion.div

@@ -8,9 +8,9 @@ export default function PainDeepDive() {
     <section className="py-20 md:py-32 px-6 md:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-          {/* Left: Text */}
+          {/* Left: Text (order-2 on mobile so image appears first) */}
           <FadeIn>
-            <div>
+            <div className="order-2 md:order-1">
               <p
                 style={{
                   color: 'var(--accent)',
@@ -99,10 +99,10 @@ export default function PainDeepDive() {
             </div>
           </FadeIn>
 
-          {/* Right: Image */}
+          {/* Right: Image (order-1 on mobile so it appears first) */}
           <FadeIn delay={0.2}>
             <div
-              className="rounded-2xl overflow-hidden"
+              className="rounded-2xl overflow-hidden order-1 md:order-2"
               style={{
                 boxShadow: '0 25px 60px rgba(0, 0, 0, 0.12)',
               }}

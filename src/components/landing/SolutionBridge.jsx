@@ -236,7 +236,7 @@ export default function SolutionBridge() {
       </div>
 
       {/* ─── Sticky phone + notifications (phone stays centered while user scrolls) ─── */}
-      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
@@ -410,58 +410,58 @@ export default function SolutionBridge() {
             </motion.div>
           </div>
 
-          {/* Mobile notifications (below phone, staggered) */}
-          <div className="lg:hidden flex flex-wrap justify-center gap-3 mt-6">
+          {/* Mobile notifications (positioned around the phone bottom area) */}
+          <div className="lg:hidden relative flex justify-center mt-4" style={{ minHeight: '48px' }}>
             <AnimatePresence>
               {visibleNotifs >= 1 && (
                 <motion.div
                   key="m1"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                  className="absolute left-2 -top-2 px-3 py-2 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}
                 >
-                  <img src="/images/creator-brand-handshake.jpg" alt="" className="w-7 h-7 rounded-lg object-cover" />
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
+                  <img src="/images/creator-brand-handshake.jpg" alt="" className="w-6 h-6 rounded-lg object-cover" />
+                  <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--cocoa)' }}>+3 neue Deals</span>
                 </motion.div>
               )}
               {visibleNotifs >= 2 && (
                 <motion.div
                   key="m2"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.5, x: 20 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                  className="absolute right-2 -top-2 px-3 py-2 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}
                 >
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>+€850</span>
+                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#10b981' }}>+€850</span>
                 </motion.div>
               )}
               {visibleNotifs >= 3 && (
                 <motion.div
                   key="m3"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                  className="px-3 py-2 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)', marginTop: '32px' }}
                 >
                   <StarRating rating={4.8} />
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#f59e0b' }}>4.8</span>
+                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#f59e0b' }}>4.8</span>
                 </motion.div>
               )}
               {visibleNotifs >= 5 && (
                 <motion.div
                   key="m5"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  className="px-4 py-2.5 rounded-xl border flex items-center gap-2"
-                  style={{ background: 'rgba(255,255,255,0.95)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                  className="absolute left-1/2 -translate-x-1/2 px-3 py-2 rounded-xl border flex items-center gap-2"
+                  style={{ background: 'rgba(255,255,255,0.97)', borderColor: 'rgba(0,0,0,0.06)', boxShadow: '0 6px 20px rgba(0,0,0,0.1)', bottom: '-40px' }}
                 >
-                  <span style={{ fontSize: '13px', fontWeight: '700', color: '#10b981' }}>€2.650 Umsatz</span>
-                  <span style={{ fontSize: '11px', fontWeight: '600', color: '#10b981' }}>+34%</span>
+                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#10b981' }}>€2.650 Umsatz</span>
+                  <span style={{ fontSize: '10px', fontWeight: '600', color: '#10b981' }}>+34%</span>
                 </motion.div>
               )}
             </AnimatePresence>
