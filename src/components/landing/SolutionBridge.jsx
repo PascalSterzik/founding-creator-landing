@@ -6,33 +6,6 @@ import FadeIn from '@/components/motion/FadeIn';
 import PhoneMockup from './PhoneMockup';
 import PhoneAppUI from './PhoneAppUI';
 
-/* ─── SVG Icons (no emojis) ─── */
-const TrendUpIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-    <polyline points="16 7 22 7 22 13" />
-  </svg>
-);
-
-const StarIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-  </svg>
-);
-
-const BriefcaseIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-  </svg>
-);
-
-const ChatIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-  </svg>
-);
-
 /* ─── Phone App Open Screen ─── */
 function PhoneAppOpen({ progress }) {
   const logoOpacity = Math.min(1, progress * 4);
@@ -129,6 +102,7 @@ function NotificationCard({ children, visible, large = false, style: posStyle = 
         background: 'rgba(255, 255, 255, 0.97)',
         borderColor: 'rgba(0,0,0,0.06)',
         boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.06)',
+        whiteSpace: 'nowrap',
         ...posStyle,
       }}
     >
@@ -155,8 +129,12 @@ export default function SolutionBridge() {
 
   // 3D tilt animation: starts tilted, flattens as you scroll
   const rotateX = useTransform(scrollYProgress, [0.05, 0.22], [25, 0]);
-  const phoneScale = useTransform(scrollYProgress, [0.05, 0.22], [0.8, 1]);
+  const phoneScale = useTransform(scrollYProgress, [0.05, 0.22], [0.8, 1.05]);
+  const phoneTranslateY = useTransform(scrollYProgress, [0.05, 0.22], [120, 0]);
   const phoneOpacity = useTransform(scrollYProgress, [0.03, 0.12], [0, 1]);
+
+  // Text stays visible, but fades slightly once notifications arrive
+  const sectionTextOpacity = useTransform(scrollYProgress, [0.30, 0.38], [1, 0.15]);
 
   // Phase tracking for app content and scroll-triggered notifications
   const [appProgress, setAppProgress] = useState(0);
@@ -173,10 +151,10 @@ export default function SolutionBridge() {
       setShowDashboard(v > 0.30);
 
       // Scroll-triggered notifications: each one at a specific scroll position
-      if (v < 0.38) setVisibleNotifs(0);
-      else if (v < 0.43) setVisibleNotifs(1);
-      else if (v < 0.48) setVisibleNotifs(2);
-      else if (v < 0.53) setVisibleNotifs(3);
+      if (v < 0.36) setVisibleNotifs(0);
+      else if (v < 0.41) setVisibleNotifs(1);
+      else if (v < 0.46) setVisibleNotifs(2);
+      else if (v < 0.51) setVisibleNotifs(3);
       else setVisibleNotifs(4);
     });
     return unsubscribe;
@@ -190,8 +168,8 @@ export default function SolutionBridge() {
     >
       <div className="sticky top-0 min-h-screen flex flex-col items-center justify-center overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* ─── Header text (stays visible) ─── */}
-          <div className="text-center mb-8">
+          {/* ─── Header text (stays visible, fades slightly when dashboard shows) ─── */}
+          <motion.div style={{ opacity: sectionTextOpacity }} className="text-center mb-8">
             <FadeIn>
               <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 uppercase">
                 Die Lösung
@@ -220,7 +198,7 @@ export default function SolutionBridge() {
                 Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen.
               </h3>
             </FadeIn>
-          </div>
+          </motion.div>
 
           {/* ─── Phone + Notifications ─── */}
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
@@ -290,12 +268,13 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* ─── PHONE with 3D tilt ─── */}
+            {/* ─── PHONE with 3D tilt + rise from below ─── */}
             <motion.div
               style={{
                 rotateX,
                 scale: phoneScale,
                 opacity: phoneOpacity,
+                y: phoneTranslateY,
                 transformOrigin: 'center bottom',
               }}
               className="relative z-0"
@@ -329,7 +308,7 @@ export default function SolutionBridge() {
             </motion.div>
           </div>
 
-          {/* Mobile notifications (below phone) */}
+          {/* Mobile notifications (below phone, staggered) */}
           <div className="lg:hidden flex flex-wrap justify-center gap-3 mt-6">
             <AnimatePresence>
               {visibleNotifs >= 1 && (

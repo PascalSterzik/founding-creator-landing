@@ -11,18 +11,21 @@ export default function Credibility() {
       title: 'Creator-First Architektur',
       description:
         'Kein Marktplatz, auf dem du dich gegen tausende bewirbst. CreatorBridge verbindet dich gezielt mit Brands, die zu dir passen.',
+      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=350&fit=crop',
     },
     {
       icon: Scale,
       title: 'Faire Konditionen',
       description:
         'Transparente Deals, keine versteckten Gebühren. Du weißt genau, was du verdienst und wie die Zusammenarbeit funktioniert.',
+      image: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=600&h=350&fit=crop',
     },
     {
       icon: Users,
       title: 'Community statt Konkurrenz',
       description:
         'Founding Creator sind keine Nummern. Du bist Teil einer handverlesenen Gemeinschaft, die gemeinsam wächst.',
+      image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=350&fit=crop&crop=faces',
     },
   ];
 
@@ -50,21 +53,39 @@ export default function Credibility() {
             const Icon = card.icon;
             return (
               <FadeIn key={card.title} delay={index * 0.15}>
-                <div className="relative h-full rounded-2xl border border-[var(--border)] bg-white p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
-                  {/* Icon Circle with Accent Background */}
-                  <div className="mb-6">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--accent)] from-0% to-[var(--accent-hover)] to-100% flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
-                      <Icon className="w-8 h-8 text-white" strokeWidth={1.5} />
-                    </div>
+                <div className="relative h-full rounded-2xl border border-[var(--border)] bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group">
+                  {/* Card Image */}
+                  <div className="relative h-44 overflow-hidden">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: 'linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.15) 100%)',
+                      }}
+                    />
                   </div>
 
-                  {/* Content */}
-                  <h3 className="text-xl font-bold text-[var(--text)] mb-3">
-                    {card.title}
-                  </h3>
-                  <p className="text-[var(--text-secondary)] leading-relaxed">
-                    {card.description}
-                  </p>
+                  <div className="p-8">
+                    {/* Icon Circle */}
+                    <div className="mb-5 -mt-12 relative z-10">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-hover)] flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300 border-4 border-white">
+                        <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-xl font-bold text-[var(--text)] mb-3">
+                      {card.title}
+                    </h3>
+                    <p className="text-[var(--text-secondary)] leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
                 </div>
               </FadeIn>
             );
