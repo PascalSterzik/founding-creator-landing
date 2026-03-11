@@ -286,19 +286,13 @@ export default function SolutionBridge() {
   // Phase tracking
   const [appProgress, setAppProgress] = useState(0);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [visibleNotifs, setVisibleNotifs] = useState(0);
-  const hasCompletedRef = useRef(false);
+  const [smallNotifs, setSmallNotifs] = useState(0); // 0-4 for small notification cards
+  const [showRevenue, setShowRevenue] = useState(false); // revenue chart, permanent once shown
+  const revenueShownRef = useRef(false);
+  const [stickyDone, setStickyDone] = useState(false);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
-      // Once animation completes, persist the final state forever
-      if (hasCompletedRef.current) {
-        setAppProgress(1);
-        setShowDashboard(true);
-        setVisibleNotifs(5);
-        return;
-      }
-
       // App opening
       const p = Math.max(0, Math.min(1, (v - 0.24) / 0.12));
       setAppProgress(p);
@@ -306,16 +300,27 @@ export default function SolutionBridge() {
       // Dashboard appears after phone risen + app opened
       setShowDashboard(v > 0.40);
 
-      // Notifications: fast pops AFTER dashboard
-      if (v < 0.42) setVisibleNotifs(0);
-      else if (v < 0.44) setVisibleNotifs(1);
-      else if (v < 0.46) setVisibleNotifs(2);
-      else if (v < 0.48) setVisibleNotifs(3);
-      else if (v < 0.50) setVisibleNotifs(4);
-      else {
-        setVisibleNotifs(5);
-        // Mark animation as complete: won't replay on re-scroll
-        hasCompletedRef.current = true;
+      // Release sticky after animation sequence completes
+      if (v > 0.58) setStickyDone(true);
+
+      // Revenue chart: once shown, stays forever
+      if (v >= 0.50) {
+        revenueShownRef.current = true;
+        setShowRevenue(true);
+      }
+      // Also keep it visible if it was already shown
+      if (revenueShownRef.current) setShowRevenue(true);
+
+      // Small notifications (1-4): scroll-reactive, pop in/out dynamically
+      // They appear in the 0.42-0.56 scroll range, disappear outside
+      if (v >= 0.42 && v <= 0.56) {
+        if (v < 0.44) setSmallNotifs(1);
+        else if (v < 0.46) setSmallNotifs(2);
+        else if (v < 0.48) setSmallNotifs(3);
+        else setSmallNotifs(4);
+      } else {
+        // Outside range: small notifications hidden
+        setSmallNotifs(0);
       }
     });
     return unsubscribe;
@@ -361,8 +366,8 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* ─── Sticky phone + notifications: CLOSER to text, shorter sticky ─── */}
-      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-20 md:pt-2">
+      {/* ─── Sticky phone + notifications: releases after animation ─── */}
+      <div className={`${stickyDone ? 'relative' : 'sticky top-0'} min-h-screen flex items-center justify-center overflow-visible pt-20 md:pt-2`}>
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
@@ -372,7 +377,7 @@ export default function SolutionBridge() {
 
             {/* Notification 1: "+3 neue Deals" - just above the phone logo area */}
             <div className="lg:hidden absolute z-10" style={{ left: '2%', top: '2%' }}>
-              <NotificationCard visible={visibleNotifs >= 1}>
+              <NotificationCard visible={smallNotifs >= 1}>
                 <div className="flex items-center gap-2">
                   <img src="/images/creator-brand-handshake.jpg" alt="" className="w-8 h-8 rounded-lg object-cover" />
                   <div>
@@ -385,7 +390,7 @@ export default function SolutionBridge() {
 
             {/* Notification 2: "+€850" - right side */}
             <div className="lg:hidden absolute z-10" style={{ right: '-4%', top: '18%' }}>
-              <NotificationCard visible={visibleNotifs >= 2}>
+              <NotificationCard visible={smallNotifs >= 2}>
                 <div className="text-center" style={{ minWidth: '60px' }}>
                   <div style={{ color: '#10b981', fontSize: '14px', fontWeight: '800', lineHeight: '1.2' }}>+€850</div>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '10px', marginTop: '2px' }}>Neuer Deal</div>
@@ -395,7 +400,7 @@ export default function SolutionBridge() {
 
             {/* Notification 3: Stars - lower, just above the dashboard/revenue popup */}
             <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '68%' }}>
-              <NotificationCard visible={visibleNotifs >= 3}>
+              <NotificationCard visible={smallNotifs >= 3}>
                 <div className="flex items-center gap-2">
                   <StarRating rating={4.8} />
                   <span style={{ fontSize: '12px', fontWeight: '700', color: '#f59e0b' }}>4.8</span>
@@ -403,9 +408,9 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 4: Messages */}
-            <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '74%' }}>
-              <NotificationCard visible={visibleNotifs >= 4}>
+            {/* Notification 4: Messages - positioned above revenue chart */}
+            <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '58%' }}>
+              <NotificationCard visible={smallNotifs >= 4}>
                 <div className="flex items-center gap-2">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -418,7 +423,7 @@ export default function SolutionBridge() {
             {/* Notification 5: Animated Revenue - mobile */}
             <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '-3%', transform: 'translateX(-50%)', width: '85%', maxWidth: '300px' }}>
               <AnimatedRevenueCard
-                visible={visibleNotifs >= 5}
+                visible={showRevenue}
                 style={{ padding: '14px' }}
               />
             </div>
@@ -429,7 +434,7 @@ export default function SolutionBridge() {
 
             {/* Notification 1: Deals - left */}
             <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 380px)', top: '5%' }}>
-              <NotificationCard visible={visibleNotifs >= 1}>
+              <NotificationCard visible={smallNotifs >= 1}>
                 <div className="flex items-center gap-3.5">
                   <img src="/images/creator-brand-handshake.jpg" alt="Neue Deals" className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
                   <div>
@@ -442,7 +447,7 @@ export default function SolutionBridge() {
 
             {/* Notification 2: +€850 - right */}
             <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 390px)', top: '8%' }}>
-              <NotificationCard visible={visibleNotifs >= 2}>
+              <NotificationCard visible={smallNotifs >= 2}>
                 <div className="flex items-center gap-3.5">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#10b98112' }}>
                     <span style={{ color: '#10b981', fontSize: '15px', fontWeight: '800' }}>+€850</span>
@@ -457,7 +462,7 @@ export default function SolutionBridge() {
 
             {/* Notification 3: Star Rating - left */}
             <div className="hidden lg:block absolute z-10" style={{ left: 'calc(50% - 330px)', top: '42%' }}>
-              <NotificationCard visible={visibleNotifs >= 3}>
+              <NotificationCard visible={smallNotifs >= 3}>
                 <div className="flex items-center gap-3">
                   <div className="flex-shrink-0"><StarRating rating={4.8} /></div>
                   <div>
@@ -470,7 +475,7 @@ export default function SolutionBridge() {
 
             {/* Notification 4: Messages - right */}
             <div className="hidden lg:block absolute z-10" style={{ right: 'calc(50% - 350px)', top: '46%' }}>
-              <NotificationCard visible={visibleNotifs >= 4}>
+              <NotificationCard visible={smallNotifs >= 4}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -488,7 +493,7 @@ export default function SolutionBridge() {
             {/* Notification 5: ANIMATED Revenue Chart - BOTTOM CENTER on desktop */}
             <div className="hidden lg:block absolute z-20" style={{ left: '50%', bottom: '-5%', transform: 'translateX(-50%)', width: '340px' }}>
               <AnimatedRevenueCard
-                visible={visibleNotifs >= 5}
+                visible={showRevenue}
                 style={{ padding: '18px' }}
               />
             </div>

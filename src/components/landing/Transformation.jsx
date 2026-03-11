@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
 import Image from 'next/image';
 import { ArrowRight, X, Check } from 'lucide-react';
@@ -210,6 +211,7 @@ const Transformation = () => {
               }}
             >
               <span className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)' }} />
+              <motion.div className="absolute inset-0 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)' }} animate={{ x: ['100%', '-100%'] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }} />
               <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </a>
           </div>

@@ -410,18 +410,6 @@ function AnalyticsDashboard({ compact }) {
         ))}
       </div>
 
-      {/* Top summary bar */}
-      <div className="flex items-center gap-3 p-3 rounded-xl mb-3" style={{ backgroundColor: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
-        <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#10b981', color: 'white', fontSize: '11px', fontWeight: '800' }}>
-          <BarChart3 size={16} />
-        </div>
-        <div className="flex-1">
-          <div className="text-xs font-bold" style={{ color: '#10b981' }}>Performance Überblick</div>
-          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Alle Metriken auf einen Blick, aktualisiert in Echtzeit</div>
-        </div>
-        <span className="text-xs px-2 py-1 rounded-full font-semibold" style={{ backgroundColor: '#10b98118', color: '#10b981' }}>Live</span>
-      </div>
-
       {/* 2x2 grid: Revenue + Branchen on top, Deal Funnel + Side panel below */}
       <div className={`grid ${compact ? 'grid-cols-1 gap-2' : 'grid-cols-2 gap-3'}`}>
         {/* Revenue mini chart */}
@@ -556,8 +544,8 @@ function DashboardPreview({ activeTab, compact = false }) {
       style={{
         backgroundColor: 'var(--bg-ivory)',
         borderColor: 'var(--border)',
-        /* Auto height: stretches to match tabs column via items-stretch */
-        height: 'auto',
+        /* Fixed height: matches tallest dashboard content */
+        height: compact ? 'auto' : '620px',
         width: '100%',
       }}
     >

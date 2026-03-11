@@ -131,7 +131,7 @@ export default function Hero() {
               className="pt-2 hidden lg:block"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 4 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 1.2 }}
             >
               <motion.a
                 href="#bewerbung"
@@ -157,14 +157,6 @@ export default function Hero() {
                     background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)',
                   }}
                 />
-                <motion.div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
-                  }}
-                  animate={{ x: ['100%', '-100%'] }}
-                  transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
-                />
                 <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
               </motion.a>
             </motion.div>
@@ -174,7 +166,7 @@ export default function Hero() {
               className="hidden lg:block"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 4.3 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 1.5 }}
               style={{
                 color: 'var(--text-muted)',
                 fontSize: '13px',
@@ -202,7 +194,7 @@ export default function Hero() {
             className="order-3 lg:hidden text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 4 }}
+            transition={{ duration: 0.7, delay: 1.2 }}
           >
             <motion.a
               href="#bewerbung"
@@ -223,14 +215,6 @@ export default function Hero() {
                 style={{
                   background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)',
                 }}
-              />
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
-                }}
-                animate={{ x: ['100%', '-100%'] }}
-                transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
               />
               <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </motion.a>
