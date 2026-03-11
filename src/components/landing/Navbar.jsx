@@ -37,7 +37,7 @@ export default function Navbar() {
         >
           {/* Wide pill-shaped container */}
           <motion.nav
-            className="flex items-center justify-between w-full max-w-5xl mt-4 px-6 sm:px-8 py-3"
+            className="flex items-center justify-between w-full max-w-5xl mt-4 px-4 sm:px-8 py-3"
             style={{
               borderRadius: '100px',
               backdropFilter: 'blur(20px)',
@@ -87,17 +87,15 @@ export default function Navbar() {
               </span>
             </motion.a>
 
-            {/* Center: Urgency Indicator */}
-            <div className="flex items-center gap-2">
+            {/* Center: Urgency Indicator (hidden on mobile) */}
+            <div className="hidden sm:flex items-center gap-2">
               <motion.div
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ backgroundColor: '#10b981' }}
                 animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              {/* Desktop: single line */}
               <span
-                className="hidden sm:inline"
                 style={{
                   color: 'var(--text-secondary)',
                   fontSize: '13px',
@@ -105,19 +103,6 @@ export default function Navbar() {
                 }}
               >
                 Nur noch 100 Bonusplätze
-              </span>
-              {/* Mobile: two lines */}
-              <span
-                className="sm:hidden text-center leading-tight"
-                style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: '11px',
-                  fontWeight: '500',
-                }}
-              >
-                Nur noch 100
-                <br />
-                Bonusplätze
               </span>
             </div>
 

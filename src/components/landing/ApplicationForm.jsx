@@ -6,6 +6,8 @@ import { CheckCircle } from 'lucide-react';
 
 const ApplicationForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     vorname: '',
     nachname: '',
@@ -26,13 +28,30 @@ const ApplicationForm = () => {
       ...prev,
       [name]: value,
     }));
+    if (error) setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Demo mode: show success without actually submitting
-    setSubmitted(true);
-    setTimeout(() => {
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      setSubmitted(true);
       setFormData({
         vorname: '',
         nachname: '',
@@ -46,8 +65,11 @@ const ApplicationForm = () => {
         erfahrung: 'none',
         herausforderung: '',
       });
-      setSubmitted(false);
-    }, 3000);
+    } catch (err) {
+      setError('Verbindungsfehler. Bitte überprüfe deine Internetverbindung und versuche es erneut.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -279,12 +301,20 @@ const ApplicationForm = () => {
                 />
               </div>
 
+              {/* Error Message */}
+              {error && (
+                <div className="mb-4 p-4 rounded-[var(--radius-sm)] bg-red-50 border border-red-200 text-red-700 text-sm">
+                  {error}
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-4 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] hover:from-[var(--accent-hover)] hover:to-[var(--cocoa)] text-white font-bold rounded-[var(--radius-md)] transition-all duration-200 transform hover:scale-105 active:scale-95"
+                disabled={isSubmitting}
+                className="w-full py-4 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] hover:from-[var(--accent-hover)] hover:to-[var(--cocoa)] text-white font-bold rounded-[var(--radius-md)] transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
               >
-                Bewerbung absenden
+                {isSubmitting ? 'Wird gesendet...' : 'Bewerbung absenden'}
               </button>
 
               <p className="text-xs text-[var(--text-muted)] text-center mt-6">

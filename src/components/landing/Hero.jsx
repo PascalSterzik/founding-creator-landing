@@ -28,7 +28,7 @@ export default function Hero() {
 
   return (
     <div
-      className="relative min-h-screen pt-24 pb-12 overflow-hidden"
+      className="relative min-h-screen pt-32 md:pt-40 pb-8 md:pb-12 overflow-hidden"
       style={{
         background: `
           radial-gradient(ellipse 800px 600px at 20% 50%, rgba(201, 140, 131, 0.15) 0%, transparent 70%),

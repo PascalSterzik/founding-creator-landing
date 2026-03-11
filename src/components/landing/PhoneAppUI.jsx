@@ -114,9 +114,9 @@ const TabBar = ({ activeTab, onTabChange }) => {
 };
 
 const OverviewTab = () => (
-  <div className="space-y-5 pb-6">
+  <div className="space-y-4 pb-4">
     {/* Premium Stats Cards */}
-    <div className="grid grid-cols-3 gap-2.5 px-4 pt-4">
+    <div className="grid grid-cols-3 gap-2 px-3 pt-3">
       {[
         { label: 'Umsatz', value: '€2.650', accent: '#10b981' },
         { label: 'Aktiv', value: '5 Deals', accent: '#f59e0b' },
@@ -127,26 +127,25 @@ const OverviewTab = () => (
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.05 }}
-          className="p-2.5 rounded-xl relative overflow-hidden group cursor-pointer transition-transform hover:scale-102"
+          className="p-2 rounded-lg relative overflow-hidden"
           style={{
             background: `linear-gradient(135deg, var(--bg-ivory) 0%, rgba(var(--accent-rgb), 0.05) 100%)`,
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            borderLeft: `3px solid ${stat.accent}`,
+            boxShadow: '0 1px 4px rgba(0, 0, 0, 0.06)',
+            borderLeft: `2px solid ${stat.accent}`,
           }}
         >
-          <div style={{ color: 'var(--text-muted)', fontSize: '9px', fontWeight: '600', letterSpacing: '0.3px', textTransform: 'uppercase' }}>
+          <div style={{ color: 'var(--text-muted)', fontSize: '8px', fontWeight: '600', letterSpacing: '0.3px', textTransform: 'uppercase' }}>
             {stat.label}
           </div>
-          <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700', marginTop: '4px', letterSpacing: '-0.3px' }}>
+          <div style={{ color: 'var(--cocoa)', fontSize: '13px', fontWeight: '700', marginTop: '2px', letterSpacing: '-0.3px' }}>
             {stat.value}
           </div>
-          <div className="absolute top-1 right-2 w-1 h-1 rounded-full" style={{ backgroundColor: stat.accent, opacity: 0.3 }}></div>
         </motion.div>
       ))}
     </div>
 
     {/* Deal Cards */}
-    <div className="space-y-3 px-4">
+    <div className="space-y-2 px-3">
       {[
         {
           name: 'Hautpflege-Kampagne',
@@ -155,7 +154,7 @@ const OverviewTab = () => (
           status: 'Matched',
           color: '#10b981',
           initials: 'BC',
-          image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=80&h=80&fit=crop&crop=center',
+          image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=80&h=80&fit=crop&crop=center',
         },
         {
           name: 'Sommer-Kollektion',
@@ -173,7 +172,7 @@ const OverviewTab = () => (
           status: 'Neu',
           color: '#ec4899',
           initials: 'SF',
-          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=80&h=80&fit=crop&crop=center',
+          image: 'https://images.unsplash.com/photo-1594498653385-d5172c532c00?w=80&h=80&fit=crop&crop=center',
         },
       ].map((deal, idx) => (
         <motion.div
@@ -181,49 +180,41 @@ const OverviewTab = () => (
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 + idx * 0.05 }}
-          className="p-4 rounded-2xl border group hover:shadow-lg transition-all duration-200 cursor-pointer"
+          className="p-3 rounded-xl border cursor-pointer"
           style={{
             borderColor: 'var(--border)',
             backgroundColor: 'white',
-            borderLeft: `4px solid ${deal.color}`,
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+            borderLeft: `3px solid ${deal.color}`,
+            boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)',
           }}
         >
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex items-start gap-3 flex-1">
-              {deal.image ? (
-                <img
-                  src={deal.image}
-                  alt={deal.name}
-                  className="w-8 h-8 rounded-full object-cover flex-shrink-0 mt-0.5"
-                  style={{ border: `2px solid ${deal.color}30` }}
-                />
-              ) : (
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5"
-                  style={{ backgroundColor: `${deal.color}18`, color: deal.color }}
-                >
-                  {deal.initials}
-                </div>
-              )}
-              <div className="flex-1">
-                <div style={{ color: 'var(--cocoa)', fontSize: '13px', fontWeight: '600', letterSpacing: '-0.2px' }}>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <img
+                src={deal.image}
+                alt={deal.name}
+                className="w-7 h-7 rounded-full object-cover flex-shrink-0"
+                style={{ border: `2px solid ${deal.color}30` }}
+              />
+              <div className="flex-1 min-w-0">
+                <div style={{ color: 'var(--cocoa)', fontSize: '12px', fontWeight: '600', letterSpacing: '-0.2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {deal.name}
                 </div>
-                <div style={{ color: 'var(--text-secondary)', fontSize: '11px', marginTop: '3px' }}>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '10px', marginTop: '1px' }}>
                   {deal.brand}
                 </div>
               </div>
             </div>
-            <div className="text-right">
-              <div style={{ color: 'var(--cocoa)', fontSize: '14px', fontWeight: '700', letterSpacing: '-0.2px' }}>
+            <div className="text-right flex-shrink-0">
+              <div style={{ color: 'var(--cocoa)', fontSize: '12px', fontWeight: '700', letterSpacing: '-0.2px' }}>
                 {deal.amount}
               </div>
               <div
-                className="text-10px font-semibold px-2.5 py-1 rounded-full inline-block mt-2 transition-colors"
+                className="font-semibold px-2 py-0.5 rounded-full inline-block mt-1"
                 style={{
                   backgroundColor: `${deal.color}15`,
                   color: deal.color,
+                  fontSize: '9px',
                   fontWeight: '600',
                 }}
               >
