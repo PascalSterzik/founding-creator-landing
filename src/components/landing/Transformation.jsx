@@ -70,10 +70,10 @@ const Transformation = () => {
                 }}
               >
                 <Image
-                  src="/images/creator-chaos-desk.jpg"
-                  alt="Creator am chaotischen Schreibtisch, gestresst"
-                  width={600}
-                  height={400}
+                  src="/images/transformation-before.png"
+                  alt="Creator gestresst am chaotischen Schreibtisch, Hände an den Schläfen"
+                  width={1216}
+                  height={832}
                   className="w-full h-auto object-cover"
                   style={{ aspectRatio: '3/2' }}
                 />
@@ -161,10 +161,10 @@ const Transformation = () => {
                 }}
               >
                 <Image
-                  src="/images/creator-confident-setup.jpg"
-                  alt="Creator selbstbewusst am professionellen Setup"
-                  width={600}
-                  height={400}
+                  src="/images/transformation-after.png"
+                  alt="Creator lächelnd am aufgeräumten Schreibtisch, entspannt und professionell"
+                  width={1216}
+                  height={832}
                   className="w-full h-auto object-cover"
                   style={{ aspectRatio: '3/2' }}
                 />
