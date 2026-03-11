@@ -1,0 +1,15 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gymshark-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+    <clipPath id="gymshark-clip">
+      <circle cx="40" cy="40" r="38"/>
+    </clipPath>
+  </defs>
+  <circle cx="40" cy="40" r="38" fill="url(#gymshark-grad)"/>
+  <g clip-path="url(#gymshark-clip)" fill="#ffffff" opacity="0.9">
+    <polygon points="40,18 55,50 40,42 25,50"/>
+  </g>
+</svg>

@@ -111,7 +111,7 @@ function NotificationCard({ children, visible, style: posStyle = {} }) {
   );
 }
 
-/* ─── Animated Revenue Chart (line draws + number counts up) ─── */
+/* ─── Animated Revenue Chart (line draws + number counts up, PERFECTLY SYNCED) ─── */
 function AnimatedRevenueCard({ visible, style: posStyle = {}, className: extraClass = '' }) {
   const [animProgress, setAnimProgress] = useState(0);
 
@@ -120,7 +120,6 @@ function AnimatedRevenueCard({ visible, style: posStyle = {}, className: extraCl
       setAnimProgress(0);
       return;
     }
-    // Animate from 0 to 1 over ~2 seconds with easing
     let start = null;
     let raf;
     const duration = 2000;
@@ -144,30 +143,37 @@ function AnimatedRevenueCard({ visible, style: posStyle = {}, className: extraCl
   const chartW = 280;
   const chartH = 80;
 
-  // How many points to show based on animation progress
-  const visibleCount = Math.max(1, Math.ceil(animProgress * dataPoints.length));
-  const currentValue = Math.round(dataPoints[visibleCount - 1] * (visibleCount === dataPoints.length ? animProgress / (visibleCount / dataPoints.length) : 1));
-  const displayValue = Math.round(2650 * animProgress);
+  // SYNCED: Use continuousIndex so line position and number match exactly
+  const continuousIndex = animProgress * (dataPoints.length - 1); // 0 to 6
+  const baseIndex = Math.floor(continuousIndex);
+  const frac = continuousIndex - baseIndex;
 
-  // Build path only for visible points
-  const points = dataPoints.slice(0, visibleCount).map((v, i) => {
-    const x = (i / (dataPoints.length - 1)) * chartW;
-    const y = chartH - (v / maxVal) * chartH;
-    return { x, y };
-  });
+  // Display value: interpolate between current and next data point
+  let displayValue;
+  if (baseIndex >= dataPoints.length - 1) {
+    displayValue = dataPoints[dataPoints.length - 1];
+  } else {
+    displayValue = Math.round(
+      dataPoints[baseIndex] + (dataPoints[baseIndex + 1] - dataPoints[baseIndex]) * frac
+    );
+  }
 
-  // If partially through last segment, interpolate
-  const fractional = (animProgress * dataPoints.length) - Math.floor(animProgress * dataPoints.length);
-  if (visibleCount < dataPoints.length && fractional > 0) {
-    const nextIdx = visibleCount;
-    const prevIdx = visibleCount - 1;
-    const prevX = (prevIdx / (dataPoints.length - 1)) * chartW;
-    const prevY = chartH - (dataPoints[prevIdx] / maxVal) * chartH;
-    const nextX = (nextIdx / (dataPoints.length - 1)) * chartW;
-    const nextY = chartH - (dataPoints[nextIdx] / maxVal) * chartH;
+  // Build path up to the current continuous position
+  const points = [];
+  for (let i = 0; i <= Math.min(baseIndex, dataPoints.length - 1); i++) {
     points.push({
-      x: prevX + (nextX - prevX) * fractional,
-      y: prevY + (nextY - prevY) * fractional,
+      x: (i / (dataPoints.length - 1)) * chartW,
+      y: chartH - (dataPoints[i] / maxVal) * chartH,
+    });
+  }
+  // Add interpolated endpoint
+  if (baseIndex < dataPoints.length - 1) {
+    const curVal = dataPoints[baseIndex];
+    const nextVal = dataPoints[baseIndex + 1];
+    const interpVal = curVal + (nextVal - curVal) * frac;
+    points.push({
+      x: ((baseIndex + frac) / (dataPoints.length - 1)) * chartW,
+      y: chartH - (interpVal / maxVal) * chartH,
     });
   }
 
@@ -211,7 +217,7 @@ function AnimatedRevenueCard({ visible, style: posStyle = {}, className: extraCl
         </div>
         <div
           className="px-2.5 py-1 rounded-full text-xs font-bold"
-          style={{ backgroundColor: '#10b98118', color: '#10b981', opacity: animProgress > 0.8 ? 1 : 0, transition: 'opacity 0.3s' }}
+          style={{ backgroundColor: '#10b98118', color: '#10b981', opacity: animProgress > 0.9 ? 1 : 0, transition: 'opacity 0.3s' }}
         >
           +34% ↑
         </div>
@@ -306,11 +312,11 @@ export default function SolutionBridge() {
     <section
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '280vh' }}
+      style={{ minHeight: '210vh' }}
     >
-      {/* ─── Header text: scrolls normally ─── */}
+      {/* ─── Header text: scrolls normally, NOT sticky ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
-        <div className="text-center mb-8">
+        <div className="text-center mb-2">
           <FadeIn>
             <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 uppercase">
               Die Lösung
@@ -335,15 +341,15 @@ export default function SolutionBridge() {
           </FadeIn>
 
           <FadeIn delay={0.2}>
-            <h3 className="text-lg lg:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto font-light mb-8">
+            <h3 className="text-lg lg:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto font-light">
               Eine Plattform, die das macht, was bisher nur Agenturen konnten: dich mit den richtigen Brands zusammenbringen.
             </h3>
           </FadeIn>
         </div>
       </div>
 
-      {/* ─── Sticky phone + notifications ─── */}
-      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-24 md:pt-20">
+      {/* ─── Sticky phone + notifications: CLOSER to text, shorter sticky ─── */}
+      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-6 md:pt-2">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
@@ -364,7 +370,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 2: "+€850" - right side, UNCHANGED */}
+            {/* Notification 2: "+€850" - right side */}
             <div className="lg:hidden absolute z-10" style={{ right: '-4%', top: '18%' }}>
               <NotificationCard visible={visibleNotifs >= 2}>
                 <div className="text-center" style={{ minWidth: '60px' }}>
@@ -374,7 +380,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 3: Stars - positioned just above revenue (moved from 42% to 55%) */}
+            {/* Notification 3: Stars - just above revenue */}
             <div className="lg:hidden absolute z-10" style={{ left: '-2%', top: '55%' }}>
               <NotificationCard visible={visibleNotifs >= 3}>
                 <div className="flex items-center gap-2">
@@ -384,7 +390,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 4: Messages - moved down to 62% */}
+            {/* Notification 4: Messages */}
             <div className="lg:hidden absolute z-10" style={{ right: '-2%', top: '62%' }}>
               <NotificationCard visible={visibleNotifs >= 4}>
                 <div className="flex items-center gap-2">
@@ -396,7 +402,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 5: Animated Revenue - mobile (raised from -8% to -3%) */}
+            {/* Notification 5: Animated Revenue - mobile */}
             <div className="lg:hidden absolute z-10" style={{ left: '50%', bottom: '-3%', transform: 'translateX(-50%)', width: '85%', maxWidth: '300px' }}>
               <AnimatedRevenueCard
                 visible={visibleNotifs >= 5}
@@ -466,7 +472,7 @@ export default function SolutionBridge() {
               </NotificationCard>
             </div>
 
-            {/* Notification 5: ANIMATED Revenue Chart - BOTTOM CENTER (over phone) on desktop */}
+            {/* Notification 5: ANIMATED Revenue Chart - BOTTOM CENTER on desktop */}
             <div className="hidden lg:block absolute z-20" style={{ left: '50%', bottom: '-5%', transform: 'translateX(-50%)', width: '340px' }}>
               <AnimatedRevenueCard
                 visible={visibleNotifs >= 5}
@@ -516,8 +522,8 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* Large bottom spacer for much more distance to next section */}
-      <div style={{ height: '25vh' }} />
+      {/* Minimal bottom spacer - just enough transition space */}
+      <div style={{ height: '5vh' }} />
     </section>
   );
 }

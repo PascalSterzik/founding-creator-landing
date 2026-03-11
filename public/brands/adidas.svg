@@ -1,0 +1,17 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="adidas-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </radialGradient>
+    <clipPath id="adidas-clip">
+      <circle cx="40" cy="40" r="38"/>
+    </clipPath>
+  </defs>
+  <circle cx="40" cy="40" r="38" fill="url(#adidas-grad)"/>
+  <g clip-path="url(#adidas-clip)" fill="#ffffff" opacity="0.9">
+    <rect x="24" y="32" width="5" height="16" transform="rotate(-25 26.5 40)"/>
+    <rect x="37" y="28" width="5" height="24"/>
+    <rect x="50" y="32" width="5" height="16" transform="rotate(25 52.5 40)"/>
+  </g>
+</svg>

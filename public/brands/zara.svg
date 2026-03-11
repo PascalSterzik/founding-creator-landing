@@ -1,0 +1,16 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="zara-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4c1d95;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <clipPath id="zara-clip">
+      <circle cx="40" cy="40" r="38"/>
+    </clipPath>
+  </defs>
+  <circle cx="40" cy="40" r="38" fill="url(#zara-grad)"/>
+  <g clip-path="url(#zara-clip)" fill="#ffffff" opacity="0.9">
+    <polygon points="35,22 50,22 42,55 27,55"/>
+    <polygon points="48,55 55,55 45,28 38,28"/>
+  </g>
+</svg>

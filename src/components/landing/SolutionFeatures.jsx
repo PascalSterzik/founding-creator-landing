@@ -3,7 +3,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
-import { Search, Handshake, LayoutDashboard, BarChart3 } from 'lucide-react';
+import {
+  Search, Handshake, LayoutDashboard, BarChart3,
+  ClipboardList, Upload, CircleDollarSign, PenLine,
+} from 'lucide-react';
 
 const FEATURES = [
   {
@@ -36,43 +39,34 @@ const FEATURES = [
   },
 ];
 
-/* ─── Shared: fixed-height dashboard container ─── */
-const DESKTOP_HEIGHT = 'min-h-[480px] max-h-[520px]';
-const COMPACT_MAX = ''; // mobile: auto height
-
 /* ─────────────────────────────────────────────────
-   Brand Logo Component (SVG letter mark)
+   Brand Image Component — real SVG brand avatars
+   Each brand gets its own unique image from /public/brands/
    ───────────────────────────────────────────────── */
-function BrandLogo({ letter, bgColor, size = 40 }) {
+function BrandImage({ src, alt, size = 40 }) {
   return (
-    <div
-      className="rounded-xl flex items-center justify-center flex-shrink-0"
+    <img
+      src={src}
+      alt={alt}
+      className="rounded-xl flex-shrink-0 object-cover"
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        backgroundColor: bgColor,
-        color: 'white',
-        fontWeight: '800',
-        fontSize: `${size * 0.4}px`,
-        letterSpacing: '-0.5px',
-        fontFamily: "'DM Sans', sans-serif",
       }}
-    >
-      {letter}
-    </div>
+    />
   );
 }
 
 /* ─────────────────────────────────────────────────
    TAB 0: DEALS ENTDECKEN
-   Search bar + filters + deal listing cards with IMAGES
+   Search bar + filters + deal listing cards with category icons
    ───────────────────────────────────────────────── */
 function DealsDiscoveryDashboard({ compact }) {
   const deals = [
-    { brand: 'GlowSkin Co.', category: 'Beauty', amount: '€1.200', match: 95, type: 'Instagram Reel', deadline: '3 Tage', logo: 'G', logoColor: '#ec4899' },
-    { brand: 'FitLife Pro', category: 'Fitness', amount: '€850', match: 88, type: 'TikTok + Story', deadline: '5 Tage', logo: 'F', logoColor: '#10b981' },
-    { brand: 'Urban Style', category: 'Fashion', amount: '€2.100', match: 82, type: 'YouTube Review', deadline: '7 Tage', logo: 'U', logoColor: '#8b5cf6' },
-    { brand: 'TechWave', category: 'Tech', amount: '€650', match: 76, type: 'Instagram Post', deadline: '4 Tage', logo: 'T', logoColor: '#3b82f6' },
+    { brand: 'GlowSkin Co.', category: 'Beauty', amount: '€1.200', match: 95, type: 'Instagram Reel', deadline: '3 Tage', image: '/brands/glowskin.svg', catColor: '#ec4899' },
+    { brand: 'FitLife Pro', category: 'Fitness', amount: '€850', match: 88, type: 'TikTok + Story', deadline: '5 Tage', image: '/brands/fitlife.svg', catColor: '#10b981' },
+    { brand: 'Urban Style', category: 'Fashion', amount: '€2.100', match: 82, type: 'YouTube Review', deadline: '7 Tage', image: '/brands/urbanstyle.svg', catColor: '#8b5cf6' },
+    { brand: 'TechWave', category: 'Tech', amount: '€650', match: 76, type: 'Instagram Post', deadline: '4 Tage', image: '/brands/techwave.svg', catColor: '#3b82f6' },
   ];
   const filters = ['Alle', 'Beauty', 'Fashion', 'Tech', 'Fitness', 'Food'];
 
@@ -113,7 +107,7 @@ function DealsDiscoveryDashboard({ compact }) {
         ))}
       </div>
 
-      {/* Deal cards with brand logos (not emojis) */}
+      {/* Deal cards with category icons */}
       <div className="space-y-3 mt-3">
         {deals.map((deal, idx) => (
           <motion.div
@@ -124,15 +118,15 @@ function DealsDiscoveryDashboard({ compact }) {
             className="flex items-center gap-4 p-4 rounded-xl bg-white border transition-all hover:shadow-md cursor-pointer"
             style={{ borderColor: 'var(--border)' }}
           >
-            {/* Brand logo mark */}
-            <BrandLogo letter={deal.logo} bgColor={deal.logoColor} size={compact ? 36 : 42} />
+            {/* Brand image */}
+            <BrandImage src={deal.image} alt={deal.brand} size={compact ? 36 : 42} />
             {/* Info */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold" style={{ color: 'var(--text)' }}>{deal.brand}</span>
                 <span
                   className="text-xs px-2 py-0.5 rounded-full font-semibold"
-                  style={{ backgroundColor: `${deal.logoColor}18`, color: deal.logoColor }}
+                  style={{ backgroundColor: `${deal.catColor}18`, color: deal.catColor }}
                 >
                   {deal.category}
                 </span>
@@ -165,23 +159,19 @@ function DealsDiscoveryDashboard({ compact }) {
 
 /* ─────────────────────────────────────────────────
    TAB 1: GEMATCHT WERDEN
-   Brand marketplace with 8 brands, more info, logos
+   Brand marketplace with 8 brands, category icons, more info
    ───────────────────────────────────────────────── */
 function BrandMarketplaceDashboard({ compact }) {
   const brands = [
-    { name: 'Nike', category: 'Sports', logo: 'N', color: '#111', match: 97, budget: '€1.500+', deals: 12 },
-    { name: 'L\'Oréal', category: 'Beauty', logo: 'L', color: '#1a1a1a', match: 94, budget: '€800+', deals: 8 },
-    { name: 'Adidas', category: 'Sports', logo: 'A', color: '#000', match: 91, budget: '€1.200+', deals: 15 },
-    { name: 'Sephora', category: 'Beauty', logo: 'S', color: '#1a1a1a', match: 89, budget: '€600+', deals: 6 },
-    { name: 'Zara', category: 'Fashion', logo: 'Z', color: '#111', match: 86, budget: '€900+', deals: 4 },
-    { name: 'Samsung', category: 'Tech', logo: 'S', color: '#1428A0', match: 83, budget: '€2.000+', deals: 10 },
-    { name: 'H&M', category: 'Fashion', logo: 'H', color: '#E50010', match: 81, budget: '€500+', deals: 7 },
-    { name: 'Gymshark', category: 'Fitness', logo: 'G', color: '#1a1a1a', match: 78, budget: '€750+', deals: 5 },
+    { name: 'Nike', category: 'Sports', image: '/brands/nike.svg', color: '#f59e0b', match: 97, budget: '€1.500+', deals: 12 },
+    { name: 'L\'Oréal', category: 'Beauty', image: '/brands/loreal.svg', color: '#ec4899', match: 94, budget: '€800+', deals: 8 },
+    { name: 'Adidas', category: 'Sports', image: '/brands/adidas.svg', color: '#f59e0b', match: 91, budget: '€1.200+', deals: 15 },
+    { name: 'Sephora', category: 'Beauty', image: '/brands/sephora.svg', color: '#ec4899', match: 89, budget: '€600+', deals: 6 },
+    { name: 'Zara', category: 'Fashion', image: '/brands/zara.svg', color: '#8b5cf6', match: 86, budget: '€900+', deals: 4 },
+    { name: 'Samsung', category: 'Tech', image: '/brands/samsung.svg', color: '#3b82f6', match: 83, budget: '€2.000+', deals: 10 },
+    { name: 'H&M', category: 'Fashion', image: '/brands/hm.svg', color: '#8b5cf6', match: 81, budget: '€500+', deals: 7 },
+    { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.svg', color: '#10b981', match: 78, budget: '€750+', deals: 5 },
   ];
-
-  const categoryColors = {
-    Sports: '#f59e0b', Beauty: '#ec4899', Fashion: '#8b5cf6', Tech: '#3b82f6', Fitness: '#10b981',
-  };
 
   return (
     <div>
@@ -206,7 +196,7 @@ function BrandMarketplaceDashboard({ compact }) {
         </div>
       </div>
 
-      {/* Brand grid - 8 brands with more detail */}
+      {/* Brand grid - 8 brands with category icons */}
       <div className={`grid ${compact ? 'grid-cols-2 gap-2' : 'grid-cols-4 gap-3'}`}>
         {brands.map((brand, idx) => (
           <motion.div
@@ -218,10 +208,10 @@ function BrandMarketplaceDashboard({ compact }) {
             style={{ borderColor: 'var(--border)' }}
           >
             <div className="flex items-center gap-2.5 mb-2">
-              <BrandLogo letter={brand.logo} bgColor={brand.color} size={compact ? 32 : 36} />
+              <BrandImage src={brand.image} alt={brand.name} size={compact ? 32 : 36} />
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-bold truncate" style={{ color: 'var(--text)' }}>{brand.name}</div>
-                <div className="text-xs" style={{ color: categoryColors[brand.category] || 'var(--text-muted)' }}>{brand.category}</div>
+                <div className="text-xs" style={{ color: brand.color }}>{brand.category}</div>
               </div>
             </div>
             {/* Match percentage */}
@@ -246,7 +236,7 @@ function BrandMarketplaceDashboard({ compact }) {
 /* ─────────────────────────────────────────────────
    TAB 2: ALLES AN EINEM ORT
    Project management / unified workspace view
-   More padding inside cards
+   Activity icons use lucide-react, NOT emojis
    ───────────────────────────────────────────────── */
 function UnifiedWorkspaceDashboard({ compact }) {
   const projects = [
@@ -256,10 +246,10 @@ function UnifiedWorkspaceDashboard({ compact }) {
   ];
 
   const activities = [
-    { text: 'Briefing von GlowSkin Co. erhalten', time: 'vor 2 Std.', icon: '📋' },
-    { text: 'Content für FitLife Pro hochgeladen', time: 'vor 5 Std.', icon: '📤' },
-    { text: 'Zahlung von Urban Style eingegangen', time: 'Gestern', icon: '💰' },
-    { text: 'Vertrag mit TechWave unterzeichnet', time: 'Gestern', icon: '✍️' },
+    { text: 'Briefing von GlowSkin Co. erhalten', time: 'vor 2 Std.', icon: ClipboardList, iconColor: 'var(--accent)' },
+    { text: 'Content für FitLife Pro hochgeladen', time: 'vor 5 Std.', icon: Upload, iconColor: '#10b981' },
+    { text: 'Zahlung von Urban Style eingegangen', time: 'Gestern', icon: CircleDollarSign, iconColor: '#f59e0b' },
+    { text: 'Vertrag mit TechWave unterzeichnet', time: 'Gestern', icon: PenLine, iconColor: '#6366f1' },
   ];
 
   return (
@@ -279,7 +269,7 @@ function UnifiedWorkspaceDashboard({ compact }) {
         ))}
       </div>
 
-      {/* Active projects - MORE PADDING */}
+      {/* Active projects */}
       <div className={`space-y-2.5 ${compact ? 'mb-3' : 'mb-4'}`}>
         {projects.map((project, idx) => (
           <motion.div
@@ -329,17 +319,22 @@ function UnifiedWorkspaceDashboard({ compact }) {
         ))}
       </div>
 
-      {/* Recent activity - MORE PADDING */}
+      {/* Recent activity - with lucide icons, NO emojis */}
       <div className={`rounded-xl bg-white border ${compact ? 'px-4 py-3' : 'px-5 py-4'}`} style={{ borderColor: 'var(--border)' }}>
         <h5 className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: 'var(--text-muted)' }}>Letzte Aktivität</h5>
         <div className="space-y-2.5">
-          {activities.map((a, idx) => (
-            <div key={idx} className="flex items-center gap-3">
-              <span className="text-sm">{a.icon}</span>
-              <span className="text-xs flex-1" style={{ color: 'var(--text-secondary)' }}>{a.text}</span>
-              <span className="text-xs flex-shrink-0" style={{ color: 'var(--text-muted)' }}>{a.time}</span>
-            </div>
-          ))}
+          {activities.map((a, idx) => {
+            const ActivityIcon = a.icon;
+            return (
+              <div key={idx} className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${a.iconColor}12` }}>
+                  <ActivityIcon size={14} style={{ color: a.iconColor }} />
+                </div>
+                <span className="text-xs flex-1" style={{ color: 'var(--text-secondary)' }}>{a.text}</span>
+                <span className="text-xs flex-shrink-0" style={{ color: 'var(--text-muted)' }}>{a.time}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -507,7 +502,8 @@ function AnalyticsDashboard({ compact }) {
 }
 
 /* ─────────────────────────────────────────────────
-   Dashboard Router with CONSISTENT HEIGHT
+   Dashboard Router with FIXED HEIGHT (matches tabs column)
+   All tabs render at identical height. Content overflows with scroll.
    ───────────────────────────────────────────────── */
 function DashboardPreview({ activeTab, compact = false }) {
   if (activeTab < 0) return null;
@@ -524,10 +520,12 @@ function DashboardPreview({ activeTab, compact = false }) {
 
   return (
     <div
-      className={`relative rounded-xl overflow-hidden border ${compact ? 'p-4' : 'p-6'}`}
+      className={`relative rounded-xl overflow-hidden border flex flex-col ${compact ? 'p-4' : 'p-6'}`}
       style={{
         backgroundColor: 'var(--bg-ivory)',
         borderColor: 'var(--border)',
+        /* Desktop: fill full height of parent (grid stretch); Mobile: auto */
+        height: compact ? 'auto' : '100%',
       }}
     >
       {/* Subtle grid background */}
@@ -542,7 +540,8 @@ function DashboardPreview({ activeTab, compact = false }) {
         </svg>
       </div>
       <div className="absolute top-0 right-0 w-48 h-48 rounded-full opacity-5 pointer-events-none" style={{ background: 'var(--accent)', filter: 'blur(60px)' }} />
-      <div className="relative z-10">
+      {/* Scrollable content area for consistent height */}
+      <div className="relative z-10 flex-1 overflow-y-auto min-h-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -561,6 +560,7 @@ function DashboardPreview({ activeTab, compact = false }) {
 
 /* ─────────────────────────────────────────────────
    Main Component
+   Desktop: grid with items-stretch so dashboard matches tabs height
    ───────────────────────────────────────────────── */
 export default function SolutionFeatures() {
   const [activeTab, setActiveTab] = useState(0);
@@ -590,11 +590,11 @@ export default function SolutionFeatures() {
           </p>
         </FadeIn>
 
-        {/* Desktop: Tabs left + Dashboard right */}
-        <div className="hidden lg:grid grid-cols-3 gap-12">
+        {/* Desktop: Tabs left + Dashboard right, SAME HEIGHT via items-stretch */}
+        <div className="hidden lg:grid grid-cols-3 gap-12 items-stretch">
           {/* Left: Feature Tabs */}
-          <FadeIn delay={0.3} className="col-span-1">
-            <div className="space-y-3">
+          <FadeIn delay={0.3} className="col-span-1" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="space-y-3 flex-1 flex flex-col">
               {FEATURES.map((feature) => {
                 const Icon = feature.icon;
                 const isActive = activeTab === feature.id;
@@ -602,7 +602,7 @@ export default function SolutionFeatures() {
                   <motion.button
                     key={feature.id}
                     onClick={() => setActiveTab(feature.id)}
-                    className="w-full text-left p-6 rounded-xl border transition-all relative group"
+                    className="w-full text-left p-6 rounded-xl border transition-all relative group flex-1"
                     style={{
                       backgroundColor: isActive ? 'white' : 'transparent',
                       borderColor: isActive ? 'var(--accent)' : 'var(--border)',
@@ -644,8 +644,8 @@ export default function SolutionFeatures() {
             </div>
           </FadeIn>
 
-          {/* Right: Dashboard Preview */}
-          <FadeIn delay={0.4} className="col-span-2">
+          {/* Right: Dashboard Preview - stretches to match tabs height */}
+          <FadeIn delay={0.4} className="col-span-2" style={{ display: 'flex' }}>
             <DashboardPreview activeTab={activeTab} />
           </FadeIn>
         </div>

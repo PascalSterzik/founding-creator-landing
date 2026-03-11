@@ -1,0 +1,15 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sephora-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f43f5e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <clipPath id="sephora-clip">
+      <circle cx="40" cy="40" r="38"/>
+    </clipPath>
+  </defs>
+  <circle cx="40" cy="40" r="38" fill="url(#sephora-grad)"/>
+  <g clip-path="url(#sephora-clip)" fill="#ffffff" opacity="0.85">
+    <path d="M 40 18 Q 50 28, 48 40 Q 50 52, 40 62 Q 30 52, 32 40 Q 30 28, 40 18 Z"/>
+  </g>
+</svg>

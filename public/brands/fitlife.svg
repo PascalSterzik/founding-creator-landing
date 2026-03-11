@@ -1,0 +1,16 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fitlife-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#34d399;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+    <clipPath id="fitlife-clip">
+      <circle cx="40" cy="40" r="38"/>
+    </clipPath>
+  </defs>
+  <circle cx="40" cy="40" r="38" fill="url(#fitlife-grad)"/>
+  <g clip-path="url(#fitlife-clip)" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round">
+    <polyline points="28,55 40,28 52,42 65,15" stroke-linejoin="round"/>
+    <polygon points="40,28 48,38 32,38" fill="#ffffff" opacity="0.6"/>
+  </g>
+</svg>
