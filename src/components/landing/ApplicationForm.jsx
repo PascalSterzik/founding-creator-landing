@@ -38,7 +38,7 @@ const ApplicationForm = () => {
     try {
       // Submit via hidden form + iframe to bypass all CORS issues.
       // A regular HTML form POST to a cross-origin target works without CORS restrictions.
-      const googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbwlylrHHRe50_xjbRcYlqRYVbMzCd-ek99egttYN8Ok2-onhNyj50rZrg3ECPU6d79R/exec';
+      const googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbzSPyOfzHfUX-tB-u72b23lxjwByUgZDvjdEIqnUdPTbbl9595n57Nahr-dQZ_3vVLt/exec';
 
       // Create hidden iframe as form target
       const iframeName = 'hidden_iframe_' + Date.now();
