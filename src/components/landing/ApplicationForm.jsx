@@ -36,30 +36,45 @@ const ApplicationForm = () => {
     setError('');
 
     try {
-      // Submit to Google Sheets via Apps Script
+      // Submit via hidden form + iframe to bypass all CORS issues.
+      // A regular HTML form POST to a cross-origin target works without CORS restrictions.
       const googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbwlylrHHRe50_xjbRcYlqRYVbMzCd-ek99egttYN8Ok2-onhNyj50rZrg3ECPU6d79R/exec';
 
-      // Use URLSearchParams (form-urlencoded) instead of JSON
-      // With mode: 'no-cors', the browser restricts Content-Type to form-urlencoded,
-      // so JSON bodies get stripped. URLSearchParams works correctly.
-      const params = new URLSearchParams();
-      Object.entries(formData).forEach(([key, value]) => {
-        params.append(key, value);
-      });
-      params.append('timestamp', new Date().toISOString());
+      // Create hidden iframe as form target
+      const iframeName = 'hidden_iframe_' + Date.now();
+      const iframe = document.createElement('iframe');
+      iframe.name = iframeName;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
 
-      await fetch(googleSheetsUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: params,
+      // Create hidden form with all fields as explicit inputs
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = googleSheetsUrl;
+      form.target = iframeName;
+      form.style.display = 'none';
+
+      // Add each field as a hidden input
+      const allFields = { ...formData, timestamp: new Date().toISOString() };
+      Object.entries(allFields).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
       });
 
-      // With no-cors mode, we can't read the response, so we assume success
-      // Redirect to thank-you page
-      window.location.href = '/danke';
+      document.body.appendChild(form);
+      form.submit();
+
+      // Clean up and redirect after a short delay to ensure submission completes
+      setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+        window.location.href = '/danke';
+      }, 1500);
     } catch (err) {
       setError('Verbindungsfehler. Bitte überprüfe deine Internetverbindung und versuche es erneut.');
-    } finally {
       setIsSubmitting(false);
     }
   };

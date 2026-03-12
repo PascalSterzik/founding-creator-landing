@@ -22,8 +22,8 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Show CTA only when user scrolls to the "Creator sein, ohne dich selbst zu verlieren" section
-    const target = document.getElementById('dream-deep-dive');
+    // Show CTA when user scrolls to the CreatorBridge solution section
+    const target = document.getElementById('solution-bridge');
     let observer;
     if (target) {
       observer = new IntersectionObserver(

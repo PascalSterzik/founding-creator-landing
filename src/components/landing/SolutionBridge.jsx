@@ -327,13 +327,13 @@ export default function SolutionBridge() {
 
       // Small notifications (1-4):
       // First time: staggered appearance from 0.42 to 0.48.
-      // After all 4 have appeared once, they show when the sticky phone is actually visible.
-      // The phone is sticky and centered, so it's visible roughly when v is between 0.20 and 0.85.
-      // Below 0.20: section just entered from bottom, phone hasn't scrolled into view yet.
-      // Above 0.85: section is leaving from top.
-      // They ONLY hide when the phone area is off-screen.
-      // This ensures the user NEVER sees them pop in off-screen.
-      const phoneVisible = v > 0.20 && v < 0.85;
+      // After all 4 have appeared once, they show when the phone is centered on screen.
+      // The phone is sticky, so it's vertically centered roughly when v is between 0.35 and 0.75.
+      // Below 0.35: phone is still entering from the bottom of the viewport.
+      // Above 0.75: section is leaving from top, phone sliding off.
+      // They ONLY hide when the phone is not centered.
+      // This ensures notifications only appear when the phone is solidly in the middle of the screen.
+      const phoneVisible = v > 0.35 && v < 0.75;
 
       if (!phoneVisible) {
         // Phone not visible: hide all (instant, duration: 0)
@@ -358,6 +358,7 @@ export default function SolutionBridge() {
 
   return (
     <section
+      id="solution-bridge"
       ref={containerRef}
       className="relative"
       style={{ minHeight: '140vh' }}
