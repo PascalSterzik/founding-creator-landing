@@ -85,6 +85,18 @@ body::after {
   50% { transform: translateY(-8px); }
 }
 
+/* Navbar progress bar: CSS-only animation that plays once and holds.
+   Uses forwards fill-mode so it never resets on React re-renders. */
+@keyframes progress-fill {
+  from { width: 0; }
+  to { width: var(--target-width, 76%); }
+}
+
+.navbar-progress-fill {
+  width: var(--target-width, 76%);
+  animation: progress-fill 4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+}
+
 /* Smooth card hover */
 .card-lift {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),

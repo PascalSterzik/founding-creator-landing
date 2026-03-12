@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSlotCount } from '@/lib/slotTracker';
 
@@ -10,7 +10,6 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
-  const progressAnimDone = useRef(false);
 
   const remaining = useSlotCount();
   const filledPercent = ((remaining / TOTAL_SLOTS) * 100);
@@ -60,8 +59,7 @@ export default function Navbar() {
     }
   };
 
-  // Progress bar component (reused in two places)
-  // Animation only plays once, then locks at final width
+  // Progress bar with pure CSS animation (immune to React re-renders)
   const ProgressBar = ({ className = '' }) => (
     <div className={`flex flex-col items-center gap-1 flex-shrink-0 ${className}`}>
       <span
@@ -86,30 +84,15 @@ export default function Navbar() {
           backgroundColor: 'rgba(201, 140, 131, 0.12)',
         }}
       >
-        {progressAnimDone.current ? (
-          <div
-            className="h-full rounded-full"
-            style={{
-              width: `${filledPercent}%`,
-              background: 'linear-gradient(90deg, var(--accent), #d4a099)',
-            }}
-          />
-        ) : (
-          <motion.div
-            className="h-full rounded-full"
-            style={{
-              background: 'linear-gradient(90deg, var(--accent), #d4a099)',
-            }}
-            initial={{ width: 0 }}
-            animate={{ width: `${filledPercent}%` }}
-            transition={{
-              duration: 5,
-              ease: [0.16, 1, 0.3, 1],
-              delay: 0.8,
-            }}
-            onAnimationComplete={() => { progressAnimDone.current = true; }}
-          />
-        )}
+        {/* CSS @keyframes animation: plays once on mount, holds final state,
+            never restarts on re-render (unlike Framer Motion initial/animate) */}
+        <div
+          className="h-full rounded-full navbar-progress-fill"
+          style={{
+            background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+            '--target-width': `${filledPercent}%`,
+          }}
+        />
       </div>
     </div>
   );
