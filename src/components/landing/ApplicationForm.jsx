@@ -54,12 +54,26 @@ const ApplicationForm = () => {
       form.target = iframeName;
       form.style.display = 'none';
 
-      // Add each field as a hidden input
+      // Map form field names to exact Google Sheets column headers
+      const fieldToSheet = {
+        vorname: 'Vorname',
+        nachname: 'Nachname',
+        email: 'E-Mail',
+        instagram: 'Instagram',
+        tiktok: 'TikTok',
+        youtube: 'YouTube',
+        hauptplattform: 'Hauptplattform',
+        reichweite: 'Reichweite',
+        nische: 'Nische',
+        erfahrung: 'Brand Deals',
+        herausforderung: 'Herausforderung',
+        timestamp: 'Zeitstempel',
+      };
       const allFields = { ...formData, timestamp: new Date().toISOString() };
       Object.entries(allFields).forEach(([key, value]) => {
         const input = document.createElement('input');
         input.type = 'hidden';
-        input.name = key;
+        input.name = fieldToSheet[key] || key;
         input.value = value;
         form.appendChild(input);
       });
