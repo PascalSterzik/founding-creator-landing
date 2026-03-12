@@ -17,7 +17,7 @@ const FinalCTA = () => {
         <FadeIn delay={0.1}>
           <p className="text-lg text-gray-200 mb-10">
             Die Plattform steht jedem offen. Aber die exklusiven Founding-Boni gibt es nur für
-            die ersten 100 Creator.
+            die ersten 50 Creator.
           </p>
         </FadeIn>
 

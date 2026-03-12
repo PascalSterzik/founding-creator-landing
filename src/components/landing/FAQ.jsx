@@ -11,7 +11,7 @@ const FAQ = () => {
     {
       question: 'Was bedeutet Founding Creator?',
       answer:
-        'Founding Creator sind die ersten Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe von maximal 100 Creators, die von Anfang an dabei sind. Es gibt 3 Tiers: Founding 10 (die ersten 10), Founding 50 (die nächsten 40) und Founding 100 (die letzten 50). Jeder Tier hat unterschiedliche Bonus-Vorteile.',
+        'Founding Creator sind die ersten 50 Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und dafür besondere Vorteile erhält: persönliches Onboarding, höchste Matching-Priorität bei Brand Deals, Einfluss auf die Produktentwicklung und einen Lifetime Founding-Creator-Badge.',
     },
     {
       question: 'Brauche ich eine große Reichweite?',
@@ -36,7 +36,7 @@ const FAQ = () => {
     {
       question: 'Ist ein Platz garantiert?',
       answer:
-        'Nein, leider nicht. Es sind begrenzt 100 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
+        'Nein, leider nicht. Es sind begrenzt 50 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
     },
     {
       question: 'Was passiert im Call?',

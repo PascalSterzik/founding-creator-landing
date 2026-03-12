@@ -426,7 +426,7 @@ const ProfileTab = () => (
 
     {/* Badges */}
     <div className="flex flex-wrap gap-2">
-      {['Founding 10', 'Beauty', 'Lifestyle', 'DACH'].map((badge, idx) => (
+      {['Founding Creator', 'Beauty', 'Lifestyle', 'DACH'].map((badge, idx) => (
         <motion.div
           key={idx}
           initial={{ opacity: 0, scale: 0.9 }}

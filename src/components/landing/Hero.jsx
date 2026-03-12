@@ -180,7 +180,7 @@ export default function Hero() {
                 letterSpacing: '0.3px',
               }}
             >
-              ✓ Nur die ersten 100 Creator erhalten exklusive Boni
+              ✓ Nur die ersten 50 Creator erhalten exklusive Boni
             </motion.p>
           </motion.div>
 
@@ -240,7 +240,7 @@ export default function Hero() {
                 letterSpacing: '0.3px',
               }}
             >
-              ✓ Nur die ersten 100 Creator erhalten exklusive Boni
+              ✓ Nur die ersten 50 Creator erhalten exklusive Boni
             </p>
           </motion.div>
         </div>

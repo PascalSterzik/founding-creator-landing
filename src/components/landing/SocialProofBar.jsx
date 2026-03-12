@@ -13,7 +13,7 @@ export default function SocialProofBar() {
       label: 'Creator Economy bis 2027',
     },
     {
-      number: '100',
+      number: '50',
       label: 'Founding-Bonusplätze',
     },
   ];

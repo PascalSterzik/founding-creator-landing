@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const TOTAL_SLOTS = 100;
-const REMAINING_SLOTS = 100; // Update this as slots fill up
+const TOTAL_SLOTS = 50;
+const REMAINING_SLOTS = 50; // Update this as slots fill up
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);

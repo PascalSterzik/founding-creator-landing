@@ -8,7 +8,7 @@ const JsonLd = () => {
         name: 'Was bedeutet Founding Creator?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Founding Creator sind die ersten Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe von maximal 100 Creators, die von Anfang an dabei sind. Es gibt 3 Tiers: Founding 10 (die ersten 10), Founding 50 (die nächsten 40) und Founding 100 (die letzten 50). Jeder Tier hat unterschiedliche Bonus-Vorteile.',
+          text: 'Founding Creator sind die ersten 50 Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und dafür besondere Vorteile erhält: persönliches Onboarding, höchste Matching-Priorität bei Brand Deals, Einfluss auf die Produktentwicklung und einen Lifetime Founding-Creator-Badge.',
         },
       },
       {
@@ -48,7 +48,7 @@ const JsonLd = () => {
         name: 'Ist ein Platz garantiert?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Nein, leider nicht. Es sind begrenzt 100 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
+          text: 'Nein, leider nicht. Es sind begrenzt 50 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
         },
       },
       {
@@ -67,7 +67,7 @@ const JsonLd = () => {
     '@type': 'WebPage',
     name: 'CreatorBridge: Founding Creator Program',
     description:
-      'Sei einer der ersten Creator in CreatorBridge. Exklusive Founding-Vorteile für nur 100 Creator.',
+      'Sei einer der ersten Creator in CreatorBridge. Exklusive Founding-Vorteile für nur 50 Creator.',
     url: 'https://creatorbridge.de',
     publisher: {
       '@type': 'Organization',

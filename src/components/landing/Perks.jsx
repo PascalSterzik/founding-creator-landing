@@ -2,67 +2,24 @@
 
 import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
-import { Check, Crown, Star, Sparkles } from 'lucide-react';
+import { Check, Crown } from 'lucide-react';
 
 export default function Perks() {
-  const tiers = [
-    {
-      name: 'Founding 10',
-      range: 'Plätze 1 bis 10',
-      subtitle: 'Exklusivste Vorteile',
-      badge: 'Noch erhältlich',
-      badgeColor: 'bg-green-50 text-green-700 border-green-200',
-      icon: Crown,
-      perks: [
-        'Persönliches 1:1 Onboarding mit dem Gründerteam',
-        'Direkter Einfluss auf die Produktentwicklung',
-        'Höchste Matching-Priorität bei Brand Deals',
-        'Priorisierte Profilprüfung',
-        'Frühester Zugang zu neuen Features',
-        'Exklusiver Founding 10 Badge',
-        'Zugang zur privaten Founding-10-Community',
-      ],
-      isHighlighted: true,
-    },
-    {
-      name: 'Founding 50',
-      range: 'Plätze 11 bis 50',
-      subtitle: 'Starke Vorteile',
-      badge: 'Verfügbar',
-      badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-      icon: Star,
-      perks: [
-        'Priorisiertes Gruppen-Onboarding',
-        'Early Access zu allen Features',
-        'Priorisierter Support',
-        'Regelmäßige Founder-Updates',
-        'Frühe Berücksichtigung bei neuen Deals',
-        'Founding 50 Badge',
-      ],
-      isHighlighted: false,
-    },
-    {
-      name: 'Founding 100',
-      range: 'Plätze 51 bis 100',
-      subtitle: 'Basis-Vorteile',
-      badge: 'Verfügbar',
-      badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-      icon: Sparkles,
-      perks: [
-        'Onboarding-Support',
-        'Early Access',
-        'Regelmäßige Updates',
-        'Feedback-Möglichkeit',
-        'Zukünftige exklusive Perks',
-        'Founding 100 Badge',
-      ],
-      isHighlighted: false,
-    },
+  const perks = [
+    'Persönliches 1:1 Onboarding mit dem Gründerteam',
+    'Direkter Einfluss auf die Produktentwicklung',
+    'Höchste Matching-Priorität bei Brand Deals',
+    'Priorisierte Profilprüfung',
+    'Frühester Zugang zu neuen Features',
+    'Exklusiver Founding Creator Badge',
+    'Zugang zur privaten Founding-Creator-Community',
+    'Priorisierter Support',
+    'Regelmäßige Founder-Updates',
   ];
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--bg-ivory)]">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <p className="text-sm font-semibold text-[var(--accent)] mb-3 tracking-wide">
@@ -73,96 +30,62 @@ export default function Perks() {
             <span className="italic text-[var(--accent)]">früh</span> dabei zu sein
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            Wir haben insgesamt 100 exklusive Founding Creator Spots reserviert. Je früher du
-            dabei bist, desto umfassender deine Vorteile.
+            Die ersten 50 Creator erhalten exklusive Vorteile, die es danach nie wieder gibt.
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {tiers.map((tier, index) => {
-            const Icon = tier.icon;
-            return (
-              <FadeIn key={tier.name} delay={index * 0.15}>
-                <div
-                  className={`relative h-full rounded-2xl overflow-hidden transition-all duration-300 ${
-                    tier.isHighlighted
-                      ? 'md:scale-105 border-2 border-[var(--gold)] bg-white shadow-xl'
-                      : 'border border-[var(--border)] bg-white shadow-md hover:shadow-lg'
-                  }`}
-                >
-                  {/* Glow effect for highlighted card */}
-                  {tier.isHighlighted && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)] to-[var(--accent)] opacity-5 pointer-events-none" />
-                  )}
+        {/* Single Card with all Perks */}
+        <FadeIn>
+          <div className="relative rounded-2xl overflow-hidden border-2 border-[var(--gold)] bg-white shadow-xl">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)] to-[var(--accent)] opacity-5 pointer-events-none" />
 
-                  {/* Top border accent */}
+            {/* Top border accent */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--gold)] to-[var(--accent)]" />
+
+            <div className="p-8 sm:p-10 relative z-10">
+              {/* Icon + Badge row */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
                   <div
-                    className={`absolute top-0 left-0 right-0 h-1 ${
-                      tier.isHighlighted
-                        ? 'bg-gradient-to-r from-[var(--gold)] to-[var(--accent)]'
-                        : 'bg-gradient-to-r from-[var(--accent)] to-transparent'
-                    }`}
-                  />
-
-                  <div className="p-8 relative z-10">
-                    {/* Icon + Badge row */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center"
-                        style={{
-                          backgroundColor: tier.isHighlighted
-                            ? 'rgba(230, 201, 168, 0.2)'
-                            : 'rgba(201, 140, 131, 0.1)',
-                        }}
-                      >
-                        <Icon
-                          size={20}
-                          style={{
-                            color: tier.isHighlighted ? 'var(--gold-dark)' : 'var(--accent)',
-                          }}
-                        />
-                      </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold border ${tier.badgeColor}`}
-                      >
-                        {tier.badge}
-                      </span>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-2xl font-bold text-[var(--text)] mb-1">
-                      {tier.name}
+                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: 'rgba(230, 201, 168, 0.2)' }}
+                  >
+                    <Crown size={24} style={{ color: 'var(--gold-dark)' }} />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-[var(--text)]">
+                      Founding Creator
                     </h3>
-                    <p className="text-sm text-[var(--text-secondary)] mb-2">
-                      {tier.range}
+                    <p className="text-sm text-[var(--text-secondary)]">
+                      Limitiert auf 50 Plätze
                     </p>
-                    <p className="text-sm font-medium text-[var(--text-muted)] mb-4">
-                      {tier.subtitle}
-                    </p>
-
-                    {/* Divider */}
-                    <div className="h-px bg-[var(--border)] my-5" />
-
-                    {/* Perks List */}
-                    <ul className="space-y-3">
-                      {tier.perks.map((perk, i) => (
-                        <li key={i} className="flex gap-3 items-start">
-                          <Check className="w-4 h-4 text-[var(--accent)] flex-shrink-0 mt-0.5" />
-                          <span className="text-sm text-[var(--text-secondary)]">{perk}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
-              </FadeIn>
-            );
-          })}
-        </div>
+                <span className="px-3 py-1 rounded-full text-xs font-semibold border bg-green-50 text-green-700 border-green-200">
+                  Noch erhältlich
+                </span>
+              </div>
 
-        {/* Single CTA for all tiers */}
-        <FadeIn delay={0.45}>
-          <div className="text-center">
+              {/* Divider */}
+              <div className="h-px bg-[var(--border)] my-5" />
+
+              {/* Perks List - two columns on larger screens */}
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {perks.map((perk, i) => (
+                  <li key={i} className="flex gap-3 items-start">
+                    <Check className="w-4 h-4 text-[var(--accent)] flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-[var(--text-secondary)]">{perk}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* CTA */}
+        <FadeIn delay={0.2}>
+          <div className="text-center mt-12">
             <p className="text-[var(--text-secondary)] mb-6">
               Alle Founding Creator Spots sind reserviert für echte Creator mit etabliertem
               Publikum im DACH-Raum.{' '}

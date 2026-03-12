@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
 
+const TOTAL_SLOTS = 50;
+const REMAINING_SLOTS = 50;
+
 const Scarcity = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
   const sectionRef = useRef(null);
@@ -38,11 +41,8 @@ const Scarcity = () => {
     return () => observer.disconnect();
   }, []);
 
-  const totalAvailable = Math.floor((animatedProgress / 100) * 100);
-
-  // Segment boundaries as % of total bar width
-  // Founding 10 = slots 1-10 = 10% | Founding 50 = slots 11-50 = 40% | Founding 100 = slots 51-100 = 50%
-  const segmentBreaks = [10, 50]; // percentage positions where dividers sit
+  const slotsShown = Math.floor((animatedProgress / 100) * REMAINING_SLOTS);
+  const filledPercent = (slotsShown / TOTAL_SLOTS) * 100;
 
   return (
     <section
@@ -56,81 +56,39 @@ const Scarcity = () => {
               Limitierte Bonus-Plätze
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Nur die ersten 100 Creator erhalten{' '}
+              Nur die ersten 50 Creator erhalten{' '}
               <span className="italic text-[var(--gold)]">exklusive Vorteile</span>
             </h2>
             <p className="text-lg text-gray-300">
-              Je früher du dabei bist, desto mehr Extras sicherst du dir.
+              Sei von Anfang an dabei und sichere dir deinen Founding Creator Status.
             </p>
           </div>
         </FadeIn>
 
-        {/* Single Progress Bar with Segment Markers */}
+        {/* Single Progress Bar */}
         <FadeIn delay={0.1}>
           <div className="mb-12">
-            {/* Segment labels above the bar */}
-            <div className="relative flex mb-3">
-              <div className="text-center" style={{ width: '10%' }}>
-                <span className="text-xs sm:text-sm font-bold text-[var(--gold)]">
-                  Founding 10
-                </span>
-                <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
-                  10 Plätze
-                </span>
-              </div>
-              <div className="text-center" style={{ width: '40%' }}>
-                <span className="text-xs sm:text-sm font-bold text-white">
-                  Founding 50
-                </span>
-                <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
-                  40 Plätze
-                </span>
-              </div>
-              <div className="text-center" style={{ width: '50%' }}>
-                <span className="text-xs sm:text-sm font-bold text-white">
-                  Founding 100
-                </span>
-                <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
-                  50 Plätze
-                </span>
-              </div>
-            </div>
-
-            {/* ONE single bar with fill + divider overlays */}
+            {/* The bar */}
             <div
               className="w-full h-5 sm:h-6 rounded-full overflow-hidden border border-[rgba(230,201,168,0.2)] relative"
               style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
             >
-              {/* Single fill gradient spanning the full width */}
               <div
                 className="h-full rounded-full transition-all duration-300 ease-out"
                 style={{
-                  width: `${Math.min(animatedProgress, 100)}%`,
-                  background: 'linear-gradient(90deg, var(--gold) 0%, #d4a099 15%, var(--accent) 55%, #b5736a 100%)',
+                  width: `${filledPercent}%`,
+                  background: 'linear-gradient(90deg, var(--gold) 0%, #d4a099 40%, var(--accent) 100%)',
                 }}
               />
-
-              {/* Segment divider lines (overlaid on top) */}
-              {segmentBreaks.map((pos, idx) => (
-                <div
-                  key={idx}
-                  className="absolute top-0 h-full"
-                  style={{
-                    left: `${pos}%`,
-                    width: '2px',
-                    backgroundColor: 'rgba(75, 50, 45, 0.7)',
-                  }}
-                />
-              ))}
             </div>
 
-            {/* Available count */}
+            {/* Labels under bar */}
             <div className="flex justify-between mt-3">
               <span className="text-xs text-gray-400">0</span>
               <span className="text-sm font-semibold text-[var(--gold)]">
-                {totalAvailable} von 100 verfügbar
+                {slotsShown} von {TOTAL_SLOTS} verfügbar
               </span>
-              <span className="text-xs text-gray-400">100</span>
+              <span className="text-xs text-gray-400">{TOTAL_SLOTS}</span>
             </div>
           </div>
         </FadeIn>
@@ -140,7 +98,7 @@ const Scarcity = () => {
           <div className="bg-gradient-to-br from-[rgba(230,201,168,0.1)] to-[rgba(201,140,131,0.1)] border border-[rgba(230,201,168,0.2)] rounded-[var(--radius-lg)] p-8 text-center">
             <div className="mb-4">
               <p className="text-6xl md:text-7xl font-bold text-[var(--gold)] mb-2">
-                {totalAvailable}
+                {slotsShown}
               </p>
               <p className="text-xl text-white font-semibold">Bonus-Plätze noch verfügbar</p>
             </div>
