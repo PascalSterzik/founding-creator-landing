@@ -1,11 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
-import { CheckCircle } from 'lucide-react';
 
 const ApplicationForm = () => {
-  const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -40,32 +39,24 @@ const ApplicationForm = () => {
       // Submit to Google Sheets via Apps Script
       const googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbwlylrHHRe50_xjbRcYlqRYVbMzCd-ek99egttYN8Ok2-onhNyj50rZrg3ECPU6d79R/exec';
 
-      const res = await fetch(googleSheetsUrl, {
+      // Use URLSearchParams (form-urlencoded) instead of JSON
+      // With mode: 'no-cors', the browser restricts Content-Type to form-urlencoded,
+      // so JSON bodies get stripped. URLSearchParams works correctly.
+      const params = new URLSearchParams();
+      Object.entries(formData).forEach(([key, value]) => {
+        params.append(key, value);
+      });
+      params.append('timestamp', new Date().toISOString());
+
+      await fetch(googleSheetsUrl, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          timestamp: new Date().toISOString(),
-        }),
+        body: params,
       });
 
       // With no-cors mode, we can't read the response, so we assume success
-      // The Apps Script will handle validation server-side
-      setSubmitted(true);
-      setFormData({
-        vorname: '',
-        nachname: '',
-        email: '',
-        instagram: '',
-        tiktok: '',
-        youtube: '',
-        hauptplattform: 'instagram',
-        reichweite: 'micro',
-        nische: '',
-        erfahrung: 'none',
-        herausforderung: '',
-      });
+      // Redirect to thank-you page
+      window.location.href = '/danke';
     } catch (err) {
       setError('Verbindungsfehler. Bitte überprüfe deine Internetverbindung und versuche es erneut.');
     } finally {
@@ -89,24 +80,7 @@ const ApplicationForm = () => {
           </div>
         </FadeIn>
 
-        {submitted ? (
-          <FadeIn>
-            <div className="bg-white rounded-[var(--radius-lg)] shadow-lg p-8 md:p-12 text-center border-2 border-[var(--accent)]">
-              <div className="mb-4"><CheckCircle size={48} style={{ color: 'var(--accent)' }} /></div>
-              <h3 className="text-2xl font-bold text-[var(--text)] mb-2">
-                Vielen Dank für deine Bewerbung!
-              </h3>
-              <p className="text-[var(--text-secondary)] mb-6">
-                Wir schauen uns deine Infos an und melden uns in Kürze mit den Details für deinen
-                30-Minuten-Call zurück.
-              </p>
-              <p className="text-sm text-[var(--text-muted)]">
-                Bist du noch hier? Schau mal in die Über-Sektion.
-              </p>
-            </div>
-          </FadeIn>
-        ) : (
-          <FadeIn>
+        <FadeIn>
             <form
               onSubmit={handleSubmit}
               className="bg-white rounded-[var(--radius-lg)] shadow-lg p-8 md:p-10 border border-[var(--border)]"
@@ -309,21 +283,34 @@ const ApplicationForm = () => {
                 </div>
               )}
 
-              {/* Submit Button */}
-              <button
+              {/* Submit Button - 3D CTA Style */}
+              <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] hover:from-[var(--accent-hover)] hover:to-[var(--cocoa)] text-white font-bold rounded-[var(--radius-md)] transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                className="relative w-full py-4 rounded-full text-white font-bold text-base overflow-hidden cursor-pointer whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
+                style={{
+                  background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                  boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  letterSpacing: '0.5px',
+                }}
+                whileHover={!isSubmitting ? {
+                  scale: 1.02,
+                  boxShadow: '0 12px 36px rgba(201, 140, 131, 0.45), 0 4px 8px rgba(201, 140, 131, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
+                } : {}}
+                whileTap={!isSubmitting ? {
+                  scale: 0.98,
+                  boxShadow: '0 2px 8px rgba(201, 140, 131, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
+                } : {}}
               >
-                {isSubmitting ? 'Wird gesendet...' : 'Bewerbung absenden'}
-              </button>
-
-              <p className="text-xs text-[var(--text-muted)] text-center mt-6">
-                Kostenlos. Unverbindlich. 30-Minuten-Call nach der Bewerbung.
-              </p>
+                <span className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)' }} />
+                <motion.div className="absolute inset-0 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)' }} animate={{ x: ['100%', '-100%'] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }} />
+                <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>
+                  {isSubmitting ? 'Wird gesendet...' : 'Bewerbung absenden'}
+                </span>
+              </motion.button>
             </form>
           </FadeIn>
-        )}
       </div>
     </section>
   );

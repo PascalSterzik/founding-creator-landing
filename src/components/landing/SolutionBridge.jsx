@@ -95,7 +95,7 @@ function NotificationCard({ children, visible, style: posStyle = {} }) {
               scale: { type: 'spring', stiffness: 350, damping: 18 },
               opacity: { duration: 0.2 },
             }
-          : { duration: 0.15 }
+          : { duration: 0 }
       }
       className="rounded-2xl backdrop-blur-md border px-4 py-3"
       style={{
@@ -196,7 +196,7 @@ function AnimatedRevenueCard({ visible, style: posStyle = {}, className: extraCl
               opacity: { duration: 0.25 },
               y: { type: 'spring', stiffness: 300, damping: 20 },
             }
-          : { duration: 0.15 }
+          : { duration: 0 }
       }
       className={`rounded-2xl backdrop-blur-md border ${extraClass}`}
       style={{
@@ -289,6 +289,7 @@ export default function SolutionBridge() {
   const [smallNotifs, setSmallNotifs] = useState(0); // 0-4 for small notification cards
   const [showRevenue, setShowRevenue] = useState(false); // revenue chart, permanent once shown
   const revenueShownRef = useRef(false);
+  const notifsEverShownRef = useRef(false); // tracks if staggered intro has completed
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
@@ -324,14 +325,30 @@ export default function SolutionBridge() {
       // Also keep it visible if it was already shown
       if (revenueShownRef.current) setShowRevenue(true);
 
-      // Small notifications (1-4): pop in at threshold, stay visible
-      // They appear staggered starting at 0.42 and remain until scrolling back above 0.42.
-      // The sticky section naturally scrolls off screen when the container ends.
-      if (v >= 0.48) setSmallNotifs(4);
-      else if (v >= 0.46) setSmallNotifs(3);
-      else if (v >= 0.44) setSmallNotifs(2);
-      else if (v >= 0.42) setSmallNotifs(1);
-      else setSmallNotifs(0);
+      // Small notifications (1-4):
+      // First time: staggered appearance from 0.42 to 0.48.
+      // After all 4 have appeared once, they ALWAYS show when the section is in viewport.
+      // They ONLY hide when the section is completely off-screen (v < 0.02 or v > 0.98).
+      // This ensures the user NEVER sees them disappear.
+      const sectionInViewport = v > 0.02 && v < 0.98;
+
+      if (!sectionInViewport) {
+        // Section completely off-screen: hide all
+        setSmallNotifs(0);
+      } else if (notifsEverShownRef.current) {
+        // Re-entry after staggered intro already played: show all 4 immediately
+        setSmallNotifs(4);
+      } else {
+        // First time staggered intro
+        if (v >= 0.48) {
+          setSmallNotifs(4);
+          notifsEverShownRef.current = true; // stagger complete
+        }
+        else if (v >= 0.46) setSmallNotifs(3);
+        else if (v >= 0.44) setSmallNotifs(2);
+        else if (v >= 0.42) setSmallNotifs(1);
+        // If v < 0.42 but section is in viewport and notifs never shown, keep at 0
+      }
     });
     return unsubscribe;
   }, [scrollYProgress]);

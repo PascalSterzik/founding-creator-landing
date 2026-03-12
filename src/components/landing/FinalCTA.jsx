@@ -38,18 +38,6 @@ const FinalCTA = () => {
           </a>
         </FadeIn>
 
-        <FadeIn delay={0.3}>
-          <a
-            href="#bewerbung"
-            className="inline-block mt-5 text-sm text-gray-300 hover:text-white transition-colors cursor-pointer no-underline"
-            style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}
-          >
-            Was passiert, wenn du wartest?
-          </a>
-          <p className="text-xs text-gray-400 mt-4">
-            Kostenlos. Unverbindlich. 30-Minuten-Call nach der Bewerbung.
-          </p>
-        </FadeIn>
       </div>
     </section>
   );
