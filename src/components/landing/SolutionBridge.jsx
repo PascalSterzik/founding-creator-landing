@@ -271,19 +271,10 @@ const StarRating = ({ rating = 4.8 }) => (
 /* ─── Main Component ─── */
 export default function SolutionBridge() {
   const containerRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-
-  // Detect mobile for disabling sticky behavior (too short scroll distance)
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
 
   /* 3D tilt animation: TRUE perspective rotation (like ContainerScroll).
      The phone rotates on the X axis from 20deg tilted back to 0deg flat.
@@ -300,9 +291,8 @@ export default function SolutionBridge() {
   const revenueShownRef = useRef(false);
   const notifsEverShownRef = useRef(false); // tracks if staggered intro has completed
 
-  // On mobile (no sticky), show everything once section is in view
+  // No sticky: show everything once section is in view
   useEffect(() => {
-    if (!isMobile) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -318,14 +308,14 @@ export default function SolutionBridge() {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
     if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
-  }, [isMobile]);
+  }, []);
 
+  // Keep scroll-based logic as backup (fires if IntersectionObserver hasn't triggered yet)
   useEffect(() => {
-    if (isMobile) return; // Skip scroll-based logic on mobile
     const unsubscribe = scrollYProgress.on('change', (v) => {
       // Phone entrance animation: only runs forward, locks once done
       if (!phoneAnimDoneRef.current) {
@@ -395,7 +385,7 @@ export default function SolutionBridge() {
       id="solution-bridge"
       ref={containerRef}
       className="relative"
-      style={{ minHeight: isMobile ? 'auto' : '140vh' }}
+      style={{ minHeight: 'auto' }}
     >
       {/* ─── Header text: scrolls normally, NOT sticky ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
@@ -432,7 +422,7 @@ export default function SolutionBridge() {
       </div>
 
       {/* ─── Phone + notifications: sticky on desktop, normal flow on mobile ─── */}
-      <div className={`${isMobile ? '' : 'sticky top-0 min-h-screen'} flex items-center justify-center overflow-visible pt-20 md:pt-2`}>
+      <div className="flex items-center justify-center overflow-visible pt-20 md:pt-2">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 

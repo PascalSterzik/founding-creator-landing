@@ -170,55 +170,60 @@ export default function Navbar() {
             {/* Desktop: Urgency Indicator (always visible, center) */}
             <ProgressBar className="hidden sm:flex" />
 
-            {/* Mobile: Show progress bar OR CTA button on the right */}
-            <div className="sm:hidden flex items-center">
+            {/* Mobile: progress bar before CTA, then button + tiny bar after CTA */}
+            <div className="sm:hidden flex flex-col items-end">
               {!showCTA ? (
                 /* Before CTA: show progress bar on mobile */
                 <ProgressBar />
               ) : (
-                /* After CTA: show button */
-                <motion.button
-                  onClick={scrollToForm}
-                  className="relative px-5 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer whitespace-nowrap"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ opacity: { duration: 0.5, ease: 'easeOut' } }}
-                  style={{
-                    background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
-                    boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                  }}
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: '0 8px 20px rgba(201, 140, 131, 0.45), 0 3px 6px rgba(201, 140, 131, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
-                  }}
-                  whileTap={{
-                    scale: 0.96,
-                    boxShadow: '0 1px 4px rgba(201, 140, 131, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
-                  }}
-                >
-                  <div
-                    className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none"
+                /* After CTA: button with compact progress bar directly underneath */
+                <div className="flex flex-col items-center">
+                  <motion.button
+                    onClick={scrollToForm}
+                    className="relative px-5 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer whitespace-nowrap"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ opacity: { duration: 0.5, ease: 'easeOut' } }}
                     style={{
-                      background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%)',
+                      background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                      boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
+                      border: '1px solid rgba(255, 255, 255, 0.12)',
                     }}
-                  />
-                  <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
-                </motion.button>
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: '0 8px 20px rgba(201, 140, 131, 0.45), 0 3px 6px rgba(201, 140, 131, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
+                    }}
+                    whileTap={{
+                      scale: 0.96,
+                      boxShadow: '0 1px 4px rgba(201, 140, 131, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
+                    }}
+                  >
+                    <div
+                      className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%)',
+                      }}
+                    />
+                    <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
+                  </motion.button>
+                  {/* Compact progress bar directly under button */}
+                  <motion.div
+                    className="flex flex-col items-center mt-1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                  >
+                    <span style={{ color: 'var(--text-muted)', fontSize: '9px', fontWeight: '600', whiteSpace: 'nowrap' }}>
+                      <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
+                      <span> / {TOTAL_SLOTS}</span> Bonusplätze
+                    </span>
+                    <div className="rounded-full overflow-hidden mt-0.5" style={{ width: '100px', height: '2px', backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
+                      <div className="h-full rounded-full" style={{ width: `${filledPercent}%`, background: 'linear-gradient(90deg, var(--accent), #d4a099)' }} />
+                    </div>
+                  </motion.div>
+                </div>
               )}
             </div>
-
-            {/* Mobile: Progress bar below the button when CTA is visible */}
-            {showCTA && (
-              <motion.div
-                className="sm:hidden w-full flex justify-center pt-1"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                <ProgressBar />
-              </motion.div>
-            )}
 
             {/* Desktop: CTA Button (right side, appears with simple opacity fade) */}
             <motion.div

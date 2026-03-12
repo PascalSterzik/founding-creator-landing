@@ -212,7 +212,7 @@ const ApplicationForm = () => {
                     value={formData.hauptplattform}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border-2 border-[var(--border)] rounded-[var(--radius-sm)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[rgba(201,140,131,0.2)] transition-colors"
-                    placeholder="z.B. Instagram, TikTok, YouTube, Twitch..."
+                    placeholder="z.B. Instagram"
                   />
                 </div>
                 <div>
@@ -228,9 +228,9 @@ const ApplicationForm = () => {
                   >
                     <option value="" disabled>Bitte wählen</option>
                     <option value="aufsteigend">Aufsteigend (bis 10K)</option>
-                    <option value="small">Small (10K - 100K)</option>
-                    <option value="medium">Medium (100K - 1M)</option>
-                    <option value="large">Large (1M+)</option>
+                    <option value="wachsend">Wachsend (10K - 100K)</option>
+                    <option value="etabliert">Etabliert (100K - 1M)</option>
+                    <option value="groß">Groß (1M+)</option>
                   </select>
                 </div>
               </div>

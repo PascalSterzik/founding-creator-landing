@@ -60,10 +60,10 @@ const Scarcity = () => {
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Nur die ersten 100 Creator erhalten{' '}
-              <span className="italic text-[var(--gold)]">Founding-Vorteile</span>
+              <span className="italic text-[var(--gold)]">exklusive Vorteile</span>
             </h2>
             <p className="text-lg text-gray-300">
-              Danach normaler Preis. Keine Gnade. Das ist der Deal.
+              Je früher du dabei bist, desto mehr Extras sicherst du dir.
             </p>
           </div>
         </FadeIn>
