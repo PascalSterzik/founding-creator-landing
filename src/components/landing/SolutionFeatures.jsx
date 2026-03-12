@@ -68,6 +68,8 @@ function DealsDiscoveryDashboard({ compact }) {
     { brand: 'Zara', category: 'Fashion', amount: '€2.100', match: 82, type: 'YouTube Review', deadline: '7 Tage', image: '/brands/zara.jpeg', catColor: '#8b5cf6' },
     { brand: 'Samsung', category: 'Tech', amount: '€1.800', match: 79, type: 'Unboxing + Review', deadline: '10 Tage', image: '/brands/samsung.jpeg', catColor: '#3b82f6' },
     { brand: 'Sephora', category: 'Beauty', amount: '€950', match: 91, type: 'Instagram Story Serie', deadline: '4 Tage', image: '/brands/sephora.jpeg', catColor: '#ec4899' },
+    { brand: 'Adidas', category: 'Sports', amount: '€1.400', match: 86, type: 'Reel + Story Takeover', deadline: '6 Tage', image: '/brands/adidas.png', catColor: '#f59e0b' },
+    { brand: 'Nike', category: 'Sports', amount: '€2.500', match: 93, type: 'YouTube Kampagne', deadline: '14 Tage', image: '/brands/nike.jpeg', catColor: '#f59e0b' },
   ];
   const filters = ['Alle', 'Beauty', 'Fashion', 'Tech', 'Fitness', 'Food'];
 
@@ -152,7 +154,7 @@ function DealsDiscoveryDashboard({ compact }) {
       </div>
 
       <div className="text-center mt-3">
-        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>21 weitere Deals verfügbar</span>
+        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>34 weitere Deals verfügbar</span>
       </div>
     </div>
   );
@@ -173,6 +175,12 @@ function BrandMarketplaceDashboard({ compact }) {
     { name: 'H&M', category: 'Fashion', image: '/brands/hm.jpeg', color: '#8b5cf6', match: 80, budget: '€600+', deals: 7, avgDeal: '€650', responseTime: '< 48h', topFormat: 'TikTok' },
     { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 92, budget: '€850+', deals: 9, avgDeal: '€900', responseTime: '< 12h', topFormat: 'Reels' },
     { name: 'H&M Home', category: 'Lifestyle', image: '/brands/hm.jpeg', color: '#6366f1', match: 77, budget: '€500+', deals: 3, avgDeal: '€550', responseTime: '< 48h', topFormat: 'Stories' },
+    { name: 'GlowSkin Co.', category: 'Beauty', image: '/brands/loreal.jpeg', color: '#ec4899', match: 88, budget: '€900+', deals: 6, avgDeal: '€850', responseTime: '< 24h', topFormat: 'Reels' },
+    { name: 'FitLife Pro', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 85, budget: '€750+', deals: 4, avgDeal: '€720', responseTime: '< 12h', topFormat: 'TikTok' },
+    { name: 'Urban Style', category: 'Fashion', image: '/brands/zara.jpeg', color: '#8b5cf6', match: 82, budget: '€1.100+', deals: 5, avgDeal: '€980', responseTime: '< 24h', topFormat: 'YouTube' },
+    { name: 'TechWave', category: 'Tech', image: '/brands/samsung.jpeg', color: '#3b82f6', match: 79, budget: '€1.400+', deals: 3, avgDeal: '€1.500', responseTime: '< 48h', topFormat: 'YouTube' },
+    { name: 'Puma', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 90, budget: '€800+', deals: 7, avgDeal: '€870', responseTime: '< 12h', topFormat: 'Reels' },
+    { name: 'Douglas', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 84, budget: '€600+', deals: 8, avgDeal: '€680', responseTime: '< 24h', topFormat: 'Stories' },
   ];
 
   return (
@@ -181,7 +189,7 @@ function BrandMarketplaceDashboard({ compact }) {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h4 className="text-sm font-bold" style={{ color: 'var(--text)' }}>Brand Marketplace</h4>
-          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>312 Brands aktiv · 18 neue diese Woche</span>
+          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>486 Brands aktiv · 24 neue diese Woche</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ backgroundColor: 'var(--accent)', color: 'white' }}>Für dich</span>

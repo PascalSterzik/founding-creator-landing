@@ -347,7 +347,7 @@ export default function SolutionBridge() {
     <section
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '180vh' }}
+      style={{ minHeight: '140vh' }}
     >
       {/* ─── Header text: scrolls normally, NOT sticky ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
@@ -384,7 +384,7 @@ export default function SolutionBridge() {
       </div>
 
       {/* ─── Sticky phone + notifications: releases after animation ─── */}
-      <div className={`${stickyDone ? 'relative' : 'sticky top-0'} min-h-screen flex items-center justify-center overflow-visible pt-20 md:pt-2`}>
+      <div className={`${stickyDone ? 'relative' : 'sticky top-0 min-h-screen'} flex items-center justify-center overflow-visible pt-20 md:pt-2`}>
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
@@ -561,8 +561,8 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* Minimal bottom spacer */}
-      <div style={{ height: '2vh' }} />
+      {/* Bottom spacer: minimal after sticky done */}
+      <div style={{ height: stickyDone ? '0' : '2vh' }} />
     </section>
   );
 }

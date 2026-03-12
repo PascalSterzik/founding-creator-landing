@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 const SUPABASE_URL = 'https://brvebfxaexxjghvwyidy.supabase.co';
 const SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJydmViZnhhZXh4amdodnd5aWR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNjc5MjcsImV4cCI6MjA4ODc0MzkyN30.PJmaphJ1QDjKTwihIjnGKQf5pTfPFGj2f5EGatzwbqs';
+const GOOGLE_SHEETS_URL =
+  'https://script.google.com/macros/s/AKfycbwlylrHHRe50_xjbRcYlqRYVbMzCd-ek99egttYN8Ok2-onhNyj50rZrg3ECPU6d79R/exec';
 
 export async function POST(request) {
   try {
@@ -74,6 +76,18 @@ export async function POST(request) {
     }
 
     const inserted = await supabaseRes.json();
+
+    // Also send to Google Sheets (fire-and-forget, don't block the response)
+    try {
+      await fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(applicationData),
+      });
+    } catch (sheetsErr) {
+      // Log but don't fail the request if Sheets integration fails
+      console.error('Google Sheets submission failed:', sheetsErr);
+    }
 
     return NextResponse.json({
       success: true,
