@@ -291,91 +291,59 @@ export default function SolutionBridge() {
   const revenueShownRef = useRef(false);
   const notifsEverShownRef = useRef(false); // tracks if staggered intro has completed
 
-  // No sticky: show everything once section is in view
+  // Staggered animation: trigger phases sequentially when section enters view
   useEffect(() => {
+    let timers = [];
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          observer.disconnect();
+
+          // Phase 1: Phone rises into view (0ms)
           phoneAnimDoneRef.current = true;
           setPhoneAnimValues({ rotateX: 0, scale: 1.05, y: 0, opacity: 1 });
-          appProgressDoneRef.current = true;
-          setAppProgress(1);
-          setShowDashboard(true);
-          revenueShownRef.current = true;
-          setShowRevenue(true);
-          notifsEverShownRef.current = true;
-          setSmallNotifs(4);
-          observer.disconnect();
+
+          // Phase 2: App opens (600ms)
+          timers.push(setTimeout(() => {
+            appProgressDoneRef.current = true;
+            setAppProgress(1);
+          }, 600));
+
+          // Phase 3: Dashboard appears (1200ms)
+          timers.push(setTimeout(() => {
+            setShowDashboard(true);
+          }, 1200));
+
+          // Phase 4: Notifications appear one by one (1800ms, 2200ms, 2600ms, 3000ms)
+          timers.push(setTimeout(() => setSmallNotifs(1), 1800));
+          timers.push(setTimeout(() => setSmallNotifs(2), 2200));
+          timers.push(setTimeout(() => setSmallNotifs(3), 2600));
+          timers.push(setTimeout(() => {
+            setSmallNotifs(4);
+            notifsEverShownRef.current = true;
+          }, 3000));
+
+          // Phase 5: Revenue chart (3400ms)
+          timers.push(setTimeout(() => {
+            revenueShownRef.current = true;
+            setShowRevenue(true);
+          }, 3400));
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.25 }
     );
     if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      timers.forEach(t => clearTimeout(t));
+    };
   }, []);
 
-  // Keep scroll-based logic as backup (fires if IntersectionObserver hasn't triggered yet)
+  // Scroll-based backup: only used if IntersectionObserver hasn't triggered yet
+  // Keeps revenue visible once shown
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (v) => {
-      // Phone entrance animation: only runs forward, locks once done
-      if (!phoneAnimDoneRef.current) {
-        const rotateX = 20 - Math.min(1, Math.max(0, (v - 0.08) / 0.22)) * 20;
-        const scale = 0.85 + Math.min(1, Math.max(0, (v - 0.08) / 0.22)) * 0.2;
-        const y = 100 - Math.min(1, Math.max(0, (v - 0.08) / 0.22)) * 100;
-        const opacity = Math.min(1, Math.max(0, (v - 0.06) / 0.10));
-        setPhoneAnimValues({ rotateX, scale, y, opacity });
-        // Lock once phone animation is complete
-        if (v >= 0.30) {
-          phoneAnimDoneRef.current = true;
-          setPhoneAnimValues({ rotateX: 0, scale: 1.05, y: 0, opacity: 1 });
-        }
-      }
-
-      // App opening: also locks once complete
-      if (!appProgressDoneRef.current) {
-        const p = Math.max(0, Math.min(1, (v - 0.24) / 0.12));
-        setAppProgress(p);
-        if (p >= 1) appProgressDoneRef.current = true;
-      }
-
-      // Dashboard appears after phone risen + app opened (locks once shown)
-      if (v > 0.40) setShowDashboard(true);
-
-      // Revenue chart: once shown, stays forever
-      if (v >= 0.50) {
-        revenueShownRef.current = true;
-        setShowRevenue(true);
-      }
-      // Also keep it visible if it was already shown
+    const unsubscribe = scrollYProgress.on('change', () => {
       if (revenueShownRef.current) setShowRevenue(true);
-
-      // Small notifications (1-4):
-      // First time: staggered appearance from 0.42 to 0.48.
-      // After all 4 have appeared once, they show when the phone is centered on screen.
-      // The phone is sticky, so it's vertically centered roughly when v is between 0.35 and 0.75.
-      // Below 0.35: phone is still entering from the bottom of the viewport.
-      // Above 0.75: section is leaving from top, phone sliding off.
-      // They ONLY hide when the phone is not centered.
-      // This ensures notifications only appear when the phone is solidly in the middle of the screen.
-      const phoneVisible = v > 0.35 && v < 0.75;
-
-      if (!phoneVisible) {
-        // Phone not visible: hide all (instant, duration: 0)
-        setSmallNotifs(0);
-      } else if (notifsEverShownRef.current) {
-        // Re-entry after staggered intro already played: show all 4 immediately
-        setSmallNotifs(4);
-      } else {
-        // First time staggered intro
-        if (v >= 0.48) {
-          setSmallNotifs(4);
-          notifsEverShownRef.current = true; // stagger complete
-        }
-        else if (v >= 0.46) setSmallNotifs(3);
-        else if (v >= 0.44) setSmallNotifs(2);
-        else if (v >= 0.42) setSmallNotifs(1);
-        // If v < 0.42 but phone visible and notifs never shown, keep at 0
-      }
     });
     return unsubscribe;
   }, [scrollYProgress]);
@@ -389,7 +357,7 @@ export default function SolutionBridge() {
     >
       {/* ─── Header text: scrolls normally, NOT sticky ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
-        <div className="text-center mb-2">
+        <div className="text-center mb-8">
           <FadeIn>
             <p className="text-sm font-semibold tracking-wide text-[var(--accent)] mb-4 uppercase">
               Die Lösung
@@ -422,7 +390,7 @@ export default function SolutionBridge() {
       </div>
 
       {/* ─── Phone + notifications: sticky on desktop, normal flow on mobile ─── */}
-      <div className="flex items-center justify-center overflow-visible pt-20 md:pt-2">
+      <div className="flex items-center justify-center overflow-visible pt-16 md:pt-16">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 

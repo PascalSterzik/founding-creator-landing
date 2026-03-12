@@ -172,15 +172,8 @@ function BrandMarketplaceDashboard({ compact }) {
     { name: 'Samsung', category: 'Tech', image: '/brands/samsung.jpeg', color: '#3b82f6', match: 83, budget: '€1.200+', deals: 6, avgDeal: '€1.800', responseTime: '< 24h', topFormat: 'YouTube', rating: 4.6, lastActive: 'vor 2 Tagen' },
     { name: 'Adidas', category: 'Sports', image: '/brands/adidas.png', color: '#f59e0b', match: 91, budget: '€1.000+', deals: 10, avgDeal: '€1.100', responseTime: '< 12h', topFormat: 'Reels', rating: 4.8, lastActive: 'Heute' },
     { name: 'Sephora', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 89, budget: '€700+', deals: 5, avgDeal: '€780', responseTime: '< 24h', topFormat: 'Stories', rating: 4.5, lastActive: 'Gestern' },
-    { name: 'H&M', category: 'Fashion', image: '/brands/hm.jpeg', color: '#8b5cf6', match: 80, budget: '€600+', deals: 7, avgDeal: '€650', responseTime: '< 48h', topFormat: 'TikTok', rating: 4.1, lastActive: 'vor 3 Tagen' },
     { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 92, budget: '€850+', deals: 9, avgDeal: '€900', responseTime: '< 12h', topFormat: 'Reels', rating: 4.7, lastActive: 'Heute' },
-    { name: 'H&M Home', category: 'Lifestyle', image: '/brands/hm.jpeg', color: '#6366f1', match: 77, budget: '€500+', deals: 3, avgDeal: '€550', responseTime: '< 48h', topFormat: 'Stories', rating: 4.2, lastActive: 'vor 3 Tagen' },
-    { name: 'GlowSkin Co.', category: 'Beauty', image: '/brands/glowskin.svg', color: '#ec4899', match: 93, budget: '€900+', deals: 7, avgDeal: '€850', responseTime: '< 12h', topFormat: 'Reels', rating: 4.9, lastActive: 'Heute' },
-    { name: 'FitLife Pro', category: 'Fitness', image: '/brands/fitlife.svg', color: '#10b981', match: 88, budget: '€750+', deals: 5, avgDeal: '€720', responseTime: '< 24h', topFormat: 'TikTok', rating: 4.6, lastActive: 'Gestern' },
-    { name: 'TechWave', category: 'Tech', image: '/brands/techwave.svg', color: '#3b82f6', match: 81, budget: '€1.500+', deals: 4, avgDeal: '€1.650', responseTime: '< 24h', topFormat: 'YouTube', rating: 4.7, lastActive: 'vor 2 Tagen' },
-    { name: 'Urban Style', category: 'Fashion', image: '/brands/urbanstyle.svg', color: '#8b5cf6', match: 85, budget: '€800+', deals: 6, avgDeal: '€780', responseTime: '< 48h', topFormat: 'Reels', rating: 4.4, lastActive: 'Heute' },
     { name: 'Puma', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 90, budget: '€800+', deals: 7, avgDeal: '€870', responseTime: '< 12h', topFormat: 'Reels', rating: 4.8, lastActive: 'Heute' },
-    { name: 'Douglas', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 84, budget: '€600+', deals: 8, avgDeal: '€680', responseTime: '< 24h', topFormat: 'Stories', rating: 4.3, lastActive: 'Gestern' },
   ];
 
   return (
@@ -362,22 +355,22 @@ function UnifiedWorkspaceDashboard({ compact }) {
         ))}
       </div>
 
-      {/* Recent activity - compact horizontal pills with label on the right */}
+      {/* Recent activity - readable pills with label on the right */}
       <div className={`rounded-xl bg-white border ${compact ? 'px-4 py-3' : 'px-5 py-4'}`} style={{ borderColor: 'var(--border)' }}>
         <div className="flex items-start gap-4">
-          {/* Activity pills - half size, compact */}
-          <div className="flex-1 flex flex-wrap gap-1.5">
+          {/* Activity pills */}
+          <div className="flex-1 flex flex-wrap gap-2">
             {activities.map((a, idx) => {
               const ActivityIcon = a.icon;
               return (
                 <div
                   key={idx}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full border"
                   style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-ivory)' }}
                 >
-                  <ActivityIcon size={10} style={{ color: a.iconColor }} />
-                  <span className="text-xs truncate" style={{ color: 'var(--text-secondary)', maxWidth: '140px', fontSize: '10px' }}>{a.text}</span>
-                  <span className="text-xs flex-shrink-0" style={{ color: 'var(--text-muted)', fontSize: '9px' }}>{a.time}</span>
+                  <ActivityIcon size={13} style={{ color: a.iconColor }} />
+                  <span className="text-xs truncate" style={{ color: 'var(--text-secondary)', maxWidth: '180px', fontSize: '11.5px' }}>{a.text}</span>
+                  <span className="text-xs flex-shrink-0" style={{ color: 'var(--text-muted)', fontSize: '10px' }}>{a.time}</span>
                 </div>
               );
             })}
@@ -447,7 +440,7 @@ function AnalyticsDashboard({ compact }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.06 }}
-            className="px-3 py-2.5 rounded-xl bg-white border"
+            className="px-3 py-4 rounded-xl bg-white border"
             style={{ borderColor: 'var(--border)' }}
           >
             <div className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>{kpi.label}</div>
@@ -462,7 +455,7 @@ function AnalyticsDashboard({ compact }) {
       {/* 2x2 grid: Revenue + Branchen on top, Deal Funnel + Side panel below */}
       <div className={`grid ${compact ? 'grid-cols-1 gap-2' : 'grid-cols-2 gap-3'}`}>
         {/* Revenue mini chart */}
-        <div className="rounded-xl bg-white border px-4 py-3" style={{ borderColor: 'var(--border)' }}>
+        <div className="rounded-xl bg-white border px-4 py-4" style={{ borderColor: 'var(--border)' }}>
           <div className="flex items-center justify-between mb-2">
             <h5 className="text-xs font-bold" style={{ color: 'var(--text)' }}>Umsatzentwicklung</h5>
             <span className="text-xs px-1.5 py-0.5 rounded font-semibold" style={{ backgroundColor: 'var(--accent)', color: 'white', fontSize: '10px' }}>7M</span>
@@ -491,7 +484,7 @@ function AnalyticsDashboard({ compact }) {
         </div>
 
         {/* Branchen Donut */}
-        <div className="rounded-xl bg-white border px-4 py-3" style={{ borderColor: 'var(--border)' }}>
+        <div className="rounded-xl bg-white border px-4 py-4" style={{ borderColor: 'var(--border)' }}>
           <h5 className="text-xs font-bold mb-2" style={{ color: 'var(--text)' }}>Branchen</h5>
           <div className="flex items-center gap-3">
             <svg viewBox="0 0 36 36" className="w-16 h-16 flex-shrink-0">
@@ -523,7 +516,7 @@ function AnalyticsDashboard({ compact }) {
         </div>
 
         {/* Deal Funnel - below metrics */}
-        <div className="rounded-xl bg-white border px-4 py-3" style={{ borderColor: 'var(--border)' }}>
+        <div className="rounded-xl bg-white border px-4 py-4" style={{ borderColor: 'var(--border)' }}>
           <h5 className="text-xs font-bold mb-2" style={{ color: 'var(--text)' }}>Deal Funnel</h5>
           <div className="space-y-2">
             {funnel.map((step, idx) => (
@@ -547,7 +540,7 @@ function AnalyticsDashboard({ compact }) {
         </div>
 
         {/* Top Deals side panel */}
-        <div className="rounded-xl bg-white border px-4 py-3" style={{ borderColor: 'var(--border)' }}>
+        <div className="rounded-xl bg-white border px-4 py-4" style={{ borderColor: 'var(--border)' }}>
           <h5 className="text-xs font-bold mb-2" style={{ color: 'var(--text)' }}>Top Deals</h5>
           <div className="space-y-2">
             {[
