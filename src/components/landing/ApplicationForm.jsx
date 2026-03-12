@@ -37,20 +37,21 @@ const ApplicationForm = () => {
     setError('');
 
     try {
-      const res = await fetch('/api/apply', {
+      // Submit to Google Sheets via Apps Script
+      const googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbwlylrHHRe50_xjbRcYlqRYVbMzCd-ek99egttYN8Ok2-onhNyj50rZrg3ECPU6d79R/exec';
+
+      const res = await fetch(googleSheetsUrl, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          timestamp: new Date().toISOString(),
+        }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.');
-        setIsSubmitting(false);
-        return;
-      }
-
+      // With no-cors mode, we can't read the response, so we assume success
+      // The Apps Script will handle validation server-side
       setSubmitted(true);
       setFormData({
         vorname: '',

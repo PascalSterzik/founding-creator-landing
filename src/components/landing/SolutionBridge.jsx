@@ -289,7 +289,6 @@ export default function SolutionBridge() {
   const [smallNotifs, setSmallNotifs] = useState(0); // 0-4 for small notification cards
   const [showRevenue, setShowRevenue] = useState(false); // revenue chart, permanent once shown
   const revenueShownRef = useRef(false);
-  const [stickyDone, setStickyDone] = useState(false);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
@@ -316,9 +315,6 @@ export default function SolutionBridge() {
 
       // Dashboard appears after phone risen + app opened (locks once shown)
       if (v > 0.40) setShowDashboard(true);
-
-      // Release sticky after animation sequence completes
-      if (v > 0.58) setStickyDone(true);
 
       // Revenue chart: once shown, stays forever
       if (v >= 0.50) {
@@ -383,8 +379,8 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* ─── Sticky phone + notifications: releases after animation ─── */}
-      <div className={`${stickyDone ? 'relative' : 'sticky top-0 min-h-screen'} flex items-center justify-center overflow-visible pt-20 md:pt-2`}>
+      {/* ─── Sticky phone + notifications ─── */}
+      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-20 md:pt-2">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 
@@ -561,8 +557,6 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* Bottom spacer: minimal after sticky done */}
-      <div style={{ height: stickyDone ? '0' : '2vh' }} />
     </section>
   );
 }
