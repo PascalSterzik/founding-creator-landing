@@ -271,10 +271,19 @@ const StarRating = ({ rating = 4.8 }) => (
 /* ─── Main Component ─── */
 export default function SolutionBridge() {
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
+
+  // Detect mobile for disabling sticky behavior (too short scroll distance)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   /* 3D tilt animation: TRUE perspective rotation (like ContainerScroll).
      The phone rotates on the X axis from 20deg tilted back to 0deg flat.
@@ -291,7 +300,32 @@ export default function SolutionBridge() {
   const revenueShownRef = useRef(false);
   const notifsEverShownRef = useRef(false); // tracks if staggered intro has completed
 
+  // On mobile (no sticky), show everything once section is in view
   useEffect(() => {
+    if (!isMobile) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          phoneAnimDoneRef.current = true;
+          setPhoneAnimValues({ rotateX: 0, scale: 1.05, y: 0, opacity: 1 });
+          appProgressDoneRef.current = true;
+          setAppProgress(1);
+          setShowDashboard(true);
+          revenueShownRef.current = true;
+          setShowRevenue(true);
+          notifsEverShownRef.current = true;
+          setSmallNotifs(4);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (isMobile) return; // Skip scroll-based logic on mobile
     const unsubscribe = scrollYProgress.on('change', (v) => {
       // Phone entrance animation: only runs forward, locks once done
       if (!phoneAnimDoneRef.current) {
@@ -361,7 +395,7 @@ export default function SolutionBridge() {
       id="solution-bridge"
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '140vh' }}
+      style={{ minHeight: isMobile ? 'auto' : '140vh' }}
     >
       {/* ─── Header text: scrolls normally, NOT sticky ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
@@ -397,8 +431,8 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* ─── Sticky phone + notifications ─── */}
-      <div className="sticky top-0 min-h-screen flex items-center justify-center overflow-visible pt-20 md:pt-2">
+      {/* ─── Phone + notifications: sticky on desktop, normal flow on mobile ─── */}
+      <div className={`${isMobile ? '' : 'sticky top-0 min-h-screen'} flex items-center justify-center overflow-visible pt-20 md:pt-2`}>
         <div className="container mx-auto px-6 lg:px-12">
           <div className="relative flex items-center justify-center" style={{ perspective: '1200px' }}>
 

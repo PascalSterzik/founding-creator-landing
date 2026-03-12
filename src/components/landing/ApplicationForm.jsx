@@ -14,8 +14,8 @@ const ApplicationForm = () => {
     instagram: '',
     tiktok: '',
     youtube: '',
-    hauptplattform: 'instagram',
-    reichweite: 'micro',
+    hauptplattform: '',
+    reichweite: '',
     nische: '',
     erfahrung: 'none',
     herausforderung: '',
@@ -85,13 +85,10 @@ const ApplicationForm = () => {
         <FadeIn>
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-[var(--text-secondary)] mb-2">Bewerbung</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text)] mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text)]">
               Bewirb dich als{' '}
               <span className="italic text-[var(--accent)]">Founding Creator</span>
             </h2>
-            <p className="text-lg text-[var(--text-secondary)]">
-              Sag uns ein wenig über dich. Der Rest klären wir im Call.
-            </p>
           </div>
         </FadeIn>
 
@@ -186,7 +183,7 @@ const ApplicationForm = () => {
               {/* YouTube */}
               <div className="mb-2">
                 <label htmlFor="youtube" className="block text-sm font-semibold text-[var(--text)] mb-2">
-                  YouTube Kanal
+                  YouTube Handle
                 </label>
                 <input
                   type="text"
@@ -195,7 +192,7 @@ const ApplicationForm = () => {
                   value={formData.youtube}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border-2 border-[var(--border)] rounded-[var(--radius-sm)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[rgba(201,140,131,0.2)] transition-colors"
-                  placeholder="Dein YouTube-Kanal"
+                  placeholder="@deinhandle"
                 />
               </div>
               <p className="text-xs text-[var(--text-muted)] mb-6">
@@ -208,18 +205,15 @@ const ApplicationForm = () => {
                   <label htmlFor="hauptplattform" className="block text-sm font-semibold text-[var(--text)] mb-2">
                     Hauptplattform
                   </label>
-                  <select
+                  <input
+                    type="text"
                     id="hauptplattform"
                     name="hauptplattform"
                     value={formData.hauptplattform}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-[var(--border)] rounded-[var(--radius-sm)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[rgba(201,140,131,0.2)] transition-colors bg-white"
-                  >
-                    <option value="instagram">Instagram</option>
-                    <option value="tiktok">TikTok</option>
-                    <option value="youtube">YouTube</option>
-                    <option value="andere">Andere</option>
-                  </select>
+                    className="w-full px-4 py-3 border-2 border-[var(--border)] rounded-[var(--radius-sm)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[rgba(201,140,131,0.2)] transition-colors"
+                    placeholder="z.B. Instagram, TikTok, YouTube, Twitch..."
+                  />
                 </div>
                 <div>
                   <label htmlFor="reichweite" className="block text-sm font-semibold text-[var(--text)] mb-2">
@@ -232,9 +226,10 @@ const ApplicationForm = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-3 border-2 border-[var(--border)] rounded-[var(--radius-sm)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[rgba(201,140,131,0.2)] transition-colors bg-white"
                   >
-                    <option value="micro">Micro (1k-10k)</option>
-                    <option value="small">Small (10k-100k)</option>
-                    <option value="medium">Medium (100k-1M)</option>
+                    <option value="" disabled>Bitte wählen</option>
+                    <option value="aufsteigend">Aufsteigend (bis 10K)</option>
+                    <option value="small">Small (10K - 100K)</option>
+                    <option value="medium">Medium (100K - 1M)</option>
                     <option value="large">Large (1M+)</option>
                   </select>
                 </div>

@@ -38,9 +38,15 @@ export default function Navbar() {
       observer.observe(target);
     }
 
+    // Fallback: show CTA after 30 seconds regardless
+    const timer = setTimeout(() => {
+      setShowCTA(true);
+    }, 30000);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       if (observer) observer.disconnect();
+      clearTimeout(timer);
     };
   }, []);
 
@@ -52,6 +58,48 @@ export default function Navbar() {
     }
   };
 
+  // Progress bar component (reused in two places)
+  const ProgressBar = ({ className = '' }) => (
+    <div className={`flex flex-col items-center gap-1 flex-shrink-0 ${className}`}>
+      <span
+        style={{
+          color: 'var(--text-secondary)',
+          fontSize: '12px',
+          fontWeight: '600',
+          letterSpacing: '0.2px',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
+        <span style={{ color: 'var(--text-muted)' }}> von </span>
+        <span>{TOTAL_SLOTS}</span>
+        {' '}Bonusplätze
+      </span>
+      <div
+        className="rounded-full overflow-hidden"
+        style={{
+          width: '140px',
+          height: '3px',
+          backgroundColor: 'rgba(201, 140, 131, 0.12)',
+        }}
+      >
+        <motion.div
+          className="h-full rounded-full"
+          style={{
+            background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+          }}
+          initial={{ width: 0 }}
+          animate={{ width: `${filledPercent}%` }}
+          transition={{
+            duration: 5,
+            ease: [0.16, 1, 0.3, 1],
+            delay: 0.8,
+          }}
+        />
+      </div>
+    </div>
+  );
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -61,9 +109,9 @@ export default function Navbar() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Nav pill: starts narrow (logo + Bonusplätze), expands when CTA appears */}
+          {/* Nav pill */}
           <motion.nav
-            className="flex items-center mt-4 px-4 sm:px-8 py-3 w-full"
+            className="flex flex-wrap items-center justify-between mt-4 px-4 sm:px-8 py-3 w-full"
             initial={{ maxWidth: '30rem' }}
             animate={{
               maxWidth: showCTA ? '64rem' : '30rem',
@@ -83,7 +131,7 @@ export default function Navbar() {
                 ? '0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04)'
                 : '0 4px 16px rgba(0, 0, 0, 0.06)',
               transition: 'background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease',
-              justifyContent: 'space-between',
+              gap: '8px',
             }}
           >
             {/* Logo (left) */}
@@ -119,71 +167,78 @@ export default function Navbar() {
               </span>
             </motion.a>
 
-            {/* Urgency Indicator with progress bar (hidden on mobile) */}
-            <div className="hidden sm:flex flex-col items-center gap-1 flex-shrink-0">
-              <span
-                style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  letterSpacing: '0.2px',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
-                <span style={{ color: 'var(--text-muted)' }}> von </span>
-                <span>{TOTAL_SLOTS}</span>
-                {' '}Bonusplätze
-              </span>
-              {/* Progress bar */}
-              <div
-                className="rounded-full overflow-hidden"
-                style={{
-                  width: '140px',
-                  height: '3px',
-                  backgroundColor: 'rgba(201, 140, 131, 0.12)',
-                }}
-              >
-                <motion.div
-                  className="h-full rounded-full"
+            {/* Desktop: Urgency Indicator (always visible, center) */}
+            <ProgressBar className="hidden sm:flex" />
+
+            {/* Mobile: Show progress bar OR CTA button on the right */}
+            <div className="sm:hidden flex items-center">
+              {!showCTA ? (
+                /* Before CTA: show progress bar on mobile */
+                <ProgressBar />
+              ) : (
+                /* After CTA: show button */
+                <motion.button
+                  onClick={scrollToForm}
+                  className="relative px-5 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer whitespace-nowrap"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ opacity: { duration: 0.5, ease: 'easeOut' } }}
                   style={{
-                    background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+                    background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                    boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
                   }}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${filledPercent}%` }}
-                  transition={{
-                    duration: 5,
-                    ease: [0.16, 1, 0.3, 1],
-                    delay: 0.8,
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: '0 8px 20px rgba(201, 140, 131, 0.45), 0 3px 6px rgba(201, 140, 131, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
                   }}
-                />
-              </div>
+                  whileTap={{
+                    scale: 0.96,
+                    boxShadow: '0 1px 4px rgba(201, 140, 131, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
+                  }}
+                >
+                  <div
+                    className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none"
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%)',
+                    }}
+                  />
+                  <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
+                </motion.button>
+              )}
             </div>
 
-            {/* CTA Button wrapper: width grows from 0, then button fades in ultra-slowly */}
+            {/* Mobile: Progress bar below the button when CTA is visible */}
+            {showCTA && (
+              <motion.div
+                className="sm:hidden w-full flex justify-center pt-1"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <ProgressBar />
+              </motion.div>
+            )}
+
+            {/* Desktop: CTA Button (right side, appears with simple opacity fade) */}
             <motion.div
-              className="flex-shrink-0"
-              initial={{ width: 0, marginLeft: 0 }}
+              className="hidden sm:flex flex-shrink-0"
+              initial={{ width: 0, marginLeft: 0, opacity: 0 }}
               animate={{
                 width: showCTA ? 160 : 0,
                 marginLeft: showCTA ? 12 : 0,
+                opacity: showCTA ? 1 : 0,
               }}
               transition={{
                 width: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
                 marginLeft: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.8, ease: 'easeOut', delay: 0.4 },
               }}
               style={{ overflow: 'visible' }}
             >
               <motion.button
                 onClick={scrollToForm}
                 className="relative px-5 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer whitespace-nowrap"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: showCTA ? 1 : 0,
-                }}
-                transition={{
-                  opacity: { duration: 1.5, ease: 'easeOut', delay: 0.6 },
-                }}
                 style={{
                   background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
                   boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
@@ -205,7 +260,6 @@ export default function Navbar() {
                     background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%)',
                   }}
                 />
-{/* No shimmer on navbar CTA */}
                 <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
               </motion.button>
             </motion.div>

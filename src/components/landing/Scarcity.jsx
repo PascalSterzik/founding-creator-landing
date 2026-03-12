@@ -38,13 +38,14 @@ const Scarcity = () => {
     return () => observer.disconnect();
   }, []);
 
-  const tiers = [
-    { label: 'Founding 10', available: 10, total: 10 },
-    { label: 'Founding 50', available: 40, total: 40 },
-    { label: 'Founding 100', available: 50, total: 50 },
-  ];
-
   const totalAvailable = Math.floor((animatedProgress / 100) * 100);
+
+  // Segment widths: 10%, 40%, 50% of total 100 slots
+  const segments = [
+    { label: 'Founding 10', slots: 10, width: '10%' },
+    { label: 'Founding 50', slots: 40, width: '40%' },
+    { label: 'Founding 100', slots: 50, width: '50%' },
+  ];
 
   return (
     <section
@@ -67,28 +68,63 @@ const Scarcity = () => {
           </div>
         </FadeIn>
 
-        {/* Tier Breakdown */}
+        {/* Single Segmented Progress Bar */}
         <FadeIn delay={0.1}>
-          <div className="space-y-6 mb-12">
-            {tiers.map((tier, idx) => {
-              const barProgress = Math.min(animatedProgress, 100);
-              return (
-                <div key={idx}>
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="text-sm font-semibold text-white">{tier.label}</label>
-                    <span className="text-sm text-gray-300">
-                      {Math.floor((barProgress / 100) * tier.available)}/{tier.total} verfügbar
-                    </span>
-                  </div>
-                  <div className="w-full h-3 bg-[rgba(255,255,255,0.1)] rounded-full overflow-hidden border border-[rgba(230,201,168,0.2)]">
-                    <div
-                      className="h-full bg-gradient-to-r from-[var(--gold)] to-[var(--accent)] transition-all duration-300 ease-out rounded-full"
-                      style={{ width: `${barProgress}%` }}
-                    />
-                  </div>
+          <div className="mb-12">
+            {/* Segment labels */}
+            <div className="flex mb-3">
+              {segments.map((seg, idx) => (
+                <div
+                  key={idx}
+                  className="text-center"
+                  style={{ width: seg.width }}
+                >
+                  <span className="text-xs sm:text-sm font-bold text-white">
+                    {seg.label}
+                  </span>
+                  <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
+                    {seg.slots} Plätze
+                  </span>
                 </div>
-              );
-            })}
+              ))}
+            </div>
+
+            {/* The bar */}
+            <div
+              className="w-full h-5 sm:h-6 bg-[rgba(255,255,255,0.08)] rounded-full overflow-hidden border border-[rgba(230,201,168,0.2)] relative flex"
+            >
+              {segments.map((seg, idx) => (
+                <div
+                  key={idx}
+                  className="h-full relative"
+                  style={{
+                    width: seg.width,
+                    borderRight: idx < segments.length - 1 ? '2px solid rgba(75, 50, 45, 0.6)' : 'none',
+                  }}
+                >
+                  <div
+                    className="h-full transition-all duration-300 ease-out"
+                    style={{
+                      width: `${Math.min(animatedProgress, 100)}%`,
+                      background: idx === 0
+                        ? 'linear-gradient(90deg, var(--gold), #d4a099)'
+                        : idx === 1
+                        ? 'linear-gradient(90deg, #d4a099, var(--accent))'
+                        : 'linear-gradient(90deg, var(--accent), #b5736a)',
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Available count */}
+            <div className="flex justify-between mt-3">
+              <span className="text-xs text-gray-400">0</span>
+              <span className="text-sm font-semibold text-[var(--gold)]">
+                {totalAvailable} von 100 verfügbar
+              </span>
+              <span className="text-xs text-gray-400">100</span>
+            </div>
           </div>
         </FadeIn>
 
