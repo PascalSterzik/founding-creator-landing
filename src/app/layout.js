@@ -8,6 +8,20 @@ export const metadata = {
     description: 'Strukturierte Brand Deals, von Creator für Creator.',
     locale: 'de_DE',
     type: 'website',
+    images: [
+      {
+        url: 'https://founding-creator-landing.vercel.app/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'CreatorBridge — Founding Creator Programm',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CreatorBridge — Founding Creator Bewerbung',
+    description: 'Strukturierte Brand Deals, von Creator für Creator.',
+    images: ['https://founding-creator-landing.vercel.app/og-image.png'],
   },
 }
 

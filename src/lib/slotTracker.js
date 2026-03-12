@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 const SUPABASE_URL = 'https://brvebfxaexxjghvwyidy.supabase.co';
 const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/slot-count`;
 
-const FALLBACK_REMAINING = 38;
+const FALLBACK_REMAINING = 50;
 const TOTAL_SLOTS = 50;
 
 // Shared state across all hook instances
