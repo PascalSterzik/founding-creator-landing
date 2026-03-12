@@ -166,21 +166,21 @@ function DealsDiscoveryDashboard({ compact }) {
    ───────────────────────────────────────────────── */
 function BrandMarketplaceDashboard({ compact }) {
   const brands = [
-    { name: 'Nike', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 97, budget: '€1.500+', deals: 12, avgDeal: '€1.250', responseTime: '< 24h', topFormat: 'Reels' },
-    { name: 'L\'Oréal', category: 'Beauty', image: '/brands/loreal.jpeg', color: '#ec4899', match: 94, budget: '€800+', deals: 8, avgDeal: '€920', responseTime: '< 12h', topFormat: 'Stories' },
-    { name: 'Zara', category: 'Fashion', image: '/brands/zara.jpeg', color: '#8b5cf6', match: 86, budget: '€900+', deals: 4, avgDeal: '€1.050', responseTime: '< 48h', topFormat: 'TikTok' },
-    { name: 'Samsung', category: 'Tech', image: '/brands/samsung.jpeg', color: '#3b82f6', match: 83, budget: '€1.200+', deals: 6, avgDeal: '€1.800', responseTime: '< 24h', topFormat: 'YouTube' },
-    { name: 'Adidas', category: 'Sports', image: '/brands/adidas.png', color: '#f59e0b', match: 91, budget: '€1.000+', deals: 10, avgDeal: '€1.100', responseTime: '< 12h', topFormat: 'Reels' },
-    { name: 'Sephora', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 89, budget: '€700+', deals: 5, avgDeal: '€780', responseTime: '< 24h', topFormat: 'Stories' },
-    { name: 'H&M', category: 'Fashion', image: '/brands/hm.jpeg', color: '#8b5cf6', match: 80, budget: '€600+', deals: 7, avgDeal: '€650', responseTime: '< 48h', topFormat: 'TikTok' },
-    { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 92, budget: '€850+', deals: 9, avgDeal: '€900', responseTime: '< 12h', topFormat: 'Reels' },
-    { name: 'H&M Home', category: 'Lifestyle', image: '/brands/hm.jpeg', color: '#6366f1', match: 77, budget: '€500+', deals: 3, avgDeal: '€550', responseTime: '< 48h', topFormat: 'Stories' },
-    { name: 'GlowSkin Co.', category: 'Beauty', image: '/brands/loreal.jpeg', color: '#ec4899', match: 88, budget: '€900+', deals: 6, avgDeal: '€850', responseTime: '< 24h', topFormat: 'Reels' },
-    { name: 'FitLife Pro', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 85, budget: '€750+', deals: 4, avgDeal: '€720', responseTime: '< 12h', topFormat: 'TikTok' },
-    { name: 'Urban Style', category: 'Fashion', image: '/brands/zara.jpeg', color: '#8b5cf6', match: 82, budget: '€1.100+', deals: 5, avgDeal: '€980', responseTime: '< 24h', topFormat: 'YouTube' },
-    { name: 'TechWave', category: 'Tech', image: '/brands/samsung.jpeg', color: '#3b82f6', match: 79, budget: '€1.400+', deals: 3, avgDeal: '€1.500', responseTime: '< 48h', topFormat: 'YouTube' },
-    { name: 'Puma', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 90, budget: '€800+', deals: 7, avgDeal: '€870', responseTime: '< 12h', topFormat: 'Reels' },
-    { name: 'Douglas', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 84, budget: '€600+', deals: 8, avgDeal: '€680', responseTime: '< 24h', topFormat: 'Stories' },
+    { name: 'Nike', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 97, budget: '€1.500+', deals: 12, avgDeal: '€1.250', responseTime: '< 24h', topFormat: 'Reels', rating: 4.9, lastActive: 'Heute' },
+    { name: 'L\'Oréal', category: 'Beauty', image: '/brands/loreal.jpeg', color: '#ec4899', match: 94, budget: '€800+', deals: 8, avgDeal: '€920', responseTime: '< 12h', topFormat: 'Stories', rating: 4.7, lastActive: 'Heute' },
+    { name: 'Zara', category: 'Fashion', image: '/brands/zara.jpeg', color: '#8b5cf6', match: 86, budget: '€900+', deals: 4, avgDeal: '€1.050', responseTime: '< 48h', topFormat: 'TikTok', rating: 4.3, lastActive: 'Gestern' },
+    { name: 'Samsung', category: 'Tech', image: '/brands/samsung.jpeg', color: '#3b82f6', match: 83, budget: '€1.200+', deals: 6, avgDeal: '€1.800', responseTime: '< 24h', topFormat: 'YouTube', rating: 4.6, lastActive: 'vor 2 Tagen' },
+    { name: 'Adidas', category: 'Sports', image: '/brands/adidas.png', color: '#f59e0b', match: 91, budget: '€1.000+', deals: 10, avgDeal: '€1.100', responseTime: '< 12h', topFormat: 'Reels', rating: 4.8, lastActive: 'Heute' },
+    { name: 'Sephora', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 89, budget: '€700+', deals: 5, avgDeal: '€780', responseTime: '< 24h', topFormat: 'Stories', rating: 4.5, lastActive: 'Gestern' },
+    { name: 'H&M', category: 'Fashion', image: '/brands/hm.jpeg', color: '#8b5cf6', match: 80, budget: '€600+', deals: 7, avgDeal: '€650', responseTime: '< 48h', topFormat: 'TikTok', rating: 4.1, lastActive: 'vor 3 Tagen' },
+    { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 92, budget: '€850+', deals: 9, avgDeal: '€900', responseTime: '< 12h', topFormat: 'Reels', rating: 4.7, lastActive: 'Heute' },
+    { name: 'H&M Home', category: 'Lifestyle', image: '/brands/hm.jpeg', color: '#6366f1', match: 77, budget: '€500+', deals: 3, avgDeal: '€550', responseTime: '< 48h', topFormat: 'Stories', rating: 4.2, lastActive: 'vor 3 Tagen' },
+    { name: 'GlowSkin Co.', category: 'Beauty', image: '/brands/glowskin.svg', color: '#ec4899', match: 93, budget: '€900+', deals: 7, avgDeal: '€850', responseTime: '< 12h', topFormat: 'Reels', rating: 4.9, lastActive: 'Heute' },
+    { name: 'FitLife Pro', category: 'Fitness', image: '/brands/fitlife.svg', color: '#10b981', match: 88, budget: '€750+', deals: 5, avgDeal: '€720', responseTime: '< 24h', topFormat: 'TikTok', rating: 4.6, lastActive: 'Gestern' },
+    { name: 'TechWave', category: 'Tech', image: '/brands/techwave.svg', color: '#3b82f6', match: 81, budget: '€1.500+', deals: 4, avgDeal: '€1.650', responseTime: '< 24h', topFormat: 'YouTube', rating: 4.7, lastActive: 'vor 2 Tagen' },
+    { name: 'Urban Style', category: 'Fashion', image: '/brands/urbanstyle.svg', color: '#8b5cf6', match: 85, budget: '€800+', deals: 6, avgDeal: '€780', responseTime: '< 48h', topFormat: 'Reels', rating: 4.4, lastActive: 'Heute' },
+    { name: 'Puma', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 90, budget: '€800+', deals: 7, avgDeal: '€870', responseTime: '< 12h', topFormat: 'Reels', rating: 4.8, lastActive: 'Heute' },
+    { name: 'Douglas', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 84, budget: '€600+', deals: 8, avgDeal: '€680', responseTime: '< 24h', topFormat: 'Stories', rating: 4.3, lastActive: 'Gestern' },
   ];
 
   return (
@@ -252,10 +252,22 @@ function BrandMarketplaceDashboard({ compact }) {
                 <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Top-Format</span>
                 <span className="text-xs font-semibold" style={{ color: brand.color }}>{brand.topFormat}</span>
               </div>
-              <div className="flex items-center justify-between pt-0.5">
+              <div className="flex items-center justify-between">
                 <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Deals</span>
                 <span className="text-xs font-bold" style={{ color: 'var(--text)' }}>{brand.deals} aktiv</span>
               </div>
+              {brand.rating && (
+                <div className="flex items-center justify-between">
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Rating</span>
+                  <span className="text-xs font-semibold" style={{ color: '#f59e0b' }}>{brand.rating} ★</span>
+                </div>
+              )}
+              {brand.lastActive && (
+                <div className="flex items-center justify-between pt-0.5">
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Aktiv</span>
+                  <span className="text-xs font-semibold" style={{ color: brand.lastActive === 'Heute' ? '#10b981' : 'var(--text-secondary)' }}>{brand.lastActive}</span>
+                </div>
+              )}
             </div>
           </motion.div>
         ))}

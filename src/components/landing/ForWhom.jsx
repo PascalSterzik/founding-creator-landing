@@ -41,7 +41,7 @@ export default function ForWhom() {
         </div>
 
         {/* Two Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Good Fit Column */}
           <FadeIn delay={0}>
             <div className="rounded-2xl p-8 bg-green-50 border border-green-200">
@@ -91,13 +91,13 @@ export default function ForWhom() {
 
         {/* CTA */}
         <FadeIn delay={0.2}>
-          <div className="text-center mt-8">
+          <div className="text-center mt-4">
             <p className="text-lg text-[var(--text-secondary)] mb-4 leading-relaxed max-w-2xl mx-auto">
               Wenn das nach dir klingt, lass uns sprechen.
             </p>
             <a
               href="#bewerbung"
-              className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-lg overflow-hidden cursor-pointer no-underline whitespace-nowrap transition-all duration-300 hover:scale-105"
+              className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base overflow-hidden cursor-pointer no-underline whitespace-nowrap transition-all duration-300 hover:scale-105"
               style={{
                 background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
                 boxShadow: '0 8px 24px rgba(201, 140, 131, 0.35), 0 3px 6px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.15)',
@@ -112,7 +112,7 @@ export default function ForWhom() {
             <div className="mt-3">
               <a
                 href="#bewerbung"
-                className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors cursor-pointer no-underline"
+                className="inline-block text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors cursor-pointer no-underline"
                 style={{ borderBottom: '1px solid var(--border)' }}
               >
                 Was passiert, wenn du wartest?
