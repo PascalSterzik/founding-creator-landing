@@ -324,17 +324,14 @@ export default function SolutionBridge() {
       // Also keep it visible if it was already shown
       if (revenueShownRef.current) setShowRevenue(true);
 
-      // Small notifications (1-4): scroll-reactive, pop in/out dynamically
-      // They appear in the 0.42-0.56 scroll range, disappear outside
-      if (v >= 0.42 && v <= 0.56) {
-        if (v < 0.44) setSmallNotifs(1);
-        else if (v < 0.46) setSmallNotifs(2);
-        else if (v < 0.48) setSmallNotifs(3);
-        else setSmallNotifs(4);
-      } else {
-        // Outside range: small notifications hidden
-        setSmallNotifs(0);
-      }
+      // Small notifications (1-4): pop in at threshold, stay visible
+      // They appear staggered starting at 0.42 and remain until scrolling back above 0.42.
+      // The sticky section naturally scrolls off screen when the container ends.
+      if (v >= 0.48) setSmallNotifs(4);
+      else if (v >= 0.46) setSmallNotifs(3);
+      else if (v >= 0.44) setSmallNotifs(2);
+      else if (v >= 0.42) setSmallNotifs(1);
+      else setSmallNotifs(0);
     });
     return unsubscribe;
   }, [scrollYProgress]);

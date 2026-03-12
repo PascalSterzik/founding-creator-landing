@@ -91,10 +91,7 @@ export default function ForWhom() {
 
         {/* CTA */}
         <FadeIn delay={0.2}>
-          <div className="text-center mt-4">
-            <p className="text-lg text-[var(--text-secondary)] mb-4 leading-relaxed max-w-2xl mx-auto">
-              Wenn das nach dir klingt, lass uns sprechen.
-            </p>
+          <div className="text-center mt-8">
             <a
               href="#bewerbung"
               className="relative inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base overflow-hidden cursor-pointer no-underline whitespace-nowrap transition-all duration-300 hover:scale-105"
@@ -109,15 +106,6 @@ export default function ForWhom() {
               <motion.div className="absolute inset-0 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)' }} animate={{ x: ['100%', '-100%'] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }} />
               <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </a>
-            <div className="mt-3">
-              <a
-                href="#bewerbung"
-                className="inline-block text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors cursor-pointer no-underline"
-                style={{ borderBottom: '1px solid var(--border)' }}
-              >
-                Was passiert, wenn du wartest?
-              </a>
-            </div>
           </div>
         </FadeIn>
       </div>
