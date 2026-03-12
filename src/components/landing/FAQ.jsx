@@ -74,7 +74,7 @@ const FAQ = () => {
                   onClick={() => toggleFAQ(idx)}
                   className="w-full px-6 py-5 flex justify-between items-center bg-white hover:bg-[rgba(201,140,131,0.03)] transition-colors"
                 >
-                  <h3 className="text-left font-semibold text-[var(--text)]">{faq.question}</h3>
+                  <h3 className="text-left text-lg md:text-xl font-bold text-[var(--text)]">{faq.question}</h3>
                   <span
                     className={`text-2xl text-[var(--accent)] transition-transform duration-200 flex-shrink-0 ml-4 ${
                       openIndex === idx ? 'rotate-45' : ''
@@ -93,7 +93,7 @@ const FAQ = () => {
                       transition={{ duration: 0.2, ease: 'easeOut' }}
                     >
                       <div className="px-6 py-5 bg-gradient-to-b from-[rgba(201,140,131,0.05)] to-transparent border-t-2 border-[var(--border)]">
-                        <p className="text-[var(--text-secondary)] leading-relaxed">{faq.answer}</p>
+                        <p className="text-base md:text-lg text-[var(--text-secondary)] leading-relaxed font-medium">{faq.answer}</p>
                       </div>
                     </motion.div>
                   )}

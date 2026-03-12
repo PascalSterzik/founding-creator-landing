@@ -16,18 +16,31 @@ export default function Navbar() {
   useEffect(() => {
     setIsVisible(true);
 
-    // Show CTA after 20 seconds OR when scrolling past 2000px
-    const timer = setTimeout(() => setShowCTA(true), 20000);
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-      if (window.scrollY > 2000) setShowCTA(true);
     };
 
     window.addEventListener('scroll', handleScroll);
+
+    // Show CTA only when user scrolls to the "Creator sein, ohne dich selbst zu verlieren" section
+    const target = document.getElementById('dream-deep-dive');
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setShowCTA(true);
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(target);
+    }
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timer);
+      if (observer) observer.disconnect();
     };
   }, []);
 

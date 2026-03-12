@@ -79,10 +79,10 @@ export default function Credibility() {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-xl font-bold text-[var(--text)] mb-3">
+                    <h3 className="text-xl md:text-2xl font-bold text-[var(--text)] mb-3">
                       {card.title}
                     </h3>
-                    <p className="text-[var(--text-secondary)] leading-relaxed">
+                    <p className="text-base text-[var(--text-secondary)] leading-relaxed">
                       {card.description}
                     </p>
                   </div>

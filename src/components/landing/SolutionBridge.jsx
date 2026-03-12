@@ -327,13 +327,16 @@ export default function SolutionBridge() {
 
       // Small notifications (1-4):
       // First time: staggered appearance from 0.42 to 0.48.
-      // After all 4 have appeared once, they ALWAYS show when the section is in viewport.
-      // They ONLY hide when the section is completely off-screen (v < 0.02 or v > 0.98).
-      // This ensures the user NEVER sees them disappear.
-      const sectionInViewport = v > 0.02 && v < 0.98;
+      // After all 4 have appeared once, they show when the sticky phone is actually visible.
+      // The phone is sticky and centered, so it's visible roughly when v is between 0.20 and 0.85.
+      // Below 0.20: section just entered from bottom, phone hasn't scrolled into view yet.
+      // Above 0.85: section is leaving from top.
+      // They ONLY hide when the phone area is off-screen.
+      // This ensures the user NEVER sees them pop in off-screen.
+      const phoneVisible = v > 0.20 && v < 0.85;
 
-      if (!sectionInViewport) {
-        // Section completely off-screen: hide all
+      if (!phoneVisible) {
+        // Phone not visible: hide all (instant, duration: 0)
         setSmallNotifs(0);
       } else if (notifsEverShownRef.current) {
         // Re-entry after staggered intro already played: show all 4 immediately
@@ -347,7 +350,7 @@ export default function SolutionBridge() {
         else if (v >= 0.46) setSmallNotifs(3);
         else if (v >= 0.44) setSmallNotifs(2);
         else if (v >= 0.42) setSmallNotifs(1);
-        // If v < 0.42 but section is in viewport and notifs never shown, keep at 0
+        // If v < 0.42 but phone visible and notifs never shown, keep at 0
       }
     });
     return unsubscribe;

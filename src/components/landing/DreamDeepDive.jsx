@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function DreamDeepDive() {
   return (
-    <section className="py-20 lg:py-28">
+    <section id="dream-deep-dive" className="py-20 lg:py-28">
       <div className="container mx-auto px-6 lg:px-12">
         {/* 2-Column Layout: Image left, Heading+Text right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">

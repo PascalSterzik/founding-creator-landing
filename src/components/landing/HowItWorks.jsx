@@ -82,10 +82,10 @@ export default function HowItWorks() {
                   </div>
 
                   {/* Text Content */}
-                  <h3 className="text-xl font-bold text-[var(--text)] mb-3">
+                  <h3 className="text-xl md:text-2xl font-bold text-[var(--text)] mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-[var(--text-secondary)] mb-4 text-sm leading-relaxed">
+                  <p className="text-[var(--text-secondary)] mb-4 text-base leading-relaxed">
                     {step.description}
                   </p>
                   <span

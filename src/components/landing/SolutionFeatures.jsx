@@ -691,7 +691,7 @@ export default function SolutionFeatures() {
                         <p className="text-sm font-bold transition-colors" style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
                           {feature.number}
                         </p>
-                        <h3 className="text-xl font-bold mt-1 transition-colors" style={{ color: 'var(--text)' }}>
+                        <h3 className="text-xl md:text-2xl font-bold mt-1 transition-colors" style={{ color: 'var(--text)' }}>
                           {feature.title}
                         </h3>
                         {isActive && (
@@ -700,7 +700,7 @@ export default function SolutionFeatures() {
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="text-sm mt-3 leading-relaxed"
+                            className="text-base mt-3 leading-relaxed"
                             style={{ color: 'var(--text-secondary)' }}
                           >
                             {feature.description}
@@ -750,7 +750,7 @@ export default function SolutionFeatures() {
                         <p className="text-sm font-bold" style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
                           {feature.number}
                         </p>
-                        <h3 className="text-lg font-bold mt-0.5" style={{ color: 'var(--text)' }}>
+                        <h3 className="text-lg md:text-xl font-bold mt-0.5" style={{ color: 'var(--text)' }}>
                           {feature.title}
                         </h3>
                       </div>
