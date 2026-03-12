@@ -89,10 +89,10 @@ export default function ForWhom() {
           </FadeIn>
         </div>
 
-        {/* CTA Box */}
+        {/* CTA */}
         <FadeIn delay={0.2}>
-          <div className="bg-gradient-to-br from-[var(--accent)] to-[var(--accent-hover)] rounded-2xl p-8 md:p-10 text-white text-center">
-            <p className="text-lg mb-6 leading-relaxed">
+          <div className="text-center mt-4">
+            <p className="text-lg text-[var(--text-secondary)] mb-6 leading-relaxed max-w-2xl mx-auto">
               Es geht nicht nur darum, dabei zu sein. Es geht darum, mit den richtigen Menschen
               an den richtigen Deals zu arbeiten. Wenn das nach dir klingt, lass uns sprechen.
             </p>
@@ -108,7 +108,7 @@ export default function ForWhom() {
             >
               <span className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)' }} />
               <motion.div className="absolute inset-0 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)' }} animate={{ x: ['100%', '-100%'] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }} />
-              <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
+              <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </a>
           </div>
         </FadeIn>

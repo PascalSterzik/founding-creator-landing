@@ -277,14 +277,14 @@ export default function SolutionBridge() {
   });
 
   /* 3D tilt animation: TRUE perspective rotation (like ContainerScroll).
-     The phone rotates on the X axis from 20deg tilted back to 0deg flat. */
-  const rotateX = useTransform(scrollYProgress, [0.08, 0.30], [20, 0]);
-  const phoneScale = useTransform(scrollYProgress, [0.08, 0.30], [0.85, 1.05]);
-  const phoneTranslateY = useTransform(scrollYProgress, [0.08, 0.30], [100, 0]);
-  const phoneOpacity = useTransform(scrollYProgress, [0.06, 0.16], [0, 1]);
+     The phone rotates on the X axis from 20deg tilted back to 0deg flat.
+     Once the phone has fully entered, the animation locks and does NOT re-trigger on scroll back. */
+  const phoneAnimDoneRef = useRef(false);
+  const [phoneAnimValues, setPhoneAnimValues] = useState({ rotateX: 20, scale: 0.85, y: 100, opacity: 0 });
 
   // Phase tracking
   const [appProgress, setAppProgress] = useState(0);
+  const appProgressDoneRef = useRef(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [smallNotifs, setSmallNotifs] = useState(0); // 0-4 for small notification cards
   const [showRevenue, setShowRevenue] = useState(false); // revenue chart, permanent once shown
@@ -293,12 +293,29 @@ export default function SolutionBridge() {
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
-      // App opening
-      const p = Math.max(0, Math.min(1, (v - 0.24) / 0.12));
-      setAppProgress(p);
+      // Phone entrance animation: only runs forward, locks once done
+      if (!phoneAnimDoneRef.current) {
+        const rotateX = 20 - Math.min(1, Math.max(0, (v - 0.08) / 0.22)) * 20;
+        const scale = 0.85 + Math.min(1, Math.max(0, (v - 0.08) / 0.22)) * 0.2;
+        const y = 100 - Math.min(1, Math.max(0, (v - 0.08) / 0.22)) * 100;
+        const opacity = Math.min(1, Math.max(0, (v - 0.06) / 0.10));
+        setPhoneAnimValues({ rotateX, scale, y, opacity });
+        // Lock once phone animation is complete
+        if (v >= 0.30) {
+          phoneAnimDoneRef.current = true;
+          setPhoneAnimValues({ rotateX: 0, scale: 1.05, y: 0, opacity: 1 });
+        }
+      }
 
-      // Dashboard appears after phone risen + app opened
-      setShowDashboard(v > 0.40);
+      // App opening: also locks once complete
+      if (!appProgressDoneRef.current) {
+        const p = Math.max(0, Math.min(1, (v - 0.24) / 0.12));
+        setAppProgress(p);
+        if (p >= 1) appProgressDoneRef.current = true;
+      }
+
+      // Dashboard appears after phone risen + app opened (locks once shown)
+      if (v > 0.40) setShowDashboard(true);
 
       // Release sticky after animation sequence completes
       if (v > 0.58) setStickyDone(true);
@@ -330,7 +347,7 @@ export default function SolutionBridge() {
     <section
       ref={containerRef}
       className="relative"
-      style={{ minHeight: '210vh' }}
+      style={{ minHeight: '180vh' }}
     >
       {/* ─── Header text: scrolls normally, NOT sticky ─── */}
       <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
@@ -499,12 +516,16 @@ export default function SolutionBridge() {
             </div>
 
             {/* ─── PHONE (centered) with TRUE 3D perspective tilt + rise ─── */}
+            {/* Phone animation is one-shot: once it enters, it stays locked in final position */}
             <motion.div
+              animate={{
+                rotateX: phoneAnimValues.rotateX,
+                scale: phoneAnimValues.scale,
+                opacity: phoneAnimValues.opacity,
+                y: phoneAnimValues.y,
+              }}
+              transition={phoneAnimDoneRef.current ? { duration: 0 } : { duration: 0.1 }}
               style={{
-                rotateX,
-                scale: phoneScale,
-                opacity: phoneOpacity,
-                y: phoneTranslateY,
                 transformOrigin: 'center bottom',
               }}
               className="relative z-0"
@@ -540,8 +561,8 @@ export default function SolutionBridge() {
         </div>
       </div>
 
-      {/* Minimal bottom spacer - just enough transition space */}
-      <div style={{ height: '5vh' }} />
+      {/* Minimal bottom spacer */}
+      <div style={{ height: '2vh' }} />
     </section>
   );
 }

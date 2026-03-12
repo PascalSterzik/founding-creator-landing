@@ -34,12 +34,19 @@ const FinalCTA = () => {
           >
             <span className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 100%)' }} />
             <motion.div className="absolute inset-0 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)' }} animate={{ x: ['100%', '-100%'] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }} />
-            <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
+            <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
           </a>
         </FadeIn>
 
         <FadeIn delay={0.3}>
-          <p className="text-xs text-gray-300 mt-8">
+          <a
+            href="#bewerbung"
+            className="inline-block mt-5 text-sm text-gray-300 hover:text-white transition-colors cursor-pointer no-underline"
+            style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}
+          >
+            Was passiert, wenn du wartest?
+          </a>
+          <p className="text-xs text-gray-400 mt-4">
             Kostenlos. Unverbindlich. 30-Minuten-Call nach der Bewerbung.
           </p>
         </FadeIn>

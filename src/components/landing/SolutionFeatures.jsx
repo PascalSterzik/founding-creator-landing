@@ -66,6 +66,8 @@ function DealsDiscoveryDashboard({ compact }) {
     { brand: 'L\'Oréal', category: 'Beauty', amount: '€1.200', match: 95, type: 'Instagram Reel', deadline: '3 Tage', image: '/brands/loreal.jpeg', catColor: '#ec4899' },
     { brand: 'Gymshark', category: 'Fitness', amount: '€850', match: 88, type: 'TikTok + Story', deadline: '5 Tage', image: '/brands/gymshark.png', catColor: '#10b981' },
     { brand: 'Zara', category: 'Fashion', amount: '€2.100', match: 82, type: 'YouTube Review', deadline: '7 Tage', image: '/brands/zara.jpeg', catColor: '#8b5cf6' },
+    { brand: 'Samsung', category: 'Tech', amount: '€1.800', match: 79, type: 'Unboxing + Review', deadline: '10 Tage', image: '/brands/samsung.jpeg', catColor: '#3b82f6' },
+    { brand: 'Sephora', category: 'Beauty', amount: '€950', match: 91, type: 'Instagram Story Serie', deadline: '4 Tage', image: '/brands/sephora.jpeg', catColor: '#ec4899' },
   ];
   const filters = ['Alle', 'Beauty', 'Fashion', 'Tech', 'Fitness', 'Food'];
 
@@ -150,7 +152,7 @@ function DealsDiscoveryDashboard({ compact }) {
       </div>
 
       <div className="text-center mt-3">
-        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>23 weitere Deals verfügbar</span>
+        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>21 weitere Deals verfügbar</span>
       </div>
     </div>
   );
@@ -162,9 +164,15 @@ function DealsDiscoveryDashboard({ compact }) {
    ───────────────────────────────────────────────── */
 function BrandMarketplaceDashboard({ compact }) {
   const brands = [
-    { name: 'Nike', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 97, budget: '€1.500+', deals: 12 },
-    { name: 'L\'Oréal', category: 'Beauty', image: '/brands/loreal.jpeg', color: '#ec4899', match: 94, budget: '€800+', deals: 8 },
-    { name: 'Zara', category: 'Fashion', image: '/brands/zara.jpeg', color: '#8b5cf6', match: 86, budget: '€900+', deals: 4 },
+    { name: 'Nike', category: 'Sports', image: '/brands/nike.jpeg', color: '#f59e0b', match: 97, budget: '€1.500+', deals: 12, avgDeal: '€1.250', responseTime: '< 24h', topFormat: 'Reels' },
+    { name: 'L\'Oréal', category: 'Beauty', image: '/brands/loreal.jpeg', color: '#ec4899', match: 94, budget: '€800+', deals: 8, avgDeal: '€920', responseTime: '< 12h', topFormat: 'Stories' },
+    { name: 'Zara', category: 'Fashion', image: '/brands/zara.jpeg', color: '#8b5cf6', match: 86, budget: '€900+', deals: 4, avgDeal: '€1.050', responseTime: '< 48h', topFormat: 'TikTok' },
+    { name: 'Samsung', category: 'Tech', image: '/brands/samsung.jpeg', color: '#3b82f6', match: 83, budget: '€1.200+', deals: 6, avgDeal: '€1.800', responseTime: '< 24h', topFormat: 'YouTube' },
+    { name: 'Adidas', category: 'Sports', image: '/brands/adidas.png', color: '#f59e0b', match: 91, budget: '€1.000+', deals: 10, avgDeal: '€1.100', responseTime: '< 12h', topFormat: 'Reels' },
+    { name: 'Sephora', category: 'Beauty', image: '/brands/sephora.jpeg', color: '#ec4899', match: 89, budget: '€700+', deals: 5, avgDeal: '€780', responseTime: '< 24h', topFormat: 'Stories' },
+    { name: 'H&M', category: 'Fashion', image: '/brands/hm.jpeg', color: '#8b5cf6', match: 80, budget: '€600+', deals: 7, avgDeal: '€650', responseTime: '< 48h', topFormat: 'TikTok' },
+    { name: 'Gymshark', category: 'Fitness', image: '/brands/gymshark.png', color: '#10b981', match: 92, budget: '€850+', deals: 9, avgDeal: '€900', responseTime: '< 12h', topFormat: 'Reels' },
+    { name: 'H&M Home', category: 'Lifestyle', image: '/brands/hm.jpeg', color: '#6366f1', match: 77, budget: '€500+', deals: 3, avgDeal: '€550', responseTime: '< 48h', topFormat: 'Stories' },
   ];
 
   return (
@@ -173,7 +181,7 @@ function BrandMarketplaceDashboard({ compact }) {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h4 className="text-sm font-bold" style={{ color: 'var(--text)' }}>Brand Marketplace</h4>
-          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>248 Brands aktiv · 12 neue diese Woche</span>
+          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>312 Brands aktiv · 18 neue diese Woche</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ backgroundColor: 'var(--accent)', color: 'white' }}>Für dich</span>
@@ -190,8 +198,11 @@ function BrandMarketplaceDashboard({ compact }) {
         </div>
       </div>
 
-      {/* Brand grid - 3 brands with category icons */}
-      <div className={`grid ${compact ? 'grid-cols-1 gap-2' : 'grid-cols-3 gap-3'}`}>
+      {/* Brand grid - scrollable with enriched cards */}
+      <div
+        className={`grid ${compact ? 'grid-cols-1 gap-2' : 'grid-cols-3 gap-3'}`}
+        style={!compact ? { maxHeight: '380px', overflowY: 'auto', paddingRight: '4px' } : {}}
+      >
         {brands.map((brand, idx) => (
           <motion.div
             key={idx}
@@ -209,16 +220,34 @@ function BrandMarketplaceDashboard({ compact }) {
               </div>
             </div>
             {/* Match percentage */}
-            <div className="flex items-center gap-1.5 mb-1.5">
+            <div className="flex items-center gap-1.5 mb-2">
               <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: 'rgba(16,185,129,0.1)' }}>
                 <div className="h-full rounded-full" style={{ width: `${brand.match}%`, backgroundColor: '#10b981' }} />
               </div>
               <span className="text-xs font-bold" style={{ color: '#10b981' }}>{brand.match}%</span>
             </div>
-            {/* Extra details */}
-            <div className="flex items-center justify-between">
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{brand.budget}</span>
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{brand.deals} Deals</span>
+            {/* Enriched details */}
+            <div className="space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Budget</span>
+                <span className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{brand.budget}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Avg. Deal</span>
+                <span className="text-xs font-semibold" style={{ color: '#10b981' }}>{brand.avgDeal}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Antwortzeit</span>
+                <span className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>{brand.responseTime}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Top-Format</span>
+                <span className="text-xs font-semibold" style={{ color: brand.color }}>{brand.topFormat}</span>
+              </div>
+              <div className="flex items-center justify-between pt-0.5">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Deals</span>
+                <span className="text-xs font-bold" style={{ color: 'var(--text)' }}>{brand.deals} aktiv</span>
+              </div>
             </div>
           </motion.div>
         ))}
