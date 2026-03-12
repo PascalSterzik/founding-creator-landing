@@ -6,6 +6,47 @@ import { useSlotCount } from '@/lib/slotTracker';
 
 const TOTAL_SLOTS = 50;
 
+// IMPORTANT: ProgressBar is defined OUTSIDE of Navbar so React sees the same
+// component type across re-renders. If defined inside, every Navbar re-render
+// creates a new function → React unmounts/remounts the DOM → CSS animation restarts.
+const ProgressBar = ({ remaining, filledPercent, className = '' }) => (
+  <div className={`flex flex-col items-center gap-1 flex-shrink-0 ${className}`}>
+    <span
+      style={{
+        color: 'var(--text-secondary)',
+        fontSize: '12px',
+        fontWeight: '600',
+        letterSpacing: '0.2px',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
+      <span style={{ color: 'var(--text-muted)' }}> von </span>
+      <span>{TOTAL_SLOTS}</span>
+      {' '}Bonusplätze
+    </span>
+    <div
+      className="rounded-full overflow-hidden"
+      style={{
+        width: '140px',
+        height: '3px',
+        backgroundColor: 'rgba(201, 140, 131, 0.12)',
+      }}
+    >
+      {/* CSS @keyframes animation: plays once on mount, holds final state via
+          animation-fill-mode: both. Never restarts because the DOM element
+          persists across parent re-renders (component defined outside). */}
+      <div
+        className="h-full rounded-full navbar-progress-fill"
+        style={{
+          background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+          '--target-width': `${filledPercent}%`,
+        }}
+      />
+    </div>
+  </div>
+);
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -58,44 +99,6 @@ export default function Navbar() {
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
-
-  // Progress bar with pure CSS animation (immune to React re-renders)
-  const ProgressBar = ({ className = '' }) => (
-    <div className={`flex flex-col items-center gap-1 flex-shrink-0 ${className}`}>
-      <span
-        style={{
-          color: 'var(--text-secondary)',
-          fontSize: '12px',
-          fontWeight: '600',
-          letterSpacing: '0.2px',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
-        <span style={{ color: 'var(--text-muted)' }}> von </span>
-        <span>{TOTAL_SLOTS}</span>
-        {' '}Bonusplätze
-      </span>
-      <div
-        className="rounded-full overflow-hidden"
-        style={{
-          width: '140px',
-          height: '3px',
-          backgroundColor: 'rgba(201, 140, 131, 0.12)',
-        }}
-      >
-        {/* CSS @keyframes animation: plays once on mount, holds final state,
-            never restarts on re-render (unlike Framer Motion initial/animate) */}
-        <div
-          className="h-full rounded-full navbar-progress-fill"
-          style={{
-            background: 'linear-gradient(90deg, var(--accent), #d4a099)',
-            '--target-width': `${filledPercent}%`,
-          }}
-        />
-      </div>
-    </div>
-  );
 
   return (
     <AnimatePresence>
@@ -165,13 +168,13 @@ export default function Navbar() {
             </motion.a>
 
             {/* Desktop: Urgency Indicator (always visible, center) */}
-            <ProgressBar className="hidden sm:flex" />
+            <ProgressBar remaining={remaining} filledPercent={filledPercent} className="hidden sm:flex" />
 
             {/* Mobile: progress bar before CTA, then button + tiny bar after CTA */}
             <div className="sm:hidden flex flex-col items-end">
               {!showCTA ? (
                 /* Before CTA: show progress bar on mobile */
-                <ProgressBar />
+                <ProgressBar remaining={remaining} filledPercent={filledPercent} />
               ) : (
                 /* After CTA: button with compact progress bar directly underneath */
                 <div className="flex flex-col items-center">
