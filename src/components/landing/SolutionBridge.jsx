@@ -291,48 +291,54 @@ export default function SolutionBridge() {
   const revenueShownRef = useRef(false);
   const notifsEverShownRef = useRef(false); // tracks if staggered intro has completed
 
-  // Staggered animation: trigger phases sequentially when section enters view
+  // Staggered animation: trigger phases sequentially when phone area is well into viewport
+  // We observe the phone wrapper (not the section) and require 60% visibility
+  // so the animation only starts when the phone is roughly centered on screen
+  const phoneWrapperRef = useRef(null);
+  const animTriggeredRef = useRef(false);
+
   useEffect(() => {
     let timers = [];
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !animTriggeredRef.current) {
+          animTriggeredRef.current = true;
           observer.disconnect();
 
-          // Phase 1: Phone rises into view (0ms)
+          // Phase 1: Phone rises into view (0ms), smooth 0.8s spring
           phoneAnimDoneRef.current = true;
           setPhoneAnimValues({ rotateX: 0, scale: 1.05, y: 0, opacity: 1 });
 
-          // Phase 2: App opens (600ms)
+          // Phase 2: App opens with "Willkommen, Creator" (1000ms)
           timers.push(setTimeout(() => {
             appProgressDoneRef.current = true;
             setAppProgress(1);
-          }, 600));
+          }, 1000));
 
-          // Phase 3: Dashboard appears (1200ms)
+          // Phase 3: Dashboard appears (2000ms)
           timers.push(setTimeout(() => {
             setShowDashboard(true);
-          }, 1200));
+          }, 2000));
 
-          // Phase 4: Notifications appear one by one (1800ms, 2200ms, 2600ms, 3000ms)
-          timers.push(setTimeout(() => setSmallNotifs(1), 1800));
-          timers.push(setTimeout(() => setSmallNotifs(2), 2200));
-          timers.push(setTimeout(() => setSmallNotifs(3), 2600));
+          // Phase 4: Notifications appear one by one (2800ms, 3300ms, 3800ms, 4300ms)
+          timers.push(setTimeout(() => setSmallNotifs(1), 2800));
+          timers.push(setTimeout(() => setSmallNotifs(2), 3300));
+          timers.push(setTimeout(() => setSmallNotifs(3), 3800));
           timers.push(setTimeout(() => {
             setSmallNotifs(4);
             notifsEverShownRef.current = true;
-          }, 3000));
+          }, 4300));
 
-          // Phase 5: Revenue chart (3400ms)
+          // Phase 5: Revenue chart (4800ms)
           timers.push(setTimeout(() => {
             revenueShownRef.current = true;
             setShowRevenue(true);
-          }, 3400));
+          }, 4800));
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.6 }
     );
-    if (containerRef.current) observer.observe(containerRef.current);
+    if (phoneWrapperRef.current) observer.observe(phoneWrapperRef.current);
     return () => {
       observer.disconnect();
       timers.forEach(t => clearTimeout(t));
@@ -524,13 +530,14 @@ export default function SolutionBridge() {
             {/* ─── PHONE (centered) with TRUE 3D perspective tilt + rise ─── */}
             {/* Phone animation is one-shot: once it enters, it stays locked in final position */}
             <motion.div
+              ref={phoneWrapperRef}
               animate={{
                 rotateX: phoneAnimValues.rotateX,
                 scale: phoneAnimValues.scale,
                 opacity: phoneAnimValues.opacity,
                 y: phoneAnimValues.y,
               }}
-              transition={phoneAnimDoneRef.current ? { duration: 0 } : { duration: 0.1 }}
+              transition={phoneAnimDoneRef.current ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { duration: 0.1 }}
               style={{
                 transformOrigin: 'center bottom',
               }}

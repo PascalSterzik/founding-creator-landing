@@ -3,19 +3,18 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Crown, Check } from 'lucide-react';
+import { useSlotCount } from '@/lib/slotTracker';
 
 const TOTAL_SLOTS = 50;
-const CURRENT_COUNT = 0; // Update as creators join
 
 const perks = [
-  'Persönlicher Ansprechpartner',
-  'Erste Wahl bei Premium-Brands',
-  'Mitgestaltung der Plattform',
-  'Lifetime Founding-Creator-Badge',
-  'Priorität bei Brand-Matching',
-  'Exklusive Creator-Community',
-  'Early Access auf neue Features',
-  'Priorisierter Support',
+  'Erste 3 Kooperationen komplett kostenlos vermittelt',
+  'Persönliches Onboarding mit dem Gründerteam',
+  'Höchste Matching-Priorität bei Brand Deals',
+  'Direkter Draht zum Founder',
+  'Early Access zu allen neuen Features',
+  'Exklusiver Founding Creator Badge',
+  'Einfluss auf die Produktentwicklung',
 ];
 
 export default function DankePage() {
@@ -50,7 +49,8 @@ export default function DankePage() {
     },
   };
 
-  const creatorNumber = CURRENT_COUNT + 1;
+  const remaining = useSlotCount();
+  const creatorNumber = TOTAL_SLOTS - remaining + 1;
 
   return (
     <div

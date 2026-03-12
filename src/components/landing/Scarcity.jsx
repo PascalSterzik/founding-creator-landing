@@ -3,14 +3,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
+import { useSlotCount } from '@/lib/slotTracker';
 
 const TOTAL_SLOTS = 50;
-const REMAINING_SLOTS = 50;
 
 const Scarcity = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
   const sectionRef = useRef(null);
   const hasAnimated = useRef(false);
+  const remaining = useSlotCount();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,7 +42,7 @@ const Scarcity = () => {
     return () => observer.disconnect();
   }, []);
 
-  const slotsShown = Math.floor((animatedProgress / 100) * REMAINING_SLOTS);
+  const slotsShown = Math.floor((animatedProgress / 100) * remaining);
   const filledPercent = (slotsShown / TOTAL_SLOTS) * 100;
 
   return (
@@ -56,11 +57,11 @@ const Scarcity = () => {
               Limitierte Bonus-Plätze
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Nur die ersten 50 Creator erhalten{' '}
-              <span className="italic text-[var(--gold)]">exklusive Vorteile</span>
+              Nur die ersten 50 Creator bekommen den vollen{' '}
+              <span className="italic text-[var(--gold)]">Founding-Bonus</span>
             </h2>
             <p className="text-lg text-gray-300">
-              Sei von Anfang an dabei und sichere dir deinen Founding Creator Status.
+              12 Plätze sind bereits vergeben. Sichere dir deinen Founding Creator Status, bevor alle Plätze weg sind.
             </p>
           </div>
         </FadeIn>

@@ -11,7 +11,7 @@ const FAQ = () => {
     {
       question: 'Was bedeutet Founding Creator?',
       answer:
-        'Founding Creator sind die ersten 50 Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und dafür besondere Vorteile erhält: persönliches Onboarding, höchste Matching-Priorität bei Brand Deals, Einfluss auf die Produktentwicklung und einen Lifetime Founding-Creator-Badge.',
+        'Founding Creator sind die ersten 50 Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und bekommst den vollen Founding-Bonus: Deine ersten 3 Kooperationen werden komplett kostenlos vermittelt, du erhältst persönliches Onboarding mit dem Gründerteam, höchste Matching-Priorität bei Brand Deals, direkten Draht zum Founder, Early Access zu neuen Features, einen Lifetime Founding-Creator-Badge und direkten Einfluss auf die Produktentwicklung.',
     },
     {
       question: 'Brauche ich eine große Reichweite?',

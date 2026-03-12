@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
+import { decrementSlot } from '@/lib/slotTracker';
 
 const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,10 +68,11 @@ const ApplicationForm = () => {
       document.body.appendChild(form);
       form.submit();
 
-      // Clean up and redirect after a short delay to ensure submission completes
-      setTimeout(() => {
+      // Decrement slot count and redirect after submission completes
+      setTimeout(async () => {
         document.body.removeChild(form);
         document.body.removeChild(iframe);
+        try { await decrementSlot(); } catch {}
         window.location.href = '/danke';
       }, 1500);
     } catch (err) {

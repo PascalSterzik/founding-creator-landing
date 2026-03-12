@@ -154,7 +154,6 @@ const OverviewTab = () => (
           status: 'Matched',
           color: '#10b981',
           initials: 'BC',
-          image: 'https://images.unsplash.com/photo-1570194065650-d99fb4a38d15?w=80&h=80&fit=crop&crop=center',
         },
         {
           name: 'Sommer-Kollektion',
@@ -163,7 +162,6 @@ const OverviewTab = () => (
           status: 'Prüfung',
           color: '#f59e0b',
           initials: 'FL',
-          image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=80&h=80&fit=crop&crop=center',
         },
         {
           name: 'Fitness-Supplement',
@@ -172,7 +170,6 @@ const OverviewTab = () => (
           status: 'Neu',
           color: '#ec4899',
           initials: 'SF',
-          image: 'https://images.unsplash.com/photo-1622484212850-eb596d769edc?w=80&h=80&fit=crop&crop=center',
         },
       ].map((deal, idx) => (
         <motion.div
@@ -190,12 +187,12 @@ const OverviewTab = () => (
         >
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 flex-1 min-w-0">
-              <img
-                src={deal.image}
-                alt={deal.name}
-                className="w-7 h-7 rounded-full object-cover flex-shrink-0"
-                style={{ border: `2px solid ${deal.color}30` }}
-              />
+              <div
+                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: `${deal.color}18`, border: `2px solid ${deal.color}30` }}
+              >
+                <span style={{ fontSize: '9px', fontWeight: '700', color: deal.color, letterSpacing: '-0.3px' }}>{deal.initials}</span>
+              </div>
               <div className="flex-1 min-w-0">
                 <div style={{ color: 'var(--cocoa)', fontSize: '12px', fontWeight: '600', letterSpacing: '-0.2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {deal.name}

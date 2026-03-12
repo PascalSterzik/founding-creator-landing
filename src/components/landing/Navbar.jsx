@@ -1,17 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSlotCount } from '@/lib/slotTracker';
 
 const TOTAL_SLOTS = 50;
-const REMAINING_SLOTS = 50; // Update this as slots fill up
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
+  const progressAnimDone = useRef(false);
 
-  const filledPercent = ((REMAINING_SLOTS / TOTAL_SLOTS) * 100);
+  const remaining = useSlotCount();
+  const filledPercent = ((remaining / TOTAL_SLOTS) * 100);
 
   useEffect(() => {
     setIsVisible(true);
@@ -59,6 +61,7 @@ export default function Navbar() {
   };
 
   // Progress bar component (reused in two places)
+  // Animation only plays once, then locks at final width
   const ProgressBar = ({ className = '' }) => (
     <div className={`flex flex-col items-center gap-1 flex-shrink-0 ${className}`}>
       <span
@@ -70,7 +73,7 @@ export default function Navbar() {
           whiteSpace: 'nowrap',
         }}
       >
-        <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
+        <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
         <span style={{ color: 'var(--text-muted)' }}> von </span>
         <span>{TOTAL_SLOTS}</span>
         {' '}Bonusplätze
@@ -83,19 +86,30 @@ export default function Navbar() {
           backgroundColor: 'rgba(201, 140, 131, 0.12)',
         }}
       >
-        <motion.div
-          className="h-full rounded-full"
-          style={{
-            background: 'linear-gradient(90deg, var(--accent), #d4a099)',
-          }}
-          initial={{ width: 0 }}
-          animate={{ width: `${filledPercent}%` }}
-          transition={{
-            duration: 5,
-            ease: [0.16, 1, 0.3, 1],
-            delay: 0.8,
-          }}
-        />
+        {progressAnimDone.current ? (
+          <div
+            className="h-full rounded-full"
+            style={{
+              width: `${filledPercent}%`,
+              background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+            }}
+          />
+        ) : (
+          <motion.div
+            className="h-full rounded-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+            }}
+            initial={{ width: 0 }}
+            animate={{ width: `${filledPercent}%` }}
+            transition={{
+              duration: 5,
+              ease: [0.16, 1, 0.3, 1],
+              delay: 0.8,
+            }}
+            onAnimationComplete={() => { progressAnimDone.current = true; }}
+          />
+        )}
       </div>
     </div>
   );
@@ -214,7 +228,7 @@ export default function Navbar() {
                     transition={{ duration: 0.4, delay: 0.3 }}
                   >
                     <span style={{ color: 'var(--text-muted)', fontSize: '9px', fontWeight: '600', whiteSpace: 'nowrap' }}>
-                      <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{REMAINING_SLOTS}</span>
+                      <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
                       <span> / {TOTAL_SLOTS}</span> Bonusplätze
                     </span>
                     <div className="rounded-full overflow-hidden mt-0.5" style={{ width: '100px', height: '2px', backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
