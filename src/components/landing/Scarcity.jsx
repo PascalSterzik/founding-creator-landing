@@ -40,12 +40,9 @@ const Scarcity = () => {
 
   const totalAvailable = Math.floor((animatedProgress / 100) * 100);
 
-  // Segment widths: 10%, 40%, 50% of total 100 slots
-  const segments = [
-    { label: 'Founding 10', slots: 10, width: '10%' },
-    { label: 'Founding 50', slots: 40, width: '40%' },
-    { label: 'Founding 100', slots: 50, width: '50%' },
-  ];
+  // Segment boundaries as % of total bar width
+  // Founding 10 = slots 1-10 = 10% | Founding 50 = slots 11-50 = 40% | Founding 100 = slots 51-100 = 50%
+  const segmentBreaks = [10, 50]; // percentage positions where dividers sit
 
   return (
     <section
@@ -68,52 +65,62 @@ const Scarcity = () => {
           </div>
         </FadeIn>
 
-        {/* Single Segmented Progress Bar */}
+        {/* Single Progress Bar with Segment Markers */}
         <FadeIn delay={0.1}>
           <div className="mb-12">
-            {/* Segment labels */}
-            <div className="flex mb-3">
-              {segments.map((seg, idx) => (
-                <div
-                  key={idx}
-                  className="text-center"
-                  style={{ width: seg.width }}
-                >
-                  <span className="text-xs sm:text-sm font-bold text-white">
-                    {seg.label}
-                  </span>
-                  <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
-                    {seg.slots} Plätze
-                  </span>
-                </div>
-              ))}
+            {/* Segment labels above the bar */}
+            <div className="relative flex mb-3">
+              <div className="text-center" style={{ width: '10%' }}>
+                <span className="text-xs sm:text-sm font-bold text-[var(--gold)]">
+                  Founding 10
+                </span>
+                <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
+                  10 Plätze
+                </span>
+              </div>
+              <div className="text-center" style={{ width: '40%' }}>
+                <span className="text-xs sm:text-sm font-bold text-white">
+                  Founding 50
+                </span>
+                <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
+                  40 Plätze
+                </span>
+              </div>
+              <div className="text-center" style={{ width: '50%' }}>
+                <span className="text-xs sm:text-sm font-bold text-white">
+                  Founding 100
+                </span>
+                <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">
+                  50 Plätze
+                </span>
+              </div>
             </div>
 
-            {/* The bar */}
+            {/* ONE single bar with fill + divider overlays */}
             <div
-              className="w-full h-5 sm:h-6 bg-[rgba(255,255,255,0.08)] rounded-full overflow-hidden border border-[rgba(230,201,168,0.2)] relative flex"
+              className="w-full h-5 sm:h-6 rounded-full overflow-hidden border border-[rgba(230,201,168,0.2)] relative"
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
             >
-              {segments.map((seg, idx) => (
+              {/* Single fill gradient spanning the full width */}
+              <div
+                className="h-full rounded-full transition-all duration-300 ease-out"
+                style={{
+                  width: `${Math.min(animatedProgress, 100)}%`,
+                  background: 'linear-gradient(90deg, var(--gold) 0%, #d4a099 15%, var(--accent) 55%, #b5736a 100%)',
+                }}
+              />
+
+              {/* Segment divider lines (overlaid on top) */}
+              {segmentBreaks.map((pos, idx) => (
                 <div
                   key={idx}
-                  className="h-full relative"
+                  className="absolute top-0 h-full"
                   style={{
-                    width: seg.width,
-                    borderRight: idx < segments.length - 1 ? '2px solid rgba(75, 50, 45, 0.6)' : 'none',
+                    left: `${pos}%`,
+                    width: '2px',
+                    backgroundColor: 'rgba(75, 50, 45, 0.7)',
                   }}
-                >
-                  <div
-                    className="h-full transition-all duration-300 ease-out"
-                    style={{
-                      width: `${Math.min(animatedProgress, 100)}%`,
-                      background: idx === 0
-                        ? 'linear-gradient(90deg, var(--gold), #d4a099)'
-                        : idx === 1
-                        ? 'linear-gradient(90deg, #d4a099, var(--accent))'
-                        : 'linear-gradient(90deg, var(--accent), #b5736a)',
-                    }}
-                  />
-                </div>
+                />
               ))}
             </div>
 
