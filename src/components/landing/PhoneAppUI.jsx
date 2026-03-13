@@ -53,21 +53,12 @@ const AppHeader = () => (
     className="flex items-center justify-between px-4 py-4 border-b"
     style={{ borderColor: 'var(--border)' }}
   >
-    <div className="flex items-center gap-1.5">
-      <span style={{ color: 'var(--cocoa)', fontWeight: '700', fontSize: '17px', letterSpacing: '-0.3px' }}>
-        Influ
-      </span>
-      <span
-        style={{
-          color: 'var(--accent)',
-          fontStyle: 'italic',
-          fontWeight: '600',
-          fontSize: '17px',
-          letterSpacing: '-0.3px',
-        }}
-      >
-        book
-      </span>
+    <div className="flex items-center">
+      <img
+        src="/influbook-logo.png"
+        alt="Influbook"
+        style={{ height: '20px', width: 'auto' }}
+      />
     </div>
     <img
       src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces&facepad=1.1"

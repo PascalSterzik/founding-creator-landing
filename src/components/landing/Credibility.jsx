@@ -1,7 +1,6 @@
 'use client';
 
 import FadeIn from '@/components/motion/FadeIn';
-import InflubookLogo from './InflubookLogo';
 import { Zap, Scale, Users } from 'lucide-react';
 
 export default function Credibility() {
@@ -35,14 +34,14 @@ export default function Credibility() {
         {/* Header */}
         <div className="text-center mb-16">
           <p className="text-sm font-semibold text-[var(--accent)] mb-3 tracking-wide">
-            Warum <InflubookLogo />?
+            Warum Influbook?
           </p>
           <h2 className="text-4xl sm:text-5xl font-bold text-[var(--text)] mb-4">
             Gebaut von jemandem, der das Problem{' '}
             <span className="italic text-[var(--accent)]">kennt</span>
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            <InflubookLogo /> entstand aus eigener Frustration mit bestehenden Lösungen. Ich wollte
+            Influbook entstand aus eigener Frustration mit bestehenden Lösungen. Ich wollte
             eine Plattform bauen, die ich selbst nutzen würde.
           </p>
         </div>

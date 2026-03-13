@@ -45,7 +45,10 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <main>{children}</main>
+        <div className="overflow-wrapper">
+          <main>{children}</main>
+        </div>
+        <div className="noise-overlay" aria-hidden="true" />
       </body>
     </html>
   )

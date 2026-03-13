@@ -111,7 +111,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop: Urgency Indicator (center) */}
-        <div className="navbar-progress hidden sm:flex">
+        <div className="navbar-progress hidden sm:!flex">
           <span className="navbar-progress-label">
             <span className="navbar-progress-count">{remaining}</span>
             <span className="navbar-progress-separator"> von </span>
@@ -127,9 +127,9 @@ export default function Navbar() {
         </div>
 
         {/* Mobile: progress bar OR CTA button */}
-        <div className="sm:hidden navbar-mobile-right">
+        <div className="flex sm:!hidden navbar-mobile-right">
           {!showCTA ? (
-            <div className="navbar-progress">
+            <div className="navbar-progress flex">
               <span className="navbar-progress-label">
                 <span className="navbar-progress-count">{remaining}</span>
                 <span className="navbar-progress-separator"> von </span>
@@ -165,7 +165,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop: CTA Button (right) */}
-        <div className={`navbar-desktop-cta hidden sm:flex ${showCTA ? 'navbar-desktop-cta-visible' : ''}`}>
+        <div className={`navbar-desktop-cta hidden sm:!flex ${showCTA ? 'navbar-desktop-cta-visible' : ''}`}>
           <button onClick={scrollToForm} className="navbar-cta-btn navbar-cta-btn-desktop">
             Jetzt bewerben
           </button>
