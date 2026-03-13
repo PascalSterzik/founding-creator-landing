@@ -1,14 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useSlotCount } from '@/lib/slotTracker';
-import FadeIn from '../motion/FadeIn';
 import PhoneMockup from './PhoneMockup';
 import PhoneAppUI from './PhoneAppUI';
 
 export default function Hero() {
-  const remaining = useSlotCount();
-  const taken = 50 - remaining;
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -170,16 +166,6 @@ export default function Hero() {
                 />
                 <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
               </motion.a>
-              <p
-                className="text-center mt-2"
-                style={{
-                  color: 'var(--text-muted)',
-                  fontSize: '13px',
-                  letterSpacing: '0.3px',
-                }}
-              >
-                ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
-              </p>
             </motion.div>
           </motion.div>
 
@@ -231,16 +217,6 @@ export default function Hero() {
               />
               <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </motion.a>
-            <p
-              className="mt-2 text-center w-full"
-              style={{
-                color: 'var(--text-muted)',
-                fontSize: '13px',
-                letterSpacing: '0.3px',
-              }}
-            >
-              ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
-            </p>
           </motion.div>
         </div>
       </div>
