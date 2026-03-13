@@ -1,10 +1,10 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'CreatorBridge — Founding Creator Bewerbung',
-  description: 'Bewirb dich als einer der ersten Founding Creator bei CreatorBridge. Strukturierte Brand Deals, von Creator für Creator. Die ersten 50 erhalten exklusive Vorteile.',
+  title: 'Influbook — Founding Creator Bewerbung',
+  description: 'Bewirb dich als einer der ersten Founding Creator bei Influbook. Strukturierte Brand Deals, von Creator für Creator. Die ersten 50 erhalten exklusive Vorteile.',
   openGraph: {
-    title: 'CreatorBridge — Founding Creator Bewerbung',
+    title: 'Influbook — Founding Creator Bewerbung',
     description: 'Strukturierte Brand Deals, von Creator für Creator.',
     locale: 'de_DE',
     type: 'website',
@@ -13,13 +13,13 @@ export const metadata = {
         url: 'https://founding-creator-landing.vercel.app/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CreatorBridge — Founding Creator Programm',
+        alt: 'Influbook — Founding Creator Programm',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CreatorBridge — Founding Creator Bewerbung',
+    title: 'Influbook — Founding Creator Bewerbung',
     description: 'Strukturierte Brand Deals, von Creator für Creator.',
     images: ['https://founding-creator-landing.vercel.app/og-image.png'],
   },

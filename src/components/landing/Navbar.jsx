@@ -28,7 +28,7 @@ const ProgressBar = ({ remaining, filledPercent, className = '' }) => (
     <div
       className="rounded-full overflow-hidden"
       style={{
-        width: '140px',
+        width: '120px',
         height: '3px',
         backgroundColor: 'rgba(201, 140, 131, 0.12)',
       }}
@@ -64,7 +64,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Show CTA when user scrolls to the CreatorBridge solution section
+    // Show CTA when user scrolls to the Influbook solution section
     const target = document.getElementById('solution-bridge');
     let observer;
     if (target) {
@@ -108,6 +108,11 @@ export default function Navbar() {
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}
         >
           {/* Nav pill */}
           <motion.nav
@@ -152,7 +157,7 @@ export default function Navbar() {
                   fontSize: '20px',
                 }}
               >
-                Creator
+                Influ
               </span>
               <span
                 style={{
@@ -163,7 +168,7 @@ export default function Navbar() {
                   fontSize: '20px',
                 }}
               >
-                Bridge
+                book
               </span>
             </motion.a>
 
@@ -217,7 +222,7 @@ export default function Navbar() {
                       <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
                       <span> / {TOTAL_SLOTS}</span> Bonusplätze
                     </span>
-                    <div className="rounded-full overflow-hidden mt-0.5" style={{ width: '100px', height: '2px', backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
+                    <div className="rounded-full overflow-hidden mt-0.5" style={{ width: '80px', height: '2px', backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
                       <div className="h-full rounded-full" style={{ width: `${filledPercent}%`, background: 'linear-gradient(90deg, var(--accent), #d4a099)' }} />
                     </div>
                   </motion.div>

@@ -61,7 +61,7 @@ const Scarcity = () => {
               <span className="italic text-[var(--gold)]">Founding-Bonus</span>
             </h2>
             <p className="text-lg text-gray-300">
-              12 Plätze sind bereits vergeben. Sichere dir deinen Founding Creator Status, bevor alle Plätze weg sind.
+              {50 - remaining > 0 ? `${50 - remaining} Plätze sind bereits vergeben. ` : ''}Sichere dir deinen Founding Creator Status, bevor alle Plätze weg sind.
             </p>
           </div>
         </FadeIn>

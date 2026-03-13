@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
-import CreatorBridgeLogo from './CreatorBridgeLogo';
+import InflubookLogo from './InflubookLogo';
 import { Check, X } from 'lucide-react';
 
 export default function ForWhom() {
@@ -36,7 +36,7 @@ export default function ForWhom() {
             <span className="italic text-[var(--accent)]">gedacht</span> ist
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            <CreatorBridgeLogo /> ist nicht für jeden. Das ist absichtlich.
+            <InflubookLogo /> ist nicht für jeden. Das ist absichtlich.
           </p>
         </div>
 

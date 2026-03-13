@@ -55,7 +55,7 @@ const AppHeader = () => (
   >
     <div className="flex items-center gap-1.5">
       <span style={{ color: 'var(--cocoa)', fontWeight: '700', fontSize: '17px', letterSpacing: '-0.3px' }}>
-        Creator
+        Influ
       </span>
       <span
         style={{
@@ -66,7 +66,7 @@ const AppHeader = () => (
           letterSpacing: '-0.3px',
         }}
       >
-        Bridge
+        book
       </span>
     </div>
     <img

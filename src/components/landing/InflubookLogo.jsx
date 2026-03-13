@@ -1,10 +1,10 @@
 'use client';
 
 /**
- * Inline "CreatorBridge" with logo styling (Cormorant Garamond, "Creator" bold + "Bridge" italic accent)
- * Use this wherever "CreatorBridge" appears in body copy.
+ * Inline "Influbook" with logo styling (Cormorant Garamond, "Influ" bold + "book" italic accent)
+ * Use this wherever "Influbook" appears in body copy.
  */
-export default function CreatorBridgeLogo({ size = 'inherit', className = '' }) {
+export default function InflubookLogo({ size = 'inherit', className = '' }) {
   return (
     <span className={className} style={{ whiteSpace: 'nowrap' }}>
       <span
@@ -14,7 +14,7 @@ export default function CreatorBridgeLogo({ size = 'inherit', className = '' }) 
           fontSize: size,
         }}
       >
-        Creator
+        Influ
       </span>
       <span
         style={{
@@ -25,7 +25,7 @@ export default function CreatorBridgeLogo({ size = 'inherit', className = '' }) 
           fontSize: size,
         }}
       >
-        Bridge
+        book
       </span>
     </span>
   );

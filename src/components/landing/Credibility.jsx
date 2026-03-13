@@ -1,7 +1,7 @@
 'use client';
 
 import FadeIn from '@/components/motion/FadeIn';
-import CreatorBridgeLogo from './CreatorBridgeLogo';
+import InflubookLogo from './InflubookLogo';
 import { Zap, Scale, Users } from 'lucide-react';
 
 export default function Credibility() {
@@ -10,7 +10,7 @@ export default function Credibility() {
       icon: Zap,
       title: 'Creator-First Architektur',
       description:
-        'Kein Marktplatz, auf dem du dich gegen tausende bewirbst. CreatorBridge verbindet dich gezielt mit Brands, die zu dir passen.',
+        'Kein Marktplatz, auf dem du dich gegen tausende bewirbst. Influbook verbindet dich gezielt mit Brands, die zu dir passen.',
       image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=350&fit=crop',
     },
     {
@@ -35,14 +35,14 @@ export default function Credibility() {
         {/* Header */}
         <div className="text-center mb-16">
           <p className="text-sm font-semibold text-[var(--accent)] mb-3 tracking-wide">
-            Warum <CreatorBridgeLogo />?
+            Warum <InflubookLogo />?
           </p>
           <h2 className="text-4xl sm:text-5xl font-bold text-[var(--text)] mb-4">
             Gebaut von jemandem, der das Problem{' '}
             <span className="italic text-[var(--accent)]">kennt</span>
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            <CreatorBridgeLogo /> entstand aus eigener Frustration mit bestehenden Lösungen. Ich wollte
+            <InflubookLogo /> entstand aus eigener Frustration mit bestehenden Lösungen. Ich wollte
             eine Plattform bauen, die ich selbst nutzen würde.
           </p>
         </div>

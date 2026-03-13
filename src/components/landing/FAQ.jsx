@@ -11,7 +11,7 @@ const FAQ = () => {
     {
       question: 'Was bedeutet Founding Creator?',
       answer:
-        'Founding Creator sind die ersten 50 Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und bekommst den vollen Founding-Bonus: Deine ersten 3 Kooperationen werden komplett kostenlos vermittelt, du erhältst persönliches Onboarding mit dem Gründerteam, höchste Matching-Priorität bei Brand Deals, direkten Draht zum Founder, Early Access zu neuen Features, einen Lifetime Founding-Creator-Badge und direkten Einfluss auf die Produktentwicklung.',
+        'Founding Creator sind die ersten 50 Creator im Influbook System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und bekommst den vollen Founding-Bonus: Deine ersten 3 Kooperationen werden komplett kostenlos vermittelt, du erhältst persönliches Onboarding mit dem Gründerteam, höchste Matching-Priorität bei Brand Deals, direkten Draht zum Founder, Early Access zu neuen Features, einen Lifetime Founding-Creator-Badge und direkten Einfluss auf die Produktentwicklung.',
     },
     {
       question: 'Brauche ich eine große Reichweite?',
@@ -21,12 +21,12 @@ const FAQ = () => {
     {
       question: 'Was ist der größte Vorteil?',
       answer:
-        'Du musst nicht mehr selbst Brands anschreiben. Keine Rejection mehr. CreatorBridge kennt deine Nische, deine Reichweite, deine Availability und matched dich mit Brands, die exakt zu dir passen. Brands kommen zu dir, nicht umgekehrt.',
+        'Du musst nicht mehr selbst Brands anschreiben. Keine Rejection mehr. Influbook kennt deine Nische, deine Reichweite, deine Availability und matched dich mit Brands, die exakt zu dir passen. Brands kommen zu dir, nicht umgekehrt.',
     },
     {
       question: 'Muss ich selbst weiter Akquise machen?',
       answer:
-        'Nein. Das System übernimmt das. Dein Job: Content erstellen. CreatorBridge matched, negotiiert (faire Konditionen), klärt die Technik. Du focusst auf das, was du kannst.',
+        'Nein. Das System übernimmt das. Dein Job: Content erstellen. Influbook matched, negotiiert (faire Konditionen), klärt die Technik. Du focusst auf das, was du kannst.',
     },
     {
       question: 'Was passiert nach meiner Bewerbung?',

@@ -8,7 +8,7 @@ const JsonLd = () => {
         name: 'Was bedeutet Founding Creator?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Founding Creator sind die ersten 50 Creator im CreatorBridge System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und dafür besondere Vorteile erhält: persönliches Onboarding, höchste Matching-Priorität bei Brand Deals, Einfluss auf die Produktentwicklung und einen Lifetime Founding-Creator-Badge.',
+          text: 'Founding Creator sind die ersten 50 Creator im Influbook System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und dafür besondere Vorteile erhält: persönliches Onboarding, höchste Matching-Priorität bei Brand Deals, Einfluss auf die Produktentwicklung und einen Lifetime Founding-Creator-Badge.',
         },
       },
       {
@@ -24,7 +24,7 @@ const JsonLd = () => {
         name: 'Was ist der größte Vorteil?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Du musst nicht mehr selbst Brands anschreiben. Keine Rejection mehr. CreatorBridge kennt deine Nische, deine Reichweite, deine Availability und matched dich mit Brands, die exakt zu dir passen. Brands kommen zu dir, nicht umgekehrt.',
+          text: 'Du musst nicht mehr selbst Brands anschreiben. Keine Rejection mehr. Influbook kennt deine Nische, deine Reichweite, deine Availability und matched dich mit Brands, die exakt zu dir passen. Brands kommen zu dir, nicht umgekehrt.',
         },
       },
       {
@@ -32,7 +32,7 @@ const JsonLd = () => {
         name: 'Muss ich selbst weiter Akquise machen?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Nein. Das System übernimmt das. Dein Job: Content erstellen. CreatorBridge matched, negotiiert (faire Konditionen), klärt die Technik. Du focusst auf das, was du kannst.',
+          text: 'Nein. Das System übernimmt das. Dein Job: Content erstellen. Influbook matched, negotiiert (faire Konditionen), klärt die Technik. Du focusst auf das, was du kannst.',
         },
       },
       {
@@ -65,16 +65,16 @@ const JsonLd = () => {
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'CreatorBridge: Founding Creator Program',
+    name: 'Influbook: Founding Creator Program',
     description:
-      'Sei einer der ersten Creator in CreatorBridge. Exklusive Founding-Vorteile für nur 50 Creator.',
-    url: 'https://creatorbridge.de',
+      'Sei einer der ersten Creator in Influbook. Exklusive Founding-Vorteile für nur 50 Creator.',
+    url: 'https://influbook.de',
     publisher: {
       '@type': 'Organization',
       name: 'Platri IT GmbH',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://creatorbridge.de/logo.png',
+        url: 'https://influbook.de/logo.png',
       },
     },
   };

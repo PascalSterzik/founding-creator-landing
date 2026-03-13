@@ -1,11 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useSlotCount } from '@/lib/slotTracker';
 import FadeIn from '../motion/FadeIn';
 import PhoneMockup from './PhoneMockup';
 import PhoneAppUI from './PhoneAppUI';
 
 export default function Hero() {
+  const remaining = useSlotCount();
+  const taken = 50 - remaining;
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -123,7 +126,7 @@ export default function Hero() {
               }}
               className="max-w-xl"
             >
-              Verbinde dich mit Brands, die zu deinem Publikum passen. Verdiene Geld mit Inhalten, die du ohnehin erstellst. <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '700' }}>Creator</span><span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600' }}>Bridge</span> macht Monetarisierung einfach.
+              Verbinde dich mit Brands, die zu deinem Publikum passen. Verdiene Geld mit Inhalten, die du ohnehin erstellst. <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '700' }}>Influ</span><span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600' }}>book</span> macht Monetarisierung einfach.
             </motion.p>
 
             {/* Desktop-only CTA Button (stays in left column) - 4s delay */}
@@ -180,7 +183,7 @@ export default function Hero() {
                 letterSpacing: '0.3px',
               }}
             >
-              ✓ Nur 50 Plätze verfügbar, 12 bereits vergeben
+              ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
             </motion.p>
           </motion.div>
 
@@ -240,7 +243,7 @@ export default function Hero() {
                 letterSpacing: '0.3px',
               }}
             >
-              ✓ Nur 50 Plätze verfügbar, 12 bereits vergeben
+              ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
             </p>
           </motion.div>
         </div>
