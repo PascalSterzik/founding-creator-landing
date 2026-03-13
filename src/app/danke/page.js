@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Crown, Check } from 'lucide-react';
 import { useSlotCount } from '@/lib/slotTracker';
 
-const TOTAL_SLOTS = 50;
+const TOTAL_SLOTS = 55;
 
 const perks = [
   'Erste 3 Kooperationen komplett kostenlos vermittelt',
@@ -277,7 +277,7 @@ export default function DankePage() {
           {/* Cal.com Inline Widget */}
           <div
             id="my-cal-inline-30min"
-            style={{ width: '100%', height: '500px', overflow: 'hidden' }}
+            style={{ width: '100%', height: '550px', overflow: 'auto' }}
           />
         </motion.div>
       </motion.div>

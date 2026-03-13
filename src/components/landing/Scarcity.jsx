@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import FadeIn from '@/components/motion/FadeIn';
 import { useSlotCount } from '@/lib/slotTracker';
 
-const TOTAL_SLOTS = 50;
+const TOTAL_SLOTS = 55;
 
 const Scarcity = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
@@ -57,11 +57,11 @@ const Scarcity = () => {
               Limitierte Bonus-Plätze
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Nur die ersten 50 Creator bekommen den vollen{' '}
+              Nur die ersten 55 Creator bekommen den vollen{' '}
               <span className="italic text-[var(--gold)]">Founding-Bonus</span>
             </h2>
             <p className="text-lg text-gray-300">
-              {50 - remaining > 0 ? `${50 - remaining} Plätze sind bereits vergeben. ` : ''}Sichere dir deinen Founding Creator Status, bevor alle Plätze weg sind.
+              {55 - remaining > 0 ? `${55 - remaining} Plätze sind bereits vergeben. ` : ''}Sichere dir deinen Founding Creator Status, bevor alle Plätze weg sind.
             </p>
           </div>
         </FadeIn>

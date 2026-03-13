@@ -8,7 +8,7 @@ import PhoneAppUI from './PhoneAppUI';
 
 export default function Hero() {
   const remaining = useSlotCount();
-  const taken = 50 - remaining;
+  const taken = 55 - remaining;
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -129,9 +129,9 @@ export default function Hero() {
               Verbinde dich mit Brands, die zu deinem Publikum passen. Verdiene Geld mit Inhalten, die du ohnehin erstellst. Influbook macht Monetarisierung einfach.
             </motion.p>
 
-            {/* Desktop-only CTA Button (stays in left column) - 4s delay */}
+            {/* Desktop-only CTA Button + micro text */}
             <motion.div
-              className="pt-2 hidden lg:block"
+              className="pt-2 hidden lg:flex flex-col items-start"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: 'easeOut', delay: 1.2 }}
@@ -169,22 +169,17 @@ export default function Hero() {
                 />
                 <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
               </motion.a>
+              <p
+                className="w-full text-center mt-2"
+                style={{
+                  color: 'var(--text-muted)',
+                  fontSize: '13px',
+                  letterSpacing: '0.3px',
+                }}
+              >
+                ✓ Nur 55 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
+              </p>
             </motion.div>
-
-            {/* Desktop-only micro text - appears with CTA */}
-            <motion.p
-              className="hidden lg:block text-center mt-3"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 1.5 }}
-              style={{
-                color: 'var(--text-muted)',
-                fontSize: '13px',
-                letterSpacing: '0.3px',
-              }}
-            >
-              ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
-            </motion.p>
           </motion.div>
 
           {/* Phone mockup: second on mobile, right column on desktop */}
@@ -236,14 +231,14 @@ export default function Hero() {
               <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </motion.a>
             <p
-              className="mt-2 text-center"
+              className="mt-2 text-center w-full"
               style={{
                 color: 'var(--text-muted)',
                 fontSize: '13px',
                 letterSpacing: '0.3px',
               }}
             >
-              ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
+              ✓ Nur 55 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
             </p>
           </motion.div>
         </div>

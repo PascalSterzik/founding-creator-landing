@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSlotCount } from '@/lib/slotTracker';
 
-const TOTAL_SLOTS = 50;
+const TOTAL_SLOTS = 55;
 
 /**
  * NAVBAR — ATTEMPT 4: BULLETPROOF MOBILE FIX

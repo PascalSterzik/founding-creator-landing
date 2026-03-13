@@ -11,7 +11,7 @@ const FAQ = () => {
     {
       question: 'Was bedeutet Founding Creator?',
       answer:
-        'Founding Creator sind die ersten 50 Creator im Influbook System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und bekommst den vollen Founding-Bonus: Deine ersten 3 Kooperationen werden komplett kostenlos vermittelt, du erhältst persönliches Onboarding mit dem Gründerteam, höchste Matching-Priorität bei Brand Deals, direkten Draht zum Founder, Early Access zu neuen Features, einen Lifetime Founding-Creator-Badge und direkten Einfluss auf die Produktentwicklung.',
+        'Founding Creator sind die ersten 55 Creator im Influbook System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und bekommst den vollen Founding-Bonus: Deine ersten 3 Kooperationen werden komplett kostenlos vermittelt, du erhältst persönliches Onboarding mit dem Gründerteam, höchste Matching-Priorität bei Brand Deals, direkten Draht zum Founder, Early Access zu neuen Features, einen Lifetime Founding-Creator-Badge und direkten Einfluss auf die Produktentwicklung.',
     },
     {
       question: 'Brauche ich eine große Reichweite?',
@@ -36,7 +36,7 @@ const FAQ = () => {
     {
       question: 'Ist ein Platz garantiert?',
       answer:
-        'Nein, leider nicht. Es sind begrenzt 50 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
+        'Nein, leider nicht. Es sind begrenzt 55 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
     },
     {
       question: 'Was passiert im Call?',
