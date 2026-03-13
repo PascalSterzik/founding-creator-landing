@@ -18,7 +18,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://founding-creator-landing.vercel.app/og-image.png',
+        url: 'https://founding-creator-landing.vercel.app/og-image-v2.png',
         width: 1200,
         height: 630,
         alt: 'Influbook — Founding Creator Programm',
@@ -29,7 +29,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Influbook — Founding Creator Bewerbung',
     description: 'Strukturierte Brand Deals, von Creator für Creator.',
-    images: ['https://founding-creator-landing.vercel.app/og-image.png'],
+    images: ['https://founding-creator-landing.vercel.app/og-image-v2.png'],
   },
 }
 
