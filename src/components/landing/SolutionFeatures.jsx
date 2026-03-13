@@ -641,8 +641,7 @@ export default function SolutionFeatures() {
         {/* Heading */}
         <FadeIn delay={0.1}>
           <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text)] mb-4 max-w-3xl">
-            So einfach läuft es mit{' '}
-            <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '700' }}>Influ</span><span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600' }}>book</span>
+            So einfach läuft es mit Influbook
           </h2>
         </FadeIn>
 

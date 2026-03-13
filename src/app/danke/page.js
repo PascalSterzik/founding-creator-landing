@@ -53,7 +53,17 @@ export default function DankePage() {
       config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
       calLink: "carlo-menga-zklpiz/30min",
     });
-    window.Cal.ns["30min"]("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    window.Cal.ns["30min"]("ui", {
+      hideEventTypeDetails: false,
+      layout: "month_view",
+      theme: "light",
+      cssVarsPerTheme: {
+        light: {
+          "cal-bg": "#ffffff",
+          "cal-text": "var(--text, #4B322D)",
+        },
+      },
+    });
   }, []);
 
   const containerVariants = {
@@ -176,40 +186,8 @@ export default function DankePage() {
           ))}
         </motion.div>
 
-        {/* Calendly Embed Section */}
-        <motion.div
-          variants={itemVariants}
-          className="bg-white rounded-[var(--radius-lg)] overflow-hidden mb-10"
-          style={{
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
-            border: '1px solid var(--border)',
-          }}
-        >
-          <div className="px-6 md:px-8 pt-6 md:pt-8 pb-4">
-            <h2
-              className="text-2xl md:text-3xl font-bold mb-2"
-              style={{ color: 'var(--text)' }}
-            >
-              Nächster Schritt:{' '}
-              <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>Call buchen</span>
-            </h2>
-            <p
-              className="text-base"
-              style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}
-            >
-              30 Minuten, ganz entspannt. Wir lernen dich kennen, besprechen deine Ziele und klären, wie Influbook dir konkret helfen kann.
-            </p>
-          </div>
-
-          {/* Cal.com Inline Widget */}
-          <div
-            id="my-cal-inline-30min"
-            style={{ width: '100%', height: '700px', overflow: 'auto' }}
-          />
-        </motion.div>
-
         {/* Founding Creator Benefits - Single Tier */}
-        <motion.div variants={itemVariants} className="mb-6">
+        <motion.div variants={itemVariants} className="mb-10">
           <h2
             className="text-2xl md:text-3xl font-bold text-center mb-2"
             style={{ color: 'var(--text)' }}
@@ -266,6 +244,38 @@ export default function DankePage() {
               ))}
             </div>
           </div>
+        </motion.div>
+
+        {/* Cal.com Embed Section */}
+        <motion.div
+          variants={itemVariants}
+          className="bg-white rounded-[var(--radius-lg)] overflow-hidden mb-6"
+          style={{
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
+            border: '1px solid var(--border)',
+          }}
+        >
+          <div className="px-6 md:px-8 pt-5 md:pt-6 pb-2">
+            <h2
+              className="text-2xl md:text-3xl font-bold mb-2"
+              style={{ color: 'var(--text)' }}
+            >
+              Nächster Schritt:{' '}
+              <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>Call buchen</span>
+            </h2>
+            <p
+              className="text-sm"
+              style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}
+            >
+              30 Minuten, ganz entspannt. Wir lernen dich kennen, besprechen deine Ziele und klären, wie Influbook dir konkret helfen kann.
+            </p>
+          </div>
+
+          {/* Cal.com Inline Widget */}
+          <div
+            id="my-cal-inline-30min"
+            style={{ width: '100%', height: '550px', overflow: 'auto' }}
+          />
         </motion.div>
       </motion.div>
     </div>
