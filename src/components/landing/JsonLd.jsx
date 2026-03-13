@@ -8,7 +8,7 @@ const JsonLd = () => {
         name: 'Was bedeutet Founding Creator?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Founding Creator sind die ersten 55 Creator im Influbook System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und dafür besondere Vorteile erhält: persönliches Onboarding, höchste Matching-Priorität bei Brand Deals, Einfluss auf die Produktentwicklung und einen Lifetime Founding-Creator-Badge.',
+          text: 'Founding Creator sind die ersten 50 Creator im Influbook System. Du gehörst zu einer exklusiven Gruppe, die von Anfang an dabei ist und dafür besondere Vorteile erhält: persönliches Onboarding, höchste Matching-Priorität bei Brand Deals, Einfluss auf die Produktentwicklung und einen Lifetime Founding-Creator-Badge.',
         },
       },
       {
@@ -48,7 +48,7 @@ const JsonLd = () => {
         name: 'Ist ein Platz garantiert?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Nein, leider nicht. Es sind begrenzt 55 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
+          text: 'Nein, leider nicht. Es sind begrenzt 50 Plätze, first come first served. Wenn die voll sind, voll sind sie. Deshalb: Wenn du Interesse hast, bewirb dich jetzt, nicht nächste Woche.',
         },
       },
       {
@@ -67,7 +67,7 @@ const JsonLd = () => {
     '@type': 'WebPage',
     name: 'Influbook: Founding Creator Program',
     description:
-      'Sei einer der ersten Creator in Influbook. Exklusive Founding-Vorteile für nur 55 Creator.',
+      'Sei einer der ersten Creator in Influbook. Exklusive Founding-Vorteile für nur 50 Creator.',
     url: 'https://influbook.de',
     publisher: {
       '@type': 'Organization',

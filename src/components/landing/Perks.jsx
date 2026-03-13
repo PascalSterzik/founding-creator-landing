@@ -38,7 +38,7 @@ const perks = [
 
 export default function Perks() {
   const remaining = useSlotCount();
-  const taken = 55 - remaining;
+  const taken = 50 - remaining;
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--bg-ivory)]">
@@ -54,7 +54,7 @@ export default function Perks() {
             {' '}bekommst
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            {`55 Plätze.${taken > 0 ? ` ${taken} bereits vergeben.` : ''} Jeder Founding Creator bekommt den gleichen vollen Bonus.`}
+            {`50 Plätze.${taken > 0 ? ` ${taken} bereits vergeben.` : ''} Jeder Founding Creator bekommt den gleichen vollen Bonus.`}
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export default function Perks() {
                       Founding Creator
                     </h3>
                     <p className="text-sm text-[var(--text-secondary)]">
-                      {`Limitiert auf 55 Plätze${taken > 0 ? `, ${taken} bereits vergeben` : ''}`}
+                      {`Limitiert auf 50 Plätze${taken > 0 ? `, ${taken} bereits vergeben` : ''}`}
                     </p>
                   </div>
                 </div>

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Crown, Check } from 'lucide-react';
 import { useSlotCount } from '@/lib/slotTracker';
 
-const TOTAL_SLOTS = 55;
+const TOTAL_SLOTS = 50;
 
 const perks = [
   'Erste 3 Kooperationen komplett kostenlos vermittelt',

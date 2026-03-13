@@ -8,7 +8,7 @@ import PhoneAppUI from './PhoneAppUI';
 
 export default function Hero() {
   const remaining = useSlotCount();
-  const taken = 55 - remaining;
+  const taken = 50 - remaining;
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -131,10 +131,11 @@ export default function Hero() {
 
             {/* Desktop-only CTA Button + micro text */}
             <motion.div
-              className="pt-2 hidden lg:flex flex-col items-start"
+              className="pt-2 hidden lg:flex flex-col items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: 'easeOut', delay: 1.2 }}
+              style={{ width: 'fit-content' }}
             >
               <motion.a
                 href="#bewerbung"
@@ -170,14 +171,14 @@ export default function Hero() {
                 <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
               </motion.a>
               <p
-                className="w-full text-center mt-2"
+                className="text-center mt-2"
                 style={{
                   color: 'var(--text-muted)',
                   fontSize: '13px',
                   letterSpacing: '0.3px',
                 }}
               >
-                ✓ Nur 55 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
+                ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
               </p>
             </motion.div>
           </motion.div>
@@ -238,7 +239,7 @@ export default function Hero() {
                 letterSpacing: '0.3px',
               }}
             >
-              ✓ Nur 55 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
+              ✓ Nur 50 Bonusplätze verfügbar{taken > 0 ? `, ${taken} bereits vergeben` : ''}
             </p>
           </motion.div>
         </div>

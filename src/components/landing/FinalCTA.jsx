@@ -6,7 +6,7 @@ import { useSlotCount } from '@/lib/slotTracker';
 
 const FinalCTA = () => {
   const remaining = useSlotCount();
-  const taken = 55 - remaining;
+  const taken = 50 - remaining;
   return (
     <section className="py-16 md:py-24 px-4 md:px-8 bg-gradient-to-br from-[var(--cocoa)] to-[var(--cocoa-deep)]">
       <div className="max-w-3xl mx-auto text-center">
@@ -19,7 +19,7 @@ const FinalCTA = () => {
 
         <FadeIn delay={0.1}>
           <p className="text-lg text-gray-200 mb-10">
-            Nur die ersten 55 Creator bekommen den vollen Founding-Bonus.{taken > 0 ? ` ${taken} Plätze sind bereits vergeben.` : ''}
+            Nur die ersten 50 Creator bekommen den vollen Founding-Bonus.{taken > 0 ? ` ${taken} Plätze sind bereits vergeben.` : ''}
           </p>
         </FadeIn>
 
