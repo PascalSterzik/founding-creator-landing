@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSlotCount } from '@/lib/slotTracker';
 
@@ -51,6 +51,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
+  const [entranceComplete, setEntranceComplete] = useState(false);
+  const containerRef = useRef(null);
 
   const remaining = useSlotCount();
   const filledPercent = ((remaining / TOTAL_SLOTS) * 100);
@@ -104,14 +106,22 @@ export default function Navbar() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          ref={containerRef}
           className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 sm:px-6"
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          onAnimationComplete={() => {
+            setEntranceComplete(true);
+            // Remove Framer Motion's transform after entrance animation.
+            // On mobile, transform on a fixed element causes it to shift
+            // when the browser address bar collapses/expands on scroll.
+            if (containerRef.current) {
+              containerRef.current.style.transform = 'none';
+            }
+          }}
           style={{
-            willChange: 'transform',
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
+            willChange: entranceComplete ? 'auto' : 'transform',
           }}
         >
           {/* Nav pill */}
