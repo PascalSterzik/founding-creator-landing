@@ -173,8 +173,8 @@ export default function Hero() {
 
             {/* Desktop-only micro text - appears with CTA */}
             <motion.p
-              className="hidden lg:block"
-              initial={{ opacity: 0, y: 20 }}
+              className="hidden lg:block text-center mt-3"
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: 'easeOut', delay: 1.5 }}
               style={{
@@ -236,7 +236,7 @@ export default function Hero() {
               <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt als Founding Creator bewerben</span>
             </motion.a>
             <p
-              className="mt-4"
+              className="mt-2 text-center"
               style={{
                 color: 'var(--text-muted)',
                 fontSize: '13px',

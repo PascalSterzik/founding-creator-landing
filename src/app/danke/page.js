@@ -57,6 +57,9 @@ export default function DankePage() {
       hideEventTypeDetails: false,
       layout: "month_view",
       theme: "light",
+      styles: {
+        branding: { brandColor: "#C98C83" },
+      },
       cssVarsPerTheme: {
         light: {
           "cal-bg": "#ffffff",
@@ -274,7 +277,7 @@ export default function DankePage() {
           {/* Cal.com Inline Widget */}
           <div
             id="my-cal-inline-30min"
-            style={{ width: '100%', height: '550px', overflow: 'auto' }}
+            style={{ width: '100%', height: '500px', overflow: 'hidden' }}
           />
         </motion.div>
       </motion.div>
