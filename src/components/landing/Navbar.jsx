@@ -1,67 +1,42 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useSlotCount } from '@/lib/slotTracker';
 
 const TOTAL_SLOTS = 50;
 
-// IMPORTANT: ProgressBar is defined OUTSIDE of Navbar so React sees the same
-// component type across re-renders. If defined inside, every Navbar re-render
-// creates a new function → React unmounts/remounts the DOM → CSS animation restarts.
-const ProgressBar = ({ remaining, filledPercent, className = '' }) => (
-  <div className={`flex flex-col items-center gap-1 flex-shrink-0 ${className}`}>
-    <span
-      style={{
-        color: 'var(--text-secondary)',
-        fontSize: '12px',
-        fontWeight: '600',
-        letterSpacing: '0.2px',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
-      <span style={{ color: 'var(--text-muted)' }}> von </span>
-      <span>{TOTAL_SLOTS}</span>
-      {' '}Bonusplätze
-    </span>
-    <div
-      className="rounded-full overflow-hidden"
-      style={{
-        width: '120px',
-        height: '3px',
-        backgroundColor: 'rgba(201, 140, 131, 0.12)',
-      }}
-    >
-      {/* CSS @keyframes animation: plays once on mount, holds final state via
-          animation-fill-mode: both. Never restarts because the DOM element
-          persists across parent re-renders (component defined outside). */}
-      <div
-        className="h-full rounded-full navbar-progress-fill"
-        style={{
-          background: 'linear-gradient(90deg, var(--accent), #d4a099)',
-          '--target-width': `${filledPercent}%`,
-        }}
-      />
-    </div>
-  </div>
-);
-
+/**
+ * NAVBAR — ZERO FRAMER MOTION
+ *
+ * Previous attempts to fix the mobile header shift used Framer Motion
+ * with various workarounds. All failed because Framer Motion applies
+ * CSS transforms that cause rendering issues on mobile when the browser
+ * address bar collapses/expands during scroll.
+ *
+ * This version uses ONLY:
+ * - position: fixed (outer wrapper, no transforms ever)
+ * - CSS @keyframes for entrance animation
+ * - CSS transitions for state changes (scroll, CTA reveal)
+ * - Zero transform properties anywhere
+ */
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const remaining = useSlotCount();
-  const filledPercent = ((remaining / TOTAL_SLOTS) * 100);
+  const filledPercent = (remaining / TOTAL_SLOTS) * 100;
 
   useEffect(() => {
+    // Trigger entrance animation after mount
+    requestAnimationFrame(() => setMounted(true));
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
-    window.addEventListener('scroll', handleScroll);
-
-    // Show CTA when user scrolls to the Influbook solution section
+    // Show CTA when user scrolls to the solution section
     const target = document.getElementById('solution-bridge');
     let observer;
     if (target) {
@@ -78,9 +53,7 @@ export default function Navbar() {
     }
 
     // Fallback: show CTA after 30 seconds regardless
-    const timer = setTimeout(() => {
-      setShowCTA(true);
-    }, 30000);
+    const timer = setTimeout(() => setShowCTA(true), 30000);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -98,180 +71,241 @@ export default function Navbar() {
   };
 
   return (
-    <>
-      {/* CRITICAL: This outer div is a plain HTML element with position: fixed.
-          It must NEVER have a CSS transform applied (no Framer Motion, no translateY).
-          On mobile browsers, when the address bar collapses/expands during scroll,
-          a fixed element WITH a transform shifts visually. Without transform, it
-          stays firmly anchored at top: 0. All animations live on the inner motion.nav. */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 pt-4">
-        {/* Nav pill: entrance animation + width expansion both live here */}
-        <motion.nav
-          className="flex flex-wrap items-center justify-between px-4 sm:px-8 py-3 w-full"
-          initial={{ y: -80, opacity: 0, maxWidth: '30rem' }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            maxWidth: showCTA ? '64rem' : '30rem',
-          }}
-          transition={{
-            y: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-            opacity: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-            maxWidth: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '16px 16px 0',
+        /* NO transform, NO will-change, NO backdrop-filter on this element */
+      }}
+    >
+      <nav
+        className="navbar-pill"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '12px 16px',
+          width: '100%',
+          maxWidth: showCTA ? '64rem' : '30rem',
+          borderRadius: '100px',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          backgroundColor: isScrolled
+            ? 'rgba(253, 250, 249, 0.92)'
+            : 'rgba(253, 250, 249, 0.75)',
+          border: isScrolled
+            ? '1px solid rgba(75, 50, 45, 0.1)'
+            : '1px solid rgba(75, 50, 45, 0.06)',
+          boxShadow: isScrolled
+            ? '0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04)'
+            : '0 4px 16px rgba(0, 0, 0, 0.06)',
+          gap: '8px',
+          opacity: mounted ? 1 : 0,
+          /* CSS transitions for all state changes, NO transforms */
+          transition: [
+            'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+            'max-width 2.5s cubic-bezier(0.16, 1, 0.3, 1)',
+            'background-color 0.3s ease',
+            'border 0.3s ease',
+            'box-shadow 0.3s ease',
+          ].join(', '),
+        }}
+      >
+        {/* Logo (left) */}
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           style={{
-            borderRadius: '100px',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            backgroundColor: isScrolled
-              ? 'rgba(253, 250, 249, 0.92)'
-              : 'rgba(253, 250, 249, 0.75)',
-            border: isScrolled
-              ? '1px solid rgba(75, 50, 45, 0.1)'
-              : '1px solid rgba(75, 50, 45, 0.06)',
-            boxShadow: isScrolled
-              ? '0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04)'
-              : '0 4px 16px rgba(0, 0, 0, 0.06)',
-            transition: 'background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease',
-            gap: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0,
+            cursor: 'pointer',
+            textDecoration: 'none',
           }}
         >
-          {/* Logo (left) */}
-          <motion.a
-            href="#"
-            className="flex items-center gap-1 cursor-pointer flex-shrink-0"
-            whileHover={{ scale: 1.02 }}
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+          <img
+            src="/influbook-logo.png"
+            alt="Influbook"
+            style={{
+              height: '28px',
+              width: 'auto',
+              display: 'block',
+            }}
+          />
+        </a>
+
+        {/* Desktop: Urgency Indicator (center) */}
+        <div
+          className="hidden sm:flex"
+          style={{
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '4px',
+            flexShrink: 0,
+          }}
+        >
+          <span
+            style={{
+              color: 'var(--text-secondary)',
+              fontSize: '12px',
+              fontWeight: '600',
+              letterSpacing: '0.2px',
+              whiteSpace: 'nowrap',
             }}
           >
-            <span
+            <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
+            <span style={{ color: 'var(--text-muted)' }}> von </span>
+            <span>{TOTAL_SLOTS}</span>
+            {' '}Bonusplätze
+          </span>
+          <div
+            style={{
+              width: '120px',
+              height: '3px',
+              borderRadius: '9999px',
+              overflow: 'hidden',
+              backgroundColor: 'rgba(201, 140, 131, 0.12)',
+            }}
+          >
+            <div
+              className="navbar-progress-fill"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                color: 'var(--cocoa)',
-                fontWeight: '700',
-                fontSize: '20px',
+                height: '100%',
+                borderRadius: '9999px',
+                background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+                '--target-width': `${filledPercent}%`,
               }}
-            >
-              Influ
-            </span>
-            <span
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                color: 'var(--accent)',
-                fontStyle: 'italic',
-                fontWeight: '600',
-                fontSize: '20px',
-              }}
-            >
-              book
-            </span>
-          </motion.a>
-
-          {/* Desktop: Urgency Indicator (always visible, center) */}
-          <ProgressBar remaining={remaining} filledPercent={filledPercent} className="hidden sm:flex" />
-
-          {/* Mobile: progress bar before CTA, then button + tiny bar after CTA */}
-          <div className="sm:hidden flex flex-col items-end">
-            {!showCTA ? (
-              /* Before CTA: show progress bar on mobile */
-              <ProgressBar remaining={remaining} filledPercent={filledPercent} />
-            ) : (
-              /* After CTA: button with compact progress bar directly underneath */
-              <div className="flex flex-col items-center">
-                <motion.button
-                  onClick={scrollToForm}
-                  className="relative px-5 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer whitespace-nowrap"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ opacity: { duration: 0.5, ease: 'easeOut' } }}
-                  style={{
-                    background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
-                    boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                  }}
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: '0 8px 20px rgba(201, 140, 131, 0.45), 0 3px 6px rgba(201, 140, 131, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
-                  }}
-                  whileTap={{
-                    scale: 0.96,
-                    boxShadow: '0 1px 4px rgba(201, 140, 131, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
-                  }}
-                >
-                  <div
-                    className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none"
-                    style={{
-                      background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%)',
-                    }}
-                  />
-                  <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
-                </motion.button>
-                {/* Compact progress bar directly under button */}
-                <motion.div
-                  className="flex flex-col items-center mt-1"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4, delay: 0.3 }}
-                >
-                  <span style={{ color: 'var(--text-muted)', fontSize: '9px', fontWeight: '600', whiteSpace: 'nowrap' }}>
-                    <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
-                    <span> / {TOTAL_SLOTS}</span> Bonusplätze
-                  </span>
-                  <div className="rounded-full overflow-hidden mt-0.5" style={{ width: '80px', height: '2px', backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
-                    <div className="h-full rounded-full" style={{ width: `${filledPercent}%`, background: 'linear-gradient(90deg, var(--accent), #d4a099)' }} />
-                  </div>
-                </motion.div>
-              </div>
-            )}
+            />
           </div>
+        </div>
 
-          {/* Desktop: CTA Button (right side, appears with simple opacity fade) */}
-          <motion.div
-            className="hidden sm:flex flex-shrink-0"
-            initial={{ width: 0, marginLeft: 0, opacity: 0 }}
-            animate={{
-              width: showCTA ? 160 : 0,
-              marginLeft: showCTA ? 12 : 0,
-              opacity: showCTA ? 1 : 0,
-            }}
-            transition={{
-              width: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
-              marginLeft: { duration: 2.5, ease: [0.16, 1, 0.3, 1] },
-              opacity: { duration: 0.8, ease: 'easeOut', delay: 0.4 },
-            }}
-            style={{ overflow: 'visible' }}
-          >
-            <motion.button
-              onClick={scrollToForm}
-              className="relative px-5 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden cursor-pointer whitespace-nowrap"
-              style={{
-                background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
-                boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                width: '160px',
-              }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0 8px 20px rgba(201, 140, 131, 0.45), 0 3px 6px rgba(201, 140, 131, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
-              }}
-              whileTap={{
-                scale: 0.96,
-                boxShadow: '0 1px 4px rgba(201, 140, 131, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1)',
-              }}
-            >
-              <div
-                className="absolute inset-x-0 top-0 h-[45%] rounded-t-full pointer-events-none"
+        {/* Mobile: progress bar OR CTA button */}
+        <div className="sm:hidden" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+          {!showCTA ? (
+            /* Before CTA: show progress bar on mobile */
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+              <span
                 style={{
-                  background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%)',
+                  color: 'var(--text-secondary)',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  letterSpacing: '0.2px',
+                  whiteSpace: 'nowrap',
                 }}
-              />
-              <span className="relative" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)' }}>Jetzt bewerben</span>
-            </motion.button>
-          </motion.div>
-        </motion.nav>
-      </div>
-    </>
+              >
+                <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
+                <span style={{ color: 'var(--text-muted)' }}> von </span>
+                <span>{TOTAL_SLOTS}</span>
+                {' '}Bonusplätze
+              </span>
+              <div
+                style={{
+                  width: '120px',
+                  height: '3px',
+                  borderRadius: '9999px',
+                  overflow: 'hidden',
+                  backgroundColor: 'rgba(201, 140, 131, 0.12)',
+                }}
+              >
+                <div
+                  className="navbar-progress-fill"
+                  style={{
+                    height: '100%',
+                    borderRadius: '9999px',
+                    background: 'linear-gradient(90deg, var(--accent), #d4a099)',
+                    '--target-width': `${filledPercent}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            /* After CTA: button with compact progress bar */
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <button
+                onClick={scrollToForm}
+                className="navbar-cta-btn"
+                style={{
+                  position: 'relative',
+                  padding: '10px 20px',
+                  borderRadius: '9999px',
+                  color: 'white',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+                  boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)',
+                  overflow: 'hidden',
+                }}
+              >
+                <span style={{ position: 'relative', zIndex: 1 }}>Jetzt bewerben</span>
+              </button>
+              {/* Compact progress bar under button */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '4px' }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: '9px', fontWeight: '600', whiteSpace: 'nowrap' }}>
+                  <span style={{ color: 'var(--accent)', fontWeight: '700' }}>{remaining}</span>
+                  <span> / {TOTAL_SLOTS}</span> Bonusplätze
+                </span>
+                <div style={{ width: '80px', height: '2px', borderRadius: '9999px', overflow: 'hidden', marginTop: '2px', backgroundColor: 'rgba(201, 140, 131, 0.12)' }}>
+                  <div style={{ height: '100%', borderRadius: '9999px', width: `${filledPercent}%`, background: 'linear-gradient(90deg, var(--accent), #d4a099)' }} />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop: CTA Button (right side) */}
+        <div
+          className="hidden sm:flex"
+          style={{
+            flexShrink: 0,
+            width: showCTA ? '160px' : '0px',
+            marginLeft: showCTA ? '12px' : '0px',
+            opacity: showCTA ? 1 : 0,
+            overflow: 'visible',
+            transition: [
+              'width 2.5s cubic-bezier(0.16, 1, 0.3, 1)',
+              'margin-left 2.5s cubic-bezier(0.16, 1, 0.3, 1)',
+              'opacity 0.8s ease-out 0.4s',
+            ].join(', '),
+          }}
+        >
+          <button
+            onClick={scrollToForm}
+            className="navbar-cta-btn"
+            style={{
+              position: 'relative',
+              padding: '10px 20px',
+              borderRadius: '9999px',
+              color: 'white',
+              fontWeight: '600',
+              fontSize: '14px',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              width: '160px',
+              background: 'linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%)',
+              boxShadow: '0 4px 12px rgba(201, 140, 131, 0.35), 0 2px 4px rgba(201, 140, 131, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15)',
+              textShadow: '0 1px 2px rgba(0, 0, 0, 0.15)',
+              overflow: 'hidden',
+            }}
+          >
+            <span style={{ position: 'relative', zIndex: 1 }}>Jetzt bewerben</span>
+          </button>
+        </div>
+      </nav>
+    </div>
   );
 }

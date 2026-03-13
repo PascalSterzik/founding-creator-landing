@@ -3,6 +3,14 @@ import './globals.css'
 export const metadata = {
   title: 'Influbook — Founding Creator Bewerbung',
   description: 'Bewirb dich als einer der ersten Founding Creator bei Influbook. Strukturierte Brand Deals, von Creator für Creator. Die ersten 50 erhalten exklusive Vorteile.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'Influbook — Founding Creator Bewerbung',
     description: 'Strukturierte Brand Deals, von Creator für Creator.',
