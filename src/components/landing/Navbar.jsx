@@ -126,42 +126,41 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile: progress bar OR CTA button */}
+        {/* Mobile: progress bar AND CTA button (CSS crossfade, no unmount) */}
         <div className="flex sm:!hidden navbar-mobile-right">
-          {!showCTA ? (
-            <div className="navbar-progress flex">
-              <span className="navbar-progress-label">
+          {/* Progress bar — fades out when CTA appears */}
+          <div className={`navbar-progress flex navbar-mobile-progress-fade ${showCTA ? 'navbar-fade-out' : ''}`}>
+            <span className="navbar-progress-label">
+              <span className="navbar-progress-count">{remaining}</span>
+              <span className="navbar-progress-separator"> von </span>
+              <span>{TOTAL_SLOTS}</span>
+              {' '}Bonusplätze
+            </span>
+            <div className="navbar-progress-track">
+              <div
+                className="navbar-progress-fill"
+                style={{ '--target-width': `${filledPercent}%` }}
+              />
+            </div>
+          </div>
+          {/* CTA button — fades in when triggered */}
+          <div className={`navbar-mobile-cta-group navbar-mobile-cta-fade ${showCTA ? 'navbar-fade-in' : ''}`}>
+            <button onClick={scrollToForm} className="navbar-cta-btn">
+              Jetzt bewerben
+            </button>
+            <div className="navbar-micro-progress">
+              <span className="navbar-micro-label">
                 <span className="navbar-progress-count">{remaining}</span>
-                <span className="navbar-progress-separator"> von </span>
-                <span>{TOTAL_SLOTS}</span>
-                {' '}Bonusplätze
+                <span> / {TOTAL_SLOTS}</span> Bonusplätze
               </span>
-              <div className="navbar-progress-track">
+              <div className="navbar-micro-track">
                 <div
-                  className="navbar-progress-fill"
-                  style={{ '--target-width': `${filledPercent}%` }}
+                  className="navbar-micro-bar"
+                  style={{ width: `${filledPercent}%` }}
                 />
               </div>
             </div>
-          ) : (
-            <div className="navbar-mobile-cta-group">
-              <button onClick={scrollToForm} className="navbar-cta-btn">
-                Jetzt bewerben
-              </button>
-              <div className="navbar-micro-progress">
-                <span className="navbar-micro-label">
-                  <span className="navbar-progress-count">{remaining}</span>
-                  <span> / {TOTAL_SLOTS}</span> Bonusplätze
-                </span>
-                <div className="navbar-micro-track">
-                  <div
-                    className="navbar-micro-bar"
-                    style={{ width: `${filledPercent}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
 
         {/* Desktop: CTA Button (right) */}

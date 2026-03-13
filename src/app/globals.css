@@ -213,6 +213,41 @@
   align-items: flex-end;
 }
 
+/* Mobile crossfade animation — both elements stacked via position */
+.navbar-mobile-right {
+  position: relative;
+}
+.navbar-mobile-progress-fade,
+.navbar-mobile-cta-fade {
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.navbar-mobile-progress-fade {
+  opacity: 1;
+  visibility: visible;
+}
+.navbar-mobile-progress-fade.navbar-fade-out {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  pointer-events: none;
+}
+.navbar-mobile-cta-fade {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  pointer-events: none;
+}
+.navbar-mobile-cta-fade.navbar-fade-in {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  pointer-events: auto;
+}
+
 /* Mobile CTA group (button + micro progress) */
 .navbar-mobile-cta-group {
   display: flex;
