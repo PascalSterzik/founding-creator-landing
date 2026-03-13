@@ -85,17 +85,220 @@ body::after {
   50% { transform: translateY(-8px); }
 }
 
-/* Navbar progress bar: CSS-only animation that plays once and holds.
-   Uses forwards fill-mode so it never resets on React re-renders. */
+/* ============================================================
+   NAVBAR — ALL STYLES
+   NO backdrop-filter (causes iOS fixed-position jitter)
+   NO transforms (causes mobile address bar shift)
+   Scroll state via classList, not React re-renders
+   ============================================================ */
+
+/* Fixed wrapper: anchored to viewport top, never moves */
+.navbar-fixed-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  padding: 16px 16px 0;
+  pointer-events: none; /* pass clicks through to page, nav has pointer-events:auto */
+}
+
+/* The pill-shaped nav bar */
+.navbar-pill {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  width: 100%;
+  max-width: 30rem;
+  border-radius: 100px;
+  gap: 8px;
+  pointer-events: auto;
+  /* SOLID background, NO backdrop-filter */
+  background-color: rgba(253, 250, 249, 0.96);
+  border: 1px solid rgba(75, 50, 45, 0.06);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  /* Transitions for opacity (entrance) and max-width (CTA expand) */
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              max-width 2.5s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* Scrolled state: applied via JS classList, NOT React state */
+.navbar-pill.navbar-scrolled {
+  background-color: rgba(253, 250, 249, 0.98);
+  border-color: rgba(75, 50, 45, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Expanded state when CTA is visible */
+.navbar-pill.navbar-expanded {
+  max-width: 64rem;
+}
+
+@media (min-width: 640px) {
+  .navbar-pill {
+    padding: 12px 32px;
+  }
+}
+
+/* Logo link */
+.navbar-logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.navbar-logo-img {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+/* Progress bar (desktop center + mobile fallback) */
+.navbar-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.navbar-progress-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.navbar-progress-count {
+  color: var(--accent);
+  font-weight: 700;
+}
+.navbar-progress-separator {
+  color: var(--text-muted);
+}
+.navbar-progress-track {
+  width: 120px;
+  height: 3px;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: rgba(201, 140, 131, 0.12);
+}
+
+/* Progress bar fill: CSS animation, plays once */
 @keyframes progress-fill {
   from { width: 0; }
   to { width: var(--target-width, 76%); }
 }
-
 .navbar-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--accent), #d4a099);
   width: var(--target-width, 76%);
   animation: progress-fill 4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
 }
+
+/* Mobile right area */
+.navbar-mobile-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Mobile CTA group (button + micro progress) */
+.navbar-mobile-cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.navbar-micro-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4px;
+}
+.navbar-micro-label {
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.navbar-micro-track {
+  width: 80px;
+  height: 2px;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 2px;
+  background-color: rgba(201, 140, 131, 0.12);
+}
+.navbar-micro-bar {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--accent), #d4a099);
+}
+
+/* CTA Button */
+.navbar-cta-btn {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #d4a099 0%, var(--accent) 40%, #b5736a 100%);
+  box-shadow: 0 4px 12px rgba(201, 140, 131, 0.35),
+              0 2px 4px rgba(201, 140, 131, 0.2),
+              inset 0 1px 1px rgba(255, 255, 255, 0.3),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.2s ease, filter 0.2s ease;
+}
+.navbar-cta-btn:hover {
+  box-shadow: 0 8px 20px rgba(201, 140, 131, 0.45),
+              0 3px 6px rgba(201, 140, 131, 0.25),
+              inset 0 1px 1px rgba(255, 255, 255, 0.35),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+  filter: brightness(1.05);
+}
+.navbar-cta-btn:active {
+  box-shadow: 0 1px 4px rgba(201, 140, 131, 0.3),
+              inset 0 2px 4px rgba(0, 0, 0, 0.15),
+              inset 0 -1px 1px rgba(255, 255, 255, 0.1);
+  filter: brightness(0.97);
+}
+.navbar-cta-btn-desktop {
+  width: 160px;
+}
+
+/* Desktop CTA container: animate width/opacity via CSS class */
+.navbar-desktop-cta {
+  flex-shrink: 0;
+  width: 0;
+  margin-left: 0;
+  opacity: 0;
+  overflow: visible;
+  transition: width 2.5s cubic-bezier(0.16, 1, 0.3, 1),
+              margin-left 2.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.8s ease-out 0.4s;
+}
+.navbar-desktop-cta-visible {
+  width: 160px;
+  margin-left: 12px;
+  opacity: 1;
+}
+
+/* ============================================================
+   END NAVBAR STYLES
+   ============================================================ */
 
 /* Smooth card hover */
 .card-lift {
@@ -104,19 +307,6 @@ body::after {
 }
 .card-lift:hover {
   transform: translateY(-4px);
-}
-
-/* Navbar CTA button hover/active states (replaces Framer Motion) */
-.navbar-cta-btn {
-  transition: box-shadow 0.2s ease, filter 0.2s ease;
-}
-.navbar-cta-btn:hover {
-  box-shadow: 0 8px 20px rgba(201, 140, 131, 0.45), 0 3px 6px rgba(201, 140, 131, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.15) !important;
-  filter: brightness(1.05);
-}
-.navbar-cta-btn:active {
-  box-shadow: 0 1px 4px rgba(201, 140, 131, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(255, 255, 255, 0.1) !important;
-  filter: brightness(0.97);
 }
 
 /* Selection color */
