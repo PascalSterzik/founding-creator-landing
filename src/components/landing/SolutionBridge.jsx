@@ -46,14 +46,13 @@ function PhoneAppOpen({ progress }) {
       {/* Logo */}
       <div
         style={{ opacity: logoOpacity, transform: `scale(${logoScale})` }}
-        className="flex items-center gap-1 mb-4"
+        className="flex items-center justify-center mb-4"
       >
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--cocoa)', fontWeight: '700', fontSize: '28px' }}>
-          Creator
-        </span>
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600', fontSize: '28px' }}>
-          Bridge
-        </span>
+        <img
+          src="/influbook-logo.png"
+          alt="Influbook"
+          style={{ height: '32px', width: 'auto' }}
+        />
       </div>
 
       {/* "Willkommen, Creator." */}
@@ -372,18 +371,7 @@ export default function SolutionBridge() {
 
           <FadeIn delay={0.1}>
             <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--text)] mb-4 max-w-3xl mx-auto">
-              <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
-                Creator
-              </span>
-              <span
-                style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  color: 'var(--accent)',
-                  fontStyle: 'italic',
-                }}
-              >
-                Bridge
-              </span>
+              Influbook
             </h2>
           </FadeIn>
 

@@ -48,19 +48,7 @@ const Transformation = () => {
                 className="text-xl font-bold mb-6 text-center"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Ohne{' '}
-                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
-                  Creator
-                </span>
-                <span
-                  style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    color: 'var(--accent)',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  Bridge
-                </span>
+                Ohne Influbook
               </h3>
 
               {/* Before Image */}
@@ -138,19 +126,7 @@ const Transformation = () => {
                 className="text-xl font-bold mb-6 text-center"
                 style={{ color: 'var(--accent)' }}
               >
-                Mit{' '}
-                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--cocoa)' }}>
-                  Creator
-                </span>
-                <span
-                  style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    color: 'var(--accent)',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  Bridge
-                </span>
+                Mit Influbook
               </h3>
 
               {/* After Image */}

@@ -170,10 +170,7 @@ export default function DankePage() {
               className="text-base"
               style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}
             >
-              30 Minuten, ganz entspannt. Wir lernen dich kennen, besprechen deine Ziele und klären, wie{' '}
-              <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '700' }}>Creator</span>
-              <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'var(--accent)', fontStyle: 'italic', fontWeight: '600' }}>Bridge</span>
-              {' '}dir konkret helfen kann.
+              30 Minuten, ganz entspannt. Wir lernen dich kennen, besprechen deine Ziele und klären, wie Influbook dir konkret helfen kann.
             </p>
           </div>
 
